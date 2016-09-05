@@ -7,6 +7,7 @@ let defaultSettings = require('./defaults');
 
 // Add needed plugins here
 let BowerWebpackPlugin = require('bower-webpack-plugin');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 let config = Object.assign({}, baseConfig, {
   entry: [
@@ -21,19 +22,24 @@ let config = Object.assign({}, baseConfig, {
     new webpack.NoErrorsPlugin(),
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
-    })
+    }),
+    new ExtractTextPlugin('app.css'),
   ],
   module: defaultSettings.getDefaultModules()
 });
 
 // Add needed loaders to the defaults here
 config.module.loaders.push({
-  test: /\.(js|jsx)$/,
-  loader: 'react-hot!babel-loader',
-  include: [].concat(
-    config.additionalPaths,
-    [ path.join(__dirname, '/../src') ]
-  )
-});
+    test: /\.(js|jsx)$/,
+    loader: 'react-hot!babel-loader',
+    include: [].concat(
+      config.additionalPaths,
+      [path.join(__dirname, '/../src')]
+    )
+  },
+  {
+    test: /\.css$/,
+    loader: ExtractTextPlugin.extract('css-loader')
+  });
 
 module.exports = config;

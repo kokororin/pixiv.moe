@@ -100,7 +100,7 @@ class AppComponent extends React.Component {
               items: this.state.items.concat(elem),
               images: this.state.images.concat({
                 uri: elem.image_urls.px_480mw,
-                title: elem.link
+                title: elem.title
               })
             });
           });
