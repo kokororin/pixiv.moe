@@ -66,9 +66,9 @@ class AppComponent extends React.Component {
       items: [],
       images: [],
       isRefreshIconHidden: true,
-      isRefreshSpinnerHidden: false,
-      currentPage: 0
+      isRefreshSpinnerHidden: false
     });
+
     this.fetchSource(true, () => {
       this.setState({
         isRefreshIconHidden: false,
@@ -84,7 +84,7 @@ class AppComponent extends React.Component {
     this.setState({
       isLoading: true
     });
-    let currentPage = this.state.currentPage;
+    let currentPage = isFirstLoad ? 0 : this.state.currentPage;
     fetchJsonp(config.sourceURL + '?page=' + (++currentPage), {
       method: 'get',
       timeout: 15e3
