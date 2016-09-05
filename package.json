@@ -1,6 +1,6 @@
 {
   "name": "pixiv.moe",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Source code of https://pixiv.moe",
   "main": "",
   "scripts": {
@@ -77,6 +77,6 @@
     "react-masonry-component": "^4.2.1"
   },
   "engines": {
-    "node": ">=4.0.0",
+    "node": ">=4.0.0"
   }
 }

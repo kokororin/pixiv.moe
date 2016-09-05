@@ -1,6 +1,8 @@
 # pixiv.moe
 
 [![GitHub issues](https://img.shields.io/github/issues/kokororin/pixiv.moe.svg)](https://github.com/kokororin/pixiv.moe/issues)
+[![npm version](https://badge.fury.io/js/pixiv.moe.svg)](https://badge.fury.io/js/pixiv.moe)
+![Node Version](https://img.shields.io/node/v/pixiv.moe.svg "Node Version")
 
 > pixiv.moe written in React
 
