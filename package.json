@@ -1,5 +1,5 @@
 {
-  "private": true,
+  "name": "pixiv.moe",
   "version": "0.0.1",
   "description": "Source code of https://pixiv.moe",
   "main": "",
@@ -18,9 +18,14 @@
     "test": "karma start",
     "test:watch": "karma start --autoWatch=true --singleRun=false"
   },
-  "repository": "https://github.com/kokororin/pixiv.moe.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kokororin/pixiv.moe.git"
+  },
   "keywords": [],
   "author": "kokororin",
+  "license": "MIT",
+  "homepage": "https://github.com/kokororin/pixiv.moe#readme",
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-eslint": "^6.0.0",
@@ -70,5 +75,8 @@
     "react-ga": "^2.1.1",
     "react-image-lightbox": "^3.1.0",
     "react-masonry-component": "^4.2.1"
+  },
+  "engines": {
+    "node": ">=4.0.0",
   }
 }
