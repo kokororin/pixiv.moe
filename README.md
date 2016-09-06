@@ -7,7 +7,7 @@
 > pixiv.moe written in React
 
 ## Demo
-[https://kokororin.github.io/pixiv.moe/](https://kokororin.github.io/pixiv.moe/)
+[https://pixiv.moe](https://pixiv.moe)
 
 ## Installation
 ```bash

@@ -5,7 +5,7 @@ import Lightbox from 'react-image-lightbox';
 class ImageComponent extends React.Component {
 
   static propTypes = {
-    item: React.PropTypes.object
+    images: React.PropTypes.array
   };
 
   constructor(props) {

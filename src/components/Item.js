@@ -33,7 +33,7 @@ class ItemComponent extends React.Component {
         <p className={ 'title' }>
           <a
              target={ '_blank' }
-             href={ config.baseURL + this.props.item.id }>
+             href={ '/' + this.props.item.id }>
             { this.props.item.title }
           </a>
         </p>
