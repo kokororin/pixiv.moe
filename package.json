@@ -15,8 +15,7 @@
     "serve": "node server.js --env=dev",
     "serve:dist": "node server.js --env=dist",
     "start": "node server.js --env=dev",
-    "test": "karma start",
-    "test:watch": "karma start --autoWatch=true --singleRun=false"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -26,6 +25,9 @@
   "author": "kokororin",
   "license": "MIT",
   "homepage": "https://github.com/kokororin/pixiv.moe#readme",
+  "bugs": {
+    "url": "https://github.com/kokororin/pixiv.moe/issues"
+  },
   "devDependencies": {
     "babel-core": "^6.0.0",
     "babel-eslint": "^6.0.0",
@@ -45,14 +47,6 @@
     "file-loader": "^0.9.0",
     "glob": "^7.0.0",
     "isparta-instrumenter-loader": "^1.0.0",
-    "karma": "^1.0.0",
-    "karma-chai": "^0.1.0",
-    "karma-coverage": "^1.0.0",
-    "karma-mocha": "^1.0.0",
-    "karma-mocha-reporter": "^2.0.0",
-    "karma-phantomjs-launcher": "^1.0.0",
-    "karma-sourcemap-loader": "^0.3.5",
-    "karma-webpack": "^1.7.0",
     "minimist": "^1.2.0",
     "mocha": "^3.0.0",
     "null-loader": "^0.1.1",

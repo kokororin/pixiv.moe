@@ -19,12 +19,17 @@ class ItemComponent extends React.Component {
     return false;
   }
 
+  onLinkClick(event) {
+    event.nativeEvent.preventDefault();
+    this.props.onClick();
+  }
+
   render() {
     return (
       <div className={ 'cell' }>
         <a
-           href={ 'javascipt:;' }
-           onClick={ this.props.onClick }><img src={ this.props.item.image_urls.px_480mw } /></a>
+           href={ '#' }
+           onClick={ this.onLinkClick.bind(this) }><img src={ this.props.item.image_urls.px_480mw } /></a>
         <p className={ 'title' }>
           <a
              target={ '_blank' }
