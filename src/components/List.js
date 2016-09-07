@@ -42,7 +42,7 @@ class ListComponent extends React.Component {
     window.removeEventListener('scroll', this.scrollListener.bind(this));
   }
 
-  scrollListener(event) {
+  scrollListener() {
     if (this.state.isLoading) {
       return;
     }
@@ -127,7 +127,7 @@ class ListComponent extends React.Component {
         typeof callback === 'function' && callback();
       })
       .catch((ex) => {
-        console.log('parsing failed', ex)
+        throw('parsing failed', ex);
       });
   }
 
