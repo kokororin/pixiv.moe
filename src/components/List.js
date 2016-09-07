@@ -131,6 +131,25 @@ class ListComponent extends React.Component {
       });
   }
 
+  rearranger() {
+    /* reset size of masonry-container when window size change */
+    let node           = this.refs.container,
+        cellClassName  = 'cell';
+
+    // try to get cell width
+    let temp = document.createElement('div');
+    temp.setAttribute('class', cellClassName);
+    document.body.appendChild(temp);
+
+    let cellWidth      = temp.offsetWidth,
+        cellMargin     = 8,
+        componentWidth = cellWidth + 2 * cellMargin,
+        maxn           = Math.floor(document.body.offsetWidth / componentWidth);
+
+    node.style.width   = String(maxn * componentWidth + 'px');
+    document.body.removeChild(temp);
+  }  
+
   render() {
     return (
       <div>
