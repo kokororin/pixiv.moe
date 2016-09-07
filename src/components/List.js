@@ -35,6 +35,9 @@ class ListComponent extends React.Component {
 
   componentDidMount() {
     this.fetchSource(true);
+    this.rearranger();
+
+    window.addEventListener('resize', this.rearranger.bind(this));
     window.addEventListener('scroll', this.scrollListener.bind(this));
   }
 
@@ -148,11 +151,13 @@ class ListComponent extends React.Component {
 
     node.style.width   = String(maxn * componentWidth + 'px');
     document.body.removeChild(temp);
-  }  
+  }
 
   render() {
     return (
-      <div>
+      <div
+          ref={ 'container' }
+          style={ { margin: '0 auto' } }>
         <Masonry
                  className={ 'masonry' }
                  elementType={ 'div' }
