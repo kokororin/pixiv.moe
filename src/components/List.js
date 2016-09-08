@@ -35,6 +35,9 @@ class ListComponent extends React.Component {
 
   componentDidMount() {
     this.fetchSource(true);
+    this.rearranger();
+
+    window.addEventListener('resize', this.rearranger.bind(this));
     window.addEventListener('scroll', this.scrollListener.bind(this));
   }
 
@@ -42,7 +45,7 @@ class ListComponent extends React.Component {
     window.removeEventListener('scroll', this.scrollListener.bind(this));
   }
 
-  scrollListener(event) {
+  scrollListener() {
     if (this.state.isLoading) {
       return;
     }
@@ -127,13 +130,34 @@ class ListComponent extends React.Component {
         typeof callback === 'function' && callback();
       })
       .catch((ex) => {
-        console.log('parsing failed', ex)
+        throw('parsing failed', ex);
       });
+  }
+
+  rearranger() {
+    /* reset size of masonry-container when window size change */
+    let node           = this.refs.container,
+        cellClassName  = 'cell';
+
+    // try to get cell width
+    let temp = document.createElement('div');
+    temp.setAttribute('class', cellClassName);
+    document.body.appendChild(temp);
+
+    let cellWidth      = temp.offsetWidth,
+        cellMargin     = 8,
+        componentWidth = cellWidth + 2 * cellMargin,
+        maxn           = Math.floor(document.body.offsetWidth / componentWidth);
+
+    node.style.width   = String(maxn * componentWidth + 'px');
+    document.body.removeChild(temp);
   }
 
   render() {
     return (
-      <div>
+      <div
+          ref={ 'container' }
+          style={ { margin: '0 auto' } }>
         <Masonry
                  className={ 'masonry' }
                  elementType={ 'div' }
