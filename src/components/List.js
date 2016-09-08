@@ -34,14 +34,15 @@ class ListComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchSource(true);
-    this.rearranger();
-
-    window.addEventListener('resize', this.rearranger.bind(this));
+    window.addEventListener('resize', this.resizeListener.bind(this));
     window.addEventListener('scroll', this.scrollListener.bind(this));
+
+    this.fetchSource(true);
+    this.resizeListener();
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeListener.bind(this));
     window.removeEventListener('scroll', this.scrollListener.bind(this));
   }
 
@@ -130,34 +131,34 @@ class ListComponent extends React.Component {
         typeof callback === 'function' && callback();
       })
       .catch((ex) => {
-        throw('parsing failed', ex);
+        throw ('parsing failed', ex);
       });
   }
 
-  rearranger() {
+  resizeListener() {
     /* reset size of masonry-container when window size change */
-    let node           = this.refs.container,
-        cellClassName  = 'cell';
+    let node = this.root,
+      cellClassName = 'cell';
 
     // try to get cell width
     let temp = document.createElement('div');
     temp.setAttribute('class', cellClassName);
     document.body.appendChild(temp);
 
-    let cellWidth      = temp.offsetWidth,
-        cellMargin     = 8,
-        componentWidth = cellWidth + 2 * cellMargin,
-        maxn           = Math.floor(document.body.offsetWidth / componentWidth);
+    let cellWidth = temp.offsetWidth,
+      cellMargin = 8,
+      componentWidth = cellWidth + 2 * cellMargin,
+      maxn = Math.floor(document.body.offsetWidth / componentWidth);
 
-    node.style.width   = String(maxn * componentWidth + 'px');
+    node.style.width = String(maxn * componentWidth + 'px');
     document.body.removeChild(temp);
   }
 
   render() {
     return (
       <div
-          ref={ 'container' }
-          style={ { margin: '0 auto' } }>
+           ref={ (ref) => this.root = ref }
+           style={ { margin: '0 auto' } }>
         <Masonry
                  className={ 'masonry' }
                  elementType={ 'div' }
@@ -175,7 +176,7 @@ class ListComponent extends React.Component {
              id={ 'refresh' }
              className={ 'float-btn' }
              onClick={ this.onRefreshClick.bind(this) }>
-          <i className={ 'material-icons ' + (this.state.isRefreshIconHidden ? 'hide' : 'show') }>replay</i>
+          <i className={ 'material-icons replay ' + (this.state.isRefreshIconHidden ? 'hide' : 'show') }></i>
           <div className={ 'loading-spinner ' + (this.state.isRefreshSpinnerHidden ? 'hide' : 'show') }></div>
         </div>
         <Image

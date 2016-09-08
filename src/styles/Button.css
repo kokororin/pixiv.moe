@@ -39,6 +39,15 @@
     filter: FlipH;
 }
 
+.material-icons.replay {
+    display: inline-block;
+}
+
+.material-icons.replay:after {
+    content: "replay";
+    display: inline-block;
+}
+
 .loading-spinner {
     display: none;
     margin: 1rem;
