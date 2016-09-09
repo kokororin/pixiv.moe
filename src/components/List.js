@@ -1,7 +1,5 @@
 import '../styles/Base.css';
-import '../styles/App.css';
-import '../styles/Button.css';
-import '../styles/MaterialIcons.css';
+import '../styles/List.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -12,6 +10,8 @@ import config from 'config';
 
 import Item from './Item';
 import Image from './Image';
+import Loading from './Loading';
+import Refresh from './Refresh';
 
 
 class ListComponent extends React.Component {
@@ -27,9 +27,7 @@ class ListComponent extends React.Component {
       originalTitle: 'Pixivのラブライブ発見',
       newCount: 0,
       items: [],
-      images: [],
-      isRefreshIconHidden: false,
-      isRefreshSpinnerHidden: true
+      images: []
     };
   }
 
@@ -69,15 +67,12 @@ class ListComponent extends React.Component {
     this.setState({
       items: [],
       images: [],
-      isRefreshIconHidden: true,
-      isRefreshSpinnerHidden: false
     });
 
+    this.refresh.animate(true);
+
     this.fetchSource(true, () => {
-      this.setState({
-        isRefreshIconHidden: false,
-        isRefreshSpinnerHidden: true
-      });
+      this.refresh.animate(false);
     });
   }
 
@@ -85,6 +80,7 @@ class ListComponent extends React.Component {
     if (this.state.isLoading) {
       return;
     }
+    this.loading.show();
     this.setState({
       isLoading: true
     });
@@ -129,6 +125,7 @@ class ListComponent extends React.Component {
       })
       .then(() => {
         typeof callback === 'function' && callback();
+        this.loading.hide();
       })
       .catch((ex) => {
         throw ('parsing failed', ex);
@@ -172,13 +169,10 @@ class ListComponent extends React.Component {
                            onClick={ () => this.image.openLightbox(index) } />
             }) }
         </Masonry>
-        <div
-             id={ 'refresh' }
-             className={ 'float-btn' }
-             onClick={ this.onRefreshClick.bind(this) }>
-          <i className={ 'material-icons replay ' + (this.state.isRefreshIconHidden ? 'hide' : 'show') }></i>
-          <div className={ 'loading-spinner ' + (this.state.isRefreshSpinnerHidden ? 'hide' : 'show') }></div>
-        </div>
+        <Loading ref={ (ref) => this.loading = ref } />
+        <Refresh
+                 ref={ (ref) => this.refresh = ref }
+                 onClick={ this.onRefreshClick.bind(this) } />
         <Image
                ref={ (ref) => this.image = ref }
                images={ this.state.images } />

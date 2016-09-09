@@ -9,3 +9,11 @@ body {
     padding: 10px 0;
     color: #999;
 }
+
+.hide {
+    display: none!important;
+}
+
+.show {
+    display: block!important;
+}

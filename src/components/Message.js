@@ -13,11 +13,13 @@ class MessageComponent extends React.Component {
   }
 
   render() {
-    return (<div className={ 'message' }>
-              <p>
-                { typeof this.props.text === 'undefined' ? 'エラーが発生しました。URLを確認するか、しばらく時間を置いて再度アクセスしてください。' : this.props.text }
-              </p>
-            </div>);
+    return (
+      <div className={ 'message' }>
+        <p>
+          { typeof this.props.text === 'undefined' ? 'エラーが発生しました。URLを確認するか、しばらく時間を置いて再度アクセスしてください。' : this.props.text }
+        </p>
+      </div>
+      );
   }
 }
 
