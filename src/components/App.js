@@ -22,21 +22,25 @@ class AppComponent extends React.Component {
     ReactGA.pageview(window.location.pathname);
   }
 
+  routes = <Route>
+             <Route
+                    path="/"
+                    component={ List } />
+             <Route
+                    path="/:illustId"
+                    component={ Redirect } />
+             <Route
+                    path="*"
+                    component={ Message } />
+           </Route>;
+
 
   render() {
     return (
       <Router
               history={ browserHistory }
               onUpdate={ this.logPageView }>
-        <Route
-                path="/"
-                component={ List } />
-        <Route
-               path="/:illustId"
-               component={ Redirect } />
-        <Route
-               path="*"
-               component={ Message } />
+        { this.routes }
       </Router>
       );
   }

@@ -32,14 +32,32 @@ class ListComponent extends React.Component {
     };
   }
 
+  isSupportPassive() {
+    let supportsPassive = false;
+    try {
+      let opts = Object.defineProperty({}, 'passive', {
+        get: () => supportsPassive = true
+      });
+      window.addEventListener('test-for-passive', null, opts);
+    } catch ( e ) {}
+    return supportsPassive;
+  }
+
   componentDidMount() {
     window.addEventListener('resize', this.resizeListener.bind(this));
-    window.addEventListener('scroll', this.scrollListener.bind(this));
+    window.addEventListener('scroll', this.scrollListener.bind(this),
+      this.isSupportPassive()
+        ? {
+          passive: true
+        }
+        : false);
 
     this.fetchSource(true);
     this.resizeListener();
     setInterval(this.updateLatent.bind(this), 10e3);
   }
+
+
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener.bind(this));
