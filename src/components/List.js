@@ -12,6 +12,7 @@ import Item from './Item';
 import Image from './Image';
 import Loading from './Loading';
 import Refresh from './Refresh';
+import Message from './Message';
 
 
 class ListComponent extends React.Component {
@@ -37,6 +38,7 @@ class ListComponent extends React.Component {
 
     this.fetchSource(true);
     this.resizeListener();
+    setInterval(this.updateLatent.bind(this), 10e3);
   }
 
   componentWillUnmount() {
@@ -66,7 +68,7 @@ class ListComponent extends React.Component {
   onRefreshClick() {
     this.setState({
       items: [],
-      images: [],
+      images: []
     });
 
     this.refresh.animate(true);
@@ -81,21 +83,30 @@ class ListComponent extends React.Component {
       return;
     }
     this.loading.show();
+    this.error.hide();
     this.setState({
       isLoading: true
     });
     let currentPage = isFirstLoad ? 0 : this.state.currentPage;
     fetchJsonp(config.sourceURL + '?page=' + (++currentPage), {
-      method: 'get',
       timeout: 15e3
     })
       .then((response) => {
-        return response.json()
+        if (response.ok) {
+          return response.json()
+        }
+        this.loading.hide();
+        this.error.show();
       })
       .then((data) => {
         if (data.status == 'success' && data.count > 0) {
           Object.keys(data.response).map((key) => {
             const elem = data.response[key];
+            if (isFirstLoad && key == 0) {
+              this.setState({
+                lastId: elem.id
+              });
+            }
             this.setState({
               items: this.state.items.concat(elem),
               images: this.state.images.concat({
@@ -105,9 +116,7 @@ class ListComponent extends React.Component {
             });
           });
         } else {
-          this.setState({
-            isFailureHidden: false
-          });
+          this.error.show();
         }
       })
       .then(() => {
@@ -127,8 +136,9 @@ class ListComponent extends React.Component {
         typeof callback === 'function' && callback();
         this.loading.hide();
       })
-      .catch((ex) => {
-        throw ('parsing failed', ex);
+      .catch(() => {
+        this.loading.hide();
+        this.error.show();
       });
   }
 
@@ -151,6 +161,36 @@ class ListComponent extends React.Component {
     document.body.removeChild(temp);
   }
 
+  updateLatent() {
+    if (this.state.isFirstLoadCompleted && this.state.lastId != 0) {
+      fetchJsonp(config.sourceURL + '?last=' + this.state.lastId)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          if (data.status == 'success' && data.new_latent_count) {
+            let count = data.new_latent_count;
+            if (count > 0) {
+              setTimeout(() => {
+                Object.keys(data.response).map((key) => {
+                  const elem = data.response[key];
+                  if (key != count) {
+                    this.setState({
+                      lastId: elem.id,
+                      newCount: this.state.newCount + 1
+                    });
+                  }
+                });
+                window.document.title = '(' + this.state.newCount + ') ' + this.state.originalTitle;
+              }, 1500);
+            }
+          }
+        });
+    }
+  }
+
   render() {
     return (
       <div
@@ -170,6 +210,10 @@ class ListComponent extends React.Component {
             }) }
         </Masonry>
         <Loading ref={ (ref) => this.loading = ref } />
+        <Message
+                 ref={ (ref) => this.error = ref }
+                 text={ '読み込みに失敗しました' }
+                 isHidden={ true } />
         <Refresh
                  ref={ (ref) => this.refresh = ref }
                  onClick={ this.onRefreshClick.bind(this) } />
