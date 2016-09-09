@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./src/robots.txt ./dist",
-    "dist": "npm run copy & webpack --env=dist",
+    "dist": "npm run clean && npm run copy & webpack --env=dist",
     "lint": "eslint ./src",
     "posttest": "npm run lint",
     "release:major": "npm version major && npm publish && git push --follow-tags",

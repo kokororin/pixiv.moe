@@ -25,7 +25,7 @@ let config = Object.assign({}, baseConfig, {
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
     }),
-    new ExtractTextPlugin('app.css'),
+    new ExtractTextPlugin('bundle.css'),
   ],
   module: defaultSettings.getDefaultModules()
 });
@@ -38,10 +38,9 @@ config.module.loaders.push({
     config.additionalPaths,
     [path.join(__dirname, '/../src')]
   )
-},
-  {
-    test: /\.css$/,
-    loader: ExtractTextPlugin.extract('css-loader')
-  });
+}, {
+  test: /\.css$/,
+  loader: ExtractTextPlugin.extract('css-loader')
+});
 
 module.exports = config;
