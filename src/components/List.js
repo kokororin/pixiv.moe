@@ -174,15 +174,21 @@ class ListComponent extends React.Component {
             let count = data.new_latent_count;
             if (count > 0) {
               setTimeout(() => {
-                Object.keys(data.response).map((key) => {
+                for (let key in data.response) {
                   const elem = data.response[key];
-                  if (key != count) {
+                  if (key == count) {
+                    break;
+                  }
+                  if (key == 0) {
                     this.setState({
-                      lastId: elem.id,
-                      newCount: this.state.newCount + 1
+                      lastId: elem.id
                     });
                   }
-                });
+                  this.setState({
+                    newCount: this.state.newCount + 1
+                  });
+                }
+
                 window.document.title = '(' + this.state.newCount + ') ' + this.state.originalTitle;
               }, 1500);
             }
