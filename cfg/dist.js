@@ -51,7 +51,7 @@ let config = Object.assign({}, baseConfig, {
 
           htmlOutput = htmlOutput.replace(
             /<link\s+rel="stylesheet"\s+href=(["'])(.+?)bundle\.css\1/i,
-            '<link rel="stylesheet" href=$1$2' + stats.assetsByChunkName.main[0] + '$1');
+            '<link rel="stylesheet" href=$1$2' + stats.assetsByChunkName.main[1] + '$1');
 
           fileSystem.writeFileSync(
             path.join(__dirname, '/../dist', htmlFileName), htmlOutput);
