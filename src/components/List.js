@@ -32,7 +32,7 @@ class ListComponent extends React.Component {
     };
   }
 
-  isSupportPassive() {
+  componentDidMount() {
     let supportsPassive = false;
     try {
       let opts = Object.defineProperty({}, 'passive', {
@@ -40,24 +40,17 @@ class ListComponent extends React.Component {
       });
       window.addEventListener('test-for-passive', null, opts);
     } catch ( e ) {}
-    return supportsPassive;
-  }
+    let opt = supportsPassive ? {
+      passive: true
+    } : false;
 
-  componentDidMount() {
     window.addEventListener('resize', this.resizeListener.bind(this));
-    window.addEventListener('scroll', this.scrollListener.bind(this),
-      this.isSupportPassive()
-        ? {
-          passive: true
-        }
-        : false);
+    window.addEventListener('scroll', this.scrollListener.bind(this), opt);
 
     this.fetchSource(true);
     this.resizeListener();
     setInterval(this.updateLatent.bind(this), 10e3);
   }
-
-
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener.bind(this));
@@ -129,7 +122,8 @@ class ListComponent extends React.Component {
               items: this.state.items.concat(elem),
               images: this.state.images.concat({
                 uri: elem.image_urls.px_480mw,
-                title: elem.title
+                title: elem.title,
+                link: '/' + elem.id
               })
             });
           });

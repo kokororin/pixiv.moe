@@ -1,3 +1,5 @@
+import '../styles/Base.css';
+
 import React from 'react';
 import Lightbox from 'react-image-lightbox';
 
@@ -42,23 +44,30 @@ class ImageComponent extends React.Component {
     });
   }
 
+  generateTitle({title, link}) {
+    // prevent jsfmt's ugly style
+    const child = <a
+                    className={ 'link' }
+                    target={ '_blank' }
+                    href={ link }>(→ pixiv.netで見ます)</a>
+    return <span>{ title } { child }</span>;
+  }
+
   render() {
     if (this.state.isOpen) {
       return (
         <Lightbox
-                  mainSrc={ this.props.images[this.state.index].uri }
-                  nextSrc={ this.props.images[(this.state.index + 1) % this.props.images.length].uri }
-                  prevSrc={ this.props.images[(this.state.index + this.props.images.length - 1) % this.props.images.length].uri }
-                  imageTitle={ this.props.images[this.state.index].title }
-                  onCloseRequest={ this.closeLightbox.bind(this) }
-                  onMovePrevRequest={ this.movePrev.bind(this) }
-                  onMoveNextRequest={ this.moveNext.bind(this) } />
+          mainSrc={ this.props.images[this.state.index].uri }
+          nextSrc={ this.props.images[(this.state.index + 1) % this.props.images.length].uri }
+          prevSrc={ this.props.images[(this.state.index + this.props.images.length - 1) % this.props.images.length].uri }
+          imageTitle={ this.generateTitle(this.props.images[this.state.index]) }
+          onCloseRequest={ this.closeLightbox.bind(this) }
+          onMovePrevRequest={ this.movePrev.bind(this) }
+          onMoveNextRequest={ this.moveNext.bind(this) } />
         );
     }
 
-    return (
-      <div></div>
-      );
+    return null;
   }
 
 }

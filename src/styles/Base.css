@@ -10,6 +10,11 @@ body {
     color: #999;
 }
 
+.link {
+    color: #1e6bb8;
+    text-decoration: none;
+}
+
 .hide {
     display: none!important;
 }
