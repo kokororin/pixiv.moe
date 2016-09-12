@@ -3,6 +3,7 @@
 let path = require('path');
 let webpack = require('webpack');
 let fileSystem = require('fs');
+let minify = require('html-minifier').minify;
 
 let baseConfig = require('./base');
 let defaultSettings = require('./defaults');
@@ -52,6 +53,10 @@ let config = Object.assign({}, baseConfig, {
           htmlOutput = htmlOutput.replace(
             /<link\s+rel="stylesheet"\s+href=(["'])(.+?)bundle\.css\1/i,
             '<link rel="stylesheet" href=$1$2' + stats.assetsByChunkName.main[1] + '$1');
+
+          htmlOutput = minify(htmlOutput, {
+            collapseWhitespace: true
+          });
 
           fileSystem.writeFileSync(
             path.join(__dirname, '/../dist', htmlFileName), htmlOutput);

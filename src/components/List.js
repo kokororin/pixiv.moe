@@ -212,32 +212,32 @@ class ListComponent extends React.Component {
   render() {
     return (
       <div
-           ref={ (ref) => this.root = ref }
-           style={ { margin: '0 auto' } }>
+        ref={ (ref) => this.root = ref }
+        style={ { margin: '0 auto' } }>
         <Masonry
-                 className={ 'masonry' }
-                 elementType={ 'div' }
-                 options={ { transitionDuration: 0 } }
-                 disableImagesLoaded={ false }
-                 updateOnEachImageLoad={ false }>
+          className={ 'masonry' }
+          elementType={ 'div' }
+          options={ { transitionDuration: 0 } }
+          disableImagesLoaded={ false }
+          updateOnEachImageLoad={ false }>
           { this.state.items.map((elem, index) => {
               return <Item
-                           key={ index }
-                           item={ elem }
-                           onClick={ () => this.image.openLightbox(index) } />
+                       key={ index }
+                       item={ elem }
+                       onClick={ () => this.image.openLightbox(index) } />
             }) }
         </Masonry>
         <Loading ref={ (ref) => this.loading = ref } />
         <Message
-                 ref={ (ref) => this.error = ref }
-                 text={ '読み込みに失敗しました' }
-                 isHidden={ true } />
+          ref={ (ref) => this.error = ref }
+          text={ '読み込みに失敗しました' }
+          isHidden={ true } />
         <Refresh
-                 ref={ (ref) => this.refresh = ref }
-                 onClick={ this.onRefreshClick.bind(this) } />
+          ref={ (ref) => this.refresh = ref }
+          onClick={ this.onRefreshClick.bind(this) } />
         <Image
-               ref={ (ref) => this.image = ref }
-               images={ this.state.images } />
+          ref={ (ref) => this.image = ref }
+          images={ this.state.images } />
       </div>
       );
   }
