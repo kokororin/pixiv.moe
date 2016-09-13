@@ -11,6 +11,8 @@
 
 ## Installation
 ```bash
+git clone https://github.com/kokororin/pixiv.moe
+cd pixiv.moe
 npm install
 ```
 
@@ -26,12 +28,6 @@ npm run serve:dist
 
 # Just build the dist version and copy static files
 npm run dist
-
-# Run unit tests
-npm test
-
-# Auto-run unit tests on file changes
-npm run test:watch
 
 # Lint all files in src (also automatically done AFTER tests are run)
 npm run lint
