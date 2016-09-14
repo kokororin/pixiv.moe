@@ -24,22 +24,22 @@ class AppComponent extends React.Component {
 
   routes = <Route>
              <Route
-                    path="/"
-                    component={ List } />
+               path="/"
+               component={ List } />
              <Route
-                    path="/:illustId"
-                    component={ Redirect } />
+               path="/:illustId"
+               component={ Redirect } />
              <Route
-                    path="*"
-                    component={ Message } />
+               path="*"
+               component={ Message } />
            </Route>;
 
 
   render() {
     return (
       <Router
-              history={ browserHistory }
-              onUpdate={ this.logPageView }>
+        history={ browserHistory }
+        onUpdate={ this.logPageView }>
         { this.routes }
       </Router>
       );

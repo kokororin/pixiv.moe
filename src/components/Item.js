@@ -1,6 +1,7 @@
 import '../styles/Item.css';
 
 import React from 'react';
+import { formatPattern } from 'react-router/lib/PatternUtils';
 
 
 class ItemComponent extends React.Component {
@@ -27,12 +28,14 @@ class ItemComponent extends React.Component {
     return (
       <div className={ 'cell' }>
         <a
-           href={ '#' }
-           onClick={ this.onLinkClick.bind(this) }><img src={ this.props.item.image_urls.medium } /></a>
+          href={ '#' }
+          onClick={ this.onLinkClick.bind(this) }><img src={ this.props.item.image_urls.medium } /></a>
         <p className={ 'title' }>
           <a
-             target={ '_blank' }
-             href={ '/' + this.props.item.id }>
+            target={ '_blank' }
+            href={ formatPattern('/:illustId', {
+                     illustId: this.props.item.id
+                   }) }>
             { this.props.item.title }
           </a>
         </p>

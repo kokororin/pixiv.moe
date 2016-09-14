@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Masonry from 'react-masonry-component';
 import fetchJsonp from 'fetch-jsonp';
+import { formatPattern } from 'react-router/lib/PatternUtils';
 
 import config from 'config';
 
@@ -123,7 +124,9 @@ class ListComponent extends React.Component {
               images: this.state.images.concat({
                 uri: elem.image_urls.large,
                 title: elem.title,
-                link: '/' + elem.id
+                link: formatPattern('/:illustId', {
+                  illustId: elem.id
+                })
               })
             });
           });
