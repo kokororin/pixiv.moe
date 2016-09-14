@@ -1,0 +1,133 @@
+body {
+    overflow: scroll;
+}
+
+#pixiv-container {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.cell {
+    width: 175px;
+    min-height: 100px;
+    padding: 0px 0px 0;
+    background: #fff;
+    margin: 8px;
+    margin-top: 10px;
+    font-size: 12px;
+    float: left;
+    box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    -moz-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    -webkit-box-shadow: 0 1px 3px rgba(34, 25, 25, 0.4);
+    -webkit-transition: top 1s ease, left 1s ease;
+    -moz-transition: top 1s ease, left 1s ease;
+    -o-transition: top 1s ease, left 1s ease;
+    -ms-transition: top 1s ease, left 1s ease;
+    font-style: strong;
+    text-align: center;
+}
+
+.cell:hover {
+    box-shadow: 0 1px 5px rgba(34, 25, 25, .8);
+    -moz-box-shadow: 0 1px 5px rgba(34, 25, 25, .8);
+    -webkit-box-shadow: 0 1px 5px rgba(34, 25, 25, .8);
+    filter: progid: DXImageTransform.Microsoft.Shadow(color=#979797, direction=135, strength=3);
+}
+
+.cell img {
+    width: expression(document.body.clientWidth>190?"190px": "auto");
+    overflow: hidden;
+    border: 0;
+    max-width: 100%;
+    background: #ccc;
+}
+
+.cell a {
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+}
+
+.cell p.title {
+    margin: 10px 0;
+    display: block;
+    padding: 0px 0px 5px;
+    font-size: 17px;
+    line-height: 10px;
+}
+
+.cell p.meta {
+    display: block;
+    line-height: 10px;
+    padding: 0px 0px 5px;
+    margin: 10px 0;
+}
+
+.float-btn {
+    position: fixed;
+    display: none;
+    right: 40px;
+    bottom: 40px;
+    width: 4rem;
+    height: 4rem;
+    color: #fff;
+    -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 2333;
+    background: rgb(255, 255, 255);
+    border-radius: 50%;
+    line-height: 6rem;
+    text-align: center;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+.float-btn i {
+    position: absolute;
+    font-size: 2rem;
+    text-align: center;
+    line-height: 4rem;
+    left: 1rem;
+}
+
+#refresh {
+    display: block;
+    background-color: #2196F3;
+}
+
+#refresh i {
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    /*IE*/
+    filter: FlipH;
+}
+
+.loading-spinner {
+    display: none;
+    margin: 1rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    animation: rotate 0.8s infinite linear;
+    border: .3rem solid #fff;
+    border-right-color: transparent;
+    border-radius: 50%;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.message {
+    text-align: center;
+    padding: 10px 0;
+    color: #999;
+}
