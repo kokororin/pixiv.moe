@@ -29,7 +29,7 @@ class ItemComponent extends React.Component {
       <div className={ 'cell' }>
         <a
           href={ '#' }
-          onClick={ this.onLinkClick.bind(this) }><img src={ this.props.item.image_urls.medium } /></a>
+          onClick={ this.onLinkClick.bind(this) }><img src={ this.props.item.image_urls.px_480mw } /></a>
         <p className={ 'title' }>
           <a
             target={ '_blank' }

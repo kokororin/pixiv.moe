@@ -122,7 +122,7 @@ class ListComponent extends React.Component {
             this.setState({
               items: this.state.items.concat(elem),
               images: this.state.images.concat({
-                uri: elem.image_urls.large,
+                uri: elem.image_urls.px_480mw,
                 title: elem.title,
                 link: formatPattern('/:illustId', {
                   illustId: elem.id
