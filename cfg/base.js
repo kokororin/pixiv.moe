@@ -38,16 +38,5 @@ module.exports = {
       config: `${defaultSettings.srcPath}/config/` + process.env.REACT_WEBPACK_ENV
     }
   },
-  module: {},
-  loaders: [
-    {
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel'
-    },
-    {
-      test: /masonry|imagesloaded|fizzy\-ui\-utils|desandro\-|outlayer|get\-size|doc\-ready|eventie|eventemitter/,
-      loader: 'imports?define=>false&this=>window'
-    }
-  ]
+  module: {}
 };
