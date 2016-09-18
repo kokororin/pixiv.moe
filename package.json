@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "clean": "rimraf dist/*",
-    "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./src/robots.txt ./dist",
+    "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./src/robots.txt ./src/CNAME ./dist",
     "dist": "npm run clean && npm run copy & webpack --env=dist",
     "lint": "eslint ./src",
     "posttest": "npm run lint",
@@ -16,7 +16,7 @@
     "serve:dist": "node server.js --env=dist",
     "start": "node server.js --env=dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "git subtree push --prefix dist origin gh-pages"
+    "deploy": "npm run dist && git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
