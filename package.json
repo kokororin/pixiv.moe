@@ -16,7 +16,7 @@
     "serve:dist": "node server.js --env=dist",
     "start": "node server.js --env=dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pull": "git pull && chown -R www:www ./"
+    "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
