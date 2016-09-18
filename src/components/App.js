@@ -4,9 +4,7 @@ import ReactGA from 'react-ga';
 
 import config from 'config';
 
-import List from './List';
-import Redirect from './Redirect';
-import Message from './Message';
+import { List, Redirect, Message } from '.';
 
 class AppComponent extends React.Component {
 

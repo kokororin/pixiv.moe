@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Message from './Message';
+import { Message } from '.';
 
 class RedirectComponent extends React.Component {
   constructor(props) {

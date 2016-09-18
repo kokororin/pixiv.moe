@@ -9,11 +9,7 @@ import { formatPattern } from 'react-router/lib/PatternUtils';
 
 import config from 'config';
 
-import Item from './Item';
-import Image from './Image';
-import Loading from './Loading';
-import Refresh from './Refresh';
-import Message from './Message';
+import { Item, Image, Loading, Refresh, Message, Github } from '.';
 
 
 class ListComponent extends React.Component {
@@ -217,6 +213,7 @@ class ListComponent extends React.Component {
       <div
         ref={ (ref) => this.root = ref }
         style={ { margin: '0 auto' } }>
+        <Github link={ config.projectLink } />
         <Masonry
           className={ 'masonry' }
           elementType={ 'div' }

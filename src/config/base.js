@@ -4,5 +4,6 @@
 export default {
   sourceURL: 'https://api.kotori.love/pixiv/source.php',
   baseURL: 'https://pixiv.moe/',
-  trackingID: 'UA-70944432-2'
+  trackingID: 'UA-70944432-2',
+  projectLink: 'https://github.com/kokororin/pixiv.moe'
 }
