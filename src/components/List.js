@@ -120,7 +120,7 @@ class ListComponent extends React.Component {
               images: this.state.images.concat({
                 uri: elem.image_urls.px_480mw,
                 title: elem.title,
-                link: formatPattern('/:illustId', {
+                link: formatPattern('/#/:illustId', {
                   illustId: elem.id
                 })
               })

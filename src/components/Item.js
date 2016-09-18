@@ -33,7 +33,7 @@ class ItemComponent extends React.Component {
         <p className={ 'title' }>
           <a
             target={ '_blank' }
-            href={ formatPattern('/:illustId', {
+            href={ formatPattern('/#/:illustId', {
                      illustId: this.props.item.id
                    }) }>
             { this.props.item.title }

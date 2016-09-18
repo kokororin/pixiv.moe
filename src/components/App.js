@@ -1,5 +1,6 @@
 import React from 'react';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, useRouterHistory } from 'react-router';
+import { createHashHistory } from 'history';
 import ReactGA from 'react-ga';
 
 import config from 'config';
@@ -32,11 +33,15 @@ class AppComponent extends React.Component {
                component={ Message } />
            </Route>;
 
+  appHistory = useRouterHistory(createHashHistory)({
+    queryKey: false
+  });
+
 
   render() {
     return (
       <Router
-        history={ browserHistory }
+        history={ this.appHistory }
         onUpdate={ this.logPageView }>
         { this.routes }
       </Router>
