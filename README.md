@@ -2,42 +2,31 @@
 
 [![GitHub issues](https://img.shields.io/github/issues/kokororin/pixiv.moe.svg)](https://github.com/kokororin/pixiv.moe/issues)
 [![npm version](https://badge.fury.io/js/pixiv.moe.svg)](https://badge.fury.io/js/pixiv.moe)
+![Dependency Tracker](https://img.shields.io/david/kokororin/pixiv.moe.svg "Dependency Tracker") ![Dependency Tracker](https://img.shields.io/david/dev/kokororin/pixiv.moe.svg "Dependency Tracker")
 ![Node Version](https://img.shields.io/node/v/pixiv.moe.svg "Node Version")
 
-> pixiv.moe written in React
+A cascading grid layout site, shows illusts on [pixiv.net](http://pixiv.net). Written with react.
 
-## Demo
+## Online Site
 [https://pixiv.moe](https://pixiv.moe)
 
-## Installation
+## Dev
 ```bash
+# Start for development
 git clone https://github.com/kokororin/pixiv.moe
 cd pixiv.moe
 npm install
+npm start
 ```
 
-## Usage
-The following commands are available:
-```bash
-# Start for development
-npm start # or
-npm run serve
+### Commands
+- Init: `$ npm install`
+- Run: `$ npm start`
+- Build: `$ npm run dist`
+- Publish `$ npm run deploy`
 
-# Start the dev-server with the dist version
-npm run serve:dist
-
-# Just build the dist version and copy static files
-npm run dist
-
-# Lint all files in src (also automatically done AFTER tests are run)
-npm run lint
-
-# Clean up the dist directory
-npm run clean
-
-# Just copy the static assets
-npm run copy
-```
+## Contribute
+Feel free to contribute (PR-s and issues welcomed).
 
 ## License
 [MIT license](http://opensource.org/licenses/mit-license.php)
