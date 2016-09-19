@@ -13,10 +13,10 @@ A cascading grid layout site, shows illusts on [pixiv.net](http://pixiv.net). Wr
 ## Dev
 ```bash
 # Start for development
-git clone https://github.com/kokororin/pixiv.moe
-cd pixiv.moe
-npm install
-npm start
+$ git clone https://github.com/kokororin/pixiv.moe
+$ cd pixiv.moe
+$ npm install
+$ npm start
 ```
 
 ### Commands
