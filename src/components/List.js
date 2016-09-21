@@ -76,8 +76,11 @@ class ListComponent extends React.Component {
   onRefreshClick() {
     this.setState({
       items: [],
-      images: []
+      images: [],
+      newCount: 0
     });
+
+    window.document.title = this.state.originalTitle;
 
     this.refresh.animate(true);
 
