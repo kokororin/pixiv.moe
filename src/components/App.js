@@ -15,10 +15,11 @@ class AppComponent extends React.Component {
   }
 
   logPageView() {
+    const pageLink = window.location.pathname + (window.location.hash == '#/' ? '' : window.location.hash);
     ReactGA.set({
-      page: window.location.pathname
+      page: pageLink
     });
-    ReactGA.pageview(window.location.pathname);
+    ReactGA.pageview(pageLink);
   }
 
   routes = <Route>
