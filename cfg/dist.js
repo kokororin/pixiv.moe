@@ -55,7 +55,9 @@ let config = Object.assign({}, baseConfig, {
             '<link rel="stylesheet" href=$1$2' + stats.assetsByChunkName.main[1] + '$1');
 
           htmlOutput = minify(htmlOutput, {
-            collapseWhitespace: true
+            collapseWhitespace: true,
+            removeComments: true,
+            minifyJS: true
           });
 
           fileSystem.writeFileSync(
