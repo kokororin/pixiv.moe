@@ -57,7 +57,8 @@ let config = Object.assign({}, baseConfig, {
           htmlOutput = minify(htmlOutput, {
             collapseWhitespace: true,
             removeComments: true,
-            minifyJS: true
+            minifyJS: true,
+            processConditionalComments: true
           });
 
           fileSystem.writeFileSync(
