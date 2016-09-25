@@ -4,7 +4,7 @@ import React from 'react';
 import Lightbox from 'react-image-lightbox';
 
 
-class ImageComponent extends React.Component {
+export default class Image extends React.Component {
 
   static propTypes = {
     images: React.PropTypes.array
@@ -71,5 +71,3 @@ class ImageComponent extends React.Component {
   }
 
 }
-
-export default ImageComponent;

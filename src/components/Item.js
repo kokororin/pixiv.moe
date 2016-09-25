@@ -1,14 +1,16 @@
 import '../styles/Item.css';
 
 import React from 'react';
+import ReactTooltip from 'react-tooltip'
+
 import { formatPattern } from 'react-router/lib/PatternUtils';
 
-
-class ItemComponent extends React.Component {
+export default class Item extends React.Component {
 
   static propTypes = {
     item: React.PropTypes.object,
-    onClick: React.PropTypes.func
+    onImageClick: React.PropTypes.func,
+    onFavouriteClick: React.PropTypes.func
   };
 
   constructor(props) {
@@ -19,9 +21,14 @@ class ItemComponent extends React.Component {
     return false;
   }
 
-  onLinkClick(event) {
+  onImageClick(event) {
     event.nativeEvent.preventDefault();
-    this.props.onClick();
+    this.props.onImageClick();
+  }
+
+  onFavouriteClick(event) {
+    event.nativeEvent.preventDefault();
+    this.props.onFavouriteClick();
   }
 
   render() {
@@ -29,8 +36,8 @@ class ItemComponent extends React.Component {
       <div className={ 'cell' }>
         <a
           href={ '#' }
-          onClick={ this.onLinkClick.bind(this) }><img src={ this.props.item.image_urls.px_480mw } /></a>
-        <p className={ 'title' }>
+          onClick={ this.onImageClick.bind(this) }><img src={ this.props.item.image_urls.px_480mw } /></a>
+        <div className={ 'title' }>
           <a
             target={ '_blank' }
             href={ formatPattern('/#/:illustId', {
@@ -38,13 +45,19 @@ class ItemComponent extends React.Component {
                    }) }>
             { this.props.item.title }
           </a>
-        </p>
-        <p className={ 'meta' }>
-          { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private + '件のブックマーク' }
-        </p>
+        </div>
+        <div className={ 'meta' }>
+          <a
+            data-tip={ 'ブックマークに追加' }
+            href={ '#' }
+            onClick={ this.onFavouriteClick.bind(this) }
+            className={ 'count' }><i className={ 'material-icons grade star' }></i> { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private }</a>
+        </div>
+        <ReactTooltip
+          place={ 'top' }
+          type={ 'dark' }
+          effect={ 'float' } />
       </div>
       );
   }
 }
-
-export default ItemComponent;

@@ -2,7 +2,7 @@ import '../styles/Github.css';
 
 import React from 'react';
 
-class GithubComponent extends React.Component {
+export default class Github extends React.Component {
 
   static propTypes = {
     link: React.PropTypes.string
@@ -37,5 +37,3 @@ class GithubComponent extends React.Component {
       </a>);
   }
 }
-
-export default GithubComponent;

@@ -1,0 +1,147 @@
+#login-modal {
+    position: fixed;
+    width: 24em;
+    left: 50%;
+    top: 50%;
+    z-index: 1001;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px;
+    border-radius: 2px;
+}
+
+#login-modal .close {
+    position: absolute;
+    right: 10px;
+    text-decoration: none;
+    color: #000;
+    font-size: 120%;
+}
+
+#login-modal .avatar {
+    left: 50%;
+}
+
+#login-modal .avatar img {
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+#login-modal .avatar .name {
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+#login-modal .form {
+    height: auto;
+    opacity: 1;
+    padding-top: 12em;
+    padding: 3em;
+}
+
+#login-modal .fields {
+    opacity: 1;
+    visibility: visible;
+}
+
+#login-modal .footer {
+    padding-top: 1em;
+}
+
+
+/* Form */
+
+#login-modal .field {
+    position: relative;
+    margin-bottom: 2em;
+}
+
+#login-modal .input {
+    width: 100%;
+    font-size: 100%;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    height: 2rem;
+    line-height: 2rem;
+    border-bottom: 1px solid #eee;
+    color: #777;
+    transition: all .2s ease-in;
+}
+
+#login-modal .input:focus {
+    outline: 0;
+    border-color: #ccc;
+}
+
+@keyframes login-modal-open {
+    from {
+        opacity: 0;
+        top: 0;
+    }
+    to {
+        opacity: 1;
+        top: 50%;
+    }
+}
+
+#login-modal .button.blue {
+    background-color: #ff4081;
+    color: #fff;
+}
+
+#login-modal .button.raised {
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.2s;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+#login-modal .button.raised:active {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+    transition-delay: 0s;
+}
+
+#login-modal .button {
+    display: inline-block;
+    position: relative;
+    width: 150px;
+    height: 42px;
+    line-height: 42px;
+    border-radius: 2px;
+    font-size: 0.9em;
+    background-color: #fff;
+    color: #646464;
+    cursor: pointer;
+}
+
+#login-modal .button-inner {
+    text-align: center;
+}
+
+#login-modal .button-inner:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.login-modal-container.close #login-modal {
+    display: none;
+}
+
+.login-modal-container.open #login-modal {
+    animation: login-modal-open .7s;
+    display: block;
+}
+
+.login-modal-container.open #modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background: #292f29;
+    background: rgba(41, 47, 51, 0.9);
+}
+
+.login-modal-container.open #login-modal {
+    display: block;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Message } from '.';
 
-class RedirectComponent extends React.Component {
+export default class Redirect extends React.Component {
   constructor(props) {
     super(props);
 
@@ -38,5 +38,3 @@ class RedirectComponent extends React.Component {
       );
   }
 }
-
-export default RedirectComponent;

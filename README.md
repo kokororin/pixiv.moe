@@ -10,6 +10,29 @@ A cascading grid layout site, shows illusts on [pixiv.net](http://pixiv.net). Wr
 ## Online Site
 [https://pixiv.moe](https://pixiv.moe)
 
+
+
+## Features
+
+* Cascading grid layout illusts.
+* Login in Pixiv and add bookmarks easily.
+
+
+
+## Privacy
+
+We would never record your password.  
+
+The authorized data is only stored in `localStorage` and `ACCESS_TOKEN` will expire in one hour. That is to say, **your login session will only remain for one hour!**
+
+
+
+## Q&A
+
+Q: Why don't you use `REFRESH TOKEN`?
+
+A: Pixiv change the `REFRESH TOKEN` auth method, so re-login with refresh_token is failed.
+
 ## Dev
 ```bash
 # Start for development

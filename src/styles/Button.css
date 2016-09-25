@@ -25,27 +25,15 @@
     left: 1rem;
 }
 
+#account {
+    display: block;
+    background-color: #ff4081;
+    bottom: 120px;
+}
+
 #refresh {
     display: block;
     background-color: #2196F3;
-}
-
-#refresh i {
-    -moz-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    transform: scaleX(-1);
-    /*IE*/
-    filter: FlipH;
-}
-
-.material-icons.replay {
-    display: inline-block;
-}
-
-.material-icons.replay:after {
-    content: "replay";
-    display: inline-block;
 }
 
 .loading-spinner {

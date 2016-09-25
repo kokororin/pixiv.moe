@@ -4,7 +4,7 @@ import '../styles/MaterialIcons.css';
 
 import React from 'react';
 
-class RefreshComponent extends React.Component {
+export default class Refresh extends React.Component {
 
   static propTypes = {
     onClick: React.PropTypes.func
@@ -35,11 +35,9 @@ class RefreshComponent extends React.Component {
            id={ 'refresh' }
            className={ 'float-btn' }
            onClick={ this.props.onClick.bind(this) }>
-        <i className={ 'material-icons replay ' + (this.state.isRefreshIconHidden ? 'hide' : 'show') }></i>
+        <i className={ 'material-icons refresh ' + (this.state.isRefreshIconHidden ? 'hide' : 'show') }></i>
         <div className={ 'loading-spinner ' + (this.state.isRefreshSpinnerHidden ? 'hide' : 'show') }></div>
       </div>
       );
   }
 }
-
-export default RefreshComponent;

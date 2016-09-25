@@ -2,7 +2,7 @@ import '../styles/Base.css';
 
 import React from 'react';
 
-class LoadingComponent extends React.Component {
+export default class Loading extends React.Component {
 
   constructor(props) {
     super(props);
@@ -35,5 +35,3 @@ class LoadingComponent extends React.Component {
       );
   }
 }
-
-export default LoadingComponent;

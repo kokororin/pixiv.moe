@@ -2,17 +2,16 @@ import '../styles/Base.css';
 import '../styles/List.css';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Masonry from 'react-masonry-component';
-import fetchJsonp from 'fetch-jsonp';
 import { formatPattern } from 'react-router/lib/PatternUtils';
 
 import config from 'config';
 
-import { Item, Image, Loading, Refresh, Message, Github } from '.';
+import { Account, Dialog, Item, Image, Loading, Login, Refresh, Message, Github } from '.';
+import { BottomPosition, Storage, SupportPassive } from '../utils';
 
 
-class ListComponent extends React.Component {
+export default class List extends React.Component {
 
   constructor(props) {
     super(props);
@@ -30,19 +29,10 @@ class ListComponent extends React.Component {
   }
 
   componentDidMount() {
-    let supportsPassive = false;
-    try {
-      let opts = Object.defineProperty({}, 'passive', {
-        get: () => supportsPassive = true
-      });
-      window.addEventListener('test-for-passive', null, opts);
-    } catch ( e ) {}
-    let opt = supportsPassive ? {
-      passive: true
-    } : false;
-
     window.addEventListener('resize', this.resizeListener.bind(this));
-    window.addEventListener('scroll', this.scrollListener.bind(this), opt);
+    window.addEventListener('scroll', this.scrollListener.bind(this), SupportPassive ? {
+      passive: true
+    } : false);
 
     this.fetchSource(true);
     this.resizeListener();
@@ -58,19 +48,10 @@ class ListComponent extends React.Component {
     if (this.state.isLoading) {
       return;
     }
-    const el = ReactDOM.findDOMNode(this);
-    const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-    if (this.topPosition(el) + el.offsetHeight - scrollTop - window.innerHeight < 250) {
+
+    if (BottomPosition(this) < 250) {
       this.fetchSource(false);
     }
-
-  }
-
-  topPosition(domElem) {
-    if (!domElem) {
-      return 0;
-    }
-    return domElem.offsetTop + this.topPosition(domElem.offsetParent);
   }
 
   onRefreshClick() {
@@ -99,7 +80,8 @@ class ListComponent extends React.Component {
       isLoading: true
     });
     let currentPage = isFirstLoad ? 0 : this.state.currentPage;
-    fetchJsonp(config.sourceURL + '?page=' + (++currentPage), {
+    fetch(config.sourceURL + '?page=' + (++currentPage), {
+      mode: 'cors',
       timeout: 15e3
     })
       .then((response) => {
@@ -177,7 +159,9 @@ class ListComponent extends React.Component {
 
   updateLatent() {
     if (this.state.isFirstLoadCompleted && this.state.lastId != 0) {
-      fetchJsonp(config.sourceURL + '?last=' + this.state.lastId)
+      fetch(config.sourceURL + '?last=' + this.state.lastId, {
+        mode: 'cors'
+      })
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -211,6 +195,33 @@ class ListComponent extends React.Component {
     }
   }
 
+  onFavouriteClick(illustId) {
+    const authData = Storage.get('auth');
+    if (authData == null || authData.expires_time < new Date().getTime()) {
+      return this.login.open();
+    }
+    fetch(config.favouriteURL, {
+      mode: 'cors',
+      method: 'post',
+      headers: new Headers({
+        'Accept': 'application/json',
+        'Content-Type': 'text/plain',
+        'Access-Token': authData.access_token
+      }),
+      body: JSON.stringify({
+        illust_id: illustId
+      })
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        this.dialog.setContent(data.message);
+      });
+  }
+
   render() {
     return (
       <div
@@ -227,7 +238,8 @@ class ListComponent extends React.Component {
               return <Item
                        key={ index }
                        item={ elem }
-                       onClick={ () => this.image.openLightbox(index) } />
+                       onImageClick={ () => this.image.openLightbox(index) }
+                       onFavouriteClick={ () => this.onFavouriteClick(elem.id) } />
             }) }
         </Masonry>
         <Loading ref={ (ref) => this.loading = ref } />
@@ -238,12 +250,13 @@ class ListComponent extends React.Component {
         <Refresh
           ref={ (ref) => this.refresh = ref }
           onClick={ this.onRefreshClick.bind(this) } />
+        <Account onClick={ () => this.login.open() } />
         <Image
           ref={ (ref) => this.image = ref }
           images={ this.state.images } />
+        <Login ref={ (ref) => this.login = ref } />
+        <Dialog ref={ (ref) => this.dialog = ref } />
       </div>
       );
   }
 }
-
-export default ListComponent;

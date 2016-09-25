@@ -40,7 +40,7 @@ config.module.loaders.push({
   )
 }, {
   test: /\.css$/,
-  loader: ExtractTextPlugin.extract('css-loader')
+  loader: 'style!css'
 });
 
 module.exports = config;

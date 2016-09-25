@@ -2,7 +2,7 @@ import '../styles/Base.css';
 
 import React from 'react';
 
-class MessageComponent extends React.Component {
+export default class Message extends React.Component {
 
   static defaultProps = {
     isHidden: false,
@@ -44,5 +44,3 @@ class MessageComponent extends React.Component {
       );
   }
 }
-
-export default MessageComponent;

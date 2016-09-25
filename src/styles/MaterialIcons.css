@@ -29,3 +29,15 @@
     /* Support for IE. */
     font-feature-settings: 'liga';
 }
+
+.material-icons.refresh:after {
+    content: "\e5d5";
+}
+
+.material-icons.grade:after {
+    content: "\e885";
+}
+
+.material-icons.person:after {
+    content: "\e7fd";
+}

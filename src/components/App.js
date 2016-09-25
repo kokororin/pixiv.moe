@@ -7,7 +7,7 @@ import config from 'config';
 
 import { List, Redirect, Message } from '.';
 
-class AppComponent extends React.Component {
+export default class App extends React.Component {
 
   constructor(props) {
     super(props);
@@ -50,5 +50,3 @@ class AppComponent extends React.Component {
   }
 
 }
-
-export default AppComponent;
