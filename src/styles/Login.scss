@@ -174,3 +174,9 @@
         width: 18em;
     }
 }
+
+body {
+    &.login-modal-open {
+        overflow: hidden;
+    }
+}

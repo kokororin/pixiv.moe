@@ -3,6 +3,7 @@ import '../styles/MaterialIcons.scss';
 
 import React from 'react';
 import classNames from 'classnames';
+import 'classlist-polyfill';
 
 import { Dialog } from '.';
 import { Storage } from '../utils';
@@ -30,56 +31,12 @@ export default class Login extends React.Component {
     });
   }
 
-  renderContent() {
-
-    if (this.state.authData != null && this.state.authData.expires_time > new Date().getTime()) {
-      return (<div>
-                <div className={ 'avatar' }>
-                  <span className={ 'name' }>ニックネーム 「{ this.state.authData.user.name }」</span>
-                </div>
-                <div className={ 'footer' }>
-                  <div
-                    className={ 'button raised blue' }
-                    onClick={ () => this.onLogoutClick() }>
-                    <div className={ 'button-inner' }>
-                      ログアウト
-                    </div>
-                  </div>
-                </div>
-              </div>);
-    }
-    return (<div>
-              <div className={ 'field' }>
-                <input
-                  ref={ (ref) => this.username = ref }
-                  type={ 'text' }
-                  className={ 'input' }
-                  placeholder={ 'メールアドレス / pixiv ID' } />
-              </div>
-              <div className={ 'field' }>
-                <input
-                  ref={ (ref) => this.password = ref }
-                  type={ 'password' }
-                  className={ 'input' }
-                  placeholder={ 'パスワード' } />
-              </div>
-              <div className={ 'footer' }>
-                <div
-                  className={ 'button raised blue' }
-                  onClick={ () => this.onLoginClick() }>
-                  <div className={ 'button-inner' }>
-                    { this.state.isSubmitting ? 'ちょっとまって' : 'ログイン' }
-                  </div>
-                </div>
-              </div>
-            </div>);
-  }
-
   open() {
     this.setState({
       hasOpened: true,
       isHidden: false
     });
+    document.body.classList.add('login-modal-open');
   }
 
 
@@ -87,6 +44,7 @@ export default class Login extends React.Component {
     this.setState({
       isHidden: true
     });
+    document.body.classList.remove('login-modal-open');
   }
 
   onOverlayClick(event) {
@@ -164,6 +122,51 @@ export default class Login extends React.Component {
     this.setState({
       authData: null
     });
+  }
+
+  renderContent() {
+
+    if (this.state.authData != null && this.state.authData.expires_time > new Date().getTime()) {
+      return (<div>
+                <div className={ 'avatar' }>
+                  <span className={ 'name' }>ニックネーム 「{ this.state.authData.user.name }」</span>
+                </div>
+                <div className={ 'footer' }>
+                  <div
+                    className={ 'button raised blue' }
+                    onClick={ () => this.onLogoutClick() }>
+                    <div className={ 'button-inner' }>
+                      ログアウト
+                    </div>
+                  </div>
+                </div>
+              </div>);
+    }
+    return (<div>
+              <div className={ 'field' }>
+                <input
+                  ref={ (ref) => this.username = ref }
+                  type={ 'text' }
+                  className={ 'input' }
+                  placeholder={ 'メールアドレス / pixiv ID' } />
+              </div>
+              <div className={ 'field' }>
+                <input
+                  ref={ (ref) => this.password = ref }
+                  type={ 'password' }
+                  className={ 'input' }
+                  placeholder={ 'パスワード' } />
+              </div>
+              <div className={ 'footer' }>
+                <div
+                  className={ 'button raised blue' }
+                  onClick={ () => this.onLoginClick() }>
+                  <div className={ 'button-inner' }>
+                    { this.state.isSubmitting ? 'ちょっとまって' : 'ログイン' }
+                  </div>
+                </div>
+              </div>
+            </div>);
   }
 
   render() {
