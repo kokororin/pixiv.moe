@@ -1,0 +1,49 @@
+.dialog-container {
+    &.close {
+        display: none;
+    }
+
+    &.open {
+        display: block;
+        animation: dialog-open .7s;
+    }
+
+    .dialog-wrap-1 {
+        box-sizing: border-box;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1004;
+        opacity: 1;
+    }
+
+    .dialog-wrap-2 {
+        color: rgba(0, 0, 0, 0.87059);
+        background-color: rgb(255, 255, 255);
+        box-sizing: border-box;
+        box-shadow: rgba(0, 0, 0, 0.24706) 0 14px 45px, rgba(0, 0, 0, 0.21961) 0 10px 18px;
+        border-radius: 2px;
+    }
+
+    .dialog-body {
+        font-size: 16px;
+        color: rgba(0, 0, 0, 0.6);
+        padding: 24px;
+        box-sizing: border-box;
+        overflow-y: hidden;
+        max-height: 552px;
+    }
+}
+
+@keyframes dialog-open {
+    from {
+        opacity: 0;
+        top: 0;
+    }
+
+    to {
+        opacity: 1;
+        top: 50%;
+    }
+}

@@ -1,8 +1,9 @@
-import '../styles/Base.css';
-import '../styles/Button.css';
-import '../styles/MaterialIcons.css';
+import '../styles/Base.scss';
+import '../styles/Button.scss';
+import '../styles/MaterialIcons.scss';
 
 import React from 'react';
+import classNames from 'classnames';
 
 export default class Refresh extends React.Component {
 
@@ -32,11 +33,20 @@ export default class Refresh extends React.Component {
   render() {
     return (
       <div
-           id={ 'refresh' }
-           className={ 'float-btn' }
-           onClick={ this.props.onClick.bind(this) }>
-        <i className={ 'material-icons refresh ' + (this.state.isRefreshIconHidden ? 'hide' : 'show') }></i>
-        <div className={ 'loading-spinner ' + (this.state.isRefreshSpinnerHidden ? 'hide' : 'show') }></div>
+        id={ 'refresh' }
+        className={ 'float-btn' }
+        onClick={ this.props.onClick.bind(this) }>
+        <i className={ classNames({
+                         'material-icons': true,
+                         'refresh': true,
+                         'show': !this.state.isRefreshIconHidden,
+                         'hide': this.state.isRefreshIconHidden
+                       }) }></i>
+        <div className={ classNames({
+                           'loading-spinner': true,
+                           'show': !this.state.isRefreshSpinnerHidden,
+                           'hide': this.state.isRefreshSpinnerHidden
+                         }) }></div>
       </div>
       );
   }

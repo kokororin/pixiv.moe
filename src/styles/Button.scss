@@ -6,7 +6,6 @@
     width: 4rem;
     height: 4rem;
     color: #fff;
-    -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
     cursor: pointer;
     z-index: 999;
@@ -14,15 +13,14 @@
     border-radius: 50%;
     line-height: 6rem;
     text-align: center;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-}
 
-.float-btn i {
-    position: absolute;
-    font-size: 2rem;
-    text-align: center;
-    line-height: 4rem;
-    left: 1rem;
+    i {
+        position: absolute;
+        font-size: 2rem;
+        text-align: center;
+        line-height: 4rem;
+        left: 1rem;
+    }
 }
 
 #account {
@@ -33,7 +31,7 @@
 
 #refresh {
     display: block;
-    background-color: #2196F3;
+    background-color: #2196f3;
 }
 
 .loading-spinner {
@@ -51,6 +49,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }

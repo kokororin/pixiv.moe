@@ -1,6 +1,8 @@
-import '../styles/Login.css';
+import '../styles/Login.scss';
+import '../styles/MaterialIcons.scss';
 
 import React from 'react';
+import classNames from 'classnames';
 
 import { Dialog } from '.';
 import { Storage } from '../utils';
@@ -14,6 +16,8 @@ export default class Login extends React.Component {
 
     this.state = {
       isHidden: true,
+      isClosing: false,
+      hasOpened: false,
       isSubmitting: false,
       authData: null
     };
@@ -73,6 +77,7 @@ export default class Login extends React.Component {
 
   open() {
     this.setState({
+      hasOpened: true,
       isHidden: false
     });
   }
@@ -82,11 +87,6 @@ export default class Login extends React.Component {
     this.setState({
       isHidden: true
     });
-  }
-
-  onCloseClick(event) {
-    event.nativeEvent.preventDefault();
-    this.close();
   }
 
   onOverlayClick(event) {
@@ -168,13 +168,19 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className={ 'login-modal-container ' + (this.state.isHidden ? 'close' : 'open') }>
-          <div id={ 'login-modal' }>
-            <a
-              className={ 'close' }
-              href={ '#' }
-              onClick={ this.onCloseClick.bind(this) }>x</a>
+      <div id={ 'login-modal-root' }>
+        <div className={ classNames({
+                           'login-modal-container': true,
+                           'open': !this.state.isHidden,
+                           'close': this.state.isHidden,
+                           'init': !this.state.hasOpened
+                         }) }>
+          <div className={ 'login-modal-body' }>
+            <div
+              className={ 'clear' }
+              onClick={ this.close.bind(this) }>
+              <i className={ 'material-icons clear' }></i>
+            </div>
             <div className={ 'form' }>
               <div className={ 'fields' }>
                 { this.renderContent() }

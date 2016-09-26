@@ -79,8 +79,8 @@ config.module.loaders.push({
     [path.join(__dirname, '/../src')]
   )
 }, {
-  test: /\.css$/,
-  loader: ExtractTextPlugin.extract('css-loader')
+  test: /\.scss$/,
+  loader: ExtractTextPlugin.extract('style', 'css!sass')
 });
 
 module.exports = config;

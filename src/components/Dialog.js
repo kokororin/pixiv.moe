@@ -1,6 +1,7 @@
-import '../styles/Dialog.css';
+import '../styles/Dialog.scss';
 
 import React from 'react';
+import classNames from 'classnames';
 
 export default class Dialog extends React.Component {
 
@@ -34,7 +35,11 @@ export default class Dialog extends React.Component {
 
   render() {
     return (
-      <div className={ 'dialog-container ' + (this.state.isHidden ? 'close' : 'open') }>
+      <div className={ classNames({
+                   'dialog-container': true,
+                   'show': !this.state.isHidden,
+                   'hide': this.state.isHidden
+                 }) }>
         <div className={ 'dialog-wrap-1' }>
           <div className={ 'dialog-wrap-2' }>
             <div className={ 'dialog-body' }>

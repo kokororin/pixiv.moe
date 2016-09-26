@@ -39,8 +39,8 @@ config.module.loaders.push({
     [path.join(__dirname, '/../src')]
   )
 }, {
-  test: /\.css$/,
-  loader: 'style!css'
+  test: /\.scss/,
+  loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
 });
 
 module.exports = config;

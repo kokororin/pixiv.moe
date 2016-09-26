@@ -1,4 +1,4 @@
-import '../styles/Github.css';
+import '../styles/Github.scss';
 
 import React from 'react';
 

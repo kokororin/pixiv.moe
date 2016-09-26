@@ -1,6 +1,6 @@
-import '../styles/Base.css';
-import '../styles/Button.css';
-import '../styles/MaterialIcons.css';
+import '../styles/Base.scss';
+import '../styles/Button.scss';
+import '../styles/MaterialIcons.scss';
 
 import React from 'react';
 
@@ -21,7 +21,7 @@ export default class Account extends React.Component {
         id={ 'account' }
         className={ 'float-btn' }
         onClick={ this.props.onClick.bind(this) }>
-        <i className={ 'material-icons person' }></i>
+        <i className={ 'material-icons favorite' }></i>
       </div>
       );
   }

@@ -1,5 +1,3 @@
-import '../styles/Base.css';
-
 import React from 'react';
 import Lightbox from 'react-image-lightbox';
 

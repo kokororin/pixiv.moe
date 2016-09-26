@@ -1,4 +1,4 @@
-import '../styles/Item.css';
+import '../styles/Item.scss';
 
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
