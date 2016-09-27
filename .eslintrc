@@ -29,6 +29,9 @@
     "no-trailing-spaces": [1, { "skipBlankLines": true }],
     "no-unreachable": 1,
     "no-alert": 0,
+    "no-var": 2,
+    "prefer-arrow-callback": 0,
+    'prefer-const': [ 'error', { 'destructuring': 'all' } ],
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1
   }

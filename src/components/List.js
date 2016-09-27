@@ -140,15 +140,15 @@ export default class List extends React.Component {
 
   resizeListener() {
     /* reset size of masonry-container when window size change */
-    let node = this.root,
+    const node = this.root,
       cellClassName = 'cell';
 
     // try to get cell width
-    let temp = document.createElement('div');
+    const temp = document.createElement('div');
     temp.setAttribute('class', cellClassName);
     document.body.appendChild(temp);
 
-    let cellWidth = temp.offsetWidth,
+    const cellWidth = temp.offsetWidth,
       cellMargin = 8,
       componentWidth = cellWidth + 2 * cellMargin,
       maxn = Math.floor(document.body.offsetWidth / componentWidth);
@@ -169,10 +169,10 @@ export default class List extends React.Component {
         })
         .then((data) => {
           if (data.status == 'success' && data.new_latent_count) {
-            let count = data.new_latent_count;
+            const count = data.new_latent_count;
             if (count > 0) {
               setTimeout(() => {
-                for (let key in data.response) {
+                for (const key in data.response) {
                   const elem = data.response[key];
                   if (key == count) {
                     break;

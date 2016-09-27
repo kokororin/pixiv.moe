@@ -1,5 +1,6 @@
 # pixiv.moe
 
+[![Build Status](http://img.shields.io/travis/kokororin/pixiv.moe.svg)](https://travis-ci.org/kokororin/pixiv.moe)
 [![GitHub issues](https://img.shields.io/github/issues/kokororin/pixiv.moe.svg)](https://github.com/kokororin/pixiv.moe/issues)
 [![npm version](https://badge.fury.io/js/pixiv.moe.svg)](https://badge.fury.io/js/pixiv.moe)
 ![Dependency Tracker](https://img.shields.io/david/kokororin/pixiv.moe.svg "Dependency Tracker") ![Dependency Tracker](https://img.shields.io/david/dev/kokororin/pixiv.moe.svg "Dependency Tracker")

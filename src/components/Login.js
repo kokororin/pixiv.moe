@@ -92,7 +92,7 @@ export default class Login extends React.Component {
       })
       .then((data) => {
         if (data.status == 'success') {
-          let authData = data.data;
+          const authData = data.data;
           authData['auth_time'] = new Date().getTime();
           authData['expires_time'] = authData['auth_time'] + authData['expires_in'] * 1000;
           Storage.set('auth', authData);

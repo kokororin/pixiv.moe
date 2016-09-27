@@ -2,7 +2,7 @@
 
 import baseConfig from './base';
 
-let config = {
+const config = {
   appEnv: 'dev'  // feel free to remove the appEnv property here
 };
 
