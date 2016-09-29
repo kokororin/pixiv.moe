@@ -186,7 +186,7 @@ export default class ListContainer extends React.Component {
                   });
                 }
 
-                window.document.title = `(${this.state.newCount})${config.siteTitle}`;
+                window.document.title = `(${this.state.newCount}) ${config.siteTitle}`;
               }, 1500);
             }
           }
