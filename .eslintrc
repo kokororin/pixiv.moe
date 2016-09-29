@@ -25,13 +25,30 @@
     "no-extra-semi": 1,
     "no-underscore-dangle": 0,
     "no-console": 1,
-    "no-unused-vars": 1,
+    "no-unused-vars": ['error', { vars: 'local', args: 'after-used' }],
+    "no-use-before-define": 'error',
+    "strict": ['error', 'never'],// babel inserts `'use strict';` for us
+    "no-unreachable": 'error',
+    'no-else-return': 'error',
+    'no-empty-function': ['error', {
+      allow: [
+        'arrowFunctions',
+        'functions',
+        'methods',
+      ]
+    }],
+    'no-eq-null': 'off',
+    'no-eval': 'error',
+    'no-extend-native': 'error',
+    'no-extra-label': 'error',
     "no-trailing-spaces": [1, { "skipBlankLines": true }],
-    "no-unreachable": 1,
     "no-alert": 0,
     "no-var": 2,
     "prefer-arrow-callback": 0,
     'prefer-const': [ 'error', { 'destructuring': 'all' } ],
+    'prefer-template': 'error',
+    'prefer-spread': 'error',
+    'no-duplicate-imports': 'error',
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1
   }

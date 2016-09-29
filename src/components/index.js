@@ -1,5 +1,4 @@
 export Account from './Account';
-export App from './App';
 export Dialog from './Dialog';
 export Github from './Github';
 export Image from './Image';
@@ -8,5 +7,4 @@ export List from './List';
 export Login from './Login';
 export Loading from './Loading';
 export Message from './Message';
-export Redirect from './Redirect';
 export Refresh from './Refresh';

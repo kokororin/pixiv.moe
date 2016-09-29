@@ -5,13 +5,17 @@ import ReactGA from 'react-ga';
 
 import config from 'config';
 
-import { List, Redirect, Message } from '.';
+import { ListContainer, RedirectContainer, NotFoundContainer } from '../containers';
 
-export default class App extends React.Component {
+export default class AppContainer extends React.Component {
 
   constructor(props) {
     super(props);
     ReactGA.initialize(config.trackingID);
+  }
+
+  shouldComponentUpdate() {
+    return false;
   }
 
   logPageView() {
@@ -25,13 +29,13 @@ export default class App extends React.Component {
   routes = <Route>
              <Route
                path="/"
-               component={ List } />
+               component={ ListContainer } />
              <Route
                path="/:illustId"
-               component={ Redirect } />
+               component={ RedirectContainer } />
              <Route
                path="*"
-               component={ Message } />
+               component={ NotFoundContainer } />
            </Route>;
 
   appHistory = useRouterHistory(createHashHistory)({

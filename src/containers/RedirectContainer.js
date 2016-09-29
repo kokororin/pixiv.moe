@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Message } from '.';
+import { Message } from '../components';
 
-export default class Redirect extends React.Component {
+export default class RedirectContainer extends React.Component {
   constructor(props) {
     super(props);
 
