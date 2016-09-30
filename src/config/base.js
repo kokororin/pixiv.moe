@@ -5,6 +5,8 @@ export default {
   favouriteURL: 'https://api.kotori.love/pixiv/favourite.php',
   baseURL: 'https://pixiv.moe/',
   trackingID: 'UA-70944432-2',
+  piwikDomain: 'analytics.kotori.love',
+  piwikSiteId: 1,
   projectLink: 'https://github.com/kokororin/pixiv.moe',
   siteTitle: 'Pixivの「ラブライブ」発見'
 }

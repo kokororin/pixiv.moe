@@ -2,10 +2,11 @@ import React from 'react';
 import { Router, Route, useRouterHistory } from 'react-router';
 import { createHashHistory } from 'history';
 import ReactGA from 'react-ga';
+import PiwikReactRouter from 'piwik-react-router';
 
 import config from 'config';
 
-import { ListContainer, RedirectContainer, NotFoundContainer } from '../containers';
+import { MainContainer, RedirectContainer, NotFoundContainer } from '../containers';
 
 export default class AppContainer extends React.Component {
 
@@ -19,17 +20,25 @@ export default class AppContainer extends React.Component {
   }
 
   logPageView() {
+    if (config.appEnv != 'dist') {
+      return;
+    }
     const pageLink = window.location.pathname + (window.location.hash == '#/' ? '' : window.location.hash);
     ReactGA.set({
       page: pageLink
     });
     ReactGA.pageview(pageLink);
+    this.piwik || (this.piwik = PiwikReactRouter({
+      url: config.piwikDomain,
+      siteId: config.piwikSiteId
+    }));
+    this.piwik.track(pageLink);
   }
 
   routes = <Route>
              <Route
                path="/"
-               component={ ListContainer } />
+               component={ MainContainer } />
              <Route
                path="/:illustId"
                component={ RedirectContainer } />

@@ -6,11 +6,12 @@ import { formatPattern } from 'react-router/lib/PatternUtils';
 
 import config from 'config';
 
-import { Account, Dialog, Image, List, Loading, Login, Refresh, Message, Github } from '../components';
+import { Account, Dialog, Image, List, Loading, Refresh, Message, Github } from '../components';
+import { LoginContainer } from '../containers';
 import { BottomPosition, Storage, SupportPassive } from '../utils';
 
 
-export default class ListContainer extends React.Component {
+export default class MainContainer extends React.Component {
 
   constructor(props) {
     super(props);
@@ -247,7 +248,7 @@ export default class ListContainer extends React.Component {
         <Image
           ref={ (ref) => this.image = ref }
           images={ this.state.images } />
-        <Login ref={ (ref) => this.login = ref } />
+        <LoginContainer ref={ (ref) => this.login = ref } />
         <Dialog ref={ (ref) => this.dialog = ref } />
       </div>
       );
