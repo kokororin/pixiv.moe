@@ -2,11 +2,11 @@ import React from 'react';
 import { Router, Route, useRouterHistory } from 'react-router';
 import { createHashHistory } from 'history';
 import ReactGA from 'react-ga';
-import PiwikReactRouter from 'piwik-react-router';
 
 import config from 'config';
 
 import { MainContainer, RedirectContainer, NotFoundContainer } from '../containers';
+import { Piwik } from '../utils';
 
 export default class AppContainer extends React.Component {
 
@@ -28,7 +28,7 @@ export default class AppContainer extends React.Component {
       page: pageLink
     });
     ReactGA.pageview(pageLink);
-    this.piwik || (this.piwik = PiwikReactRouter({
+    this.piwik || (this.piwik = new Piwik({
       url: config.piwikDomain,
       siteId: config.piwikSiteId
     }));

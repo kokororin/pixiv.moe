@@ -1,3 +1,4 @@
-export BottomPosition from './BottomPosition';
+export bottomPosition from './bottomPosition';
+export Piwik from './Piwik';
 export Storage from './Storage';
-export SupportPassive from './SupportPassive';
+export supportPassive from './supportPassive';

@@ -8,7 +8,7 @@ import config from 'config';
 
 import { Account, Dialog, Image, List, Loading, Refresh, Message, Github } from '../components';
 import { LoginContainer } from '../containers';
-import { BottomPosition, Storage, SupportPassive } from '../utils';
+import { bottomPosition, Storage, supportPassive } from '../utils';
 
 
 export default class MainContainer extends React.Component {
@@ -29,7 +29,7 @@ export default class MainContainer extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.resizeListener.bind(this));
-    window.addEventListener('scroll', this.scrollListener.bind(this), SupportPassive ? {
+    window.addEventListener('scroll', this.scrollListener.bind(this), supportPassive ? {
       passive: true
     } : false);
 
@@ -48,7 +48,7 @@ export default class MainContainer extends React.Component {
       return;
     }
 
-    if (BottomPosition(this) < 250) {
+    if (bottomPosition(this) < 250) {
       this.fetchSource(false);
     }
   }

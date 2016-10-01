@@ -46,7 +46,6 @@
     "no-var": 2,
     "prefer-arrow-callback": 0,
     'prefer-const': [ 'error', { 'destructuring': 'all' } ],
-    'prefer-template': 'error',
     'prefer-spread': 'error',
     'no-duplicate-imports': 'error',
     "react/jsx-uses-react": 1,
