@@ -1,7 +1,7 @@
 import '../styles/Item.scss';
 
 import React from 'react';
-import ReactTooltip from 'react-tooltip'
+
 
 import { formatPattern } from 'react-router/lib/PatternUtils';
 
@@ -53,10 +53,6 @@ export default class Item extends React.Component {
             onClick={ this.onFavouriteClick.bind(this) }
             className={ 'count' }><i className={ 'material-icons grade star' }></i> { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private }</a>
         </div>
-        <ReactTooltip
-          place={ 'top' }
-          type={ 'dark' }
-          effect={ 'float' } />
       </div>
       );
   }

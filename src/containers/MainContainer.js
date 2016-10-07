@@ -2,6 +2,7 @@ import '../styles/Base.scss';
 import '../styles/List.scss';
 
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import { formatPattern } from 'react-router/lib/PatternUtils';
 
 import config from 'config';
@@ -41,6 +42,10 @@ export default class MainContainer extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener.bind(this));
     window.removeEventListener('scroll', this.scrollListener.bind(this));
+  }
+
+  componentDidUpdate() {
+    ReactTooltip.rebuild();
   }
 
   scrollListener() {
@@ -250,6 +255,10 @@ export default class MainContainer extends React.Component {
           images={ this.state.images } />
         <LoginContainer ref={ (ref) => this.login = ref } />
         <Dialog ref={ (ref) => this.dialog = ref } />
+        <ReactTooltip
+          place={ 'top' }
+          type={ 'dark' }
+          effect={ 'float' } />
       </div>
       );
   }
