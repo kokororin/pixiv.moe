@@ -81,6 +81,9 @@ config.module.loaders.push({
 }, {
   test: /\.scss$/,
   loader: ExtractTextPlugin.extract('style', 'css!sass')
+}, {
+  test: /\.css$/,
+  loader: ExtractTextPlugin.extract('css-loader')
 });
 
 module.exports = config;

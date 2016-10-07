@@ -41,6 +41,9 @@ config.module.loaders.push({
 }, {
   test: /\.scss/,
   loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
+}, {
+  test: /\.css$/,
+  loader: 'style-loader!css-loader?outputStyle=expanded'
 });
 
 module.exports = config;
