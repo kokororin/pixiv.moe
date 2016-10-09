@@ -1,7 +1,6 @@
 import '../styles/Base.scss';
 
 import React from 'react';
-import classNames from 'classnames';
 
 export default class Message extends React.Component {
 
@@ -36,12 +35,10 @@ export default class Message extends React.Component {
   }
 
   render() {
-    return (
-      <div className={ classNames({
-                   'message': true,
-                   'show': !this.state.isHidden,
-                   'hide': this.state.isHidden
-                 }) }>
+    return this.state.isHidden
+      ? null
+      : (
+      <div className={ 'message' }>
         <p>
           { this.props.text }
         </p>

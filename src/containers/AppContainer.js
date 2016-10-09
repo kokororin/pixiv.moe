@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, useRouterHistory } from 'react-router';
+import { Router, useRouterHistory } from 'react-router';
 import { createHashHistory } from 'history';
 import ReactGA from 'react-ga';
 
@@ -35,29 +35,31 @@ export default class AppContainer extends React.Component {
     this.piwik.track(pageLink);
   }
 
-  routes = <Route>
-             <Route
-               path="/"
-               component={ MainContainer } />
-             <Route
-               path="/:illustId"
-               component={ RedirectContainer } />
-             <Route
-               path="*"
-               component={ NotFoundContainer } />
-           </Route>;
+  routeConfig =[
+    {
+      path: '/',
+      component: MainContainer
+    },
+    {
+      path: '/:illustId',
+      component: RedirectContainer
+    },
+    {
+      path: '*',
+      component: NotFoundContainer
+    }
+  ];
 
   appHistory = useRouterHistory(createHashHistory)({
     queryKey: false
   });
 
-
   render() {
     return (
       <Router
         history={ this.appHistory }
-        onUpdate={ this.logPageView }>
-        { this.routes }
+        onUpdate={ this.logPageView }
+        routes={ this.routeConfig }>
       </Router>
       );
   }

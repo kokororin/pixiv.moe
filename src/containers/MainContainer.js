@@ -1,5 +1,4 @@
 import '../styles/Base.scss';
-import '../styles/List.scss';
 
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -164,7 +163,7 @@ export default class MainContainer extends React.Component {
 
   updateLatent() {
     if (this.state.isFirstLoadCompleted && this.state.lastId != 0) {
-      fetch(`${config.sourceURL}?last=${this.state.lastId}`, {
+      fetch(`${config.sourceURL}?last=${this.state.lastId}&t=${+new Date()}`, {
         mode: 'cors'
       })
         .then((response) => {
@@ -212,11 +211,11 @@ export default class MainContainer extends React.Component {
     fetch(config.favouriteURL, {
       mode: 'cors',
       method: 'post',
-      headers: new Headers({
+      headers: {
         'Accept': 'application/json',
-        'Content-Type': 'text/plain',
+        'Content-Type': 'application/json',
         'Access-Token': authData.access_token
-      }),
+      },
       body: JSON.stringify({
         illust_id: illustId
       })

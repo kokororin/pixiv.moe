@@ -8,8 +8,6 @@ export default class NotFoundContainer extends React.Component {
   }
 
   render() {
-    return (
-      <Message />
-      );
+    return <Message />;
   }
 }

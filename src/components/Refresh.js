@@ -1,4 +1,5 @@
 import '../styles/Base.scss';
+import '../styles/Fn.scss';
 import '../styles/Button.scss';
 import '../styles/MaterialIcons.scss';
 
@@ -39,13 +40,13 @@ export default class Refresh extends React.Component {
         <i className={ classNames({
                          'material-icons': true,
                          'refresh': true,
-                         'show': !this.state.isRefreshIconHidden,
-                         'hide': this.state.isRefreshIconHidden
+                         'fn-show': !this.state.isRefreshIconHidden,
+                         'fn-hide': this.state.isRefreshIconHidden
                        }) }></i>
         <div className={ classNames({
                            'loading-spinner': true,
-                           'show': !this.state.isRefreshSpinnerHidden,
-                           'hide': this.state.isRefreshSpinnerHidden
+                           'fn-show': !this.state.isRefreshSpinnerHidden,
+                           'fn-hide': this.state.isRefreshSpinnerHidden
                          }) }></div>
       </div>
       );

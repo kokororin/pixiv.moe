@@ -3,7 +3,7 @@ import '../styles/MaterialIcons.scss';
 
 import React from 'react';
 
-import { Login } from '../components';
+import { Dialog, Login } from '../components';
 import { Storage } from '../utils';
 
 import config from 'config';
@@ -24,6 +24,17 @@ export default class LoginContainer extends React.Component {
     this.setState({
       authData: authData
     });
+    document.addEventListener('keydown', this.onKeydown.bind(this));
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeydown.bind(this));
+  }
+
+  onKeydown(event) {
+    if (event.keyCode == 27) {
+      this.login.close();
+    }
   }
 
   open() {
@@ -35,7 +46,7 @@ export default class LoginContainer extends React.Component {
   }
 
   onLoginClick() {
- 
+
     if (this.state.isSubmitting) {
       return;
     }
@@ -44,11 +55,11 @@ export default class LoginContainer extends React.Component {
     const password = this.login.password.value;
 
     if (username == '') {
-      return this.login.dialog.setContent('pixiv ID、またはメールアドレスが未記入です');
+      return this.dialog.setContent('pixiv ID、またはメールアドレスが未記入です');
     }
 
     if (password == '') {
-      return this.login.dialog.setContent('パスワードが未記入です');
+      return this.dialog.setContent('パスワードが未記入です');
     }
 
     this.setState({
@@ -58,10 +69,10 @@ export default class LoginContainer extends React.Component {
     fetch(config.authURL, {
       mode: 'cors',
       method: 'post',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-Type': 'text/plain', // eslint-disable-line
-      }),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         username: username,
         password: password
@@ -89,7 +100,7 @@ export default class LoginContainer extends React.Component {
             } catch ( e ) {}
           }, 1500);
         } else {
-          this.login.dialog.setContent(data.message);
+          this.dialog.setContent(data.message);
         }
       })
       .then(() => {
@@ -108,12 +119,15 @@ export default class LoginContainer extends React.Component {
 
   render() {
     return (
-      <Login
-        ref={ (ref) => this.login = ref }
-        onLoginClick={ this.onLoginClick.bind(this) }
-        onLogoutClick={ this.onLogoutClick.bind(this) }
-        isSubmitting={ this.state.isSubmitting }
-        authData={ this.state.authData } />
+      <div>
+        <Login
+          ref={ (ref) => this.login = ref }
+          onLoginClick={ this.onLoginClick.bind(this) }
+          onLogoutClick={ this.onLogoutClick.bind(this) }
+          isSubmitting={ this.state.isSubmitting }
+          authData={ this.state.authData } />
+        <Dialog ref={ (ref) => this.dialog = ref } />
+      </div>
       );
   }
 }

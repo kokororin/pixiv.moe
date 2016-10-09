@@ -1,8 +1,6 @@
 import '../styles/Item.scss';
 
 import React from 'react';
-
-
 import { formatPattern } from 'react-router/lib/PatternUtils';
 
 export default class Item extends React.Component {

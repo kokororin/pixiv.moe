@@ -1,4 +1,3 @@
-// Settings configured here will be merged into the final config object.
 export default {
   sourceURL: 'https://api.kotori.love/pixiv/source.php',
   authURL: 'https://api.kotori.love/pixiv/auth.php',

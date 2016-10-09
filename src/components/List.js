@@ -1,5 +1,4 @@
 import '../styles/Base.scss';
-import '../styles/List.scss';
 
 import React from 'react';
 import Masonry from 'react-masonry-component';
@@ -29,7 +28,7 @@ export default class List extends React.Component {
         updateOnEachImageLoad={ false }>
         { this.props.items.map((elem, index) => {
             return <Item
-                     key={ elem.id }
+                     key={ elem.unique_id }
                      item={ elem }
                      onImageClick={ this.props.onImageClick.bind(this, index) }
                      onFavouriteClick={ this.props.onFavouriteClick.bind(this, elem.id) } />

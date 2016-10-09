@@ -5,7 +5,6 @@ import React from 'react';
 import classNames from 'classnames';
 import 'classlist-polyfill';
 
-import { Dialog } from '.';
 import { Storage } from '../utils';
 
 export default class Login extends React.Component {
@@ -126,7 +125,6 @@ export default class Login extends React.Component {
             id={ 'modal-overlay' }
             onClick={ this.onOverlayClick.bind(this) }></div>
         </div>
-        <Dialog ref={ (ref) => this.dialog = ref } />
       </div>
       );
   }

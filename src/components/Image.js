@@ -1,6 +1,7 @@
+import '../styles/Image.scss';
+
 import React from 'react';
 import Lightbox from 'react-image-lightbox';
-
 
 export default class Image extends React.Component {
 
