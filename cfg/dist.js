@@ -25,7 +25,7 @@ let config = Object.assign({}, baseConfig, {
     publicPath: defaultSettings.publicPath
   },
   cache: false,
-  //devtool: 'sourcemap',
+  devtool: 'cheap-module-inline-source-map',
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
