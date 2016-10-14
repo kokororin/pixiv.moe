@@ -68,77 +68,81 @@ export default class MainContainer extends React.Component {
 
     this.refresh.animate(true);
 
-    this.fetchSource(true, () => {
-      this.refresh.animate(false);
+    this.fetchSource(true).then(() => {
+      this.refresh.animate(false)
     });
   }
 
-  fetchSource(isFirstLoad, callback = null) {
-    if (this.state.isLoading) {
-      return;
-    }
-    this.loading.show();
-    this.error.hide();
-    this.setState({
-      isLoading: true
-    });
-    let currentPage = isFirstLoad ? 0 : this.state.currentPage;
-    fetch(`${config.sourceURL}?page=${++currentPage}`, {
-      mode: 'cors',
-      timeout: 15e3
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json()
-        }
-        this.loading.hide();
-        this.error.show();
-      })
-      .then((data) => {
-        if (data.status == 'success' && data.count > 0) {
-          Object.keys(data.response).map((key) => {
-            const elem = data.response[key];
-            if (isFirstLoad && key == 0) {
-              this.setState({
-                lastId: elem.id
-              });
-            }
-            this.setState({
-              items: [...this.state.items, ...[elem]],
-              images: [...this.state.images, ...[{
-                uri: elem.image_urls.px_480mw,
-                title: elem.title,
-                link: formatPattern('/#/:illustId', {
-                  illustId: elem.id
-                })
-              }]]
-            });
-          });
-        } else {
-          this.error.show();
-        }
-      })
-      .then(() => {
-        if (isFirstLoad) {
-          this.setState({
-            isFirstLoadCompleted: true
-          });
-        }
-      })
-      .then(() => {
-        this.setState({
-          isLoading: false,
-          currentPage: currentPage
-        })
-      })
-      .then(() => {
-        typeof callback === 'function' && callback();
-        this.loading.hide();
-      })
-      .catch(() => {
-        this.loading.hide();
-        this.error.show();
+  fetchSource(isFirstLoad) {
+    return new Promise((resolve, reject) => {
+      if (this.state.isLoading) {
+        return;
+      }
+      this.loading.show();
+      this.error.hide();
+      this.setState({
+        isLoading: true
       });
+      let currentPage = isFirstLoad ? 0 : this.state.currentPage;
+      fetch(`${config.sourceURL}?page=${++currentPage}`, {
+        mode: 'cors',
+        timeout: 15e3
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json()
+          }
+          this.loading.hide();
+          this.error.show();
+        })
+        .then((data) => {
+          if (data.status == 'success' && data.count > 0) {
+            Object.keys(data.response).map((key) => {
+              const elem = data.response[key];
+              if (isFirstLoad && key == 0) {
+                this.setState({
+                  lastId: elem.id
+                });
+              }
+              this.setState({
+                items: [...this.state.items, ...[elem]],
+                images: [...this.state.images, ...[{
+                  uri: elem.image_urls.px_480mw,
+                  title: elem.title,
+                  link: formatPattern('/#/:illustId', {
+                    illustId: elem.id
+                  })
+                }]]
+              });
+            });
+          } else {
+            this.error.show();
+          }
+        })
+        .then(() => {
+          if (isFirstLoad) {
+            this.setState({
+              isFirstLoadCompleted: true
+            });
+          }
+        })
+        .then(() => {
+          this.setState({
+            isLoading: false,
+            currentPage: currentPage
+          })
+        })
+        .then(() => {
+          resolve();
+          this.loading.hide();
+        })
+        .catch((e) => {
+          this.loading.hide();
+          this.error.show();
+          reject(e);
+        });
+    });
+
   }
 
   resizeListener() {

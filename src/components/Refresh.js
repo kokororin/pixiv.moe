@@ -1,6 +1,7 @@
 import '../styles/Base.scss';
 import '../styles/Fn.scss';
 import '../styles/Button.scss';
+import '!style!css!material-design-icons/iconfont/material-icons.css';
 import '../styles/MaterialIcons.scss';
 
 import React from 'react';

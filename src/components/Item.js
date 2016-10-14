@@ -1,4 +1,6 @@
 import '../styles/Item.scss';
+import '!style!css!material-design-icons/iconfont/material-icons.css';
+import '../styles/MaterialIcons.scss';
 
 import React from 'react';
 import { formatPattern } from 'react-router/lib/PatternUtils';

@@ -67,6 +67,7 @@
     "classnames": "^2.2.5",
     "core-js": "^2.0.0",
     "es6-promise": "^3.2.1",
+    "material-design-icons": "^3.0.1",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-ga": "^2.1.1",
