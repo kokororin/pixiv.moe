@@ -2,7 +2,6 @@ import '../styles/Base.scss';
 
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
-import { formatPattern } from 'react-router/lib/PatternUtils';
 
 import config from 'config';
 
@@ -109,9 +108,7 @@ export default class MainContainer extends React.Component {
                 images: [...this.state.images, ...[{
                   uri: elem.image_urls.px_480mw,
                   title: elem.title,
-                  link: formatPattern('/#/:illustId', {
-                    illustId: elem.id
-                  })
+                  link: `/#/${elem.id}`
                 }]]
               });
             });

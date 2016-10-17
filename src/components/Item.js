@@ -3,14 +3,15 @@ import '!style!css!material-design-icons/iconfont/material-icons.css';
 import '../styles/MaterialIcons.scss';
 
 import React from 'react';
-import { formatPattern } from 'react-router/lib/PatternUtils';
+import ImageLoader from 'react-imageloader';
 
 export default class Item extends React.Component {
 
   static propTypes = {
     item: React.PropTypes.object,
     onImageClick: React.PropTypes.func,
-    onFavouriteClick: React.PropTypes.func
+    onFavouriteClick: React.PropTypes.func,
+    onImageLoad: React.PropTypes.func
   };
 
   constructor(props) {
@@ -36,13 +37,18 @@ export default class Item extends React.Component {
       <div className={ 'cell' }>
         <a
           href={ '#' }
-          onClick={ this.onImageClick.bind(this) }><img src={ this.props.item.image_urls.px_480mw } /></a>
+          onClick={ this.onImageClick.bind(this) }>
+          <ImageLoader
+            src={ this.props.item.image_urls.px_480mw }
+            wrapper={ React.DOM.div }
+            preloader={ () => <img src={ require('../images/kotori.jpg') } /> }
+            onLoad={ () => this.props.onImageLoad() }>
+            { <img src={ require('../images/kotori-cry.jpg') } /> } </ImageLoader>
+        </a>
         <div className={ 'title' }>
           <a
             target={ '_blank' }
-            href={ formatPattern('/#/:illustId', {
-                     illustId: this.props.item.id
-                   }) }>
+            href={ `/#/${this.props.item.id}` }>
             { this.props.item.title }
           </a>
         </div>

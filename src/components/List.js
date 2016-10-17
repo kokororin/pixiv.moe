@@ -21,6 +21,7 @@ export default class List extends React.Component {
   render() {
     return (
       <Masonry
+        ref={ (ref) => this.masonry = ref }
         className={ 'masonry' }
         elementType={ 'div' }
         options={ { transitionDuration: 0 } }
@@ -31,7 +32,8 @@ export default class List extends React.Component {
                      key={ elem.unique_id }
                      item={ elem }
                      onImageClick={ this.props.onImageClick.bind(this, index) }
-                     onFavouriteClick={ this.props.onFavouriteClick.bind(this, elem.id) } />
+                     onFavouriteClick={ this.props.onFavouriteClick.bind(this, elem.id) }
+                     onImageLoad={ this.masonry.performLayout } />
           }) }
       </Masonry>
       );
