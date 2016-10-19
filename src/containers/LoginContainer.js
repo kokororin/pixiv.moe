@@ -32,6 +32,10 @@ export default class LoginContainer extends React.Component {
     if (event.keyCode == 27) {
       this.login.close();
     }
+
+    if (this.login.state.isHidden === false && event.keyCode == 13) {
+      this.onLoginClick();
+    }
   }
 
   open() {
