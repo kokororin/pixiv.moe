@@ -1,11 +1,9 @@
-import '../styles/Base.scss';
-
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 
 import config from 'config';
 
-import { Account, Dialog, Image, List, Loading, Refresh, Message, Github } from '../components';
+import { Alert, Account, Image, List, Loading, Refresh, Message, Github } from '../components';
 import { LoginContainer } from '../containers';
 import { bottomPosition, Storage, supportPassive } from '../utils';
 
@@ -65,11 +63,7 @@ export default class MainContainer extends React.Component {
 
     window.document.title = config.siteTitle;
 
-    this.refresh.animate(true);
-
-    this.fetchSource(true).then(() => {
-      this.refresh.animate(false)
-    });
+    this.fetchSource(true);
   }
 
   fetchSource(isFirstLoad) {
@@ -227,7 +221,7 @@ export default class MainContainer extends React.Component {
         }
       })
       .then((data) => {
-        this.dialog.setContent(data.message);
+        this.alert.setContent(data.message);
       });
   }
 
@@ -254,7 +248,7 @@ export default class MainContainer extends React.Component {
           ref={ (ref) => this.image = ref }
           images={ this.state.images } />
         <LoginContainer ref={ (ref) => this.login = ref } />
-        <Dialog ref={ (ref) => this.dialog = ref } />
+        <Alert ref={ (ref) => this.alert = ref } />
         <ReactTooltip
           place={ 'top' }
           type={ 'dark' }

@@ -1,14 +1,14 @@
-.dialog-container {
+.alert-container {
     &.close {
         display: none;
     }
 
     &.open {
         display: block;
-        animation: dialog-open .7s;
+        animation: alert-open .7s;
     }
 
-    .dialog-wrap-1 {
+    .alert-wrap-1 {
         box-sizing: border-box;
         position: fixed;
         top: 50%;
@@ -18,7 +18,7 @@
         opacity: 1;
     }
 
-    .dialog-wrap-2 {
+    .alert-wrap-2 {
         color: rgba(0, 0, 0, 0.87059);
         background-color: rgb(255, 255, 255);
         box-sizing: border-box;
@@ -26,7 +26,7 @@
         border-radius: 2px;
     }
 
-    .dialog-body {
+    .alert-body {
         font-size: 16px;
         color: rgba(0, 0, 0, 0.6);
         padding: 24px;
@@ -36,7 +36,7 @@
     }
 }
 
-@keyframes dialog-open {
+@keyframes alert-open {
     from {
         opacity: 0;
         top: 0;

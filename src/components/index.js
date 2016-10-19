@@ -1,5 +1,5 @@
+export Alert from './Alert';
 export Account from './Account';
-export Dialog from './Dialog';
 export Github from './Github';
 export Image from './Image';
 export Item from './Item';

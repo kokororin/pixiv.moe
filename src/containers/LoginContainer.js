@@ -1,9 +1,6 @@
-import '../styles/Login.scss';
-import '../styles/MaterialIcons.scss';
-
 import React from 'react';
 
-import { Dialog, Login } from '../components';
+import { Alert, Login } from '../components';
 import { Storage } from '../utils';
 
 import config from 'config';
@@ -51,15 +48,15 @@ export default class LoginContainer extends React.Component {
       return;
     }
 
-    const username = this.login.username.value;
-    const password = this.login.password.value;
+    const username = this.login.getUsername();
+    const password = this.login.getPassword();
 
     if (username == '') {
-      return this.dialog.setContent('pixiv ID、またはメールアドレスが未記入です');
+      return this.alert.setContent('pixiv ID、またはメールアドレスが未記入です');
     }
 
     if (password == '') {
-      return this.dialog.setContent('パスワードが未記入です');
+      return this.alert.setContent('パスワードが未記入です');
     }
 
     this.setState({
@@ -95,8 +92,8 @@ export default class LoginContainer extends React.Component {
           setTimeout(() => {
             this.close();
             try {
-              this.login.username.value = '';
-              this.login.password.value = '';
+              this.login.setUsername('');
+              this.login.setPassword('');
             } catch ( e ) {}
           }, 1500);
         } else {
@@ -126,7 +123,7 @@ export default class LoginContainer extends React.Component {
           onLogoutClick={ this.onLogoutClick.bind(this) }
           isSubmitting={ this.state.isSubmitting }
           authData={ this.state.authData } />
-        <Dialog ref={ (ref) => this.dialog = ref } />
+        <Alert ref={ (ref) => this.alert = ref } />
       </div>
       );
   }

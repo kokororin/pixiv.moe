@@ -1,8 +1,7 @@
 import '../styles/Item.scss';
-import '!style!css!material-design-icons/iconfont/material-icons.css';
-import '../styles/MaterialIcons.scss';
 
 import React from 'react';
+import { Icon } from 'react-mdl';
 import ImageLoader from 'react-imageloader';
 
 export default class Item extends React.Component {
@@ -57,7 +56,10 @@ export default class Item extends React.Component {
             data-tip={ 'ブックマークに追加' }
             href={ '#' }
             onClick={ this.onFavouriteClick.bind(this) }
-            className={ 'count' }><i className={ 'material-icons grade star' }></i> { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private }</a>
+            className={ 'count' }>
+            <Icon name={ 'star' } />
+            { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private }
+          </a>
         </div>
       </div>
       );

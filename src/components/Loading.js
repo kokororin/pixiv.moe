@@ -1,7 +1,5 @@
-import '../styles/Base.scss';
-import '../styles/Loader.scss';
-
 import React from 'react';
+import { Spinner } from 'react-mdl';
 
 export default class Loading extends React.Component {
 
@@ -30,20 +28,7 @@ export default class Loading extends React.Component {
       ? null
       : (
       <div className={ 'message' }>
-        <div className={ 'md-loader' }>
-          <svg
-            xmlns={ 'http://www.w3.org/2000/svg' }
-            version={ 1.1 }
-            height={ 35 }
-            width={ 35 }
-            viewBox={ '0 0 75 75' }>
-            <circle
-              cx={ 37.5 }
-              cy={ 37.5 }
-              r={ 33.5 }
-              strokeWidth={ 8 } />
-          </svg>
-        </div>
+        <Spinner/>
         <p>
           データが记载する中
         </p>

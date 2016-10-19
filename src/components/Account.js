@@ -1,8 +1,7 @@
-import '../styles/Base.scss';
 import '../styles/Button.scss';
-import '../styles/MaterialIcons.scss';
 
 import React from 'react';
+import { FABButton, Icon } from 'react-mdl';
 
 export default class Account extends React.Component {
 
@@ -17,12 +16,15 @@ export default class Account extends React.Component {
 
   render() {
     return (
-      <div
-        id={ 'account' }
-        className={ 'float-btn' }
-        onClick={ this.props.onClick.bind(this) }>
-        <i className={ 'material-icons favorite' }></i>
+      <div className={ 'float-btn account' }>
+        <FABButton
+          onClick={ this.props.onClick.bind(this) }
+          colored
+          ripple>
+          <Icon name={ 'favorite' } />
+        </FABButton>
       </div>
+
       );
   }
 }

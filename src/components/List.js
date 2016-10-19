@@ -1,5 +1,3 @@
-import '../styles/Base.scss';
-
 import React from 'react';
 import Masonry from 'react-masonry-component';
 

@@ -1,8 +1,8 @@
-import '../styles/Dialog.scss';
+import '../styles/Alert.scss';
 
 import React from 'react';
 
-export default class Dialog extends React.Component {
+export default class Alert extends React.Component {
 
   constructor(props) {
     super(props);
@@ -35,10 +35,10 @@ export default class Dialog extends React.Component {
   render() {
     return this.state.isHidden
       ? null
-      : (<div className={ 'dialog-container' }>
-           <div className={ 'dialog-wrap-1' }>
-             <div className={ 'dialog-wrap-2' }>
-               <div className={ 'dialog-body' }>
+      : (<div className={ 'alert-container' }>
+           <div className={ 'alert-wrap-1' }>
+             <div className={ 'alert-wrap-2' }>
+               <div className={ 'alert-body' }>
                  { this.state.content }
                </div>
              </div>

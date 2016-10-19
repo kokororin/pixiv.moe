@@ -1,6 +1,10 @@
 import React from 'react';
 import { Locations, Location, NotFound } from 'react-router-component';
 import ReactGA from 'react-ga';
+import 'material-design-icons/iconfont/material-icons.css';
+import 'react-mdl/extra/material.css';
+import 'react-mdl/extra/material.js';
+import '../styles/Base.scss';
 
 import config from 'config';
 

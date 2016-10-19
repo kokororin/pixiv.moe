@@ -49,61 +49,6 @@
         position: relative;
         margin-bottom: 2em;
     }
-
-    .input {
-        width: 100%;
-        font-size: 100%;
-        border: 0;
-        padding: 0;
-        background-color: transparent;
-        height: 2rem;
-        line-height: 2rem;
-        border-bottom: 1px solid #eee;
-        color: #777;
-        transition: all .2s ease-in;
-
-        &:focus {
-            outline: 0;
-            border-color: #ccc;
-        }
-    }
-
-    .button {
-        display: inline-block;
-        position: relative;
-        width: 150px;
-        height: 42px;
-        line-height: 42px;
-        border-radius: 2px;
-        font-size: 0.9em;
-        background-color: #fff;
-        color: #646464;
-        cursor: pointer;
-
-        &.blue {
-            background-color: #ff4081;
-            color: #fff;
-        }
-
-        &.raised {
-            transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            transition-delay: 0.2s;
-            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-
-            &:active {
-                box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
-                transition-delay: 0s;
-            }
-        }
-    }
-
-    .button-inner {
-        text-align: center;
-
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.4);
-        }
-    }
 }
 
 @keyframes dropIn {
