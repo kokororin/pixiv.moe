@@ -32,7 +32,7 @@ export default class MainContainer extends React.Component {
 
     this.fetchSource(true);
     this.resizeListener();
-    setInterval(this.updateLatent.bind(this), 10e3);
+    // setInterval(this.updateLatent.bind(this), 10e3);
   }
 
   componentWillUnmount() {
@@ -77,7 +77,7 @@ export default class MainContainer extends React.Component {
         isLoading: true
       });
       let currentPage = isFirstLoad ? 0 : this.state.currentPage;
-      fetch(`${config.sourceURL}?page=${++currentPage}`, {
+      fetch(`${config.sourceURL}?sort=popular&page=${++currentPage}`, {
         mode: 'cors',
         timeout: 15e3
       })
@@ -156,43 +156,46 @@ export default class MainContainer extends React.Component {
     document.body.removeChild(temp);
   }
 
-  updateLatent() {
-    if (this.state.isFirstLoadCompleted && this.state.lastId != 0) {
-      fetch(`${config.sourceURL}?last=${this.state.lastId}&t=${+new Date()}`, {
-        mode: 'cors'
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          if (data.status == 'success' && data.new_latent_count) {
-            const count = data.new_latent_count;
-            if (count > 0) {
-              setTimeout(() => {
-                for (const key in data.response) {
-                  const elem = data.response[key];
-                  if (key == count) {
-                    break;
-                  }
-                  if (key == 0) {
-                    this.setState({
-                      lastId: elem.id
-                    });
-                  }
-                  this.setState({
-                    newCount: this.state.newCount + 1
-                  });
-                }
+  /**
+   * @deprecated
+   */
+  /* updateLatent() {
+     if (this.state.isFirstLoadCompleted && this.state.lastId != 0) {
+       fetch(`${config.sourceURL}?last=${this.state.lastId}&t=${+new Date()}`, {
+         mode: 'cors'
+       })
+         .then((response) => {
+           if (response.ok) {
+             return response.json();
+           }
+         })
+         .then((data) => {
+           if (data.status == 'success' && data.new_latent_count) {
+             const count = data.new_latent_count;
+             if (count > 0) {
+               setTimeout(() => {
+                 for (const key in data.response) {
+                   const elem = data.response[key];
+                   if (key == count) {
+                     break;
+                   }
+                   if (key == 0) {
+                     this.setState({
+                       lastId: elem.id
+                     });
+                   }
+                   this.setState({
+                     newCount: this.state.newCount + 1
+                   });
+                 }
 
-                window.document.title = `(${this.state.newCount}) ${config.siteTitle}`;
-              }, 1500);
-            }
-          }
-        });
-    }
-  }
+                 window.document.title = `(${this.state.newCount}) ${config.siteTitle}`;
+               }, 1500);
+             }
+           }
+         });
+     }
+   }*/
 
   onImageClick(index) {
     this.image.openLightbox(index);

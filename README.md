@@ -6,7 +6,7 @@
 ![Dependency Tracker](https://img.shields.io/david/kokororin/pixiv.moe.svg "Dependency Tracker") ![Dependency Tracker](https://img.shields.io/david/dev/kokororin/pixiv.moe.svg "Dependency Tracker")
 ![Node Version](https://img.shields.io/node/v/pixiv.moe.svg "Node Version")
 
-A cascading grid layout site, shows illusts on [pixiv.net](http://pixiv.net). Written with react.
+A cascading grid layout site, shows illusts on [pixiv.net](http://pixiv.net) order by popularity. Written with react.
 
 ## Online Site
 [https://pixiv.moe](https://pixiv.moe)
