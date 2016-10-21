@@ -11,15 +11,11 @@ A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) or
 ## Online Site
 [https://pixiv.moe](https://pixiv.moe)
 
-
-
 ## Features
 
 * Pinterest-style layout illusts.
 * Select keywords.
 * Login in Pixiv and add bookmarks easily.
-
-
 
 ## Privacy
 
