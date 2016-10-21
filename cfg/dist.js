@@ -55,11 +55,11 @@ let config = Object.assign({}, baseConfig, {
 
           let htmlOutput = html.replace(
             /<script\s+src=(["'])(.+?)bundle\.js\1/i,
-            '<script src=$1$2' + stats.assetsByChunkName.main[0] + '?v=' + stats.hash + '$1');
+            '<script src=$1$2' + stats.assetsByChunkName.main[0] + '?' + stats.hash + '$1');
 
           htmlOutput = htmlOutput.replace(
             '<!-- bundle.css placeholder -->',
-            '<link rel="stylesheet" href="/assets/' + stats.assetsByChunkName.main[1] + '?v=' + stats.hash + '" />');
+            '<link rel="stylesheet" href="/assets/' + stats.assetsByChunkName.main[1] + '?' + stats.hash + '" />');
 
           htmlOutput = minify(htmlOutput, {
             collapseWhitespace: true,

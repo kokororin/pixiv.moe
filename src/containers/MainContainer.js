@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
+import { Layout, Header, Navigation, Drawer, Content, Icon } from 'react-mdl';
 
 import config from 'config';
 
-import { Alert, Account, Image, List, Loading, Refresh, Message, Github } from '../components';
+import { Alert, Account, Image, List, Loading, Refresh, Message } from '../components';
 import { LoginContainer } from '../containers';
-import { bottomPosition, Storage, supportPassive } from '../utils';
+import { Storage } from '../utils';
 
 
 export default class MainContainer extends React.Component {
@@ -16,6 +16,7 @@ export default class MainContainer extends React.Component {
     this.state = {
       isLoading: false,
       currentPage: 0,
+      currentTag: 'lovelive',
       isFirstLoadCompleted: false,
       lastId: 0,
       newCount: 0,
@@ -26,30 +27,26 @@ export default class MainContainer extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.resizeListener.bind(this));
-    window.addEventListener('scroll', this.scrollListener.bind(this), supportPassive ? {
-      passive: true
-    } : false);
 
     this.fetchSource(true);
     this.resizeListener();
-    // setInterval(this.updateLatent.bind(this), 10e3);
+  // setInterval(this.updateLatent.bind(this), 10e3);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener.bind(this));
-    window.removeEventListener('scroll', this.scrollListener.bind(this));
   }
 
-  componentDidUpdate() {
-    ReactTooltip.rebuild();
-  }
-
-  scrollListener() {
+  scrollListener(event) {
     if (this.state.isLoading) {
       return;
     }
+    const target = event.nativeEvent.target,
+      targetHeight = target.clientHeight,
+      scrollTop = target.scrollTop,
+      scrollHeight = target.scrollHeight;
 
-    if (bottomPosition(this) < 250) {
+    if (scrollTop + targetHeight - scrollHeight > -200) {
       this.fetchSource(false);
     }
   }
@@ -59,11 +56,10 @@ export default class MainContainer extends React.Component {
       items: [],
       images: [],
       newCount: 0
+    }, () => {
+      window.document.title = config.siteTitle;
+      this.fetchSource(true);
     });
-
-    window.document.title = config.siteTitle;
-
-    this.fetchSource(true);
   }
 
   fetchSource(isFirstLoad) {
@@ -77,7 +73,7 @@ export default class MainContainer extends React.Component {
         isLoading: true
       });
       let currentPage = isFirstLoad ? 0 : this.state.currentPage;
-      fetch(`${config.sourceURL}?sort=popular&page=${++currentPage}`, {
+      fetch(`${config.sourceURL}?sort=popular&tag=${this.state.currentTag}&page=${++currentPage}`, {
         mode: 'cors',
         timeout: 15e3
       })
@@ -151,7 +147,9 @@ export default class MainContainer extends React.Component {
       componentWidth = cellWidth + 2 * cellMargin,
       maxn = Math.floor(document.body.offsetWidth / componentWidth);
 
-    node.style.width = String(`${maxn * componentWidth}px`);
+    try {
+      node.style.width = String(`${maxn * componentWidth}px`);
+    } catch ( e ) {}
 
     document.body.removeChild(temp);
   }
@@ -228,35 +226,78 @@ export default class MainContainer extends React.Component {
       });
   }
 
+  onKeywordClick(event) {
+    event.nativeEvent.preventDefault();
+    try {
+      document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
+    } catch ( e ) {
+      document.getElementsByClassName('mdl-layout')[0].MaterialLayout.toggleDrawer();
+    }
+
+    this.setState({
+      currentTag: event.nativeEvent.target.dataset.tag
+    }, () => {
+      this.onRefreshClick();
+    });
+  }
+
+  renderKeywords() {
+    const keywords = config.keywords;
+    return keywords.map((elem, index) => {
+      return <a
+               key={ index }
+               href={ '#' }
+               style={ { fontWeight: elem.en == this.state.currentTag ? 'bold' : 'normal' } }
+               data-tag={ elem.en }
+               onClick={ this.onKeywordClick.bind(this) }>
+               { elem.jp }
+             </a>;
+    });
+  }
+
   render() {
     return (
-      <div
-        ref={ (ref) => this.root = ref }
-        style={ { margin: '0 auto' } }>
-        <Github link={ config.projectLink } />
-        <List
-          items={ this.state.items }
-          onImageClick={ this.onImageClick.bind(this) }
-          onFavouriteClick={ this.onFavouriteClick.bind(this) } />
-        <Loading ref={ (ref) => this.loading = ref } />
-        <Message
-          ref={ (ref) => this.error = ref }
-          text={ '読み込みに失敗しました' }
-          isHidden={ true } />
-        <Refresh
-          ref={ (ref) => this.refresh = ref }
-          onClick={ this.onRefreshClick.bind(this) } />
-        <Account onClick={ () => this.login.open() } />
-        <Image
-          ref={ (ref) => this.image = ref }
-          images={ this.state.images } />
-        <LoginContainer ref={ (ref) => this.login = ref } />
-        <Alert ref={ (ref) => this.alert = ref } />
-        <ReactTooltip
-          place={ 'top' }
-          type={ 'dark' }
-          effect={ 'float' } />
-      </div>
+      <Layout
+        fixedHeader
+        onScroll={ this.scrollListener.bind(this) }>
+        <Header title={ <span>{ config.siteTitle }</span> }>
+          <Navigation>
+            <a
+              target={ '_blank' }
+              href={ config.projectLink }>
+              <Icon name={ 'link' } /> GitHub</a>
+          </Navigation>
+        </Header>
+        <Drawer title={ 'タグ' }>
+          <Navigation>
+            { this.renderKeywords() }
+          </Navigation>
+        </Drawer>
+        <Content>
+          <div
+            ref={ (ref) => this.root = ref }
+            style={ { margin: '0 auto' } }>
+            <List
+              items={ this.state.items }
+              onImageClick={ this.onImageClick.bind(this) }
+              onFavouriteClick={ this.onFavouriteClick.bind(this) } />
+            <Loading ref={ (ref) => this.loading = ref } />
+            <Message
+              ref={ (ref) => this.error = ref }
+              text={ '読み込みに失敗しました' }
+              isHidden={ true } />
+            <Refresh
+              ref={ (ref) => this.refresh = ref }
+              onClick={ this.onRefreshClick.bind(this) } />
+            <Account onClick={ () => this.login.open() } />
+            <Image
+              ref={ (ref) => this.image = ref }
+              images={ this.state.images } />
+            <LoginContainer ref={ (ref) => this.login = ref } />
+            <Alert ref={ (ref) => this.alert = ref } />
+          </div>
+        </Content>
+      </Layout>
       );
   }
 }

@@ -1,3 +1,5 @@
+import '../styles/Message.scss';
+
 import React from 'react';
 import { Spinner } from 'react-mdl';
 

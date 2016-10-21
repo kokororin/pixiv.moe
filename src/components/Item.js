@@ -1,7 +1,7 @@
 import '../styles/Item.scss';
 
 import React from 'react';
-import { Icon } from 'react-mdl';
+import { Icon, Tooltip } from 'react-mdl';
 import ImageLoader from 'react-imageloader';
 
 export default class Item extends React.Component {
@@ -52,14 +52,17 @@ export default class Item extends React.Component {
           </a>
         </div>
         <div className={ 'meta' }>
-          <a
-            data-tip={ 'ブックマークに追加' }
-            href={ '#' }
-            onClick={ this.onFavouriteClick.bind(this) }
-            className={ 'count' }>
-            <Icon name={ 'star' } />
-            { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private }
-          </a>
+          <Tooltip
+            label={ 'ブックマークに追加' }
+            position={ 'top' }>
+            <a
+              href={ '#' }
+              onClick={ this.onFavouriteClick.bind(this) }
+              className={ 'count' }>
+              <Icon name={ 'star' } />
+              { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private }
+            </a>
+          </Tooltip>
         </div>
       </div>
       );
