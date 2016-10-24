@@ -7,3 +7,4 @@ export Login from './Login';
 export Loading from './Loading';
 export Message from './Message';
 export Refresh from './Refresh';
+export RenderInBody from './RenderInBody';

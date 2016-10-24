@@ -5,3 +5,11 @@
 .fn-hide {
     display: none !important;
 }
+
+.fn-disallow {
+    cursor: not-allowed;
+}
+
+.fn-wait {
+    cursor: wait;
+}

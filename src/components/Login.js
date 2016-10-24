@@ -1,9 +1,11 @@
 import '../styles/Login.scss';
+import '../styles/Fn.scss';
 
 import React from 'react';
-import { Button, Textfield, Icon } from 'react-mdl';
+import Modal from 'react-modal';
 import classNames from 'classnames';
-import 'classlist-polyfill';
+import time from 'locutus/php/datetime/time';
+import { Button, Textfield, Icon } from 'react-mdl';
 
 import { Storage } from '../utils';
 
@@ -22,10 +24,18 @@ export default class Login extends React.Component {
     this.state = {
       isHidden: true,
       isClosing: false,
-      hasOpened: false,
       username: '',
       password: ''
     };
+
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
+    this.afterOpen = this.afterOpen.bind(this);
+    this.onOverlayClick = this.onOverlayClick.bind(this);
+    this.setUsername = this.setUsername.bind(this);
+    this.getUsername = this.getUsername.bind(this);
+    this.setPassword = this.setPassword.bind(this);
+    this.getPassword = this.getPassword.bind(this);
   }
 
   componentDidMount() {
@@ -37,10 +47,8 @@ export default class Login extends React.Component {
 
   open() {
     this.setState({
-      hasOpened: true,
       isHidden: false
     });
-    document.body.classList.add('login-modal-open');
   }
 
 
@@ -48,11 +56,14 @@ export default class Login extends React.Component {
     this.setState({
       isHidden: true
     });
-    document.body.classList.remove('login-modal-open');
+  }
+
+  afterOpen() {
+    document.querySelector('.login-modal-overlay').addEventListener('click', this.onOverlayClick);
   }
 
   onOverlayClick(event) {
-    if (event.target.id == 'modal-overlay') {
+    if (event.target.classList.contains('ReactModal__Content')) {
       this.close();
     }
   }
@@ -77,16 +88,39 @@ export default class Login extends React.Component {
     return this.state.password;
   }
 
+  modalStyle = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.65)',
+      zIndex: 1000
+    },
+    content: {
+      backgroundColor: 'transparent',
+      overflow: 'hidden',
+      border: 'none',
+      borderRadius: 0,
+      padding: 0,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0
+    }
+  };
+
   renderContent() {
 
-    if (this.props.authData != null && this.props.authData.expires_time > new Date().getTime()) {
+    if (this.props.authData !== null && this.props.authData.expires_at > time()) {
       return (<div>
                 <div className={ 'avatar' }>
                   <span className={ 'name' }>ニックネーム 「{ this.props.authData.user.name }」</span>
                 </div>
                 <div className={ 'footer' }>
                   <Button
-                    onClick={ this.props.onLogoutClick.bind(this) }
+                    onClick={ this.props.onLogoutClick }
                     raised
                     accent
                     ripple>
@@ -100,6 +134,7 @@ export default class Login extends React.Component {
                 onChange={ (event) => this.setUsername(event.target.value) }
                 value={ this.getUsername() }
                 label={ 'メールアドレス / pixiv ID' }
+                spellCheck={ false }
                 floatingLabel
                 style={ { width: '100%' } } />
               <Textfield
@@ -111,7 +146,11 @@ export default class Login extends React.Component {
                 style={ { width: '100%' } } />
               <div className={ 'footer' }>
                 <Button
-                  onClick={ this.props.onLoginClick.bind(this) }
+                  className={ classNames({
+                                'fn-disallow': this.props.isSubmitting
+                              }) }
+                  onClick={ this.props.onLoginClick }
+                  disabled={ this.props.isSubmitting }
                   raised
                   accent
                   ripple>
@@ -123,30 +162,31 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div id={ 'login-modal-root' }>
-        <div className={ classNames({
-                           'login-modal-container': true,
-                           'open': !this.state.isHidden,
-                           'close': this.state.isHidden,
-                           'init': !this.state.hasOpened
-                         }) }>
-          <div className={ 'login-modal-body' }>
-            <div
-              className={ 'clear' }
-              onClick={ this.close.bind(this) }>
-              <Icon name={ 'clear' } />
-            </div>
-            <div className={ 'form' }>
-              <div className={ 'fields' }>
-                { this.renderContent() }
+      <Modal
+        isOpen={ !this.state.isHidden }
+        onRequestClose={ this.close }
+        onAfterOpen={ this.afterOpen }
+        overlayClassName={ 'login-modal-overlay' }
+        shouldCloseOnOverlayClick={ false }
+        style={ this.modalStyle }
+        contentLabel={ 'login-modal' }>
+        <div id={ 'login-modal-root' }>
+          <div className={ 'login-modal-container' }>
+            <div className={ 'login-modal-body' }>
+              <div
+                className={ 'clear' }
+                onClick={ this.close }>
+                <Icon name={ 'clear' } />
+              </div>
+              <div className={ 'form' }>
+                <div className={ 'fields' }>
+                  { this.renderContent() }
+                </div>
               </div>
             </div>
           </div>
-          <div
-            id={ 'modal-overlay' }
-            onClick={ this.onOverlayClick.bind(this) }></div>
         </div>
-      </div>
+      </Modal>
       );
   }
 }

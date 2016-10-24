@@ -15,6 +15,9 @@ export default class Item extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.onImageClick = this.onImageClick.bind(this);
+    this.onFavouriteClick = this.onFavouriteClick.bind(this);
   }
 
   shouldComponentUpdate() {
@@ -28,7 +31,7 @@ export default class Item extends React.Component {
 
   onFavouriteClick(event) {
     event.nativeEvent.preventDefault();
-    this.props.onFavouriteClick();
+    this.props.onFavouriteClick(event);
   }
 
   render() {
@@ -36,7 +39,7 @@ export default class Item extends React.Component {
       <div className={ 'cell' }>
         <a
           href={ '#' }
-          onClick={ this.onImageClick.bind(this) }>
+          onClick={ this.onImageClick }>
           <ImageLoader
             src={ this.props.item.image_urls.px_480mw }
             wrapper={ React.DOM.div }
@@ -57,7 +60,7 @@ export default class Item extends React.Component {
             position={ 'top' }>
             <a
               href={ '#' }
-              onClick={ this.onFavouriteClick.bind(this) }
+              onClick={ this.onFavouriteClick }
               className={ 'count' }>
               <Icon name={ 'star' } />
               { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private }

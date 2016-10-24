@@ -2,6 +2,8 @@ import '../styles/Alert.scss';
 
 import React from 'react';
 
+import { RenderInBody } from '.';
+
 export default class Alert extends React.Component {
 
   constructor(props) {
@@ -11,6 +13,8 @@ export default class Alert extends React.Component {
       isHidden: true,
       content: ''
     };
+
+    this.setContent = this.setContent.bind(this);
   }
 
   setContent(content) {
@@ -35,14 +39,18 @@ export default class Alert extends React.Component {
   render() {
     return this.state.isHidden
       ? null
-      : (<div className={ 'alert-container' }>
-           <div className={ 'alert-wrap-1' }>
-             <div className={ 'alert-wrap-2' }>
-               <div className={ 'alert-body' }>
-                 { this.state.content }
-               </div>
-             </div>
-           </div>
-         </div>);
+      : (
+      <RenderInBody>
+        <div className={ 'alert-container' }>
+          <div className={ 'alert-wrap-1' }>
+            <div className={ 'alert-wrap-2' }>
+              <div className={ 'alert-body' }>
+                { this.state.content }
+              </div>
+            </div>
+          </div>
+        </div>
+      </RenderInBody>
+      );
   }
 }

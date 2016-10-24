@@ -1,4 +1,5 @@
 import React from 'react';
+import time from 'locutus/php/datetime/time';
 
 import { Alert, Login } from '../components';
 import { Storage } from '../utils';
@@ -14,6 +15,12 @@ export default class LoginContainer extends React.Component {
       isSubmitting: false,
       authData: null
     };
+
+    this.onKeydown = this.onKeydown.bind(this);
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
+    this.onLoginClick = this.onLoginClick.bind(this);
+    this.onLogoutClick = this.onLogoutClick.bind(this);
   }
 
   componentDidMount() {
@@ -21,19 +28,19 @@ export default class LoginContainer extends React.Component {
     this.setState({
       authData: authData
     });
-    document.addEventListener('keydown', this.onKeydown.bind(this));
+    document.addEventListener('keydown', this.onKeydown);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeydown.bind(this));
+    document.removeEventListener('keydown', this.onKeydown);
   }
 
   onKeydown(event) {
-    if (event.keyCode == 27) {
+    if (event.keyCode === 27) {
       this.login.close();
     }
 
-    if (this.login.state.isHidden === false && event.keyCode == 13) {
+    if (this.login.state.isHidden === false && event.keyCode === 13) {
       this.onLoginClick();
     }
   }
@@ -55,11 +62,11 @@ export default class LoginContainer extends React.Component {
     const username = this.login.getUsername();
     const password = this.login.getPassword();
 
-    if (username == '') {
+    if (username === '') {
       return this.alert.setContent('pixiv ID、またはメールアドレスが未記入です');
     }
 
-    if (password == '') {
+    if (password === '') {
       return this.alert.setContent('パスワードが未記入です');
     }
 
@@ -85,23 +92,22 @@ export default class LoginContainer extends React.Component {
         }
       })
       .then((data) => {
-        if (data.status == 'success') {
+
+        if (data.status === 'success') {
           const authData = data.data;
-          authData['auth_time'] = new Date().getTime();
-          authData['expires_time'] = authData['auth_time'] + authData['expires_in'] * 1000;
+          authData.auth_time = time();
+          authData.expires_at = authData.auth_time + authData.expires_in;
           Storage.set('auth', authData);
           this.setState({
             authData: authData
           });
           setTimeout(() => {
             this.close();
-            try {
-              this.login.setUsername('');
-              this.login.setPassword('');
-            } catch ( e ) {}
+            this.login.setUsername('');
+            this.login.setPassword('');
           }, 1500);
         } else {
-          this.dialog.setContent(data.message);
+          this.alert.setContent(data.message);
         }
       })
       .then(() => {
@@ -123,8 +129,8 @@ export default class LoginContainer extends React.Component {
       <div>
         <Login
           ref={ (ref) => this.login = ref }
-          onLoginClick={ this.onLoginClick.bind(this) }
-          onLogoutClick={ this.onLogoutClick.bind(this) }
+          onLoginClick={ this.onLoginClick }
+          onLogoutClick={ this.onLogoutClick }
           isSubmitting={ this.state.isSubmitting }
           authData={ this.state.authData } />
         <Alert ref={ (ref) => this.alert = ref } />

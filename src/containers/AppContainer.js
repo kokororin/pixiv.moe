@@ -5,6 +5,8 @@ import 'material-design-icons/iconfont/material-icons.css';
 import 'react-mdl/extra/material.css';
 import 'react-mdl/extra/material.js';
 import '../styles/Base.scss';
+import '../styles/Reset.scss';
+import 'classlist-polyfill';
 
 import config from 'config';
 
@@ -16,6 +18,7 @@ export default class AppContainer extends React.Component {
   constructor(props) {
     super(props);
     ReactGA.initialize(config.trackingID);
+    this.logPageView = this.logPageView.bind(this);
     this.logPageView();
   }
 
@@ -24,10 +27,10 @@ export default class AppContainer extends React.Component {
   }
 
   logPageView() {
-    if (config.appEnv != 'dist') {
+    if (config.appEnv !== 'dist') {
       return;
     }
-    const pageLink = window.location.pathname + (window.location.hash == '#/' ? '' : window.location.hash);
+    const pageLink = window.location.pathname + (window.location.hash === '#/' ? '' : window.location.hash);
     ReactGA.set({
       page: pageLink
     });

@@ -1,4 +1,6 @@
 .alert-container {
+    z-index: 1005;
+
     &.close {
         display: none;
     }

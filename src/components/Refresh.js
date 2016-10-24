@@ -14,11 +14,15 @@ export default class Refresh extends React.Component {
     super(props);
   }
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     return (
       <div className={ 'float-btn refresh' }>
         <FABButton
-          onClick={ this.props.onClick.bind(this) }
+          onClick={ this.props.onClick }
           colored
           primary
           ripple>

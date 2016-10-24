@@ -20,6 +20,9 @@ export default class Message extends React.Component {
     this.state = {
       isHidden: this.props.isHidden
     };
+
+    this.show = this.show.bind(this);
+    this.hide = this.hide.bind(this);
   }
 
   show() {

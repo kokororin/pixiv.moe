@@ -16,6 +16,11 @@ export default class Image extends React.Component {
       index: 0,
       isOpen: false
     };
+
+    this.openLightbox = this.openLightbox.bind(this);
+    this.closeLightbox = this.closeLightbox.bind(this);
+    this.moveNext = this.moveNext.bind(this);
+    this.movePrev = this.movePrev.bind(this);
   }
 
   openLightbox(index) {
@@ -60,9 +65,9 @@ export default class Image extends React.Component {
           nextSrc={ this.props.images[(this.state.index + 1) % this.props.images.length].uri }
           prevSrc={ this.props.images[(this.state.index + this.props.images.length - 1) % this.props.images.length].uri }
           imageTitle={ this.generateTitle(this.props.images[this.state.index]) }
-          onCloseRequest={ this.closeLightbox.bind(this) }
-          onMovePrevRequest={ this.movePrev.bind(this) }
-          onMoveNextRequest={ this.moveNext.bind(this) } />
+          onCloseRequest={ this.closeLightbox }
+          onMovePrevRequest={ this.movePrev }
+          onMoveNextRequest={ this.moveNext } />
         );
     }
 

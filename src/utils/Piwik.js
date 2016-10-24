@@ -16,7 +16,7 @@ export default class Piwik {
     if (!opts.url || !opts.siteId) {
       throw Error('PiwikTracker cannot be initialized! You haven\'t passed a url and sideId to it.');
     }
-    window['_paq'] = window['_paq'] || [];
+    window._paq = window._paq || [];
 
     if (opts.trackErrors) {
       if (window.addEventListener) {
@@ -34,7 +34,7 @@ export default class Piwik {
     if (opts.url.indexOf('http://') !== -1 || opts.url.indexOf('https://') !== -1) {
       u = opts.url + '/';
     } else {
-      u = (('https:' == document.location.protocol) ? 'https://' + opts.url + '/' : 'http://' + opts.url + '/');
+      u = ((document.location.protocol === 'https:') ? 'https://' + opts.url + '/' : 'http://' + opts.url + '/');
     }
 
     this.push(['setSiteId', opts.siteId]);
@@ -76,20 +76,20 @@ export default class Piwik {
   }
 
   /**
-	 * Pushes the specified args to the piwik tracker.
-	 * You can use this method as the low-level api to call methods from the piwik API or call custom functions
-	 *
-	 * @see https://developer.piwik.org/guides/tracking-javascript-guide
-	 */
+   * Pushes the specified args to the piwik tracker.
+   * You can use this method as the low-level api to call methods from the piwik API or call custom functions
+   *
+   * @see https://developer.piwik.org/guides/tracking-javascript-guide
+   */
   push(args) {
-    window['_paq'].push(args);
+    window._paq.push(args);
   }
 
   /**
-	 * Tracks occurring javascript errors as a `JavaScript Error` piwik event.
-	 *
-	 * @see http://davidwalsh.name/track-errors-google-analytics
-	 */
+   * Tracks occurring javascript errors as a `JavaScript Error` piwik event.
+   *
+   * @see http://davidwalsh.name/track-errors-google-analytics
+   */
   trackError(e, eventName = 'JavaScript Error') {
     this.push([
       'trackEvent',

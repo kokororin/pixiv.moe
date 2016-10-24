@@ -46,69 +46,6 @@
     }
 }
 
-@keyframes dropIn {
-    from {
-        opacity: 0;
-        top: 0;
-    }
-
-    to {
-        opacity: 1;
-        top: 50%;
-    }
-}
-
-@keyframes dropOut {
-    from {
-        opacity: 1;
-        top: 50%;
-    }
-
-    to {
-        opacity: 0;
-        top: 0;
-    }
-}
-
-.login-modal-container {
-    #modal-overlay {
-        position: fixed;
-        background: rgba(0, 0, 0, 0.65);
-        height: 100%;
-        width: 100%;
-        top: 0px;
-        left: 0px;
-        z-index: 1000;
-    }
-
-    &.init .login-modal-body {
-        display: none;
-    }
-
-    &.open {
-        .login-modal-body {
-            opacity: 1;
-            animation: dropIn .8s;
-        }
-
-        #modal-overlay {
-            display: block;
-        }
-    }
-
-    &.close {
-        .login-modal-body {
-            opacity: 0;
-            animation: dropOut .7s;
-            top: -10000px;
-        }
-
-        #modal-overlay {
-            display: none;
-        }
-    }
-}
-
 @media screen and (max-width: 600px) {
     .login-modal-body {
         width: 18em;

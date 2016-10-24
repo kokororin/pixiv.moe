@@ -13,12 +13,16 @@ export default class Account extends React.Component {
     super(props);
   }
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
 
   render() {
     return (
       <div className={ 'float-btn account' }>
         <FABButton
-          onClick={ this.props.onClick.bind(this) }
+          onClick={ this.props.onClick }
           colored
           ripple>
           <Icon name={ 'favorite' } />
