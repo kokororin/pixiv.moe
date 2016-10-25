@@ -22,9 +22,10 @@ export default class RedirectContainer extends React.Component {
       this.setState({
         isError: false
       });
-      setTimeout(() => {
-        window.location.href = `http://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illustId}`;
-      }, 1500);
+      new Promise((resolve) => setTimeout(resolve, 1500))
+        .then(() => {
+          window.location.href = `http://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illustId}`;
+        });
     } else {
       this.setState({
         isError: true

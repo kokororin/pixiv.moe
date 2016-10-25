@@ -247,6 +247,7 @@ export default class MainContainer extends React.Component {
       });
   }
 
+
   onKeywordClick(event) {
     event.nativeEvent.preventDefault();
 
@@ -282,9 +283,9 @@ export default class MainContainer extends React.Component {
         <Header title={ <span>{ config.siteTitle }</span> }>
           <Navigation>
             <a
+              className={ 'github-link' }
               target={ '_blank' }
-              href={ config.projectLink }>
-              <Icon name={ 'link' } /> GitHub</a>
+              href={ config.projectLink }><img src={ require('../images/GitHub-Mark-Light-32px.png') } /></a>
           </Navigation>
         </Header>
         <Drawer title={ 'タグ' }>

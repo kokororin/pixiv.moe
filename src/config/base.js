@@ -7,7 +7,7 @@ export default {
   piwikDomain: 'analytics.kotori.love',
   piwikSiteId: 1,
   projectLink: 'https://github.com/kokororin/pixiv.moe',
-  siteTitle: 'Pixivの「ラブライブ」発見',
+  siteTitle: 'pixivの「ラブライブ」発見',
   keywords: [{
     en: 'lovelive',
     jp: 'ラブライブ'
