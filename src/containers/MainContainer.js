@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Header, Navigation, Drawer, Content, Icon } from 'react-mdl';
+import { Layout, Header, Navigation, Drawer, Content } from 'react-mdl';
 import shortid from 'shortid';
 import time from 'locutus/php/datetime/time';
 
