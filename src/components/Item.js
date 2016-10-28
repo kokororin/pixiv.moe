@@ -43,9 +43,9 @@ export default class Item extends React.Component {
           <ImageLoader
             src={ this.props.item.image_urls.px_480mw }
             wrapper={ React.DOM.div }
-            preloader={ () => <img src={ require('../images/kotori.jpg') } /> }
+            preloader={ () => <img src={ require('../images/img-loading.jpg') } /> }
             onLoad={ () => this.props.onImageLoad() }>
-            { <img src={ require('../images/kotori-cry.jpg') } /> } </ImageLoader>
+            { <img src={ require('../images/img-fail.jpg') } /> } </ImageLoader>
         </a>
         <div className={ 'title' }>
           <a

@@ -29,14 +29,12 @@ export default class Loading extends React.Component {
   }
 
   render() {
+    // it means ローディング
     return this.state.isHidden
       ? null
       : (
       <div className={ 'message' }>
         <Spinner/>
-        <p>
-          データが记载する中
-        </p>
       </div>
       );
   }

@@ -30,8 +30,6 @@ export default class Login extends React.Component {
 
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
-    this.afterOpen = this.afterOpen.bind(this);
-    this.onOverlayClick = this.onOverlayClick.bind(this);
     this.setUsername = this.setUsername.bind(this);
     this.getUsername = this.getUsername.bind(this);
     this.setPassword = this.setPassword.bind(this);
@@ -58,16 +56,6 @@ export default class Login extends React.Component {
     });
   }
 
-  afterOpen() {
-    document.querySelector('.login-modal-overlay').addEventListener('click', this.onOverlayClick);
-  }
-
-  onOverlayClick(event) {
-    if (event.target.classList.contains('ReactModal__Content')) {
-      this.close();
-    }
-  }
-
   setUsername(username) {
     this.setState({
       username: username
@@ -87,29 +75,6 @@ export default class Login extends React.Component {
   getPassword() {
     return this.state.password;
   }
-
-  modalStyle = {
-    overlay: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.65)',
-      zIndex: 1000
-    },
-    content: {
-      backgroundColor: 'transparent',
-      overflow: 'hidden',
-      border: 'none',
-      borderRadius: 0,
-      padding: 0,
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0
-    }
-  };
 
   renderContent() {
 
@@ -163,27 +128,19 @@ export default class Login extends React.Component {
   render() {
     return (
       <Modal
+        className={'login-modal-body'}
+        overlayClassName={ 'login-modal-overlay' }
         isOpen={ !this.state.isHidden }
         onRequestClose={ this.close }
-        onAfterOpen={ this.afterOpen }
-        overlayClassName={ 'login-modal-overlay' }
-        shouldCloseOnOverlayClick={ false }
-        style={ this.modalStyle }
         contentLabel={ 'login-modal' }>
-        <div id={ 'login-modal-root' }>
-          <div className={ 'login-modal-container' }>
-            <div className={ 'login-modal-body' }>
-              <div
-                className={ 'clear' }
-                onClick={ this.close }>
-                <Icon name={ 'clear' } />
-              </div>
-              <div className={ 'form' }>
-                <div className={ 'fields' }>
-                  { this.renderContent() }
-                </div>
-              </div>
-            </div>
+        <div
+          className={ 'clear' }
+          onClick={ this.close }>
+          <Icon name={ 'clear' } />
+        </div>
+        <div className={ 'form' }>
+          <div className={ 'fields' }>
+            { this.renderContent() }
           </div>
         </div>
       </Modal>

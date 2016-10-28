@@ -28,7 +28,7 @@ export default class MainContainer extends React.Component {
     };
 
     this.scrollListener = this.scrollListener.bind(this);
-    this.onRefreshClick = this.onRefreshClick.bind(this);
+    this.reRenderContent = this.reRenderContent.bind(this);
     this.resizeListener = this.resizeListener.bind(this);
     this.onImageClick = this.onImageClick.bind(this);
     this.onFavouriteClick = this.onFavouriteClick.bind(this);
@@ -61,7 +61,13 @@ export default class MainContainer extends React.Component {
     }
   }
 
-  onRefreshClick() {
+  async reRenderContent(clearCache) {
+    if (clearCache) {
+      const searchResults = await Storage.search('cf_(.*)');
+      for (const searchResult of searchResults) {
+        Storage.remove(searchResult);
+      }
+    }
     this.setState({
       items: [],
       images: [],
@@ -256,7 +262,7 @@ export default class MainContainer extends React.Component {
     this.setState({
       currentTag: event.nativeEvent.target.dataset.tag
     }, () => {
-      this.onRefreshClick();
+      this.reRenderContent(false);
       Storage.set('tag', this.state.currentTag);
     });
   }
@@ -308,7 +314,7 @@ export default class MainContainer extends React.Component {
               isHidden />
             <Refresh
               ref={ (ref) => this.refresh = ref }
-              onClick={ this.onRefreshClick } />
+              onClick={ async () => await this.reRenderContent(true) } />
             <Account onClick={ () => this.login.open() } />
             <Image
               ref={ (ref) => this.image = ref }

@@ -18,15 +18,15 @@ export default class AppContainer extends React.Component {
   constructor(props) {
     super(props);
     ReactGA.initialize(config.trackingID);
-    this.logPageView = this.logPageView.bind(this);
-    this.logPageView();
+    this.onNavigation = this.onNavigation.bind(this);
+    this.onNavigation();
   }
 
   shouldComponentUpdate() {
     return false;
   }
 
-  logPageView() {
+  onNavigation() {
     if (config.appEnv !== 'dist') {
       return;
     }
@@ -40,13 +40,14 @@ export default class AppContainer extends React.Component {
       siteId: config.piwikSiteId
     }));
     this.piwik.track(pageLink);
+    document.body.scrollTop = 0;
   }
 
   render() {
     return (
       <Locations
         hash
-        onNavigation={ this.logPageView }>
+        onNavigation={ this.onNavigation }>
         <Location
           path={ '/' }
           handler={ MainContainer } />
