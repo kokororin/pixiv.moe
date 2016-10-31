@@ -128,7 +128,7 @@ export default class Login extends React.Component {
   render() {
     return (
       <Modal
-        className={'login-modal-body'}
+        className={ 'login-modal-body' }
         overlayClassName={ 'login-modal-overlay' }
         isOpen={ !this.state.isHidden }
         onRequestClose={ this.close }

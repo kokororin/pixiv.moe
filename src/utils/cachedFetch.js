@@ -1,40 +1,47 @@
 // modify from https://www.sitepoint.com/cache-fetched-ajax-requests/
 import time from 'locutus/php/datetime/time';
+import httpBuildQuery from 'locutus/php/url/http_build_query';
 
-const hashStr = (str) => {
-  let hash = 0;
-  if (str.length === 0) return hash;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return hash;
-};
+import { hashStr, Storage } from '.';
 
-export default (url, options) => {
-  let expiryKey = undefined;
-  expiryKey = options.expiryKey;
-  if (typeof expiryKey !== 'string') {
-    throw new Error('No expiryKey given.');
+export default function cachedFetch(url, options) {
+  const expiryKey = options.expiryKey,
+    query = options.query,
+    timeout = options.timeout;
+  let cacheKey = undefined;
+
+  if (typeof query === 'object') {
+    url += '?' + httpBuildQuery(query);
   }
-  // Use the URL as the cache key to sessionStorage
-  const cacheKey = 'cf_' + hashStr(url);
-  const cached = localStorage.getItem(cacheKey);
-  const cachedExpiresAt = localStorage.getItem(cacheKey + ':ts');
-  if (cached !== null && cachedExpiresAt !== null) {
-    // it was in sessionStorage! Yay!
-    if (time() < parseInt(cachedExpiresAt, 10)) {
-      const response = new Response(new Blob([cached]));
-      return Promise.resolve(response);
+  // let fetch supports timeout
+  let isTimeout = false;
+  const timeoutId = (typeof timeout === 'number') ?
+    setTimeout(() => {
+      isTimeout = true;
+    }, timeout) : setTimeout(void 0);
+
+  if (typeof expiryKey === 'string') {
+    // Use the URL as the cache key to sessionStorage
+    cacheKey = 'cf_' + hashStr(url);
+    const cached = Storage.get(cacheKey, false);
+    const cachedExpiresAt = Storage.get(cacheKey + ':ts');
+    if (cached !== null && cachedExpiresAt !== null) {
+      // it was in sessionStorage! Yay!
+      if (time() < parseInt(cachedExpiresAt, 10)) {
+        const response = new Response(new Blob([cached]));
+        return Promise.resolve(response);
+      }
+      // We need to clean up this old key
+      Storage.remove(cacheKey);
+      Storage.remove(cacheKey + ':ts');
     }
-    // We need to clean up this old key
-    localStorage.removeItem(cacheKey);
-    localStorage.removeItem(cacheKey + ':ts');
-
   }
 
   return fetch(url, options).then((response) => {
+    if (isTimeout) {
+      throw new Error('request timeout');
+    }
+    clearTimeout(timeoutId);
     // let's only store in cache if the content-type is
     // JSON or something non-binary
     if (response.status === 200) {
@@ -47,12 +54,14 @@ export default (url, options) => {
         // consumed by the time it's returned. This
         // way we're being un-intrusive.
         response.clone().text().then((content) => {
-          localStorage.setItem(cacheKey, content);
-          content = JSON.parse(content);
-          localStorage.setItem(cacheKey + ':ts', content[expiryKey]);
+          if (typeof expiryKey === 'string') {
+            Storage.set(cacheKey, content);
+            content = JSON.parse(content);
+            Storage.set(cacheKey + ':ts', content[expiryKey]);
+          }
         });
       }
     }
     return response;
   });
-};
+}

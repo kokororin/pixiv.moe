@@ -5,6 +5,14 @@ import { Spinner } from 'react-mdl';
 
 export default class Loading extends React.Component {
 
+  static defaultProps = {
+    isHidden: true
+  };
+
+  static propTypes = {
+    isHidden: React.PropTypes.bool
+  };
+
   constructor(props) {
     super(props);
 
@@ -14,6 +22,10 @@ export default class Loading extends React.Component {
 
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    nextProps.isHidden ? this.hide() : this.show();
   }
 
   show() {

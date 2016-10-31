@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Layout, Header, Navigation, Drawer, Content } from 'react-mdl';
 import shortid from 'shortid';
 import time from 'locutus/php/datetime/time';
@@ -7,7 +8,7 @@ import config from 'config';
 
 import { Alert, Account, Image, List, Loading, Refresh, Message } from '../components';
 import { LoginContainer } from '../containers';
-import { cachedFetch, Storage } from '../utils';
+import { cachedFetch, scrollTo, Storage } from '../utils';
 
 
 export default class MainContainer extends React.Component {
@@ -33,6 +34,7 @@ export default class MainContainer extends React.Component {
     this.onImageClick = this.onImageClick.bind(this);
     this.onFavouriteClick = this.onFavouriteClick.bind(this);
     this.onKeywordClick = this.onKeywordClick.bind(this);
+    this.onHeaderClick = this.onHeaderClick.bind(this);
   }
 
   componentDidMount() {
@@ -79,27 +81,30 @@ export default class MainContainer extends React.Component {
   }
 
   fetchSource(isFirstLoad) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (this.state.isLoading) {
         return;
       }
-      this.loading.show();
-      this.error.hide();
+      this.errorRef.hide();
       this.setState({
         isLoading: true
       });
       let currentPage = isFirstLoad ? 0 : this.state.currentPage;
-      cachedFetch(`${config.sourceURL}?sort=popular&tag=${this.state.currentTag}&page=${++currentPage}`, {
+      cachedFetch(config.sourceURL, {
         mode: 'cors',
-        timeout: 15e3,
-        expiryKey: 'expires_at'
+        timeout: 10e3,
+        expiryKey: 'expires_at',
+        query: {
+          sort: 'popular',
+          tag: this.state.currentTag,
+          page: ++currentPage
+        }
       })
         .then((response) => {
           if (response.ok) {
             return response.json()
           }
-          this.loading.hide();
-          this.error.show();
+          throw new Error('response is not OK');
         })
         .then((data) => {
           if (data.status === 'success' && data.count > 0) {
@@ -120,7 +125,7 @@ export default class MainContainer extends React.Component {
               });
             });
           } else {
-            this.error.show();
+            this.errorRef.show();
           }
         })
         .then(() => {
@@ -136,14 +141,12 @@ export default class MainContainer extends React.Component {
             currentPage: currentPage
           })
         })
-        .then(() => {
-          resolve();
-          this.loading.hide();
-        })
-        .catch((e) => {
-          this.loading.hide();
-          this.error.show();
-          reject(e);
+        .then(() => resolve())
+        .catch(() => {
+          this.setState({
+            isLoading: false
+          });
+          this.errorRef.show();
         });
     });
 
@@ -151,7 +154,7 @@ export default class MainContainer extends React.Component {
 
   resizeListener() {
     /* reset size of masonry-container when window size change */
-    const node = this.root,
+    const node = this.rootRef,
       cellClassName = 'cell';
 
     // try to get cell width
@@ -214,13 +217,13 @@ export default class MainContainer extends React.Component {
   }
 
   onImageClick(index) {
-    this.image.openLightbox(index);
+    this.imageRef.openLightbox(index);
   }
 
   onFavouriteClick(illustId, event) {
     const authData = Storage.get('auth');
     if (authData === null || authData.expires_at < time()) {
-      return this.login.open();
+      return this.loginRef.open();
     }
     const target = event.nativeEvent.target,
       body = document.body;
@@ -229,9 +232,10 @@ export default class MainContainer extends React.Component {
     }
     target.classList.add('fn-wait');
     body.classList.add('fn-wait');
-    fetch(config.favouriteURL, {
+    cachedFetch(config.favouriteURL, {
       mode: 'cors',
       method: 'post',
+      timeout: 10e3,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -249,7 +253,13 @@ export default class MainContainer extends React.Component {
       .then((data) => {
         target.classList.remove('fn-wait');
         body.classList.remove('fn-wait');
-        this.alert.setContent(data.message);
+        this.alertRef.setContent(data.message);
+      })
+      .catch(() => {
+        target.classList.remove('fn-wait');
+        body.classList.remove('fn-wait');
+        // text from SIF
+        this.alertRef.setContent('通信エラーが発生しました');
       });
   }
 
@@ -257,7 +267,7 @@ export default class MainContainer extends React.Component {
   onKeywordClick(event) {
     event.nativeEvent.preventDefault();
 
-    document.querySelector('.mdl-layout').MaterialLayout.toggleDrawer();
+    ReactDOM.findDOMNode(this.layoutRef).MaterialLayout.toggleDrawer();
 
     this.setState({
       currentTag: event.nativeEvent.target.dataset.tag
@@ -281,12 +291,29 @@ export default class MainContainer extends React.Component {
     });
   }
 
+  onHeaderClick(event) {
+    const target = event.nativeEvent.target,
+      tagName = target.tagName.toLowerCase(),
+      classList = event.nativeEvent.target.classList;
+
+    if (!classList.contains('material-icons')
+      && !classList.contains('mdl-layout__drawer-button')
+      && !classList.contains('github-link')
+      && tagName !== 'img') {
+      const node = ReactDOM.findDOMNode(this.layoutRef).querySelector('.mdl-layout__content');
+      scrollTo(node, 0, 900, 'easeInOutQuint');
+    }
+  }
+
   render() {
     return (
       <Layout
+        ref={ (ref) => this.layoutRef = ref }
         fixedHeader
         onScroll={ this.scrollListener }>
-        <Header title={ <span>{ config.siteTitle }</span> }>
+        <Header
+          onClick={ this.onHeaderClick }
+          title={ <span>{ config.siteTitle }</span> }>
           <Navigation>
             <a
               className={ 'github-link' }
@@ -301,26 +328,24 @@ export default class MainContainer extends React.Component {
         </Drawer>
         <Content>
           <div
-            ref={ (ref) => this.root = ref }
+            ref={ (ref) => this.rootRef = ref }
             style={ { margin: '0 auto' } }>
             <List
               items={ this.state.items }
               onImageClick={ this.onImageClick }
               onFavouriteClick={ this.onFavouriteClick } />
-            <Loading ref={ (ref) => this.loading = ref } />
+            <Loading isHidden={ !this.state.isLoading } />
             <Message
-              ref={ (ref) => this.error = ref }
+              ref={ (ref) => this.errorRef = ref }
               text={ '読み込みに失敗しました' }
               isHidden />
-            <Refresh
-              ref={ (ref) => this.refresh = ref }
-              onClick={ async () => await this.reRenderContent(true) } />
-            <Account onClick={ () => this.login.open() } />
+            <Refresh onClick={ async () => await this.reRenderContent(true) } />
+            <Account onClick={ () => this.loginRef.open() } />
             <Image
-              ref={ (ref) => this.image = ref }
+              ref={ (ref) => this.imageRef = ref }
               images={ this.state.images } />
-            <LoginContainer ref={ (ref) => this.login = ref } />
-            <Alert ref={ (ref) => this.alert = ref } />
+            <LoginContainer ref={ (ref) => this.loginRef = ref } />
+            <Alert ref={ (ref) => this.alertRef = ref } />
           </div>
         </Content>
       </Layout>

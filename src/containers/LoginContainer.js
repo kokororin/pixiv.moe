@@ -2,7 +2,7 @@ import React from 'react';
 import time from 'locutus/php/datetime/time';
 
 import { Alert, Login } from '../components';
-import { Storage } from '../utils';
+import { cachedFetch, Storage } from '../utils';
 
 import config from 'config';
 
@@ -37,20 +37,20 @@ export default class LoginContainer extends React.Component {
 
   onKeydown(event) {
     if (event.keyCode === 27) {
-      this.login.close();
+      this.loginRef.close();
     }
 
-    if (this.login.state.isHidden === false && event.keyCode === 13) {
+    if (this.loginRef.state.isHidden === false && event.keyCode === 13) {
       this.onLoginClick();
     }
   }
 
   open() {
-    this.login.open();
+    this.loginRef.open();
   }
 
   close() {
-    this.login.close();
+    this.loginRef.close();
   }
 
   onLoginClick() {
@@ -59,24 +59,25 @@ export default class LoginContainer extends React.Component {
       return;
     }
 
-    const username = this.login.getUsername();
-    const password = this.login.getPassword();
+    const username = this.loginRef.getUsername();
+    const password = this.loginRef.getPassword();
 
     if (username === '') {
-      return this.alert.setContent('pixiv ID、またはメールアドレスが未記入です');
+      return this.alertRef.setContent('pixiv ID、またはメールアドレスが未記入です');
     }
 
     if (password === '') {
-      return this.alert.setContent('パスワードが未記入です');
+      return this.alertRef.setContent('パスワードが未記入です');
     }
 
     this.setState({
       isSubmitting: true
     });
 
-    fetch(config.authURL, {
+    cachedFetch(config.authURL, {
       mode: 'cors',
       method: 'post',
+      timeout: 10e3,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -103,17 +104,24 @@ export default class LoginContainer extends React.Component {
           });
           setTimeout(() => {
             this.close();
-            this.login.setUsername('');
-            this.login.setPassword('');
+            this.loginRef.setUsername('');
+            this.loginRef.setPassword('');
           }, 1500);
         } else {
-          this.alert.setContent(data.message);
+          this.alertRef.setContent(data.message);
         }
       })
       .then(() => {
         this.setState({
           isSubmitting: false
         });
+      })
+      .catch(() => {
+        this.setState({
+          isSubmitting: false
+        });
+        // text from SIF
+        this.alertRef.setContent('通信エラーが発生しました');
       });
   }
 
@@ -128,12 +136,12 @@ export default class LoginContainer extends React.Component {
     return (
       <div>
         <Login
-          ref={ (ref) => this.login = ref }
+          ref={ (ref) => this.loginRef = ref }
           onLoginClick={ this.onLoginClick }
           onLogoutClick={ this.onLogoutClick }
           isSubmitting={ this.state.isSubmitting }
           authData={ this.state.authData } />
-        <Alert ref={ (ref) => this.alert = ref } />
+        <Alert ref={ (ref) => this.alertRef = ref } />
       </div>
       );
   }

@@ -1,13 +1,13 @@
 {
   "name": "pixiv.moe",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Source code of https://pixiv.moe",
   "main": "",
   "scripts": {
     "clean": "rimraf dist/*",
     "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./src/robots.txt ./src/CNAME ./dist",
     "dist": "npm run clean && npm run copy & webpack --env=dist",
-    "lint": "eslint ./src",
+    "lint": "eslint --max-warnings 0 ./src",
     "posttest": "npm run lint",
     "release:major": "npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm version minor && npm publish && git push --follow-tags",
@@ -81,6 +81,7 @@
     "webpack-dev-server": "^1.12.0"
   },
   "dependencies": {
+    "animation-frame": "^0.3.0",
     "classlist-polyfill": "^1.0.3",
     "classnames": "^2.2.5",
     "core-js": "^2.0.0",

@@ -6,7 +6,7 @@ export default {
   trackingID: 'UA-70944432-2',
   piwikDomain: 'analytics.kotori.love',
   piwikSiteId: 1,
-  projectLink: 'https://github.com/kokororin/pixiv.moe',
+  projectLink: 'https://git.io/pixiv.moe',
   siteTitle: 'pixivの「ラブライブ」発見',
   keywords: [{
     en: 'lovelive',

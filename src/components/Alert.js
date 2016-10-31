@@ -1,8 +1,7 @@
 import '../styles/Alert.scss';
 
 import React from 'react';
-
-import { RenderInBody } from '.';
+import Modal from 'react-modal';
 
 export default class Alert extends React.Component {
 
@@ -37,20 +36,20 @@ export default class Alert extends React.Component {
   }
 
   render() {
-    return this.state.isHidden
-      ? null
-      : (
-      <RenderInBody>
-        <div className={ 'alert-container' }>
-          <div className={ 'alert-wrap-1' }>
-            <div className={ 'alert-wrap-2' }>
-              <div className={ 'alert-body' }>
-                { this.state.content }
-              </div>
+    return (
+      <Modal
+        className={ 'alert-container' }
+        overlayClassName={ 'alert-modal-overlay' }
+        isOpen={ !this.state.isHidden }
+        contentLabel={ 'alert-modal' }>
+        <div className={ 'alert-wrap-1' }>
+          <div className={ 'alert-wrap-2' }>
+            <div className={ 'alert-body' }>
+              { this.state.content }
             </div>
           </div>
         </div>
-      </RenderInBody>
+      </Modal>
       );
   }
 }
