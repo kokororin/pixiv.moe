@@ -13,7 +13,7 @@ export default class Alert extends React.Component {
       content: ''
     };
 
-    this.setContent = this.setContent.bind(this);
+    this.setContent = ::this.setContent;
   }
 
   setContent(content) {

@@ -28,13 +28,13 @@ export default class MainContainer extends React.Component {
       images: []
     };
 
-    this.scrollListener = this.scrollListener.bind(this);
-    this.reRenderContent = this.reRenderContent.bind(this);
-    this.resizeListener = this.resizeListener.bind(this);
-    this.onImageClick = this.onImageClick.bind(this);
-    this.onFavouriteClick = this.onFavouriteClick.bind(this);
-    this.onKeywordClick = this.onKeywordClick.bind(this);
-    this.onHeaderClick = this.onHeaderClick.bind(this);
+    this.scrollListener = ::this.scrollListener;
+    this.reRenderContent = ::this.reRenderContent;
+    this.resizeListener = ::this.resizeListener;
+    this.onImageClick = ::this.onImageClick;
+    this.onFavouriteClick = ::this.onFavouriteClick;
+    this.onKeywordClick = ::this.onKeywordClick;
+    this.onHeaderClick = ::this.onHeaderClick;
   }
 
   componentDidMount() {

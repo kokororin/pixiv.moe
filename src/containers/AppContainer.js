@@ -18,7 +18,7 @@ export default class AppContainer extends React.Component {
   constructor(props) {
     super(props);
     ReactGA.initialize(config.trackingID);
-    this.onNavigation = this.onNavigation.bind(this);
+    this.onNavigation = ::this.onNavigation;
     this.onNavigation();
   }
 

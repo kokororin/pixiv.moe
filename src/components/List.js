@@ -28,9 +28,10 @@ export default class List extends React.Component {
         { this.props.items.map((elem, index) => {
             return <Item
                      key={ elem.unique_id }
+                     index={ index }
                      item={ elem }
-                     onImageClick={ () => this.props.onImageClick(index) }
-                     onFavouriteClick={ (event) => this.props.onFavouriteClick(elem.id, event) }
+                     onImageClick={ this.props.onImageClick }
+                     onFavouriteClick={ this.props.onFavouriteClick }
                      onImageLoad={ this.masonryRef.performLayout } />
           }) }
       </Masonry>

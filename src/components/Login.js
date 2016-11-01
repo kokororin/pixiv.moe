@@ -28,12 +28,12 @@ export default class Login extends React.Component {
       password: ''
     };
 
-    this.open = this.open.bind(this);
-    this.close = this.close.bind(this);
-    this.setUsername = this.setUsername.bind(this);
-    this.getUsername = this.getUsername.bind(this);
-    this.setPassword = this.setPassword.bind(this);
-    this.getPassword = this.getPassword.bind(this);
+    this.open = ::this.open;
+    this.close = ::this.close;
+    this.setUsername = ::this.setUsername;
+    this.getUsername = ::this.getUsername;
+    this.setPassword = ::this.setPassword;
+    this.getPassword = ::this.getPassword;
   }
 
   componentDidMount() {

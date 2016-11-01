@@ -17,10 +17,10 @@ export default class Image extends React.Component {
       isOpen: false
     };
 
-    this.openLightbox = this.openLightbox.bind(this);
-    this.closeLightbox = this.closeLightbox.bind(this);
-    this.moveNext = this.moveNext.bind(this);
-    this.movePrev = this.movePrev.bind(this);
+    this.openLightbox = ::this.openLightbox;
+    this.closeLightbox = ::this.closeLightbox;
+    this.moveNext = ::this.moveNext;
+    this.movePrev = ::this.movePrev;
   }
 
   openLightbox(index) {

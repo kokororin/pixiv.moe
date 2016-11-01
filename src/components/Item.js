@@ -8,6 +8,7 @@ export default class Item extends React.Component {
 
   static propTypes = {
     item: React.PropTypes.object,
+    index: React.PropTypes.number,
     onImageClick: React.PropTypes.func,
     onFavouriteClick: React.PropTypes.func,
     onImageLoad: React.PropTypes.func
@@ -16,8 +17,8 @@ export default class Item extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onImageClick = this.onImageClick.bind(this);
-    this.onFavouriteClick = this.onFavouriteClick.bind(this);
+    this.onImageClick = ::this.onImageClick;
+    this.onFavouriteClick = ::this.onFavouriteClick;
   }
 
   shouldComponentUpdate() {
@@ -26,12 +27,12 @@ export default class Item extends React.Component {
 
   onImageClick(event) {
     event.nativeEvent.preventDefault();
-    this.props.onImageClick();
+    this.props.onImageClick(this.props.index);
   }
 
   onFavouriteClick(event) {
     event.nativeEvent.preventDefault();
-    this.props.onFavouriteClick(event);
+    this.props.onFavouriteClick(this.props.item.id, event);
   }
 
   render() {

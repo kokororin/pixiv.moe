@@ -16,11 +16,11 @@ export default class LoginContainer extends React.Component {
       authData: null
     };
 
-    this.onKeydown = this.onKeydown.bind(this);
-    this.open = this.open.bind(this);
-    this.close = this.close.bind(this);
-    this.onLoginClick = this.onLoginClick.bind(this);
-    this.onLogoutClick = this.onLogoutClick.bind(this);
+    this.onKeydown = ::this.onKeydown;
+    this.open = ::this.open;
+    this.close = ::this.close;
+    this.onLoginClick = ::this.onLoginClick;
+    this.onLogoutClick = ::this.onLogoutClick;
   }
 
   componentDidMount() {
