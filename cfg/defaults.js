@@ -25,8 +25,16 @@ function getDefaultModules() {
     ],
     loaders: [
       {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader?outputStyle=expanded'
+      },
+      {
         test: /\.sass/,
         loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded&indentedSyntax'
+      },
+      {
+        test: /\.scss/,
+        loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
       },
       {
         test: /\.less/,

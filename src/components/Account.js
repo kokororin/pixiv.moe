@@ -22,7 +22,7 @@ export default class Account extends React.Component {
     return (
       <div className={ 'float-btn account' }>
         <FABButton
-          onClick={ this.props.onClick }
+          {...this.props}
           colored
           ripple>
           <Icon name={ 'favorite' } />

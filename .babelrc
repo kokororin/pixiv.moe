@@ -7,5 +7,12 @@
   "plugins": [
   	"transform-async-to-generator",
   	"transform-decorators-legacy"
-  ]
+  ],
+  "env": {
+    "dist": {
+      "plugins": [
+        "transform-react-remove-prop-types"
+      ]
+    }
+  }
 }

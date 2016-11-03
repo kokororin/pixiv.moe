@@ -8,7 +8,7 @@ import config from 'config';
 
 import { Alert, Account, Image, List, Loading, Refresh, Message } from '../components';
 import { LoginContainer } from '../containers';
-import { cachedFetch, scrollTo, Storage } from '../utils';
+import { cachedFetch, preloadImg, scrollTo, Storage } from '../utils';
 
 
 export default class MainContainer extends React.Component {
@@ -35,6 +35,16 @@ export default class MainContainer extends React.Component {
     this.onFavouriteClick = ::this.onFavouriteClick;
     this.onKeywordClick = ::this.onKeywordClick;
     this.onHeaderClick = ::this.onHeaderClick;
+
+    Promise.resolve()
+      .then(() => {
+        [
+          '../images/img-loading.jpg',
+          '../images/img-fail.jpg'
+        ]
+          .map((elem) => preloadImg(elem));
+      });
+
   }
 
   componentDidMount() {

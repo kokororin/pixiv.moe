@@ -1,7 +1,7 @@
 'use strict';
 import createComponent from 'helpers/shallowRenderHelper';
 
-import { MainContainer } from '../../src/containers';
+import { MainContainer } from 'containers';
 
 describe('MainContainer', () => {
   let mainContainer;

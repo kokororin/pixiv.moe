@@ -1,7 +1,7 @@
 'use strict';
 import createComponent from 'helpers/shallowRenderHelper';
 
-import { RedirectContainer } from '../../src/containers';
+import { RedirectContainer } from 'containers';
 
 describe('RedirectContainer', () => {
   let redirectContainer;
