@@ -15,7 +15,7 @@
   <link rel="dns-prefetch" href="//i3.pixiv.net">
   <link rel="dns-prefetch" href="//i4.pixiv.net">
   <link rel="dns-prefetch" href="//www.pixiv.net">
-  <style id="message-style">
+  <style>
   .message {
     text-align: center;
     padding: 20px 0;
@@ -26,7 +26,7 @@
     font-size: 15px;
   }
   </style>
-  <style id="index-style">
+  <style>
   #index-loading {
     position: absolute;
     width: 300px;
@@ -53,6 +53,7 @@
       <script type="text/javascript">
            (function() {
             try {
+              document.getElementById('app').innerHTML = '';
               var afterHash = window.location.hash.replace('#/', '');
               if (!isNaN(parseFloat(afterHash)) && isFinite(afterHash)) {
                 document.write('<p>あなたはpixiv.netへリダイレクトしています</p>');
@@ -74,12 +75,10 @@
   </noscript>
   <div id="app">
     <div id="index-loading" class="message">
-      <div>
         <p>(・ω・)充填中<span id="wait"></span></p>
-      </div>
     </div>
   </div>
-  <script id="index-script" type="text/javascript">
+  <script type="text/javascript">
   (function() {
     var t = setInterval(function() {
       var el = document.getElementById('index-loading');

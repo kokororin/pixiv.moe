@@ -14,14 +14,31 @@
         box-shadow: 0 1px 5px rgba(34, 25, 25, 0.8);
     }
 
-    img {
-        overflow: hidden;
-        border: 0;
-        max-width: 100%;
-        background: #ccc;
+    .illust {
+        .image-wrapper {
+            overflow: hidden;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            max-width: 100%;
+            background: #ccc;
+            transition: opacity .5s ease,transform .2s ease;
+        }
+
+        &:hover {
+            .loaded {
+                img {
+                    transform: scale(1.05);
+                }
+            }
+        }
     }
 
-    a {
+    .title a, .meta a {
         font-size: 12px;
         font-weight: bold;
         color: #000;

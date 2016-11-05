@@ -38,6 +38,9 @@ export default class MainContainer extends React.Component {
   }
 
   componentDidMount() {
+    this.layoutDOMNode = ReactDOM.findDOMNode(this.layoutRef);
+    this.contentDOMNode = this.layoutDOMNode.querySelector('.mdl-layout__content');
+
     window.addEventListener('resize', this.resizeListener);
 
     this.fetchSource(true);
@@ -267,7 +270,7 @@ export default class MainContainer extends React.Component {
   onKeywordClick(event) {
     event.nativeEvent.preventDefault();
 
-    ReactDOM.findDOMNode(this.layoutRef).MaterialLayout.toggleDrawer();
+    this.layoutDOMNode.MaterialLayout.toggleDrawer();
 
     this.setState({
       currentTag: event.nativeEvent.target.dataset.tag
@@ -300,8 +303,7 @@ export default class MainContainer extends React.Component {
       && !classList.contains('mdl-layout__drawer-button')
       && !classList.contains('github-link')
       && tagName !== 'img') {
-      const node = ReactDOM.findDOMNode(this.layoutRef).querySelector('.mdl-layout__content');
-      scrollTo(node, 0, 900, 'easeInOutQuint');
+      scrollTo(this.contentDOMNode, 0, 900, 'easeInOutQuint');
     }
   }
 

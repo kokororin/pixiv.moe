@@ -19,6 +19,7 @@ export default class Item extends React.Component {
 
     this.onImageClick = ::this.onImageClick;
     this.onFavouriteClick = ::this.onFavouriteClick;
+    this.onImageMouseMove = ::this.onImageMouseMove;
   }
 
   shouldComponentUpdate() {
@@ -35,13 +36,25 @@ export default class Item extends React.Component {
     this.props.onFavouriteClick(this.props.item.id, event);
   }
 
+  onImageMouseMove(event) {
+    event = event.nativeEvent;
+    const target = event.target;
+    if (target.tagName.toLowerCase() === 'img') {
+      target.style.cssText += `transform-origin:${event.offsetX}px ${event.offsetY}px;`;
+    }
+  }
+
   render() {
     return (
-      <div className={ 'cell' }>
+      <div
+        className={ 'cell' }
+        onMouseMove={ this.onImageMouseMove }>
         <a
+          className={ 'illust' }
           href={ '#' }
           onClick={ this.onImageClick }>
           <ImageLoader
+            className={ 'image-wrapper' }
             src={ this.props.item.image_urls.px_480mw }
             wrapper={ React.DOM.div }
             preloader={ () => <img src={ require('../images/img-loading.jpg') } /> }
