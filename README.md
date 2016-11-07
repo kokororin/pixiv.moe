@@ -162,7 +162,7 @@ curl 'https://api.kotori.love/pixiv/auth.php' \
 
 ##### request
 ```json
-{"illust_id": [:illust_id]}
+{"illust_id": "[:illust_id]"}
 ```
 
 ###### example
@@ -179,6 +179,20 @@ curl 'https://api.kotori.love/pixiv/favourite.php' \
 {
     "status":"success",
     "message":"をブックマークに追加しました"
+}
+```
+
+```json
+{
+    "status":"failure",
+    "message":"あなたは既にブックマークに追加しました"
+}
+```
+
+```json
+{
+    "status":"failure",
+    "message":"再度ログインログインセッションの有効期限が切れていてください。"
 }
 ```
 

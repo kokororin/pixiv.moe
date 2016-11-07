@@ -1,6 +1,6 @@
 {
   "name": "pixiv.moe",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "description": "Source code of https://pixiv.moe",
   "main": "server.js",
   "scripts": {
