@@ -106,6 +106,7 @@ curl 'https://api.kotori.love/pixiv/source.php?sort=popular&tag=nico&page=1'
 #### Auth
 
 ##### request
+`POST /auth.php`
 
 ```json
 {
@@ -161,6 +162,8 @@ curl 'https://api.kotori.love/pixiv/auth.php' \
 #### Add Favourite
 
 ##### request
+`POST /favourite.php`
+
 ```json
 {"illust_id": "[:illust_id]"}
 ```
