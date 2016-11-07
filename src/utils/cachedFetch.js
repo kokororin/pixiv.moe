@@ -23,12 +23,13 @@ export default function cachedFetch(url, options) {
   if (typeof expiryKey === 'string') {
     // Use the URL as the cache key to sessionStorage
     cacheKey = 'cf_' + hashStr(url);
-    const cached = Storage.get(cacheKey, false);
+    const cached = Storage.get(cacheKey);
+
     const cachedExpiresAt = Storage.get(cacheKey + ':ts');
     if (cached !== null && cachedExpiresAt !== null) {
       // it was in sessionStorage! Yay!
       if (time() < parseInt(cachedExpiresAt, 10)) {
-        const response = new Response(new Blob([cached]));
+        const response = new Response(new Blob([JSON.stringify(cached)]));
         return Promise.resolve(response);
       }
       // We need to clean up this old key
@@ -47,16 +48,10 @@ export default function cachedFetch(url, options) {
     if (response.status === 200) {
       const ct = response.headers.get('Content-Type');
       if (ct && (ct.match(/application\/json/i) || ct.match(/text\//i))) {
-        // There is a .json() instead of .text() but
-        // we're going to store it in sessionStorage as
-        // string anyway.
-        // If we don't clone the response, it will be
-        // consumed by the time it's returned. This
-        // way we're being un-intrusive.
-        response.clone().text().then((content) => {
+
+        response.clone().json().then((content) => {
           if (typeof expiryKey === 'string') {
             Storage.set(cacheKey, content);
-            content = JSON.parse(content);
             Storage.set(cacheKey + ':ts', content[expiryKey]);
           }
         });

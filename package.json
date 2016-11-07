@@ -2,13 +2,13 @@
   "name": "pixiv.moe",
   "version": "0.8.6",
   "description": "Source code of https://pixiv.moe",
-  "main": "",
+  "main": "server.js",
   "scripts": {
     "clean": "rimraf dist/*",
     "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./src/robots.txt ./src/CNAME ./dist",
-    "dist": "npm run clean && npm run copy && webpack --env=dist",
+    "dist": "yarn run clean && yarn run copy && webpack --env=dist",
     "lint": "eslint --max-warnings 0 ./src",
-    "posttest": "npm run lint",
+    "posttest": "yarn run lint",
     "serve": "node server.js --env=dev",
     "serve:dist": "node server.js --env=dist",
     "start": "node server.js --env=dev",
@@ -98,6 +98,7 @@
     "react-modal": "^1.5.2",
     "react-router-component": "^0.36.0",
     "shortid": "^2.2.6",
+    "store": "^1.3.20",
     "whatwg-fetch": "^1.0.0"
   },
   "engines": {

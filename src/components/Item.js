@@ -20,6 +20,7 @@ export default class Item extends React.Component {
     this.onImageClick = ::this.onImageClick;
     this.onFavouriteClick = ::this.onFavouriteClick;
     this.onImageMouseMove = ::this.onImageMouseMove;
+    this.onImageLoad = ::this.onImageLoad;
   }
 
   shouldComponentUpdate() {
@@ -40,8 +41,16 @@ export default class Item extends React.Component {
     event = event.nativeEvent;
     const target = event.target;
     if (target.tagName.toLowerCase() === 'img') {
-      target.style.cssText += `transform-origin:${event.offsetX}px ${event.offsetY}px;`;
+      target.style.transformOrigin = `${event.offsetX}px ${event.offsetY}px`;
     }
+  }
+
+  onImageLoad() {
+    this.props.onImageLoad();
+  }
+
+  preloader() {
+    return <img src={ require('../images/img-loading.jpg') } />;
   }
 
   render() {
@@ -57,8 +66,8 @@ export default class Item extends React.Component {
             className={ 'image-wrapper' }
             src={ this.props.item.image_urls.px_480mw }
             wrapper={ React.DOM.div }
-            preloader={ () => <img src={ require('../images/img-loading.jpg') } /> }
-            onLoad={ () => this.props.onImageLoad() }>
+            preloader={ this.preloader }
+            onLoad={ this.onImageLoad }>
             { <img src={ require('../images/img-fail.jpg') } /> } </ImageLoader>
         </a>
         <div className={ 'title' }>

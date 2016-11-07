@@ -59,6 +59,10 @@ export default class LoginContainer extends React.Component {
       return;
     }
 
+    if (!Storage.isSupport()) {
+      return this.alertRef.setContent('localStorageをサポートしていないブラウザ');
+    }
+
     const username = this.loginRef.getUsername();
     const password = this.loginRef.getPassword();
 
