@@ -45,7 +45,7 @@ $ yarn start
 - Run: `yarn start`
 - Test: `yarn test`
 - Build: `yarn run dist`
-- Publish to gh-pages `yarn run deploy`
+- Publish to gh-pages: `yarn run deploy`
 
 ### API
 
