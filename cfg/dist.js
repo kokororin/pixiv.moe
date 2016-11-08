@@ -65,10 +65,16 @@ let config = Object.assign({}, baseConfig, {
     document.body.appendChild(script);
   };
 
-  var runScript = function(content) {
-    setTimeout(function() {
-      window.eval(content);
-    }, 1);
+  var runScript = function(code) {
+    if (window.execScript) {
+      window.execScript(code);
+    } else {
+      var head = document.head;
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.text = code;
+      head.removeChild(head.appendChild(script));
+    }
   };
 
   if (localStorage) {
