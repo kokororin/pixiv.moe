@@ -36,16 +36,16 @@ A: Pixiv change the `REFRESH TOKEN` auth method, so re-login with refresh_token 
 # Start for development
 $ git clone https://github.com/kokororin/pixiv.moe
 $ cd pixiv.moe
-$ yarn install
-$ yarn start
+$ npm install
+$ npm start
 ```
 
 ### Commands
-- Install dependencies: `yarn install`
-- Run: `yarn start`
-- Test: `yarn test`
-- Build: `yarn run dist`
-- Publish to gh-pages: `yarn run deploy`
+- Install dependencies: `npm install`
+- Run: `npm start`
+- Test: `npm test`
+- Build: `npm run dist`
+- Publish to gh-pages: `npm run deploy`
 
 ### API
 
