@@ -237,7 +237,7 @@ export default class MainContainer extends React.Component {
     body.classList.add('fn-wait');
     cachedFetch(config.favouriteURL, {
       mode: 'cors',
-      method: 'post',
+      method: 'put',
       timeout: 10e3,
       headers: {
         'Accept': 'application/json',

@@ -19,24 +19,11 @@ export default class Loading extends React.Component {
     this.state = {
       isHidden: true
     };
-
-    this.show = ::this.show;
-    this.hide = ::this.hide;
   }
 
   componentWillReceiveProps(nextProps) {
-    nextProps.isHidden ? this.hide() : this.show();
-  }
-
-  show() {
     this.setState({
-      isHidden: false
-    });
-  }
-
-  hide() {
-    this.setState({
-      isHidden: true
+      isHidden: nextProps.isHidden
     });
   }
 

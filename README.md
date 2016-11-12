@@ -162,7 +162,7 @@ curl 'https://api.kotori.love/pixiv/auth.php' \
 #### Add Favourite
 
 ##### request
-`POST /favourite.php`
+`PUT /favourite.php`
 
 ```json
 {"illust_id": "[:illust_id]"}
@@ -171,6 +171,7 @@ curl 'https://api.kotori.love/pixiv/auth.php' \
 ###### example
 ```bash
 curl 'https://api.kotori.love/pixiv/favourite.php' \
+-X PUT \
 -H 'access-token: AAA' \
 -H 'content-type: application/json' \
 -H 'accept: application/json' \
