@@ -48,7 +48,7 @@ export default class Item extends React.Component {
           <img
             ref={ (ref) => this.imgRef = ref }
             src={ this.props.item.image_urls.px_480mw }
-            onError={ this.onImgError } />
+            onError={ this.onImageError } />
         </div>
         </Link>
         <div className={ 'title' }>
