@@ -1,5 +1,6 @@
 import React from 'react';
 import { Locations, Location, NotFound } from 'react-router-component';
+import { Provider } from 'react-redux';
 import ReactGA from 'react-ga';
 import 'material-design-icons/iconfont/material-icons.css';
 import 'react-mdl/extra/material.css';
@@ -9,9 +10,11 @@ import '../styles/Reset.scss';
 import 'classlist-polyfill';
 
 import config from 'config';
-
-import { MainContainer, RedirectContainer, NotFoundContainer } from '../containers';
+import configureStore from '../stores';
+import { GalleryContainer, IllustContainer, RedirectContainer, NotFoundContainer } from '.';
 import { Piwik } from '../utils';
+
+const store = configureStore();
 
 export default class AppContainer extends React.Component {
 
@@ -20,10 +23,6 @@ export default class AppContainer extends React.Component {
     ReactGA.initialize(config.trackingID);
     this.onNavigation = ::this.onNavigation;
     this.onNavigation();
-  }
-
-  shouldComponentUpdate() {
-    return false;
   }
 
   onNavigation() {
@@ -40,22 +39,27 @@ export default class AppContainer extends React.Component {
       siteId: config.piwikSiteId
     }));
     this.piwik.track(pageLink);
-    document.body.scrollTop = 0;
+  // document.body.scrollTop = 0;
   }
 
   render() {
     return (
-      <Locations
-        hash
-        onNavigation={ this.onNavigation }>
-        <Location
-          path={ '/' }
-          handler={ MainContainer } />
-        <Location
-          path={ '/:illustId' }
-          handler={ RedirectContainer } />
-        <NotFound handler={ NotFoundContainer } />
-      </Locations>
+      <Provider store={ store }>
+        <Locations
+          hash
+          onNavigation={ this.onNavigation }>
+          <Location
+            path={ '/' }
+            handler={ GalleryContainer } />
+          <Location
+            path={ /\/illust\/([0-9]{0,}$)/ }
+            handler={ IllustContainer } />
+          <Location
+            path={ /\/([0-9]{0,}$)/ }
+            handler={ RedirectContainer } />
+          <NotFound handler={ NotFoundContainer } />
+        </Locations>
+      </Provider>
       );
   }
 

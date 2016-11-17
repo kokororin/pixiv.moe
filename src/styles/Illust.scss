@@ -1,0 +1,73 @@
+#illust-layout {
+    .mdl-layout__header-row {
+        padding: 0 20px;
+    }
+
+    .back-link {
+        color: #fff;
+    }
+
+    .back-icon {
+        float: left;
+        margin-right: 2rem;
+    }
+
+    #illust-title span {
+        vertical-align: middle;
+    }
+}
+
+.illust {
+    .image {
+        overflow: hidden;
+        text-align: center;
+
+        img {
+            position: relative;
+            margin: 0px auto;
+            box-shadow: rgba(0, 0, 0, 0.09804) 0px 0px 20px;
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+    }
+
+    .tags {
+        margin: 15px;
+        text-align: center;
+
+        span {
+            margin-right: 5px;
+        }
+    }
+
+    .actions {
+        margin: 15px;
+        text-align: center;
+
+        button {
+            margin: 8px;
+        }
+
+        .twitter {
+            width: 35px;
+            height: 35px;
+        }
+    }
+
+    .detail {
+        text-align: center;
+        color: rgb(255, 64, 129);
+
+        b {
+            color: #716d6d;
+            font-style: italic;
+            margin-right: 2px;
+        }
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .illust .image img {
+        width: 100%;
+    }
+}

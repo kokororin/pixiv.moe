@@ -8,6 +8,16 @@
 
 A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) order by popularity. Written with react.
 
+## Tech Stack
+* react
+* react-dom
+* react-router-component
+* redux
+* redux-thunk
+* react-redux
+* react-mdl
+* whatwg-fetch
+
 ## Online Site
 [https://pixiv.moe](https://pixiv.moe)
 
@@ -100,6 +110,85 @@ curl 'https://api.kotori.love/pixiv/source.php?sort=popular&tag=nico&page=1'
         "pages":678
     },
     "expires_at":1478517054
+}
+```
+
+#### Illust Detail
+
+##### request
+`GET /source.php?type=illust&illust_id=[:illust_id]`
+
+###### example
+
+```bash
+curl 'https://api.kotori.love/pixiv/source.php?type=illust&illust_id=50110342'
+```
+
+##### response
+
+```json
+{
+    "status":"success",
+    "count":1,
+    "response":{
+        "id":50110342,
+        "title":"ことにこと♥【COMIC1☆9】",
+        "caption":"５月２日、COMIC1☆9【ヤモセブン】せー50bでマイクロファイバークロスになります！",
+        "tags":[
+            "ラブライブ!",
+            "矢澤にこ",
+            "南ことり",
+            "にことり",
+            "胸囲の格差社会",
+            "水着",
+            "サイハイソックス",
+            "(・8・)",
+            "ラブライブ!1000users入り"
+        ],
+        "tools":[
+
+        ],
+        "image_urls":{
+            "px_128x128":"//i3.pixiv.net/c/128x128/img-master/img/2015/04/30/19/56/14/50110342_p0_square1200.jpg",
+            "px_480mw":"//i3.pixiv.net/c/480x960/img-master/img/2015/04/30/19/56/14/50110342_p0_master1200.jpg",
+            "large":"//i3.pixiv.net/img-original/img/2015/04/30/19/56/14/50110342_p0.png"
+        },
+        "width":784,
+        "height":704,
+        "stats":null,
+        "publicity":0,
+        "age_limit":"all-age",
+        "created_time":"2015-04-30 19:56:14",
+        "reuploaded_time":"2015-04-30 19:56:14",
+        "user":{
+            "id":2473967,
+            "account":"axial",
+            "name":"あゆま紗由",
+            "profile_image_urls":{
+                "px_50x50":"http://i2.pixiv.net/user-profile/img/2016/07/13/11/20/47/11192925_b983eb7c8038bffa8db23d1341787d0e_50.jpg"
+            },
+            "stats":null,
+            "profile":null
+        },
+        "page_count":1,
+        "book_style":"right_to_left",
+        "type":"illustration",
+        "metadata":null,
+        "content_type":null
+    }
+}
+```
+
+```json
+{
+    "status":"failure",
+    "has_error":true,
+    "errors":{
+        "system":{
+            "message":"対象のイラストは見つかりませんでした。(illust_id:5)",
+            "code":206
+        }
+    }
 }
 ```
 

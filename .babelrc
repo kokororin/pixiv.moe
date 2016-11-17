@@ -6,7 +6,8 @@
   ],
   "plugins": [
   	"transform-async-to-generator",
-  	"transform-decorators-legacy"
+  	"transform-decorators-legacy",
+    "react-hot-loader/babel"
   ],
   "env": {
     "dist": {

@@ -2,16 +2,16 @@
     .mdl-layout__drawer-button, a.mdl-navigation__link {
         outline: 0 none;
     }
-}
 
-.github-link {
-    img {
-        width: 24px;
-        height: 24px;
-        -moz-user-select: -moz-none;
-        -khtml-user-select: none;
-        -webkit-user-select: none;
-        -o-user-select: none;
-        user-select: none;
+    .github-link {
+        img {
+            width: 24px;
+            height: 24px;
+            -moz-user-select: -moz-none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
     }
 }

@@ -7,9 +7,7 @@ import { Item } from '.';
 export default class List extends React.Component {
 
   static propTypes = {
-    items: React.PropTypes.array,
-    onImageClick: React.PropTypes.func,
-    onFavouriteClick: React.PropTypes.func
+    items: React.PropTypes.array
   };
 
   constructor(props) {
@@ -30,9 +28,7 @@ export default class List extends React.Component {
                      key={ elem.unique_id }
                      index={ index }
                      item={ elem }
-                     onImageClick={ this.props.onImageClick }
-                     onFavouriteClick={ this.props.onFavouriteClick }
-                     onImageLoad={ this.masonryRef.performLayout } />
+                     masonry={ this.masonryRef } />
           }) }
       </Masonry>
       );

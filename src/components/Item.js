@@ -1,40 +1,26 @@
 import '../styles/Item.scss';
 
 import React from 'react';
-import { Icon, Tooltip } from 'react-mdl';
-import ImageLoader from 'react-imageloader';
+import { Link } from 'react-router-component';
+import { Icon } from 'react-mdl';
 
 export default class Item extends React.Component {
 
   static propTypes = {
     item: React.PropTypes.object,
     index: React.PropTypes.number,
-    onImageClick: React.PropTypes.func,
-    onFavouriteClick: React.PropTypes.func,
-    onImageLoad: React.PropTypes.func
+    masonry: React.PropTypes.object
   };
 
   constructor(props) {
     super(props);
 
-    this.onImageClick = ::this.onImageClick;
-    this.onFavouriteClick = ::this.onFavouriteClick;
     this.onImageMouseMove = ::this.onImageMouseMove;
-    this.onImageLoad = ::this.onImageLoad;
+    this.onImageError = ::this.onImageError;
   }
 
   shouldComponentUpdate() {
     return false;
-  }
-
-  onImageClick(event) {
-    event.nativeEvent.preventDefault();
-    this.props.onImageClick(this.props.index);
-  }
-
-  onFavouriteClick(event) {
-    event.nativeEvent.preventDefault();
-    this.props.onFavouriteClick(this.props.item.id, event);
   }
 
   onImageMouseMove(event) {
@@ -45,12 +31,9 @@ export default class Item extends React.Component {
     }
   }
 
-  onImageLoad() {
-    this.props.onImageLoad();
-  }
-
-  preloader() {
-    return <img src={ require('../images/img-loading.jpg') } />;
+  onImageError() {
+    this.imgRef.src = require('../images/img-fail.jpg');
+    typeof this.props.masonryRef !== 'undefined' && this.props.masonryRef.performLayout();
   }
 
   render() {
@@ -58,18 +41,16 @@ export default class Item extends React.Component {
       <div
         className={ 'cell' }
         onMouseMove={ this.onImageMouseMove }>
-        <a
+        <Link
           className={ 'illust' }
-          href={ '#' }
-          onClick={ this.onImageClick }>
-          <ImageLoader
-            className={ 'image-wrapper' }
+          href={ `/illust/${this.props.item.id}` }>
+        <div className={ 'image-wrapper' }>
+          <img
+            ref={ (ref) => this.imgRef = ref }
             src={ this.props.item.image_urls.px_480mw }
-            wrapper={ React.DOM.div }
-            preloader={ this.preloader }
-            onLoad={ this.onImageLoad }>
-            { <img src={ require('../images/img-fail.jpg') } /> } </ImageLoader>
-        </a>
+            onError={ this.onImgError } />
+        </div>
+        </Link>
         <div className={ 'title' }>
           <a
             target={ '_blank' }
@@ -78,17 +59,7 @@ export default class Item extends React.Component {
           </a>
         </div>
         <div className={ 'meta' }>
-          <Tooltip
-            label={ 'ブックマークに追加' }
-            position={ 'top' }>
-            <a
-              href={ '#' }
-              onClick={ this.onFavouriteClick }
-              className={ 'count' }>
-              <Icon name={ 'star' } />
-              { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private }
-            </a>
-          </Tooltip>
+          <span className={ 'count' }><Icon name={ 'star' } /> { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private }</span>
         </div>
       </div>
       );

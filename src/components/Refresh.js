@@ -24,7 +24,6 @@ export default class Refresh extends React.Component {
         <FABButton
           {...this.props}
           colored
-          primary
           ripple>
           <Icon name={ 'refresh' } />
         </FABButton>

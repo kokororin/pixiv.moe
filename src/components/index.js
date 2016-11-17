@@ -1,6 +1,4 @@
-export Account from './Account';
 export Alert from './Alert';
-export Image from './Image';
 export Item from './Item';
 export List from './List';
 export Login from './Login';

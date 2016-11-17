@@ -26,14 +26,12 @@
             border: 0;
             max-width: 100%;
             background: #ccc;
-            transition: opacity .5s ease,transform .2s ease;
+            transition: opacity .5s ease, transform .2s ease;
         }
 
         &:hover {
-            .loaded {
-                img {
-                    transform: scale(1.05);
-                }
+            img {
+                transform: scale(1.05);
             }
         }
     }
@@ -63,7 +61,6 @@
             border-radius: 3px;
             margin: 0 1px;
             padding: 0 6px;
-            outline: 0 none;
         }
 
         i {
