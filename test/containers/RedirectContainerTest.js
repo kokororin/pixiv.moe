@@ -7,7 +7,9 @@ describe('RedirectContainer', () => {
   let redirectContainer;
 
   beforeEach(() => {
-    redirectContainer = createComponent(RedirectContainer, '45944782');
+    redirectContainer = createComponent(RedirectContainer, {
+      illustId: '45944782'
+    });
   });
 
   it('RedirectContainer has a correct message', () => {

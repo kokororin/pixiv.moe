@@ -55,5 +55,8 @@ module.exports = {
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
     })
-  ]
+  ],
+  externals: {
+    fs: '{}'
+  }
 };

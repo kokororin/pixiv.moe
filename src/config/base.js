@@ -1,4 +1,5 @@
 export default {
+  apiBaseURL: 'https://api.kotori.love/',
   sourceURL: 'https://api.kotori.love/pixiv/source.php',
   authURL: 'https://api.kotori.love/pixiv/auth.php',
   favouriteURL: 'https://api.kotori.love/pixiv/favourite.php',

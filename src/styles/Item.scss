@@ -14,10 +14,12 @@
         box-shadow: 0 1px 5px rgba(34, 25, 25, 0.8);
     }
 
-    .illust {
-        .image-wrapper {
-            overflow: hidden;
-        }
+    .link {
+        text-decoration: none;
+    }
+
+    .image-wrapper {
+        overflow: hidden;
 
         img {
             display: block;
@@ -36,7 +38,7 @@
         }
     }
 
-    .title a, .meta a {
+    .title span, .meta span {
         font-size: 12px;
         font-weight: bold;
         color: #000;

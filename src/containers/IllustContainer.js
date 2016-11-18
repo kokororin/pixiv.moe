@@ -26,11 +26,21 @@ export class IllustContainerWithoutStore extends React.Component {
   componentDidMount() {
     this.illustId = this.props._[0];
     this.props.dispatch(IllustActions.fetchItem(this.illustId));
+    this.authTimer = setInterval(() => {
+      const authData = Storage.get('auth');
+      if (authData === null) {
+        return;
+      }
+      if (authData.expires_at < time()) {
+        Storage.remove('auth');
+      }
+    }, 500);
   }
 
   componentWillUnmount() {
     this.props.dispatch(IllustActions.setFetchStatus(false));
     this.props.dispatch(IllustActions.clearItem());
+    clearInterval(this.authTimer);
   }
 
   renderHeaderTitle() {

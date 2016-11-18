@@ -119,6 +119,7 @@ export class GalleryContainerWithoutStore extends React.Component {
                href={ '#' }
                style={ { fontWeight: elem.en === this.props.tag ? 'bold' : 'normal' } }
                data-tag={ elem.en }
+               onTouchTap={ this.onKeywordClick }
                onClick={ this.onKeywordClick }>
                { elem.jp }
              </a>;

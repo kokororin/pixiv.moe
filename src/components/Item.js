@@ -42,7 +42,7 @@ export default class Item extends React.Component {
         className={ 'cell' }
         onMouseMove={ this.onImageMouseMove }>
         <Link
-          className={ 'illust' }
+          className={ 'link' }
           href={ `/illust/${this.props.item.id}` }>
         <div className={ 'image-wrapper' }>
           <img
@@ -50,17 +50,13 @@ export default class Item extends React.Component {
             src={ this.props.item.image_urls.px_480mw }
             onError={ this.onImageError } />
         </div>
-        </Link>
         <div className={ 'title' }>
-          <a
-            target={ '_blank' }
-            href={ `/#/${this.props.item.id}` }>
-            { this.props.item.title }
-          </a>
+          <span>{ this.props.item.title }</span>
         </div>
         <div className={ 'meta' }>
           <span className={ 'count' }><Icon name={ 'star' } /> { this.props.item.stats.favorited_count.public + this.props.item.stats.favorited_count.private }</span>
         </div>
+        </Link>
       </div>
       );
   }
