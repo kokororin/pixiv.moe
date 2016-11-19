@@ -4,9 +4,15 @@ var webpackCfg = require('./webpack.config');
 process.env.NODE_ENV = 'test';
 
 module.exports = function(config) {
-  config.set({
+  var configuration = {
     basePath: '',
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
     files: [
       'test/loadtests.js'
     ],
@@ -36,5 +42,12 @@ module.exports = function(config) {
         }
       ]
     }
-  });
+  };
+  // We created a custom browser launcher that runs Chrome with the --no-sandbox option. 
+  // And we only use it if the tests are running in Travis.
+  if (process.env.TRAVIS) {
+    configuration.browsers = ['Chrome_travis_ci'];
+  }
+
+  config.set(configuration);
 };

@@ -13,6 +13,6 @@ describe('GalleryContainer', () => {
   });
 
   it('GalleryContainer\'s mdl Layout has a scroll listener', () => {
-    expect(galleryContainer.props.onScroll.name).to.equal('scrollListener');
+    expect(typeof(galleryContainer.props.onScroll)).to.equal('function');
   });
 });
