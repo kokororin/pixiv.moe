@@ -1,4 +1,5 @@
 export Alert from './Alert';
+// export AnimatedLocations from './AnimatedLocations';
 export Item from './Item';
 export List from './List';
 export Login from './Login';

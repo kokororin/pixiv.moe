@@ -1,4 +1,5 @@
 import '../styles/Item.scss';
+import '../styles/Animation.scss';
 
 import React from 'react';
 import { Link } from 'react-router-component';
@@ -39,7 +40,7 @@ export default class Item extends React.Component {
   render() {
     return (
       <div
-        className={ 'cell' }
+        className={ 'cell animated fadeIn' }
         onMouseMove={ this.onImageMouseMove }>
         <Link
           className={ 'link' }

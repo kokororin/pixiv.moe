@@ -1,4 +1,5 @@
 import '../styles/Illust.scss';
+import '../styles/Animation.scss';
 
 import React from 'react';
 import { connect } from 'react-redux';
@@ -133,9 +134,15 @@ export class IllustContainerWithoutStore extends React.Component {
     try {
       return (
         <div className={ 'illust' }>
+          <Link
+            className={ 'link' }
+            href={ '/' }>
           <div className={ 'image' }>
-            <img src={ this.props.illust.item.image_urls.px_480mw } />
+            <img
+              className={ 'animated rollIn' }
+              src={ this.props.illust.item.image_urls.px_480mw } />
           </div>
+          </Link>
           <div className={ 'tags' }>
             { this.props.illust.item.tags.map((elem) => {
                 return (

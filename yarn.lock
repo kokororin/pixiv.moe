@@ -4942,6 +4942,10 @@ rc@^1.0.1, rc@^1.1.2, rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
+react-addons-css-transition-group@^15.4.0:
+  version "15.4.0"
+  resolved "https://registry.npmjs.org/react-addons-css-transition-group/-/react-addons-css-transition-group-15.4.0.tgz#410aa74533629974de33cfeaa85945066ff181cd"
+
 react-addons-test-utils@^15.0.0:
   version "15.4.0"
   resolved "https://registry.npmjs.org/react-addons-test-utils/-/react-addons-test-utils-15.4.0.tgz#bd326904916b80de6a466248ef52cdfc1799e963"
@@ -4993,6 +4997,13 @@ react-mdl@^1.7.2:
     clamp "^1.0.1"
     classnames "^2.2.3"
     lodash.isequal "^4.4.0"
+
+react-mixin@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.npmjs.org/react-mixin/-/react-mixin-3.0.5.tgz#e0b7b6713fdc9ddc429267df808b6ac5184c6706"
+  dependencies:
+    object-assign "^4.0.1"
+    smart-mixin "^2.0.0"
 
 react-modal@^1.5.2:
   version "1.5.2"
@@ -5507,6 +5518,10 @@ slice-ansi@0.0.4:
 slide@^1.1.5:
   version "1.1.6"
   resolved "https://registry.npmjs.org/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
+
+smart-mixin@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/smart-mixin/-/smart-mixin-2.0.0.tgz#a34a1055e32a75b30d2b4e3ca323dc99cb53f437"
 
 snake-case@^2.1.0:
   version "2.1.0"
