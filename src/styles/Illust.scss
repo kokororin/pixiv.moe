@@ -4,16 +4,16 @@
     }
 
     .back-link {
-        color: #fff;
+        color: #fff; 
     }
 
     .back-icon {
         float: left;
-        margin-right: 2rem;
+        margin-right: 1rem;
     }
 
     #illust-title span {
-        vertical-align: middle;
+        vertical-align: -2px;
     }
 }
 
@@ -29,7 +29,8 @@
         img {
             position: relative;
             margin: 0px auto;
-            box-shadow: rgba(0, 0, 0, 0.09804) 0px 0px 20px;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+            border: 0;
             z-index: 1;
             transition: opacity 0.3s ease;
         }
@@ -39,8 +40,13 @@
         margin: 15px;
         text-align: center;
 
-        span {
-            margin-right: 5px;
+        .mdl-chip {
+            margin: 5px;
+        }
+
+        .mdl-chip__contact {
+            color: rgb(255,255,255)!important;
+            background-color: rgb(0,150,136)!important;
         }
     }
 

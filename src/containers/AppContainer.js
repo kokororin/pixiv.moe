@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import ReactGA from 'react-ga';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import 'material-design-icons/iconfont/material-icons.css';
-import 'react-mdl/extra/material.css';
+import '../styles/mdl/material-design-lite.scss';
 import 'react-mdl/extra/material.js';
 import '../styles/Base.scss';
 import '../styles/Reset.scss';

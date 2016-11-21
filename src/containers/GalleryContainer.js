@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Layout, Header, Navigation, Drawer, Content } from 'react-mdl';
 import shortid from 'shortid';
+import 'smoothscroll-for-websites';
 
 import config from 'config';
 
@@ -24,7 +25,8 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   componentDidMount() {
     this.layoutDOMNode = ReactDOM.findDOMNode(this.layoutRef);
-    this.contentDOMNode = this.layoutDOMNode.querySelector('.mdl-layout__content');
+    this.contentDOMNode = this.layoutDOMNode.MaterialLayout.content_;
+    this.drawerDOMNode = this.layoutDOMNode.MaterialLayout.drawer_;
 
     window.addEventListener('resize', this.resizeListener);
 
@@ -45,6 +47,9 @@ export class GalleryContainerWithoutStore extends React.Component {
   }
 
   scrollListener(event) {
+    if (this.drawerDOMNode.classList.contains('is-visible')) {
+      return;
+    }
     const contentScrollTop = this.contentDOMNode.scrollTop;
     this.props.dispatch(GalleryActions.setContentScrollTop(contentScrollTop));
     if (this.props.gallery.isFetching) {
@@ -113,11 +118,19 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   renderKeywords() {
     const keywords = config.keywords;
+
     return keywords.map((elem) => {
+      let linkStyle = {};
+      if (elem.en === this.props.gallery.tag) {
+        linkStyle = {
+          fontWeight: 'bold',
+          fontSize: '16px'
+        };
+      }
       return <a
                key={ shortid.generate() }
                href={ '#' }
-               style={ { fontWeight: elem.en === this.props.tag ? 'bold' : 'normal' } }
+               style={ linkStyle }
                data-tag={ elem.en }
                onTouchTap={ this.onKeywordClick }
                onClick={ this.onKeywordClick }>

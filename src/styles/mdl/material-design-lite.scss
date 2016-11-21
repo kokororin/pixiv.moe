@@ -1,0 +1,54 @@
+/**
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* Material Design Lite */
+
+// Variables and mixins
+@import "variables";
+@import "~material-design-lite/src/mixins";
+
+// Resets and dependencies
+@import "~material-design-lite/src/resets/resets";
+@import "~material-design-lite/src/typography/typography";
+
+// Components
+@import "~material-design-lite/src/palette/palette";
+@import "~material-design-lite/src/ripple/ripple";
+@import "~material-design-lite/src/animation/animation";
+@import "~material-design-lite/src/badge/badge";
+@import "~material-design-lite/src/button/button";
+@import "~material-design-lite/src/card/card";
+@import "~material-design-lite/src/checkbox/checkbox";
+@import "~material-design-lite/src/chip/chip";
+@import "~material-design-lite/src/data-table/data-table";
+@import "~material-design-lite/src/dialog/dialog";
+@import "~material-design-lite/src/footer/mega_footer";
+@import "~material-design-lite/src/footer/mini_footer";
+@import "~material-design-lite/src/icon-toggle/icon-toggle";
+@import "~material-design-lite/src/list/list";
+@import "~material-design-lite/src/menu/menu";
+@import "~material-design-lite/src/progress/progress";
+@import "layout";
+@import "~material-design-lite/src/radio/radio";
+@import "~material-design-lite/src/slider/slider";
+@import "~material-design-lite/src/snackbar/snackbar";
+@import "~material-design-lite/src/spinner/spinner";
+@import "~material-design-lite/src/switch/switch";
+@import "~material-design-lite/src/tabs/tabs";
+@import "~material-design-lite/src/textfield/textfield";
+@import "~material-design-lite/src/tooltip/tooltip";
+@import "~material-design-lite/src/shadow/shadow";
+@import "~material-design-lite/src/grid/grid";

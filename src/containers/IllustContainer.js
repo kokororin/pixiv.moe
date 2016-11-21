@@ -147,7 +147,7 @@ export class IllustContainerWithoutStore extends React.Component {
             { this.props.illust.item.tags.map((elem) => {
                 return (
                   <Chip key={ shortid.generate() }>
-                    <ChipContact className="mdl-color--teal mdl-color-text--white">
+                    <ChipContact>
                       #
                     </ChipContact>
                     { elem }
@@ -172,9 +172,7 @@ export class IllustContainerWithoutStore extends React.Component {
               raised
               ripple
               onClick={ this.onTwitterClick }>
-              <img
-                className={ 'twitter' }
-                src={ require('../images/Twitter_Logo_Blue.png') } />ツイート
+              ツイート
             </Button>
           </div>
           <div className={ 'detail' }>
