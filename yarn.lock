@@ -5451,10 +5451,6 @@ smart-mixin@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/smart-mixin/-/smart-mixin-2.0.0.tgz#a34a1055e32a75b30d2b4e3ca323dc99cb53f437"
 
-smoothscroll-for-websites@^1.4.5:
-  version "1.4.5"
-  resolved "https://registry.npmjs.org/smoothscroll-for-websites/-/smoothscroll-for-websites-1.4.5.tgz#12de9348df9f317bba057e1b53e9fff6ab731bab"
-
 snake-case@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/snake-case/-/snake-case-2.1.0.tgz#41bdb1b73f30ec66a04d4e2cad1b76387d4d6d9f"

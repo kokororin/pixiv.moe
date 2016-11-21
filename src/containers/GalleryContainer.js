@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Layout, Header, Navigation, Drawer, Content } from 'react-mdl';
 import shortid from 'shortid';
-import 'smoothscroll-for-websites';
 
 import config from 'config';
 
