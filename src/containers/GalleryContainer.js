@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { Layout, Header, Navigation, Drawer, Content } from 'react-mdl';
+import { Layout, Header, Navigation, Drawer, Content, Icon } from 'react-mdl';
 import shortid from 'shortid';
 
 import config from 'config';
@@ -119,22 +119,34 @@ export class GalleryContainerWithoutStore extends React.Component {
     const keywords = config.keywords;
 
     return keywords.map((elem) => {
-      let linkStyle = {};
+      let linkStyle = null,
+        iconStyle = {
+          display: 'none'
+        };
       if (elem.en === this.props.gallery.tag) {
         linkStyle = {
           fontWeight: 'bold',
           fontSize: '16px'
         };
+        iconStyle = {
+          color: '#4caf50',
+          display: 'inline-block'
+        };
       }
-      return <a
-               key={ shortid.generate() }
-               href={ '#' }
-               style={ linkStyle }
-               data-tag={ elem.en }
-               onTouchTap={ this.onKeywordClick }
-               onClick={ this.onKeywordClick }>
-               { elem.jp }
-             </a>;
+      return (
+        <a
+          key={ shortid.generate() }
+          href={ '#' }
+          style={ linkStyle }
+          data-tag={ elem.en }
+          onTouchTap={ this.onKeywordClick }
+          onClick={ this.onKeywordClick }>
+          <Icon
+            style={ iconStyle }
+            name={ 'done' } />
+          { elem.jp }
+        </a>
+        );
     });
   }
 

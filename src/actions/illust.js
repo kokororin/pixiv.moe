@@ -40,17 +40,11 @@ export function fetchItem(illustId) {
     return cachedFetch(config.sourceURL, {
       mode: 'cors',
       timeout: 10e3,
-      query: {
+      data: {
         type: 'illust',
         illust_id: illustId
       }
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('response is not OK');
-      })
       .then((data) => {
         if (data.status === 'success') {
           dispatch(setItem(data.response));

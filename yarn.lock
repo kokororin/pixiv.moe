@@ -34,7 +34,7 @@ acorn@^3.0.0, acorn@^3.0.4:
   version "3.3.0"
   resolved "https://registry.npmjs.org/acorn/-/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
 
-acorn@^4.0.1:
+acorn@^4.0.1, acorn@^4.0.3:
   version "4.0.3"
   resolved "https://registry.npmjs.org/acorn/-/acorn-4.0.3.tgz#1a3e850b428e73ba6b09d1cc527f5aaad4d03ef1"
 
@@ -1938,6 +1938,10 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
+ejs@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.npmjs.org/ejs/-/ejs-2.5.2.tgz#21444ba09386f0c65b6eafb96a3d51bcb3be80d1"
+
 element-class@^0.2.0:
   version "0.2.2"
   resolved "https://registry.npmjs.org/element-class/-/element-class-0.2.2.tgz#9d3bbd0767f9013ef8e1c8ebe722c1402a60050e"
@@ -2302,7 +2306,7 @@ expect@^1.20.2:
     object-keys "^1.0.9"
     tmatch "^2.0.1"
 
-express@^4.13.3:
+express@^4.13.3, express@^4.14.0:
   version "4.14.0"
   resolved "https://registry.npmjs.org/express/-/express-4.14.0.tgz#c1ee3f42cdc891fb3dc650a8922d51ec847d0d66"
   dependencies:
@@ -2409,6 +2413,10 @@ file-loader@^0.9.0:
 filename-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/filename-regex/-/filename-regex-2.0.0.tgz#996e3e80479b98b9897f15a8a58b3d084e926775"
+
+filesize@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.npmjs.org/filesize/-/filesize-3.3.0.tgz#53149ea3460e3b2e024962a51648aa572cf98122"
 
 fill-range@^2.1.0:
   version "2.2.3"
@@ -3730,7 +3738,7 @@ lodash@4.14.2:
   version "4.14.2"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.14.2.tgz#bbccce6373a400fbfd0a8c67ca42f6d1ef416432"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.16.2, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.6.1:
+lodash@^4.0.0, lodash@^4.14.0, lodash@^4.16.2, lodash@^4.16.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.6.1:
   version "4.17.2"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
 
@@ -3957,6 +3965,10 @@ mocha@^3.0.0:
 moment@2.14.1:
   version "2.14.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.14.1.tgz#b35b27c47e57ed2ddc70053d6b07becdb291741c"
+
+moment@^2.16.0:
+  version "2.16.0"
+  resolved "https://registry.npmjs.org/moment/-/moment-2.16.0.tgz#f38f2c97c9889b0ee18fc6cc392e1e443ad2da8e"
 
 ms@0.7.1:
   version "0.7.1"
@@ -4284,6 +4296,10 @@ onetime@^1.0.0:
 open@0.0.5:
   version "0.0.5"
   resolved "https://registry.npmjs.org/open/-/open-0.0.5.tgz#42c3e18ec95466b6bf0dc42f3a2945c3f0cad8fc"
+
+opener@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.npmjs.org/opener/-/opener-1.4.2.tgz#b32582080042af8680c389a499175b4c54fff523"
 
 optimist@^0.6.1, optimist@~0.6.0, optimist@~0.6.1:
   version "0.6.1"
@@ -6104,6 +6120,20 @@ weak-map@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmjs.org/weak-map/-/weak-map-1.0.5.tgz#79691584d98607f5070bd3b70a40e6bb22e401eb"
 
+webpack-bundle-analyzer@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.npmjs.org/webpack-bundle-analyzer/-/webpack-bundle-analyzer-1.5.3.tgz#d1109bdd0a0067bba88ea6aa642533b4de926965"
+  dependencies:
+    acorn "^4.0.3"
+    chalk "^1.1.3"
+    commander "^2.9.0"
+    ejs "^2.5.2"
+    express "^4.14.0"
+    filesize "^3.3.0"
+    lodash "^4.16.4"
+    mkdirp "^0.5.1"
+    opener "^1.4.2"
+
 webpack-core@~0.6.0:
   version "0.6.8"
   resolved "https://registry.npmjs.org/webpack-core/-/webpack-core-0.6.8.tgz#edf9135de00a6a3c26dd0f14b208af0aa4af8d0a"
@@ -6120,7 +6150,7 @@ webpack-dev-middleware@^1.0.11, webpack-dev-middleware@^1.4.0:
     path-is-absolute "^1.0.0"
     range-parser "^1.0.3"
 
-webpack-dev-server@^1.12.0:
+webpack-dev-server@^1.16.2:
   version "1.16.2"
   resolved "https://registry.npmjs.org/webpack-dev-server/-/webpack-dev-server-1.16.2.tgz#8bebc2c4ce1c45a15c72dd769d9ba08db306a793"
   dependencies:
@@ -6138,7 +6168,7 @@ webpack-dev-server@^1.12.0:
     supports-color "^3.1.1"
     webpack-dev-middleware "^1.4.0"
 
-webpack@^1.12.0:
+webpack@^1.13.3:
   version "1.13.3"
   resolved "https://registry.npmjs.org/webpack/-/webpack-1.13.3.tgz#e79c46fe5a37c5ca70084ba0894c595cdcb42815"
   dependencies:

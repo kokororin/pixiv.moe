@@ -13,7 +13,7 @@ import config from 'config';
 import { IllustActions } from '../actions';
 import { Alert, Loading, Message } from '../components';
 import { LoginContainer } from '.';
-import { cachedFetch, Storage } from '../utils';
+import { cachedFetch, moment, Storage } from '../utils';
 
 export class IllustContainerWithoutStore extends React.Component {
 
@@ -84,11 +84,6 @@ export class IllustContainerWithoutStore extends React.Component {
         illust_id: this.illustId
       })
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-      })
       .then((data) => {
         target.classList.remove('fn-wait');
         body.classList.remove('fn-wait');
@@ -186,7 +181,7 @@ export class IllustContainerWithoutStore extends React.Component {
             </p>
             <p>
               <b>時間</b>
-              { this.props.illust.item.created_time }
+              { `${moment(this.props.illust.item.created_time).format('LLL')}(JST)` }
             </p>
             <p>
               <b>リンク</b>

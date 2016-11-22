@@ -64,18 +64,12 @@ function fetchSource() {
       mode: 'cors',
       timeout: 10e3,
       expiryKey: 'expires_at',
-      query: {
+      data: {
         sort: 'popular',
         tag: getState().gallery.tag,
         page: getState().gallery.page
       }
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('response is not OK');
-      })
       .then((data) => {
         if (data.status === 'success' && data.count > 0) {
           Object.keys(data.response).map((key) => {

@@ -7,8 +7,9 @@ export default class Storage {
   }
 
   static set(key, value) {
-    if (!Storage.isSupport()) return;
+    if (!Storage.isSupport()) return Storage;
     store.set(key, value);
+    return Storage;
   }
 
   static get(key) {
@@ -18,8 +19,9 @@ export default class Storage {
   }
 
   static remove(key) {
-    if (!Storage.isSupport()) return;
+    if (!Storage.isSupport()) return Storage;
     store.remove(key);
+    return Storage;
   }
 
   static clear() {

@@ -10,6 +10,7 @@ let defaultSettings = require('./defaults');
 
 // Add needed plugins here
 let BowerWebpackPlugin = require('bower-webpack-plugin');
+let BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 let config = Object.assign({}, baseConfig, {
   entry: [
@@ -33,6 +34,7 @@ let config = Object.assign({}, baseConfig, {
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
     }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
@@ -43,6 +45,12 @@ let config = Object.assign({}, baseConfig, {
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      reportFilename: path.join(__dirname, '/../dist/report.html'),
+      openAnalyzer: false,
+      generateStatsFile: false
+    }),
     new webpack.NoErrorsPlugin(), function() {
       this.plugin('done', function(statsData) {
         let stats = statsData.toJson();

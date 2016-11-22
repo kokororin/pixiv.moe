@@ -91,11 +91,6 @@ export default class LoginContainer extends React.Component {
         password: password
       })
     })
-      .then((response) => {
-        if (response.ok) {
-          return response.json()
-        }
-      })
       .then((data) => {
 
         if (data.status === 'success') {
