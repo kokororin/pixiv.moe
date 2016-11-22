@@ -20,16 +20,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kokororin/pixiv.moe.git"
+    "url": "https://github.com/LoveLiveSunshine/pixiv.moe.git"
   },
   "keywords": [
-    "pixiv"
+    "pixiv",
+    "lovelive"
   ],
   "author": "kokororin",
   "license": "MIT",
-  "homepage": "https://github.com/kokororin/pixiv.moe#readme",
+  "homepage": "https://github.com/LoveLiveSunshine/pixiv.moe#readme",
   "bugs": {
-    "url": "https://github.com/kokororin/pixiv.moe/issues"
+    "url": "https://github.com/LoveLiveSunshine/pixiv.moe/issues"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
