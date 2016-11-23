@@ -37,13 +37,9 @@ export function setFetchStatus(isFetchCompleted) {
 export function fetchItem(illustId) {
   return (dispatch) => {
     dispatch(setFetchError(false));
-    return cachedFetch(config.sourceURL, {
+    return cachedFetch(`${config.apiBaseURL}${config.illustURI}/${illustId}`, {
       mode: 'cors',
-      timeout: 10e3,
-      data: {
-        type: 'illust',
-        illust_id: illustId
-      }
+      timeout: 10e3
     })
       .then((data) => {
         if (data.status === 'success') {

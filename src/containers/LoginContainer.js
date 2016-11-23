@@ -78,7 +78,7 @@ export default class LoginContainer extends React.Component {
       isSubmitting: true
     });
 
-    cachedFetch(config.authURL, {
+    cachedFetch(`${config.apiBaseURL}${config.authURI}`, {
       mode: 'cors',
       method: 'post',
       timeout: 10e3,

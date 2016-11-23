@@ -60,16 +60,16 @@ $ npm start
 ### API
 
 The API is based on HTTPS requests and JSON responses.The stable HTTPS endpoint for the latest version is:
-`https://api.kotori.love/pixiv/`
+`https://api.pixiv.moe/v1`
 
 #### Illust List
 
 ##### request
-`GET /source.php?sort=[:sort]&tag=[:tag]&page=[:page]`
+`GET /gallery/[:tag]/[:page]`
 
 ###### example
 ```bash
-curl 'https://api.kotori.love/pixiv/source.php?sort=popular&tag=nico&page=1' 
+curl 'https://api.pixiv.moe/v1/gallery/nico/1' 
 ```
 
 ##### response
@@ -116,12 +116,12 @@ curl 'https://api.kotori.love/pixiv/source.php?sort=popular&tag=nico&page=1'
 #### Illust Detail
 
 ##### request
-`GET /source.php?type=illust&illust_id=[:illust_id]`
+`GET /illust/[:illust_id]`
 
 ###### example
 
 ```bash
-curl 'https://api.kotori.love/pixiv/source.php?type=illust&illust_id=50110342'
+curl 'https://api.pixiv.moe/v1/illust/50110342'
 ```
 
 ##### response
@@ -195,7 +195,7 @@ curl 'https://api.kotori.love/pixiv/source.php?type=illust&illust_id=50110342'
 #### Auth
 
 ##### request
-`POST /auth.php`
+`POST /user/auth`
 
 ```json
 {
@@ -206,7 +206,7 @@ curl 'https://api.kotori.love/pixiv/source.php?type=illust&illust_id=50110342'
 
 ###### example
 ```bash
-curl 'https://api.kotori.love/pixiv/auth.php' \
+curl 'https://api.pixiv.moe/v1/user/auth' \
 -H 'content-type: application/json' \
 -H 'accept: application/json' \
 --data-binary '{"username":"abc","password":"mypassword"}'
@@ -251,20 +251,15 @@ curl 'https://api.kotori.love/pixiv/auth.php' \
 #### Add Favourite
 
 ##### request
-`PUT /favourite.php`
-
-```json
-{"illust_id": "[:illust_id]"}
-```
+`PUT /favourite/[:illust_id]`
 
 ###### example
 ```bash
-curl 'https://api.kotori.love/pixiv/favourite.php' \
+curl 'https://api.pixiv.moe/v1/favourite/46453302' \
 -X PUT \
 -H 'access-token: AAA' \
 -H 'content-type: application/json' \
--H 'accept: application/json' \
---data-binary '{"illust_id":46453302}'
+-H 'accept: application/json'
 ```
 
 ##### response

@@ -1,8 +1,9 @@
 export default {
-  apiBaseURL: 'https://api.kotori.love/',
-  sourceURL: 'https://api.kotori.love/pixiv/source.php',
-  authURL: 'https://api.kotori.love/pixiv/auth.php',
-  favouriteURL: 'https://api.kotori.love/pixiv/favourite.php',
+  apiBaseURL: 'https://api.pixiv.moe/v1',
+  galleryURI: '/gallery',
+  illustURI: '/illust',
+  authURI: '/user/auth',
+  favouriteURI: '/favourite',
   baseURL: 'https://pixiv.moe/',
   trackingID: 'UA-70944432-2',
   piwikDomain: 'analytics.kotori.love',
@@ -40,7 +41,7 @@ export default {
     en: 'nozomi',
     jp: '东条希'
   }, {
-    en: 'lovelive-sunshine',
+    en: 'sunshine',
     jp: 'ラブライブ!サンシャイン!!'
   }, {
     en: 'chika',

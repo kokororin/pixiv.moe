@@ -60,15 +60,10 @@ function fetchSource() {
   return (dispatch, getState) => {
     dispatch(setFetchError(false));
     dispatch(setFetchStatus(true));
-    return cachedFetch(config.sourceURL, {
+    return cachedFetch(`${config.apiBaseURL}${config.galleryURI}/${getState().gallery.tag}/${getState().gallery.page}`, {
       mode: 'cors',
       timeout: 10e3,
-      expiryKey: 'expires_at',
-      data: {
-        sort: 'popular',
-        tag: getState().gallery.tag,
-        page: getState().gallery.page
-      }
+      expiryKey: 'expires_at'
     })
       .then((data) => {
         if (data.status === 'success' && data.count > 0) {

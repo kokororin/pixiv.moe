@@ -71,7 +71,7 @@ export class IllustContainerWithoutStore extends React.Component {
     }
     target.classList.add('fn-wait');
     body.classList.add('fn-wait');
-    cachedFetch(config.favouriteURL, {
+    cachedFetch(`${config.apiBaseURL}${config.favouriteURI}/${this.illustId}`, {
       mode: 'cors',
       method: 'put',
       timeout: 10e3,
@@ -79,10 +79,7 @@ export class IllustContainerWithoutStore extends React.Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Access-Token': authData.access_token
-      },
-      body: JSON.stringify({
-        illust_id: this.illustId
-      })
+      }
     })
       .then((data) => {
         target.classList.remove('fn-wait');
