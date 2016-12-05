@@ -4909,9 +4909,9 @@ react-masonry-component@^4.2.1:
     lodash.omit "^4.3.0"
     masonry-layout "^4.0.0"
 
-react-mdl@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.npmjs.org/react-mdl/-/react-mdl-1.7.2.tgz#08e6fabcf9fc269ae02ec90b5a0e40c6e1b69b84"
+react-mdl@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.npmjs.org/react-mdl/-/react-mdl-1.9.0.tgz#e7f285c68639cab40f0c9fff0e91ec605563c4e8"
   dependencies:
     clamp "^1.0.1"
     classnames "^2.2.3"

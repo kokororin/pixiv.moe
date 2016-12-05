@@ -1,6 +1,6 @@
 {
   "name": "pixiv.moe",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Source code of https://pixiv.moe",
   "main": "server.js",
   "scripts": {
@@ -99,7 +99,7 @@
     "react-dom": "^15.0.0",
     "react-ga": "^2.1.2",
     "react-masonry-component": "^4.2.1",
-    "react-mdl": "^1.7.2",
+    "react-mdl": "^1.9.0",
     "react-mixin": "^3.0.5",
     "react-modal": "^1.5.2",
     "react-redux": "^4.4.6",
