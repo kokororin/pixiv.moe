@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "clean": "rimraf dist/*",
-    "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./src/robots.txt ./src/CNAME ./dist",
+    "copy": "copyfiles -f ./src/*.html ./src/favicon.ico ./src/robots.txt ./src/CNAME ./dist",
     "dist": "npm run clean && npm run copy && webpack --env=dist",
     "lint": "eslint --max-warnings 0 ./src",
     "posttest": "npm run lint",

@@ -55,17 +55,18 @@ let config = Object.assign({}, baseConfig, {
       this.plugin('done', function(statsData) {
         let stats = statsData.toJson();
         if (!stats.errors.length) {
-          let htmlFileName = '/../dist/index.html';
-          let htmlFilePath = path.join(__dirname, htmlFileName);
-          let html = fs.readFileSync(htmlFilePath, 'utf8');
+          let htmlFileNames = ['/../dist/index.html', '/../dist/404.html'];
+          htmlFileNames.map(function(htmlFileName) {
+            let htmlFilePath = path.join(__dirname, htmlFileName);
+            let html = fs.readFileSync(htmlFilePath, 'utf8');
 
-          // let htmlOutput = html.replace(
-          //   /<script\s+src=(["'])(.+?)bundle\.js\1/i,
-          //   '<script src=$1$2' + stats.assetsByChunkName.main + '?' + stats.hash + '$1');
+            // let htmlOutput = html.replace(
+            //   /<script\s+src=(["'])(.+?)bundle\.js\1/i,
+            //   '<script src=$1$2' + stats.assetsByChunkName.main + '?' + stats.hash + '$1');
 
-          let htmlOutput = html.replace(
-            /<script\s+src=(["'])(.+?)bundle\.js(.*)<\/script>/i,
-            `<script type="text/javascript">
+            let htmlOutput = html.replace(
+              /<script\s+src=(["'])(.+?)bundle\.js(.*)<\/script>/i,
+              `<script type="text/javascript">
 (function(hash, src, localStorage, document, window) {
   var createScript = function(url) {
     var script = document.createElement("script");
@@ -109,15 +110,18 @@ let config = Object.assign({}, baseConfig, {
 })("${stats.hash}", "$2${stats.assetsByChunkName.main}?${stats.hash}", window.localStorage, document, window);
 </script>`);
 
-          htmlOutput = minify(htmlOutput, {
-            collapseWhitespace: true,
-            removeComments: true,
-            minifyJS: true,
-            minifyCSS: true,
-            processConditionalComments: true
+            htmlOutput = minify(htmlOutput, {
+              collapseWhitespace: true,
+              removeComments: true,
+              minifyJS: true,
+              minifyCSS: true,
+              processConditionalComments: true
+            });
+
+            fs.writeFileSync(htmlFilePath, htmlOutput);
           });
 
-          fs.writeFileSync(htmlFilePath, htmlOutput);
+
         }
       });
     }
