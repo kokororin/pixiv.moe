@@ -55,7 +55,7 @@
   </div>
   <script type="text/javascript">
   (function() {
-    var matches = window.location.pathname.replace('/', '').match(/\/([0-9]{0,}$)/);
+    var matches = window.location.pathname.match(/\/([0-9]{0,}$)/);
     if (matches && matches[1]) {
       document.getElementById('app').innerHTML = '<div class="message"><p>あなたはpixiv.netへリダイレクトしています</p></div>';
       setTimeout(function() {
