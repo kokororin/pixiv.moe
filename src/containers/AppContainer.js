@@ -54,10 +54,10 @@ export default class AppContainer extends React.Component {
             path={ '/' }
             handler={ GalleryContainer } />
           <Location
-            path={ /\/illust\/([0-9]{0,}$)/ }
+            path={ /^\/illust\/([0-9]{0,}$)/ }
             handler={ IllustContainer } />
           <Location
-            path={ /\/([0-9]{0,}$)/ }
+            path={ /^\/([0-9]{0,}$)/ }
             handler={ RedirectContainer } />
           <NotFound handler={ NotFoundContainer } />
         </Locations>

@@ -55,7 +55,7 @@
   </div>
   <script type="text/javascript">
   (function() {
-    var matches = window.location.pathname.match(/\/([0-9]{0,}$)/);
+    var matches = window.location.pathname.match(/^\/([0-9]{0,}$)/);
     if (matches && matches[1]) {
       document.getElementById('app').innerHTML = '<div class="message"><p>あなたはpixiv.netへリダイレクトしています</p></div>';
       setTimeout(function() {
@@ -79,6 +79,30 @@
   ga('create', 'UA-70944432-2', 'auto');
   ga('send', 'pageview');
   </script>
+  <!-- Piwik -->
+  <script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setDomains", ["*.pixiv.moe"]]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u = "//analytics.kotori.love/";
+    _paq.push(['setTrackerUrl', u + 'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d = document,
+      g = d.createElement('script'),
+      s = d.getElementsByTagName('script')[0];
+    g.type = 'text/javascript';
+    g.async = true;
+    g.defer = true;
+    g.src = u + 'piwik.js';
+    s.parentNode.insertBefore(g, s);
+  })();
+  </script>
+  <noscript>
+    <p><img src="//analytics.kotori.love/piwik.php?idsite=1" style="border:0;" alt="" /></p>
+  </noscript>
+  <!-- End Piwik Code -->
 </body>
 
 </html>
