@@ -20,7 +20,8 @@ A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) or
 * whatwg-fetch
 
 ## Online Site
-[https://pixiv.moe](https://pixiv.moe)
+[https://pixiv.moe](https://pixiv.moe)  
+**中国大陆用户请访问国内节点(如果你访问不了上方链接)**--> [https://cn.pixiv.moe](https://cn.pixiv.moe)
 
 ## Features
 
