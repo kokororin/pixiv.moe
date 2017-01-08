@@ -27,13 +27,6 @@ export default class Login extends React.Component {
       username: '',
       password: ''
     };
-
-    this.open = ::this.open;
-    this.close = ::this.close;
-    this.setUsername = ::this.setUsername;
-    this.getUsername = ::this.getUsername;
-    this.setPassword = ::this.setPassword;
-    this.getPassword = ::this.getPassword;
   }
 
   componentDidMount() {
@@ -43,38 +36,38 @@ export default class Login extends React.Component {
     });
   }
 
-  open() {
+  open = () => {
     this.setState({
       isHidden: false
     });
-  }
+  };
 
 
-  close() {
+  close = () => {
     this.setState({
       isHidden: true
     });
-  }
+  };
 
-  setUsername(username) {
+  setUsername = (username) => {
     this.setState({
       username: username
     });
-  }
+  };
 
-  getUsername() {
+  getUsername = () => {
     return this.state.username;
-  }
+  };
 
-  setPassword(password) {
+  setPassword = (password) => {
     this.setState({
       password: password
     });
-  }
+  };
 
-  getPassword() {
+  getPassword = () => {
     return this.state.password;
-  }
+  };
 
   renderContent() {
 

@@ -15,27 +15,24 @@ export default class Item extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.onImageMouseMove = ::this.onImageMouseMove;
-    this.onImageError = ::this.onImageError;
   }
 
   shouldComponentUpdate() {
     return false;
   }
 
-  onImageMouseMove(event) {
+  onImageMouseMove = (event) => {
     event = event.nativeEvent;
     const target = event.target;
     if (target.tagName.toLowerCase() === 'img') {
       target.style.transformOrigin = `${event.offsetX}px ${event.offsetY}px`;
     }
-  }
+  };
 
-  onImageError() {
+  onImageError = () => {
     this.imgRef.src = require('../images/img-fail.jpg');
     typeof this.props.masonryRef !== 'undefined' && this.props.masonryRef.performLayout();
-  }
+  };
 
   render() {
     return (

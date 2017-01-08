@@ -12,11 +12,9 @@ export default class Alert extends React.Component {
       isHidden: true,
       content: ''
     };
-
-    this.setContent = ::this.setContent;
   }
 
-  setContent(content) {
+  setContent = (content) => {
     if (!this.state.isHidden) {
       this.setState({
         isHidden: true
@@ -33,7 +31,7 @@ export default class Alert extends React.Component {
         isHidden: true
       });
     }, 3500);
-  }
+  };
 
   render() {
     return (

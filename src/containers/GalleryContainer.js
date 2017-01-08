@@ -14,12 +14,6 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.scrollListener = ::this.scrollListener;
-    this.reRenderContent = ::this.reRenderContent;
-    this.resizeListener = ::this.resizeListener;
-    this.onKeywordClick = ::this.onKeywordClick;
-    this.onHeaderClick = ::this.onHeaderClick;
   }
 
   componentDidMount() {
@@ -45,7 +39,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     window.removeEventListener('resize', this.resizeListener);
   }
 
-  scrollListener(event) {
+  scrollListener = (event) => {
     if (this.drawerDOMNode.classList.contains('is-visible')) {
       return;
     }
@@ -62,9 +56,9 @@ export class GalleryContainerWithoutStore extends React.Component {
     if (scrollTop + targetHeight - scrollHeight > -200) {
       this.fetchSource(false);
     }
-  }
+  };
 
-  async reRenderContent(clearCache) {
+  reRenderContent = async(clearCache) => {
     if (clearCache) {
       const searchResults = await Storage.search('cf_(.*)');
       for (const searchResult of searchResults) {
@@ -73,7 +67,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     }
     this.props.dispatch(GalleryActions.clearSource());
     this.fetchSource(true);
-  }
+  };
 
   fetchSource(isFirstLoad) {
     if (isFirstLoad) {
@@ -83,7 +77,7 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   }
 
-  resizeListener() {
+  resizeListener = () => {
     /* reset size of masonry-container when window size change */
     const node = this.rootRef,
       cellClassName = 'cell';
@@ -103,9 +97,9 @@ export class GalleryContainerWithoutStore extends React.Component {
     } catch ( e ) {}
 
     document.body.removeChild(temp);
-  }
+  };
 
-  onKeywordClick(event) {
+  onKeywordClick = (event) => {
     event.nativeEvent.preventDefault();
 
     this.layoutDOMNode.MaterialLayout.toggleDrawer();
@@ -113,7 +107,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     this.props.dispatch(GalleryActions.setTag(event.nativeEvent.target.dataset.tag));
     this.reRenderContent(false);
     Storage.set('tag', this.props.gallery.tag);
-  }
+  };
 
   renderKeywords() {
     const keywords = config.keywords;
@@ -150,7 +144,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     });
   }
 
-  onHeaderClick(event) {
+  onHeaderClick = (event) => {
     const target = event.nativeEvent.target,
       tagName = target.tagName.toLowerCase(),
       classList = event.nativeEvent.target.classList;
@@ -161,7 +155,7 @@ export class GalleryContainerWithoutStore extends React.Component {
       && tagName !== 'img') {
       scrollTo(this.contentDOMNode, 0, 900, 'easeInOutQuint');
     }
-  }
+  };
 
   render() {
     return (

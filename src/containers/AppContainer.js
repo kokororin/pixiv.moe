@@ -23,11 +23,10 @@ export default class AppContainer extends React.Component {
   constructor(props) {
     super(props);
     ReactGA.initialize(config.trackingID);
-    this.onNavigation = ::this.onNavigation;
     this.onNavigation();
   }
 
-  onNavigation() {
+  onNavigation = () => {
     if (process.env.NODE_ENV === 'production') {
       const pageLink = window.location.pathname + (window.location.hash === '#/' ? '' : window.location.hash);
       ReactGA.set({
@@ -42,7 +41,7 @@ export default class AppContainer extends React.Component {
     }
 
   // document.body.scrollTop = 0;
-  }
+  };
 
   render() {
     return (

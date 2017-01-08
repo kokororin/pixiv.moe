@@ -1,10 +1,10 @@
 export default {
-  apiBaseURL: window.location.hostname === 'cn.pixiv.moe' ? 'https://cn-api.pixiv.moe/v1' : 'https://api.pixiv.moe/v1',
+  apiBaseURL: 'https://api.pixiv.moe/v1',
   galleryURI: '/gallery',
   illustURI: '/illust',
   authURI: '/user/auth',
   favouriteURI: '/favourite',
-  baseURL: window.location.hostname === 'cn.pixiv.moe' ? 'https://cn.pixiv.moe/' : 'https://pixiv.moe/',
+  baseURL: 'https://pixiv.moe/',
   trackingID: 'UA-70944432-2',
   piwikDomain: 'analytics.kotori.love',
   piwikSiteId: 1,

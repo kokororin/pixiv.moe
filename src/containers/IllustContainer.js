@@ -19,9 +19,6 @@ export class IllustContainerWithoutStore extends React.Component {
 
   constructor(props) {
     super(props);
-    this.onFavouriteClick = ::this.onFavouriteClick;
-    this.onDownloadClick = ::this.onDownloadClick;
-    this.onTwitterClick = ::this.onTwitterClick;
   }
 
   componentDidMount() {
@@ -59,7 +56,7 @@ export class IllustContainerWithoutStore extends React.Component {
       );
   }
 
-  onFavouriteClick(event) {
+  onFavouriteClick = (event) => {
     const authData = Storage.get('auth');
     if (authData === null || authData.expires_at < time()) {
       return this.loginRef.open();
@@ -92,9 +89,9 @@ export class IllustContainerWithoutStore extends React.Component {
         // text from SIF
         this.alertRef.setContent('通信エラーが発生しました');
       });
-  }
+  };
 
-  onDownloadClick() {
+  onDownloadClick = () => {
     const tempLink = document.createElement('a');
     tempLink.href = this.props.illust.item.image_urls.px_480mw;
     tempLink.setAttribute('download', `${this.props.illust.item.title}.jpg`);
@@ -102,11 +99,11 @@ export class IllustContainerWithoutStore extends React.Component {
     document.body.appendChild(tempLink);
     tempLink.click();
     document.body.removeChild(tempLink);
-  }
+  };
 
-  onTwitterClick() {
+  onTwitterClick = () => {
     window.open(`https://twitter.com/intent/tweet?original_referer=${encodeURIComponent(window.location.href)}&ref_src=twsrc%5Etfw&text=${encodeURIComponent(`${this.props.illust.item.title} | ${this.props.illust.item.user.name} #pixiv`)}&tw_p=tweetbutton&url=${encodeURIComponent(`${config.baseURL}#/${this.props.illust.item.id}`)}`, '_blank', 'width=550,height=370');
-  }
+  };
 
   renderContent() {
     const illust = this.props.illust;
