@@ -1,10 +1,7 @@
-var webpackCfg = require('./webpack.config');
-
-// Set node environment to testing
-process.env.NODE_ENV = 'test';
+const webpackCfg = require('./build/webpack.config.test');
 
 module.exports = function(config) {
-  var configuration = {
+  const configuration = {
     basePath: '',
     browsers: ['Chrome'],
     customLaunchers: {
@@ -43,7 +40,7 @@ module.exports = function(config) {
       ]
     }
   };
-  // We created a custom browser launcher that runs Chrome with the --no-sandbox option. 
+  // We created a custom browser launcher that runs Chrome with the --no-sandbox option.
   // And we only use it if the tests are running in Travis.
   if (process.env.TRAVIS) {
     configuration.browsers = ['Chrome_travis_ci'];
