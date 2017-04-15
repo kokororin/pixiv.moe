@@ -1,6 +1,7 @@
-import '../styles/Message.scss';
+import '@/styles/Message.scss';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Spinner } from 'react-mdl';
 
 export default class Loading extends React.Component {
@@ -10,7 +11,7 @@ export default class Loading extends React.Component {
   };
 
   static propTypes = {
-    isHidden: React.PropTypes.bool
+    isHidden: PropTypes.bool
   };
 
   constructor(props) {

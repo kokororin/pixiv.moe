@@ -1,9 +1,21 @@
-import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { AppContainer as Root } from 'react-hot-loader';
 
-import { AppContainer } from './containers';
+import { AppContainer } from '@/containers';
 
 
 // Render the main component into the dom
-ReactDOM.render(<AppContainer />, document.getElementById('app'));
+const render = (Component) => {
+  ReactDOM.render(
+    <Root>
+      <Component/>
+    </Root>
+    , document.getElementById('app'));
+};
+
+render(AppContainer);
+
+if (module.hot) {
+  module.hot.accept('@/containers/AppContainer', () => render(AppContainer));
+}

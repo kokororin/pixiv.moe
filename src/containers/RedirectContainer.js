@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Message } from '../components';
+import { Message } from '@/components';
 
 export default class RedirectContainer extends React.Component {
 
   static propTypes = {
-    illustId: React.PropTypes.string
+    illustId: PropTypes.string
   };
 
   constructor(props) {

@@ -1,2 +1,2 @@
-export * as GalleryActions from './gallery';
-export * as IllustActions from './illust';
+export * as GalleryActions from '@/actions/gallery';
+export * as IllustActions from '@/actions/illust';

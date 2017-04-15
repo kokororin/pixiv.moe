@@ -1,4 +1,4 @@
-import '../styles/Animation.scss';
+import '@/styles/Animation.scss';
 import React from 'react';
 import ReactMixin from 'react-mixin';
 import { RouteRenderingMixin, RouterMixin } from 'react-router-component';

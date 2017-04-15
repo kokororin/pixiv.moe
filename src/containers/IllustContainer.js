@@ -1,5 +1,5 @@
-import '../styles/Illust.scss';
-import '../styles/Animation.scss';
+import '@/styles/Illust.scss';
+import '@/styles/Animation.scss';
 
 import React from 'react';
 import { connect } from 'react-redux';
@@ -8,12 +8,12 @@ import { Layout, Header, Content, Icon, Chip, ChipContact, Button } from 'react-
 import shortid from 'shortid';
 import time from 'locutus/php/datetime/time';
 
-import config from 'config';
+import config from '@/config';
 
-import { IllustActions } from '../actions';
-import { Alert, Loading, Message } from '../components';
-import { LoginContainer } from '.';
-import { cachedFetch, moment, Storage } from '../utils';
+import { IllustActions } from '@/actions';
+import { Alert, Loading, Message } from '@/components';
+import { LoginContainer } from '@/containers';
+import { cachedFetch, moment, Storage } from '@/utils';
 
 export class IllustContainerWithoutStore extends React.Component {
 

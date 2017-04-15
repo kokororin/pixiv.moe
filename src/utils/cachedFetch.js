@@ -2,7 +2,7 @@
 import time from 'locutus/php/datetime/time';
 import httpBuildQuery from 'locutus/php/url/http_build_query';
 
-import { hashStr, Storage } from '.';
+import { hashStr, Storage } from '@/utils';
 
 function getContent(content) {
   try {

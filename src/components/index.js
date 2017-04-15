@@ -1,8 +1,8 @@
-export Alert from './Alert';
-// export AnimatedLocations from './AnimatedLocations';
-export Item from './Item';
-export List from './List';
-export Login from './Login';
-export Loading from './Loading';
-export Message from './Message';
-export Refresh from './Refresh';
+export Alert from '@/components/Alert';
+// export AnimatedLocations from '@/components/AnimatedLocations';
+export Item from '@/components/Item';
+export List from '@/components/List';
+export Login from '@/components/Login';
+export Loading from '@/components/Loading';
+export Message from '@/components/Message';
+export Refresh from '@/components/Refresh';

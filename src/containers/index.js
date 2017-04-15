@@ -1,6 +1,6 @@
-export AppContainer from './AppContainer';
-export GalleryContainer, { GalleryContainerWithoutStore } from './GalleryContainer';
-export IllustContainer, { IllustContainerWithoutStore } from './IllustContainer';
-export LoginContainer from './LoginContainer';
-export NotFoundContainer from './NotFoundContainer';
-export RedirectContainer from './RedirectContainer';
+export AppContainer from '@/containers/AppContainer';
+export GalleryContainer, { GalleryContainerWithoutStore } from '@/containers/GalleryContainer';
+export IllustContainer, { IllustContainerWithoutStore } from '@/containers/IllustContainer';
+export LoginContainer from '@/containers/LoginContainer';
+export NotFoundContainer from '@/containers/NotFoundContainer';
+export RedirectContainer from '@/containers/RedirectContainer';

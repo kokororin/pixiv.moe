@@ -1,6 +1,6 @@
-import config from 'config';
+import config from '@/config';
 
-import { cachedFetch } from '../utils';
+import { cachedFetch } from '@/utils';
 
 export const SET_ITEM = 'SET_ITEM';
 export const SET_FETCH_ERROR = 'SET_FETCH_ERROR';

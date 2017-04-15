@@ -1,21 +1,22 @@
-import '../styles/Login.scss';
-import '../styles/Fn.scss';
+import '@/styles/Login.scss';
+import '@/styles/Fn.scss';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import classNames from 'classnames';
 import time from 'locutus/php/datetime/time';
 import { Button, Textfield, Icon } from 'react-mdl';
 
-import { Storage } from '../utils';
+import { Storage } from '@/utils';
 
 export default class Login extends React.Component {
 
   static propTypes = {
-    onLogoutClick: React.PropTypes.func,
-    onLogoutClick: React.PropTypes.func,
-    isSubmitting: React.PropTypes.bool,
-    authData: React.PropTypes.object
+    onLogoutClick: PropTypes.func,
+    onLogoutClick: PropTypes.func,
+    isSubmitting: PropTypes.bool,
+    authData: PropTypes.object
   };
 
   constructor(props) {

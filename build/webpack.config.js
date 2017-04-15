@@ -10,20 +10,20 @@ const allowedEnvs = ['development', 'production'];
 
 
 function buildConfig(wantedEnv) {
-    const isValid = wantedEnv && wantedEnv.length > 0 && allowedEnvs.indexOf(wantedEnv) !== -1;
-    const validEnv = isValid ? wantedEnv : 'development';
-    process.env.NODE_ENV = validEnv;
-    process.env.BABEL_ENV = validEnv;
+  const isValid = wantedEnv && wantedEnv.length > 0 && allowedEnvs.indexOf(wantedEnv) !== -1;
+  const validEnv = isValid ? wantedEnv : 'development';
+  process.env.NODE_ENV = validEnv;
+  process.env.BABEL_ENV = validEnv;
 
-    let config;
-    if (validEnv === 'production') {
-        config = prodConfig;
-    } else {
-        config = devConfig;
-    }
+  let config;
+  if (validEnv === 'production') {
+    config = prodConfig;
+  } else {
+    config = devConfig;
+  }
 
-    config = merge(baseConfig, config);
-    return config;
+  config = merge(baseConfig, config);
+  return config;
 }
 
 module.exports = buildConfig(process.env.NODE_ENV);

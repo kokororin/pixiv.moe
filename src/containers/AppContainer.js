@@ -4,16 +4,16 @@ import { Provider } from 'react-redux';
 import ReactGA from 'react-ga';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import 'material-design-icons/iconfont/material-icons.css';
-import '../styles/mdl/material-design-lite.scss';
+import '@/styles/mdl/material-design-lite.scss';
 import 'react-mdl/extra/material.js';
-import '../styles/Base.scss';
-import '../styles/Reset.scss';
+import '@/styles/Base.scss';
+import '@/styles/Reset.scss';
 import 'classlist-polyfill';
 
-import config from 'config';
-import configureStore from '../stores';
-import { GalleryContainer, IllustContainer, RedirectContainer, NotFoundContainer } from '.';
-import { Piwik } from '../utils';
+import config from '@/config';
+import configureStore from '@/stores';
+import { GalleryContainer, IllustContainer, RedirectContainer, NotFoundContainer } from '@/containers';
+import { Piwik } from '@/utils';
 
 injectTapEventPlugin();
 const store = configureStore();
@@ -28,7 +28,7 @@ export default class AppContainer extends React.Component {
 
   onNavigation = () => {
     if (process.env.NODE_ENV === 'production') {
-      const pageLink = window.location.pathname + (window.location.hash === '#/' ? '' : window.location.hash);
+      const pageLink = window.location.pathname;
       ReactGA.set({
         page: pageLink
       });
@@ -46,9 +46,7 @@ export default class AppContainer extends React.Component {
   render() {
     return (
       <Provider store={ store }>
-        <Locations
-          hash
-          onNavigation={ this.onNavigation }>
+        <Locations onNavigation={ this.onNavigation }>
           <Location
             path={ '/' }
             handler={ GalleryContainer } />
@@ -61,7 +59,7 @@ export default class AppContainer extends React.Component {
           <NotFound handler={ NotFoundContainer } />
         </Locations>
       </Provider>
-      );
+    );
   }
 
 }

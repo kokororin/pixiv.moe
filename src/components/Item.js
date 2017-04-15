@@ -1,16 +1,17 @@
-import '../styles/Item.scss';
-import '../styles/Animation.scss';
+import '@/styles/Item.scss';
+import '@/styles/Animation.scss';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-component';
 import { Icon } from 'react-mdl';
 
 export default class Item extends React.Component {
 
   static propTypes = {
-    item: React.PropTypes.object,
-    index: React.PropTypes.number,
-    masonry: React.PropTypes.object
+    item: PropTypes.object,
+    index: PropTypes.number,
+    masonry: PropTypes.object
   };
 
   constructor(props) {
@@ -30,7 +31,7 @@ export default class Item extends React.Component {
   };
 
   onImageError = () => {
-    this.imgRef.src = require('../images/img-fail.jpg');
+    this.imgRef.src = require('@/images/img-fail.jpg');
     typeof this.props.masonryRef !== 'undefined' && this.props.masonryRef.performLayout();
   };
 

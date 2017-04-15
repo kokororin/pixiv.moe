@@ -1,9 +1,9 @@
 'use strict';
 import nock from 'nock';
-import mockStore from 'helpers/mockStoreHelper';
+import mockStore from '../helpers/mockStoreHelper';
 
-import config from 'config';
-import { GalleryActions } from 'actions';
+import config from '@/config';
+import { GalleryActions } from '@/actions';
 
 describe('GalleryActions', () => {
   afterEach(() => {

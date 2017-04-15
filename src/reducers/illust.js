@@ -1,4 +1,4 @@
-import { IllustActions } from '../actions';
+import { IllustActions } from '@/actions';
 
 export default function illust(state = {
     item: {

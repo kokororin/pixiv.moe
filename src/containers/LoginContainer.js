@@ -1,10 +1,10 @@
 import React from 'react';
 import time from 'locutus/php/datetime/time';
 
-import { Alert, Login } from '../components';
-import { cachedFetch, Storage } from '../utils';
+import { Alert, Login } from '@/components';
+import { cachedFetch, Storage } from '@/utils';
 
-import config from 'config';
+import config from '@/config';
 
 export default class LoginContainer extends React.Component {
 

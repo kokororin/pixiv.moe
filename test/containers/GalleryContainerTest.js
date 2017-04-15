@@ -1,7 +1,7 @@
 'use strict';
-import createComponent from 'helpers/shallowRenderHelper';
+import createComponent from '../helpers/shallowRenderHelper';
 
-import { GalleryContainerWithoutStore } from 'containers';
+import { GalleryContainerWithoutStore } from '@/containers';
 
 describe('GalleryContainer', () => {
   let galleryContainer;

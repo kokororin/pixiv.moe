@@ -1,13 +1,14 @@
-import '../styles/Fn.scss';
-import '../styles/Button.scss';
+import '@/styles/Fn.scss';
+import '@/styles/Button.scss';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FABButton, Icon } from 'react-mdl';
 
 export default class Refresh extends React.Component {
 
   static propTypes = {
-    onClick: React.PropTypes.func
+    onClick: PropTypes.func
   };
 
   constructor(props) {

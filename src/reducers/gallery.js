@@ -1,4 +1,4 @@
-import { GalleryActions } from '../actions';
+import { GalleryActions } from '@/actions';
 
 export default function gallery(state = {
     page: 1,

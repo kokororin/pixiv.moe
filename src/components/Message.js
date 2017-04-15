@@ -1,6 +1,7 @@
-import '../styles/Message.scss';
+import '@/styles/Message.scss';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Message extends React.Component {
 
@@ -10,8 +11,8 @@ export default class Message extends React.Component {
   };
 
   static propTypes = {
-    isHidden: React.PropTypes.bool,
-    text: React.PropTypes.string
+    isHidden: PropTypes.bool,
+    text: PropTypes.string
   };
 
   constructor(props) {

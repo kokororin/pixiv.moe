@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { Layout, Header, Navigation, Drawer, Content, Icon } from 'react-mdl';
 import shortid from 'shortid';
 
-import config from 'config';
+import config from '@/config';
 
-import { GalleryActions } from '../actions';
-import { List, Loading, Refresh, Message } from '../components';
-import { scrollTo, Storage } from '../utils';
+import { GalleryActions } from '@/actions';
+import { List, Loading, Refresh, Message } from '@/components';
+import { scrollTo, Storage } from '@/utils';
 
 export class GalleryContainerWithoutStore extends React.Component {
 
@@ -58,7 +58,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     }
   };
 
-  reRenderContent = async(clearCache) => {
+  async reRenderContent(clearCache) {
     if (clearCache) {
       const searchResults = await Storage.search('cf_(.*)');
       for (const searchResult of searchResults) {
@@ -67,7 +67,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     }
     this.props.dispatch(GalleryActions.clearSource());
     this.fetchSource(true);
-  };
+  }
 
   fetchSource(isFirstLoad) {
     if (isFirstLoad) {
@@ -170,7 +170,7 @@ export class GalleryContainerWithoutStore extends React.Component {
             <a
               className={ 'github-link' }
               target={ '_blank' }
-              href={ config.projectLink }><img src={ require('../images/GitHub-Mark-Light-32px.png') } /></a>
+              href={ config.projectLink }><img src={ require('@/images/GitHub-Mark-Light-32px.png') } /></a>
           </Navigation>
         </Header>
         <Drawer title={ 'タグ' }>

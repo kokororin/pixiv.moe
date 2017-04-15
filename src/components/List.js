@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Masonry from 'react-masonry-component';
 
-import { Item } from '.';
+import { Item } from '@/components';
 
 
 export default class List extends React.Component {
 
   static propTypes = {
-    items: React.PropTypes.array
+    items: PropTypes.array
   };
 
   constructor(props) {

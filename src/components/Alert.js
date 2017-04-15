@@ -1,4 +1,4 @@
-import '../styles/Alert.scss';
+import '@/styles/Alert.scss';
 
 import React from 'react';
 import Modal from 'react-modal';

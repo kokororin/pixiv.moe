@@ -1,19 +1,13 @@
 {
   "presets": [
-    "es2015",
+    ["es2015", { "modules": false }],
     "react",
     "stage-0"
   ],
   "plugins": [
   	"transform-async-to-generator",
   	"transform-decorators-legacy",
-    "transform-object-assign"
-  ],
-  "env": {
-    "dist": {
-      "plugins": [
-        "transform-react-remove-prop-types"
-      ]
-    }
-  }
+    "transform-object-assign",
+    "react-hot-loader/babel"
+  ]
 }
