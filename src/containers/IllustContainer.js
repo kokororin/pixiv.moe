@@ -102,7 +102,7 @@ export class IllustContainerWithoutStore extends React.Component {
   };
 
   onTwitterClick = () => {
-    window.open(`https://twitter.com/intent/tweet?original_referer=${encodeURIComponent(window.location.href)}&ref_src=twsrc%5Etfw&text=${encodeURIComponent(`${this.props.illust.item.title} | ${this.props.illust.item.user.name} #pixiv`)}&tw_p=tweetbutton&url=${encodeURIComponent(`${config.baseURL}#/${this.props.illust.item.id}`)}`, '_blank', 'width=550,height=370');
+    window.open(`https://twitter.com/intent/tweet?original_referer=${encodeURIComponent(window.location.href)}&ref_src=twsrc%5Etfw&text=${encodeURIComponent(`${this.props.illust.item.title} | ${this.props.illust.item.user.name} #pixiv`)}&tw_p=tweetbutton&url=${encodeURIComponent(`${config.baseURL}${this.props.illust.item.id}`)}`, '_blank', 'width=550,height=370');
   };
 
   renderContent() {
@@ -181,7 +181,7 @@ export class IllustContainerWithoutStore extends React.Component {
               <b>リンク</b>
               <a
                 target={ '_blank' }
-                href={ `/#/${this.props.illust.item.id}` }>pixiv.net</a>
+                href={ `/${this.props.illust.item.id}` }>pixiv.net</a>
             </p>
           </div>
           <LoginContainer ref={ (ref) => this.loginRef = ref } />

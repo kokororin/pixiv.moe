@@ -51,22 +51,6 @@
   <!--[if lte IE 8]>
   <div class="message">
       <p>古いInternet Explorerにサ終了！</p>
-      <script type="text/javascript">
-           (function() {
-            try {
-              document.getElementById('app').innerHTML = '';
-              var afterHash = window.location.hash.replace('#/', '');
-              if (!isNaN(parseFloat(afterHash)) && isFinite(afterHash)) {
-                document.write('<p>あなたはpixiv.netへリダイレクトしています</p>');
-                setTimeout(function() {
-                  window.location.href = 'http://www.pixiv.net/member_illust.php?mode=medium&illust_id=' + afterHash;
-                }, 1500);
-              }
-            } catch ( e ) {
-                document.write('<p>申し訳ございません</p>');
-            }
-          })();
-      </script>
   </div>
   <![endif]-->
   <noscript>
