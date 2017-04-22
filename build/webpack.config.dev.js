@@ -8,8 +8,9 @@ module.exports = {
     historyApiFallback: true,
     inline: true,
     port: 23333,
-    publicPath: '/assets/',
+    publicPath: 'http://localhost:23333/assets/',
     noInfo: false,
+    hot: true,
     stats: {
       colors: true
     }
@@ -17,18 +18,25 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://127.0.0.1:23333',
-    'webpack/hot/only-dev-server',
+    'webpack-hot-middleware/client?reload=true&path=http://localhost:23333/__webpack_hmr',
     'whatwg-fetch',
     './src/index'
   ],
   cache: true,
   devtool: 'eval',
+  module: {
+    rules: [{
+      test: /\.(js|jsx)$/,
+      loader: ['react-hot-loader/webpack', 'babel-loader'],
+      include: path.join(__dirname, '/../src')
+    }]
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"development"'
     }),
     new OpenBrowserPlugin({ url: 'http://localhost:23333' }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin()
   ]
 };

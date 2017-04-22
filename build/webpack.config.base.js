@@ -23,23 +23,13 @@ module.exports = {
       loader: 'eslint-loader'
     }, {
       test: /\.css$/,
-      loader: 'style-loader!css-loader?outputStyle=expanded'
-    }, {
-      test: /\.sass/,
-      loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded&indentedSyntax'
+      loader: ['style-loader', 'css-loader']
     }, {
       test: /\.scss/,
-      loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
-    }, {
-      test: /\.(js|jsx)$/,
-      loader: 'babel-loader',
-      include: [].concat([path.join(__dirname, '/../src')])
+      loader: ['style-loader', 'css-loader', 'sass-loader']
     }, {
       test: /\.(png|jpg|gif|woff|woff2|ttf|svg|eot)(\?|\?[a-z0-9]+)?$/,
       loader: 'url-loader?limit=8192'
-    }, {
-      test: /\.(mp4|ogg)$/,
-      loader: 'file-loader'
     }, {
       test: /masonry|imagesloaded|fizzy\-ui\-utils|desandro\-|outlayer|get\-size|doc\-ready|eventie|eventemitter/,
       loader: 'imports-loader?define=>false&this=>window'
