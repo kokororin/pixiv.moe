@@ -191,6 +191,137 @@ curl 'https://api.pixiv.moe/v1/illust/50110342'
 }
 ```
 
+#### Illust Comments
+
+##### request
+`GET /illust/comments/[:illust_id]/[:page]`
+
+###### example
+```bash
+curl 'https://api.pixiv.moe/v1/illust/comments/47527196/1'
+```
+
+##### response
+```json
+{
+    "total_comments":8,
+    "comments":[
+        {
+            "id":59071954,
+            "comment":"凛ちゃん可愛い(๑////๑) 凛ちゃんロングでも似合う(๑////๑)",
+            "date":"2016-07-24T14:40:19+09:00",
+            "user":{
+                "id":17882671,
+                "name":"あかーし",
+                "account":"osomatsu0224",
+                "profile_image_urls":{
+                    "medium":"https://source.pixiv.net/common/images/no_profile.png"
+                }
+            },
+            "parent_comment":[
+
+            ]
+        },
+        {
+            "id":48082755,
+            "comment":"凛ちゃんかわいい！( ＝ω＝)",
+            "date":"2015-07-25T17:28:31+09:00",
+            "user":{
+                "id":14019593,
+                "name":"小原林檎",
+                "account":"ai888",
+                "profile_image_urls":{
+                    "medium":"https://i4.pixiv.net/user-profile/img/2016/12/31/18/35/26/11938047_60df513a413dbc60ece3c2328e300a6c_170.jpg"
+                }
+            },
+            "parent_comment":[
+
+            ]
+        },
+        {
+            "id":43536113,
+            "comment":"凛ちゃんかわいいです！ LINEのトプ画にいただいてもいいですか？",
+            "date":"2015-02-09T18:03:15+09:00",
+            "user":{
+                "id":7954997,
+                "name":"かぼす",
+                "account":"nktama",
+                "profile_image_urls":{
+                    "medium":"https://source.pixiv.net/common/images/no_profile.png"
+                }
+            },
+            "parent_comment":[
+
+            ]
+        },
+        {
+            "id":42094960,
+            "comment":"絵のタッチかわいい すごい好き(*´ω｀*)",
+            "date":"2014-12-22T20:18:19+09:00",
+            "user":{
+                "id":4675404,
+                "name":"めろうん",
+                "account":"chaosevangel",
+                "profile_image_urls":{
+                    "medium":"https://i1.pixiv.net/user-profile/img/2014/11/07/04/15/43/8594336_18ab997b91995f58ac7276919a868459_170.jpg"
+                }
+            },
+            "parent_comment":[
+
+            ]
+        },
+        {
+            "id":41885041,
+            "comment":"途中、ホグワーツがあった。",
+            "date":"2014-12-14T16:56:06+09:00",
+            "user":{
+                "id":6695794,
+                "name":"ラブライバーエグゼイド",
+                "account":"touhousanngetusei",
+                "profile_image_urls":{
+                    "medium":"https://i3.pixiv.net/user-profile/img/2015/02/10/22/23/46/8954842_fda4fed98e997f25ed3d9856395c98cf_170.jpg"
+                }
+            },
+            "parent_comment":[
+
+            ]
+        },
+        {
+            "id":41875578,
+            "comment":"髪型変更いいゾ〜コレ",
+            "date":"2014-12-14T09:56:58+09:00",
+            "user":{
+                "id":9328878,
+                "name":"緑丸",
+                "account":"aimoti1341",
+                "profile_image_urls":{
+                    "medium":"https://source.pixiv.net/common/images/no_profile.png"
+                }
+            },
+            "parent_comment":[
+
+            ]
+        },
+        {
+            "id":41848371,
+            "comment":"www",
+            "date":"2014-12-13T11:58:48+09:00",
+            "user":{
+                "id":5498845,
+                "name":"bakaookami",
+                "account":"bakaookami_suzuha",
+                "profile_image_urls":{
+                    "medium":"https://i4.pixiv.net/user-profile/img/2015/12/20/16/45/33/10264359_44a222b4c066644ecd7d4d5113009ea0_170.jpg"
+                }
+            },
+            "parent_comment":[
+
+            ]
+        }
+    ]
+}
+```
+
 #### Auth
 
 ##### request
