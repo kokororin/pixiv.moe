@@ -24,7 +24,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     window.addEventListener('resize', this.resizeListener);
 
     const cachedTag = Storage.get('tag');
-    this.props.dispatch(GalleryActions.setTag(cachedTag === null ? 'lovelive' : cachedTag));
+    this.props.dispatch(GalleryActions.setTag(cachedTag === null ? 'ranking' : cachedTag));
 
     if (this.props.gallery.items.length === 0) {
       this.fetchSource(true);
@@ -45,6 +45,10 @@ export class GalleryContainerWithoutStore extends React.Component {
     }
     const contentScrollTop = this.contentDOMNode.scrollTop;
     this.props.dispatch(GalleryActions.setContentScrollTop(contentScrollTop));
+    if (this.props.gallery.tag === 'ranking') {
+      // TODO ranking infinate scrolling
+      return;
+    }
     if (this.props.gallery.isFetching) {
       return;
     }
@@ -103,10 +107,10 @@ export class GalleryContainerWithoutStore extends React.Component {
     event.nativeEvent.preventDefault();
 
     this.layoutDOMNode.MaterialLayout.toggleDrawer();
-
-    this.props.dispatch(GalleryActions.setTag(event.nativeEvent.target.dataset.tag));
+    const tag = event.nativeEvent.target.dataset.tag;
+    this.props.dispatch(GalleryActions.setTag(tag));
     this.reRenderContent(false);
-    Storage.set('tag', this.props.gallery.tag);
+    Storage.set('tag', tag);
   };
 
   renderKeywords() {
@@ -134,13 +138,14 @@ export class GalleryContainerWithoutStore extends React.Component {
           style={ linkStyle }
           data-tag={ elem.en }
           onTouchTap={ this.onKeywordClick }
-          onClick={ this.onKeywordClick }>
+          onClick={ this.onKeywordClick }
+          className={ `nav-link__${elem.en}` }>
           <Icon
             style={ iconStyle }
             name={ 'done' } />
           { elem.jp }
         </a>
-        );
+      );
     });
   }
 
@@ -192,7 +197,7 @@ export class GalleryContainerWithoutStore extends React.Component {
           </div>
         </Content>
       </Layout>
-      );
+    );
   }
 }
 

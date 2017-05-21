@@ -15,12 +15,6 @@ export default function gallery(state = {
         items: [...state.items, ...[action.payload.data]]
       };
 
-    case GalleryActions.SET_IMAGES:
-      return {
-        ...state,
-        images: [...state.images, ...[action.payload.data]]
-      };
-
     case GalleryActions.SET_FETCH_ERROR:
       return {
         ...state,

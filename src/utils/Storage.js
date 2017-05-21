@@ -37,7 +37,7 @@ export default class Storage {
       }
       const regx = new RegExp(query),
         searchResults = [];
-      store.forEach((key) => {
+      store.each((value, key) => {
         const matches = key.match(regx);
         if (matches && matches.length > 0) {
           searchResults.push(matches[0]);

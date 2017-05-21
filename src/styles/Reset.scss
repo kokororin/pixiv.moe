@@ -1,17 +1,26 @@
 .mdl-layout {
-    .mdl-layout__drawer-button, a.mdl-navigation__link {
-        outline: 0 none;
+  .mdl-layout__drawer-button, a.mdl-navigation__link {
+    outline: 0 none;
+  }
+  .github-link {
+    img {
+      width: 24px;
+      height: 24px;
+      -moz-user-select: -moz-none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -o-user-select: none;
+      user-select: none;
     }
+  }
+}
 
-    .github-link {
-        img {
-            width: 24px;
-            height: 24px;
-            -moz-user-select: -moz-none;
-            -khtml-user-select: none;
-            -webkit-user-select: none;
-            -o-user-select: none;
-            user-select: none;
-        }
-    }
+.mdl-navigation {
+  .nav-link__ranking {
+    color: #ef5350!important;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+  }
+  .nav-link__sunshine{
+      border-top: 1px solid rgba(0, 0, 0, .12);
+  }
 }

@@ -1,6 +1,7 @@
 export default {
   apiBaseURL: 'https://api.pixiv.moe/v1',
   galleryURI: '/gallery',
+  rankingURI: '/ranking',
   illustURI: '/illust',
   authURI: '/user/auth',
   favouriteURI: '/favourite',
@@ -9,8 +10,11 @@ export default {
   piwikDomain: 'analytics.kotori.love',
   piwikSiteId: 1,
   projectLink: 'https://github.com/LoveLiveSunshine/pixiv.moe',
-  siteTitle: 'pixivの「ラブライブ」発見',
+  siteTitle: 'pixivギャラリー',
   keywords: [{
+    en: 'ranking',
+    jp: 'ランキング'
+  }, {
     en: 'lovelive',
     jp: 'ラブライブ'
   }, {
