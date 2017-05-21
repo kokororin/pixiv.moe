@@ -1,6 +1,5 @@
 const path = require('path');
-
-const srcPath = path.join(__dirname, '/../src');
+const webpack = require('webpack');
 
 module.exports = {
   entry: [
@@ -27,6 +26,11 @@ module.exports = {
       '@': path.join(__dirname, '/../src')
     }
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      autobind: 'autobind-decorator'
+    })
+  ],
   externals: {
     cheerio: 'window',
     'react/addons': true,
