@@ -3,6 +3,7 @@ import '@/styles/Message.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+@autobind
 export default class Message extends React.Component {
 
   static defaultProps = {
@@ -23,17 +24,17 @@ export default class Message extends React.Component {
     };
   }
 
-  show = () => {
+  show() {
     this.setState({
       isHidden: false
     });
-  };
+  }
 
-  hide = () => {
+  hide() {
     this.setState({
       isHidden: true
     });
-  };
+  }
 
   render() {
     return this.state.isHidden

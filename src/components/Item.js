@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-component';
 import { Icon } from 'react-mdl';
 
+@autobind
 export default class Item extends React.Component {
 
   static propTypes = {
@@ -22,18 +23,18 @@ export default class Item extends React.Component {
     return false;
   }
 
-  onImageMouseMove = (event) => {
+  onImageMouseMove(event) {
     event = event.nativeEvent;
     const target = event.target;
     if (target.tagName.toLowerCase() === 'img') {
       target.style.transformOrigin = `${event.offsetX}px ${event.offsetY}px`;
     }
-  };
+  }
 
-  onImageError = () => {
+  onImageError() {
     this.imgRef.src = require('@/images/img-fail.jpg');
     typeof this.props.masonryRef !== 'undefined' && this.props.masonryRef.performLayout();
-  };
+  }
 
   renderRankText() {
     if (this.props.item.previous_rank === 0) {

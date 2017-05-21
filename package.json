@@ -87,6 +87,7 @@
   },
   "dependencies": {
     "animation-frame": "^0.3.0",
+    "autobind-decorator": "^1.4.1",
     "classlist-polyfill": "^1.2.0",
     "classnames": "^2.2.5",
     "locutus": "^2.0.5",

@@ -3,6 +3,7 @@ import '@/styles/Alert.scss';
 import React from 'react';
 import Modal from 'react-modal';
 
+@autobind
 export default class Alert extends React.Component {
 
   constructor(props) {
@@ -14,7 +15,7 @@ export default class Alert extends React.Component {
     };
   }
 
-  setContent = (content) => {
+  setContent(content) {
     if (!this.state.isHidden) {
       this.setState({
         isHidden: true
@@ -31,7 +32,7 @@ export default class Alert extends React.Component {
         isHidden: true
       });
     }, 3500);
-  };
+  }
 
   render() {
     return (
@@ -48,6 +49,6 @@ export default class Alert extends React.Component {
           </div>
         </div>
       </Modal>
-      );
+    );
   }
 }

@@ -6,6 +6,7 @@ import { cachedFetch, Storage } from '@/utils';
 
 import config from '@/config';
 
+@autobind
 export default class LoginContainer extends React.Component {
 
   constructor(props) {
@@ -29,7 +30,7 @@ export default class LoginContainer extends React.Component {
     document.removeEventListener('keydown', this.onKeydown);
   }
 
-  onKeydown = (event) => {
+  onKeydown(event) {
     if (event.keyCode === 27) {
       this.loginRef.close();
     }
@@ -37,17 +38,17 @@ export default class LoginContainer extends React.Component {
     if (this.loginRef.state.isHidden === false && event.keyCode === 13) {
       this.onLoginClick();
     }
-  };
+  }
 
-  open = () => {
+  open() {
     this.loginRef.open();
-  };
+  }
 
-  close = () => {
+  close() {
     this.loginRef.close();
-  };
+  }
 
-  onLoginClick = () => {
+  onLoginClick() {
 
     if (this.state.isSubmitting) {
       return;
@@ -116,14 +117,14 @@ export default class LoginContainer extends React.Component {
         // text from SIF
         this.alertRef.setContent('通信エラーが発生しました');
       });
-  };
+  }
 
-  onLogoutClick = () => {
+  onLogoutClick() {
     Storage.remove('auth');
     this.setState({
       authData: null
     });
-  };
+  }
 
   render() {
     return (
@@ -136,6 +137,6 @@ export default class LoginContainer extends React.Component {
           authData={ this.state.authData } />
         <Alert ref={ (ref) => this.alertRef = ref } />
       </div>
-      );
+    );
   }
 }

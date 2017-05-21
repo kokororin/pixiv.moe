@@ -10,6 +10,7 @@ import { Button, Textfield, Icon } from 'react-mdl';
 
 import { Storage } from '@/utils';
 
+@autobind
 export default class Login extends React.Component {
 
   static propTypes = {
@@ -37,38 +38,38 @@ export default class Login extends React.Component {
     });
   }
 
-  open = () => {
+  open() {
     this.setState({
       isHidden: false
     });
-  };
+  }
 
 
-  close = () => {
+  close() {
     this.setState({
       isHidden: true
     });
-  };
+  }
 
-  setUsername = (username) => {
+  setUsername(username) {
     this.setState({
       username: username
     });
-  };
+  }
 
-  getUsername = () => {
+  getUsername() {
     return this.state.username;
-  };
+  }
 
-  setPassword = (password) => {
+  setPassword(password) {
     this.setState({
       password: password
     });
-  };
+  }
 
-  getPassword = () => {
+  getPassword() {
     return this.state.password;
-  };
+  }
 
   renderContent() {
 
@@ -138,6 +139,6 @@ export default class Login extends React.Component {
           </div>
         </div>
       </Modal>
-      );
+    );
   }
 }

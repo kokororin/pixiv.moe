@@ -18,6 +18,7 @@ import { Piwik } from '@/utils';
 injectTapEventPlugin();
 const store = configureStore();
 
+@autobind
 export default class AppContainer extends React.Component {
 
   constructor(props) {
@@ -26,7 +27,7 @@ export default class AppContainer extends React.Component {
     this.onNavigation();
   }
 
-  onNavigation = () => {
+  onNavigation() {
     if (process.env.NODE_ENV === 'production') {
       const pageLink = window.location.pathname;
       ReactGA.set({
@@ -41,7 +42,7 @@ export default class AppContainer extends React.Component {
     }
 
   // document.body.scrollTop = 0;
-  };
+  }
 
   render() {
     return (

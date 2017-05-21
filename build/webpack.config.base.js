@@ -36,6 +36,9 @@ module.exports = {
     }]
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.ProvidePlugin({
+      autobind: 'autobind-decorator'
+    })
   ]
 };
