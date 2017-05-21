@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/LoveLiveSunshine/pixiv.moe/badge.svg?branch=master)](https://coveralls.io/github/LoveLiveSunshine/pixiv.moe?branch=master)
 [![npm](https://img.shields.io/npm/dt/pixiv.moe.svg?maxAge=2592000)]()
 [![npm version](https://badge.fury.io/js/pixiv.moe.svg)](https://badge.fury.io/js/pixiv.moe)
+[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=pixivギャラリー)](https://pixiv.moe)
 
 A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) order by popularity. Written with react.
 

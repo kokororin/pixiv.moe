@@ -7,6 +7,7 @@ import { Link } from 'react-router-component';
 import { Layout, Header, Content, Icon, Chip, ChipContact, Button } from 'react-mdl';
 import shortid from 'shortid';
 import time from 'locutus/php/datetime/time';
+import Img from 'react-image';
 
 import config from '@/config';
 
@@ -94,7 +95,7 @@ export class IllustContainerWithoutStore extends React.Component {
 
   onDownloadClick() {
     const tempLink = document.createElement('a');
-    tempLink.href = this.props.illust.item.image_urls.px_480mw;
+    tempLink.href = this.props.illust.item.image_urls.large;
     tempLink.setAttribute('download', `${this.props.illust.item.title}.jpg`);
     tempLink.setAttribute('target', '_blank');
     document.body.appendChild(tempLink);
@@ -128,9 +129,10 @@ export class IllustContainerWithoutStore extends React.Component {
             className={ 'link' }
             href={ '/' }>
           <div className={ 'image' }>
-            <img
+            <Img
               className={ 'animated rollIn' }
-              src={ this.props.illust.item.image_urls.px_480mw } />
+              src={ [this.props.illust.item.image_urls.large, this.props.illust.item.image_urls.px_480mw] }
+              loader={ <Loading isHidden={ false } /> } />
           </div>
           </Link>
           <div className={ 'tags' }>

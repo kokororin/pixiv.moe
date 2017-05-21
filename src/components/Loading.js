@@ -16,21 +16,11 @@ export default class Loading extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      isHidden: true
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      isHidden: nextProps.isHidden
-    });
   }
 
   render() {
     // it means ローディング
-    return this.state.isHidden
+    return this.props.isHidden
       ? null
       : (
       <div className={ 'message' }>

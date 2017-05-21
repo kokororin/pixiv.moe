@@ -5028,6 +5028,12 @@ react-hot-loader@^v3.0.0-beta.6:
     redbox-react "^1.2.5"
     source-map "^0.4.4"
 
+react-image@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/react-image/-/react-image-1.0.1.tgz#eb3178a7b2a09945310a4bea6f89317d8b6f8c40"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-masonry-component@^5.0.5:
   version "5.0.5"
   resolved "https://registry.npmjs.org/react-masonry-component/-/react-masonry-component-5.0.5.tgz#7a6e92fc4f67f6e7c1710b4fb90b4d7e81c0719f"
