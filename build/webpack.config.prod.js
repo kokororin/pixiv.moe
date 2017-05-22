@@ -3,6 +3,7 @@ const fs = require('fs');
 const webpack = require('webpack');
 const minify = require('html-minifier').minify;
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const OptimizeJsPlugin = require('optimize-js-plugin');
 
 module.exports = {
   entry: [
@@ -38,6 +39,9 @@ module.exports = {
       comments: false
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
+    new OptimizeJsPlugin({
+      sourceMap: false
+    }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       reportFilename: path.join(__dirname, '/../dist/report.html'),
