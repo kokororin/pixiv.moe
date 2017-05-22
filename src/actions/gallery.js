@@ -51,10 +51,13 @@ function fetchSource() {
   return (dispatch, getState) => {
     dispatch(setFetchError(false));
     dispatch(setFetchStatus(true));
-    if(getState().gallery.tag==='ranking'){
+    if (getState().gallery.tag === 'ranking') {
       return cachedFetch(`${config.apiBaseURL}${config.rankingURI}`, {
       mode: 'cors',
-      timeout: 10e3
+      timeout: 10e3,
+       data: {
+        page: getState().gallery.page
+      }
     })
       .then((data) => {
         if (data.status === 'success' && data.count > 0) {

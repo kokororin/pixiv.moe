@@ -46,10 +46,6 @@ export class GalleryContainerWithoutStore extends React.Component {
     }
     const contentScrollTop = this.contentDOMNode.scrollTop;
     this.props.dispatch(GalleryActions.setContentScrollTop(contentScrollTop));
-    if (this.props.gallery.tag === 'ranking') {
-      // TODO ranking infinate scrolling
-      return;
-    }
     if (this.props.gallery.isFetching) {
       return;
     }
