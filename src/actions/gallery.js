@@ -75,10 +75,14 @@ function fetchSource() {
         dispatch(setFetchError(true));
       });
     }
-    return cachedFetch(`${config.apiBaseURL}${config.galleryURI}/${getState().gallery.tag}/${getState().gallery.page}`, {
+    return cachedFetch(`${config.apiBaseURL}${config.galleryURI}`, {
       mode: 'cors',
       timeout: 10e3,
-      expiryKey: 'expires_at'
+      expiryKey: 'expires_at',
+      data: {
+        tag: getState().gallery.tag,
+        page: getState().gallery.page
+      }
     })
       .then((data) => {
         if (data.status === 'success' && data.count > 0) {
