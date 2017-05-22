@@ -62,14 +62,98 @@ $ npm start
 The API is based on HTTPS requests and JSON responses.The stable HTTPS endpoint for the latest version is:
 `https://api.pixiv.moe/v1`
 
-#### Illust List
+#### Ranking List
 
 ##### request
-`GET /gallery/[:tag]/[:page]`
+`GET /ranking?page=[:page]`
 
 ###### example
 ```bash
-curl 'https://api.pixiv.moe/v1/gallery/nico/1' 
+curl 'https://api.pixiv.moe/v1/ranking?page=1' 
+```
+
+##### response
+```json
+{
+    "status":"success",
+    "response":{
+        "content":"all",
+        "mode":"daily",
+        "date":"2017-05-21",
+        "works":[
+            {
+                "rank":1,
+                "previous_rank":6,
+                "work":{
+                    "id":62984197,
+                    "title":"★",
+                    "caption":null,
+                    "tags":[
+                        "SUKJA",
+                        "オリジナル",
+                        "ゴスロリ"
+                    ],
+                    "tools":null,
+                    "image_urls":{
+                        "large":"https://api.pixiv.moe/v1/image/Ly9pMi5waXhpdi5uZXQvaW1nLW9yaWdpbmFsL2ltZy8yMDE3LzA1LzIwLzE3LzE1LzM5LzYyOTg0MTk3X3AwLnBuZw==",
+                        "px_480mw":"https://api.pixiv.moe/v1/image/Ly9pMi5waXhpdi5uZXQvYy80ODB4OTYwL2ltZy1tYXN0ZXIvaW1nLzIwMTcvMDUvMjAvMTcvMTUvMzkvNjI5ODQxOTdfcDBfbWFzdGVyMTIwMC5qcGc="
+                    },
+                    "width":700,
+                    "height":1000,
+                    "stats":{
+                        "scored_count":2470,
+                        "score":24700,
+                        "views_count":33130,
+                        "favorited_count":{
+                            "public":null,
+                            "private":null
+                        },
+                        "commented_count":null
+                    },
+                    "publicity":0,
+                    "age_limit":"all-age",
+                    "created_time":"2017-05-20 17:15:00",
+                    "reuploaded_time":"2017-05-20 17:15:39",
+                    "user":{
+                        "id":4889903,
+                        "account":"sorolp",
+                        "name":"SUKJA",
+                        "is_following":null,
+                        "is_follower":null,
+                        "is_friend":null,
+                        "is_premium":null,
+                        "profile_image_urls":{
+                            "px_50x50":"https://api.pixiv.moe/v1/image/Ly9pMy5waXhpdi5uZXQvdXNlci1wcm9maWxlL2ltZy8yMDE2LzExLzI1LzE4LzI4LzI1LzExNzk0MDM4X2ViNGViYjkzOWE5ZTVmNTAzZGUyYjdkMjU0N2IxMjUzXzUwLmpwZw=="
+                        },
+                        "stats":null,
+                        "profile":null
+                    },
+                    "is_manga":null,
+                    "is_liked":null,
+                    "favorite_id":null,
+                    "page_count":1,
+                    "book_style":"none",
+                    "type":"illustration",
+                    "metadata":null,
+                    "content_type":null,
+                    "sanity_level":"white"
+                },
+                "unique_id":"2uba8cM"
+            }
+        ]
+    },
+    "count":1
+}
+```
+
+#### Illust List
+
+##### request
+`GET /gallery?tag=[:tag]&page=[:page]`
+
+###### example
+```bash
+curl 'https://api.pixiv.moe/v1/gallery?tag=nico&page=1' 
 ```
 
 ##### response
@@ -195,11 +279,11 @@ curl 'https://api.pixiv.moe/v1/illust/50110342'
 #### Illust Comments
 
 ##### request
-`GET /illust/comments/[:illust_id]/[:page]`
+`GET /illust/comments/[:illust_id]?page=[:page]`
 
 ###### example
 ```bash
-curl 'https://api.pixiv.moe/v1/illust/comments/47527196/1'
+curl 'https://api.pixiv.moe/v1/illust/comments/47527196?page=1'
 ```
 
 ##### response
