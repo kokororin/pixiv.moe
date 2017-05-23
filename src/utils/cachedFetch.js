@@ -14,8 +14,7 @@ function getContent(content) {
 export default function cachedFetch(url, options) {
   let cacheKey = undefined;
 
-  if ((typeof options.method === 'undefined' || options.method.toLowerCase() === 'get')
-    && typeof options.data === 'object') {
+  if ((typeof options.method === 'undefined' || options.method.toLowerCase() === 'get') && typeof options.data === 'object') {
     url += '?' + httpBuildQuery(options.data);
   }
 
@@ -40,28 +39,30 @@ export default function cachedFetch(url, options) {
     }
   }
 
-  return fetch(url, options).then((response) => {
-    // let fetch supports timeout
+  return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
-      throw new Error('request timeout');
+      reject(new Error('request timeout'));
     }, options.timeout);
-    // let's only store in cache if the content-type is
-    // JSON or something non-binary
-    if (response.status === 200) {
-      const ct = response.headers.get('Content-Type');
-      if (ct && (ct.match(/application\/json/i) || ct.match(/text\//i))) {
+    fetch(url, options).then((response) => {
+      // let fetch supports timeout
+      // let's only store in cache if the content-type is
+      // JSON or something non-binary
+      if (response.status === 200) {
+        const ct = response.headers.get('Content-Type');
+        if (ct && (ct.match(/application\/json/i) || ct.match(/text\//i))) {
 
-        response.clone().text().then((content) => {
-          content = getContent(content);
-          if (typeof options.expiryKey === 'string') {
-            Storage.set(cacheKey, content)
-              .set(cacheKey + ':ts', content[options.expiryKey]);
-          }
-        });
+          response.clone().text().then((content) => {
+            content = getContent(content);
+            if (typeof options.expiryKey === 'string') {
+              Storage.set(cacheKey, content)
+                .set(cacheKey + ':ts', content[options.expiryKey]);
+            }
+          });
+        }
+        clearTimeout(timeoutId);
+        resolve(response.json());
       }
-      clearTimeout(timeoutId);
-      return response.json();
-    }
-    throw new Error('response is not OK');
+      reject(new Error('response is not OK'));
+    })
   });
 }

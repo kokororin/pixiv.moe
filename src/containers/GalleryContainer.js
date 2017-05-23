@@ -61,10 +61,12 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   async reRenderContent(clearCache) {
     if (clearCache) {
-      const searchResults = await Storage.search('cf_(.*)');
-      for (const searchResult of searchResults) {
-        Storage.remove(searchResult);
-      }
+      try {
+        const searchResults = await Storage.search('cf_(.*)');
+        for (const searchResult of searchResults) {
+          Storage.remove(searchResult);
+        }
+      } catch ( e ) {}
     }
     this.props.dispatch(GalleryActions.clearSource());
     this.fetchSource(true);

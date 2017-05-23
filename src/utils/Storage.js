@@ -31,9 +31,9 @@ export default class Storage {
 
   static search(query) {
     if (!Storage.isSupport()) return Promise.resolve([]);
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       if (!query instanceof RegExp) {
-        throw new Error('query is not a RegExp');
+        reject(new Error('query is not a RegExp'));
       }
       const regx = new RegExp(query),
         searchResults = [];

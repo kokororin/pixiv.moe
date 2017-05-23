@@ -53,30 +53,30 @@ function fetchSource() {
     dispatch(setFetchStatus(true));
     if (getState().gallery.tag === 'ranking') {
       return cachedFetch(`${config.apiBaseURL}${config.rankingURI}`, {
-      mode: 'cors',
-      timeout: 10e3,
-       data: {
-        page: getState().gallery.page
-      }
-    })
-      .then((data) => {
-        if (data.status === 'success' && data.count > 0) {
-          Object.keys(data.response.works).map((key) => {
-            const elem = data.response.works[key];
-            dispatch(setItems(elem));
-          });
-        } else {
-          dispatch(setFetchError(true));
+        mode: 'cors',
+        timeout: 10e3,
+        data: {
+          page: getState().gallery.page
         }
       })
-      .then(() => {
-        dispatch(setFetchStatus(false));
-        dispatch(setPage(getState().gallery.page + 1));
-      })
-      .catch(() => {
-        dispatch(setFetchStatus(false));
-        dispatch(setFetchError(true));
-      });
+        .then((data) => {
+          if (data.status === 'success' && data.count > 0) {
+            Object.keys(data.response.works).map((key) => {
+              const elem = data.response.works[key];
+              dispatch(setItems(elem));
+            });
+          } else {
+            dispatch(setFetchError(true));
+          }
+        })
+        .then(() => {
+          dispatch(setFetchStatus(false));
+          dispatch(setPage(getState().gallery.page + 1));
+        })
+        .catch(() => {
+          dispatch(setFetchStatus(false));
+          dispatch(setFetchError(true));
+        });
     }
     return cachedFetch(`${config.apiBaseURL}${config.galleryURI}`, {
       mode: 'cors',

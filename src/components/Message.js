@@ -18,10 +18,6 @@ export default class Message extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      isHidden: this.props.isHidden
-    };
   }
 
   show() {
@@ -37,7 +33,7 @@ export default class Message extends React.Component {
   }
 
   render() {
-    return this.state.isHidden
+    return this.props.isHidden
       ? null
       : (
       <div className={ 'message' }>
