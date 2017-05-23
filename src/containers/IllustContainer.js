@@ -148,9 +148,18 @@ export class IllustContainerWithoutStore extends React.Component {
             className={ 'link' }
             href={ '/' }>
             <div className={ 'image' }>
-              <Img
-                src={ [this.props.illust.item.image_urls.large, this.props.illust.item.image_urls.px_480mw] }
-                loader={ <Loading isHidden={ false } /> } />
+              { this.props.illust.item.metadata === null
+                ? <Img
+                    src={ [this.props.illust.item.image_urls.large, this.props.illust.item.image_urls.px_480mw] }
+                    loader={ <Loading isHidden={ false } /> } />
+                : this.props.illust.item.metadata.pages.map((elem) => {
+                  return (
+                    <Img
+                      key={ shortid.generate() }
+                      src={ [elem.image_urls.large, elem.image_urls.px_480mw] }
+                      loader={ <Loading isHidden={ false } /> } />
+                  );
+                }) }
             </div>
           </Link>
           <div className={ 'tags' }>
