@@ -59,10 +59,19 @@
   .detail {
     text-align: center;
     color: rgb(255, 64, 129);
-    b {
-      color: #716d6d;
-      font-style: italic;
-      margin-right: 2px;
+    .author {
+      display: inline-block;
+      &:before {
+        content: "by";
+        margin-right: 5px;
+      }
+      a {
+        color: #258fb8;
+      }
+    }
+    time {
+      margin-left: 10px;
+      color: #999;
     }
   }
   .comments {

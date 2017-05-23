@@ -15,7 +15,7 @@ import config from '@/config';
 import { IllustActions } from '@/actions';
 import { Alert, Loading, Message } from '@/components';
 import { LoginContainer } from '@/containers';
-import { cachedFetch, moment, Storage } from '@/utils';
+import { cachedFetch, EmojiParser, moment, Storage } from '@/utils';
 
 @autobind
 export class IllustContainerWithoutStore extends React.Component {
@@ -45,6 +45,17 @@ export class IllustContainerWithoutStore extends React.Component {
     this.props.dispatch(IllustActions.clearItem());
     this.props.dispatch(IllustActions.clearComments());
     clearInterval(this.authTimer);
+  }
+
+  componentDidUpdate() {
+    const commentListDOMNode = ReactDOM.findDOMNode(this.commentListRef);
+    if (commentListDOMNode) {
+      const commentContentDOMNodes = commentListDOMNode.querySelectorAll('span.mdl-list__item-sub-title');
+      for (const commentContentDOMNode of commentContentDOMNodes) {
+        commentContentDOMNode.innerHTML = EmojiParser.parse(commentContentDOMNode.innerHTML);
+      }
+    }
+
   }
 
   renderHeaderTitle() {
@@ -79,7 +90,7 @@ export class IllustContainerWithoutStore extends React.Component {
       method: 'put',
       timeout: 10e3,
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
         'Access-Token': authData.access_token
       }
@@ -144,24 +155,20 @@ export class IllustContainerWithoutStore extends React.Component {
     try {
       return (
         <div className={ 'illust' }>
-          <Link
-            className={ 'link' }
-            href={ '/' }>
-            <div className={ 'image' }>
-              { this.props.illust.item.metadata === null
-                ? <Img
-                    src={ [this.props.illust.item.image_urls.large, this.props.illust.item.image_urls.px_480mw] }
+          <div className={ 'image' }>
+            { this.props.illust.item.metadata === null
+              ? <Img
+                  src={ [this.props.illust.item.image_urls.large, this.props.illust.item.image_urls.px_480mw] }
+                  loader={ <Loading isHidden={ false } /> } />
+              : this.props.illust.item.metadata.pages.map((elem) => {
+                return (
+                  <Img
+                    key={ shortid.generate() }
+                    src={ [elem.image_urls.large, elem.image_urls.px_480mw] }
                     loader={ <Loading isHidden={ false } /> } />
-                : this.props.illust.item.metadata.pages.map((elem) => {
-                  return (
-                    <Img
-                      key={ shortid.generate() }
-                      src={ [elem.image_urls.large, elem.image_urls.px_480mw] }
-                      loader={ <Loading isHidden={ false } /> } />
-                  );
-                }) }
-            </div>
-          </Link>
+                );
+              }) }
+          </div>
           <div className={ 'tags' }>
             { this.props.illust.item.tags.map((elem) => {
                 return (
@@ -196,25 +203,29 @@ export class IllustContainerWithoutStore extends React.Component {
           </div>
           <div className={ 'detail' }>
             <p>
-              <b>插畫師</b>
-              <a
-                target={ '_blank' }
-                href={ `http://pixiv.me/${this.props.illust.item.user.account}` }>
-                { this.props.illust.item.user.name }
-              </a>
+              <span className={ 'author' }>
+                <a
+                  target={ '_blank' }
+                  href={ `http://pixiv.me/${this.props.illust.item.user.account}` }>
+                  { this.props.illust.item.user.name }
+                </a>
+              </span>
+              <time>
+                { `${moment(this.props.illust.item.created_time).format('LLL')}(JST)` }
+              </time>
             </p>
             <p>
-              <b>時間</b>
-              { `${moment(this.props.illust.item.created_time).format('LLL')}(JST)` }
-            </p>
-            <p>
-              <b>リンク</b>
               <a
                 target={ '_blank' }
-                href={ `/${this.props.illust.item.id}` }>pixiv.net</a>
+                href={ `/${this.props.illust.item.id}` }>pixivにリダイレクトする</a>
             </p>
           </div>
-          <div className={ 'comments' }>
+          <div
+            className={ 'comments' }
+            ref={ (ref) => this.commentListRef = ref }>
+            { this.props.illust.comments.length === 0
+              ? <h4>コメントはありません</h4>
+              : <h4>コメント</h4> }
             <List style={ { width: 'auto' } }>
               { this.props.illust.comments.map((elem) => {
                   return (

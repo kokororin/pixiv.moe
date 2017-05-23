@@ -78,7 +78,7 @@ export default class LoginContainer extends React.Component {
       method: 'post',
       timeout: 10e3,
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({

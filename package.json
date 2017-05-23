@@ -10,6 +10,7 @@
     "dist": "cross-env NODE_ENV=production webpack --progress --config build/webpack.config.js",
     "postdist": "copyfiles -f ./src/icons/*.ico ./src/icons/*.png ./dist/assets",
     "lint": "eslint --max-warnings 0 ./src",
+    "lint:fix": "eslint --fix ./src",
     "posttest": "npm run lint",
     "start": "cross-env NODE_ENV=development node build/dev-server.js",
     "test": "cross-env NODE_ENV=test istanbul cover karma start",

@@ -46,6 +46,7 @@
     "no-var": 1,
     "no-multi-spaces": 0,
     "object-shorthand": 1,
+    "quote-props": [1, "as-needed"],
     "spaced-comment": 1,
     "eol-last": 1,
     "prefer-arrow-callback": 0,
