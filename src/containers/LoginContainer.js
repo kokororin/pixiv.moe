@@ -21,7 +21,7 @@ export default class LoginContainer extends React.Component {
   componentDidMount() {
     const authData = Storage.get('auth');
     this.setState({
-      authData: authData
+      authData
     });
     document.addEventListener('keydown', this.onKeydown);
   }
@@ -82,8 +82,8 @@ export default class LoginContainer extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: username,
-        password: password
+        username,
+        password
       })
     })
       .then((data) => {
@@ -94,7 +94,7 @@ export default class LoginContainer extends React.Component {
           authData.expires_at = authData.auth_time + authData.expires_in;
           Storage.set('auth', authData);
           this.setState({
-            authData: authData
+            authData
           });
           setTimeout(() => {
             this.close();

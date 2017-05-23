@@ -34,7 +34,7 @@ export default class Login extends React.Component {
   componentDidMount() {
     const authData = Storage.get('auth');
     this.setState({
-      authData: authData
+      authData
     });
   }
 
@@ -53,7 +53,7 @@ export default class Login extends React.Component {
 
   setUsername(username) {
     this.setState({
-      username: username
+      username
     });
   }
 
@@ -63,7 +63,7 @@ export default class Login extends React.Component {
 
   setPassword(password) {
     this.setState({
-      password: password
+      password
     });
   }
 

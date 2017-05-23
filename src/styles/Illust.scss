@@ -15,6 +15,7 @@
 }
 
 .illust {
+  padding: 20px;
   .link {
     cursor: default;
   }
@@ -60,6 +61,9 @@
       font-style: italic;
       margin-right: 2px;
     }
+  }
+  .comments {
+    width: 100%;
   }
 }
 

@@ -45,6 +45,7 @@
     "no-alert": 0,
     "no-var": 1,
     "no-multi-spaces": 0,
+    "object-shorthand": 1,
     "spaced-comment": 1,
     "eol-last": 1,
     "prefer-arrow-callback": 0,

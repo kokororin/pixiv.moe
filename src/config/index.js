@@ -3,6 +3,7 @@ export default {
   galleryURI: '/gallery',
   rankingURI: '/ranking',
   illustURI: '/illust',
+  commentsURI: '/illust/comments',
   authURI: '/user/auth',
   favouriteURI: '/favourite',
   baseURL: 'https://pixiv.moe/',

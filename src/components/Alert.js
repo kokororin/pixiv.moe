@@ -24,7 +24,7 @@ export default class Alert extends React.Component {
 
     this.setState({
       isHidden: false,
-      content: content
+      content
     });
 
     setTimeout(() => {

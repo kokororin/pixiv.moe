@@ -30,9 +30,6 @@ module.exports = {
     }, {
       test: /\.(png|jpg|gif|woff|woff2|ttf|svg|eot)(\?|\?[a-z0-9]+)?$/,
       loader: 'url-loader?limit=8192'
-    }, {
-      test: /masonry|imagesloaded|fizzy\-ui\-utils|desandro\-|outlayer|get\-size|doc\-ready|eventie|eventemitter/,
-      loader: 'imports-loader?define=>false&this=>window'
     }]
   },
   plugins: [

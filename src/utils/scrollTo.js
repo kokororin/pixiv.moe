@@ -19,13 +19,13 @@ export default function scrollTo(element, scrollTargetY = 0, speed = 2000, easin
 
   // easing equations from https://github.com/danro/easing-js/blob/master/easing.js
   const easingEquations = {
-    easeOutSine: function(pos) {
+    easeOutSine(pos) {
       return Math.sin(pos * (Math.PI / 2));
     },
-    easeInOutSine: function(pos) {
+    easeInOutSine(pos) {
       return (-0.5 * (Math.cos(Math.PI * pos) - 1));
     },
-    easeInOutQuint: function(pos) {
+    easeInOutQuint(pos) {
       if ((pos /= 0.5) < 1) {
         return 0.5 * Math.pow(pos, 5);
       }

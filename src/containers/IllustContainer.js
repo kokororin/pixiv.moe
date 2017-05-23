@@ -2,9 +2,10 @@ import '@/styles/Illust.scss';
 import '@/styles/Animation.scss';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-component';
-import { Layout, Header, Content, Icon, Chip, ChipContact, Button } from 'react-mdl';
+import { Layout, Header, Content, Icon, Chip, ChipContact, Button, List, ListItem, ListItemContent } from 'react-mdl';
 import shortid from 'shortid';
 import time from 'locutus/php/datetime/time';
 import Img from 'react-image';
@@ -24,8 +25,10 @@ export class IllustContainerWithoutStore extends React.Component {
   }
 
   componentDidMount() {
+    this.layoutDOMNode = ReactDOM.findDOMNode(this.layoutRef);
     this.illustId = this.props._[0];
     this.props.dispatch(IllustActions.fetchItem(this.illustId));
+    this.props.dispatch(IllustActions.fetchComments(this.illustId));
     this.authTimer = setInterval(() => {
       const authData = Storage.get('auth');
       if (authData === null) {
@@ -40,6 +43,7 @@ export class IllustContainerWithoutStore extends React.Component {
   componentWillUnmount() {
     this.props.dispatch(IllustActions.setFetchStatus(false));
     this.props.dispatch(IllustActions.clearItem());
+    this.props.dispatch(IllustActions.clearComments());
     clearInterval(this.authTimer);
   }
 
@@ -48,9 +52,9 @@ export class IllustContainerWithoutStore extends React.Component {
     <Link
       href={ '/' }
       className={ 'back-link' }>
-    <Icon
-      className={ 'back-icon' }
-      name={ 'arrow_back' } />
+      <Icon
+        className={ 'back-icon' }
+        name={ 'arrow_back' } />
     </Link>
     );
     return (
@@ -107,6 +111,22 @@ export class IllustContainerWithoutStore extends React.Component {
     window.open(`https://twitter.com/intent/tweet?original_referer=${encodeURIComponent(window.location.href)}&ref_src=twsrc%5Etfw&text=${encodeURIComponent(`${this.props.illust.item.title} | ${this.props.illust.item.user.name} #pixiv`)}&tw_p=tweetbutton&url=${encodeURIComponent(`${config.baseURL}${this.props.illust.item.id}`)}`, '_blank', 'width=550,height=370');
   }
 
+  scrollListener(event) {
+    if (!this.props.illust.isFetchCommentsCompleted) {
+      return;
+    }
+    if (this.props.illust.isCommentsEnd) {
+      return;
+    }
+    const target = event.nativeEvent.target,
+      targetHeight = target.clientHeight,
+      scrollTop = target.scrollTop,
+      scrollHeight = target.scrollHeight;
+    if (scrollTop + targetHeight - scrollHeight > -200) {
+      this.props.dispatch(IllustActions.fetchComments(this.illustId));
+    }
+  }
+
   renderContent() {
     const illust = this.props.illust;
     if (!illust.isFetchCompleted) {
@@ -121,19 +141,17 @@ export class IllustContainerWithoutStore extends React.Component {
           text={ 'エラーが発生しました' } />
       );
     }
-    // TODO
     try {
       return (
         <div className={ 'illust' }>
           <Link
             className={ 'link' }
             href={ '/' }>
-          <div className={ 'image' }>
-            <Img
-              className={ 'animated rollIn' }
-              src={ [this.props.illust.item.image_urls.large, this.props.illust.item.image_urls.px_480mw] }
-              loader={ <Loading isHidden={ false } /> } />
-          </div>
+            <div className={ 'image' }>
+              <Img
+                src={ [this.props.illust.item.image_urls.large, this.props.illust.item.image_urls.px_480mw] }
+                loader={ <Loading isHidden={ false } /> } />
+            </div>
           </Link>
           <div className={ 'tags' }>
             { this.props.illust.item.tags.map((elem) => {
@@ -187,6 +205,24 @@ export class IllustContainerWithoutStore extends React.Component {
                 href={ `/${this.props.illust.item.id}` }>pixiv.net</a>
             </p>
           </div>
+          <div className={ 'comments' }>
+            <List style={ { width: 'auto' } }>
+              { this.props.illust.comments.map((elem) => {
+                  return (
+                    <ListItem
+                      twoLine
+                      key={ elem.unique_id }>
+                      <ListItemContent
+                        avatar={ <img src={ elem.user.profile_image_urls.medium } /> }
+                        subtitle={ elem.comment }>
+                        { elem.user.name }
+                      </ListItemContent>
+                    </ListItem>
+                  );
+                }) }
+            </List>
+            <Loading isHidden={ this.props.illust.isFetchCommentsCompleted } />
+          </div>
           <LoginContainer ref={ (ref) => this.loginRef = ref } />
           <Alert ref={ (ref) => this.alertRef = ref } />
         </div>
@@ -205,7 +241,9 @@ export class IllustContainerWithoutStore extends React.Component {
     return (
       <Layout
         fixedHeader
-        id={ 'illust-layout' }>
+        id={ 'illust-layout' }
+        ref={ (ref) => this.layoutRef = ref }
+        onScroll={ this.scrollListener }>
         <Header
           id={ 'illust-title' }
           title={ this.renderHeaderTitle() } />

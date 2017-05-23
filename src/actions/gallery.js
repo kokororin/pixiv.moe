@@ -15,7 +15,7 @@ function setItems(data) {
   return {
     type: SET_ITEMS,
     payload: {
-      data: data
+      data
     }
   };
 }
@@ -24,7 +24,7 @@ export function setPage(page) {
   return {
     type: SET_PAGE,
     payload: {
-      page: page
+      page
     }
   };
 }
@@ -33,7 +33,7 @@ function setFetchError(isError) {
   return {
     type: SET_FETCH_ERROR,
     payload: {
-      isError: isError
+      isError
     }
   };
 }
@@ -42,7 +42,7 @@ function setFetchStatus(isFetching) {
   return {
     type: SET_FETCH_STATUS,
     payload: {
-      isFetching: isFetching
+      isFetching
     }
   };
 }
@@ -120,7 +120,7 @@ export function setTag(tag) {
   return {
     type: SET_TAG,
     payload: {
-      tag: tag
+      tag
     }
   };
 }

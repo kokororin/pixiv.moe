@@ -4,9 +4,14 @@ export default function illust(state = {
     item: {
       title: ''
     },
-    isFetching: true,
-    isError: false
-  } , action) {
+    comments: [],
+    page: 1,
+    isCommentsEnd: false,
+    isFetchCompleted: false,
+    isError: false,
+    isFetchCommentsCompleted: false,
+    isCommentsError: false
+  }, action) {
   switch (action.type) {
     case IllustActions.SET_ITEM:
       return {
@@ -30,6 +35,44 @@ export default function illust(state = {
       return {
         ...state,
         item: action.payload.item
+      };
+
+    case IllustActions.SET_COMMENTS:
+      return {
+        ...state,
+        comments: [...state.comments, ...action.payload.data]
+      };
+
+    case IllustActions.SET_COMMENTS_PAGE:
+      return {
+        ...state,
+        page: action.payload.page
+      };
+
+    case IllustActions.SET_COMMENTS_END:
+      return {
+        ...state,
+        isCommentsEnd: action.payload.isCommentsEnd
+      };
+
+    case IllustActions.SET_FETCH_COMMENTS_ERROR:
+      return {
+        ...state,
+        isCommentsError: action.payload.isError
+      };
+
+    case IllustActions.SET_FETCH_COMMENTS_STATUS:
+      return {
+        ...state,
+        isFetchCommentsCompleted: action.payload.isFetchCompleted
+      };
+
+    case IllustActions.CLEAR_COMMENTS:
+      return {
+        ...state,
+        comments: action.payload.comments,
+        page: action.payload.comments,
+        isCommentsEnd: action.payload.isCommentsEnd
       };
 
     default:
