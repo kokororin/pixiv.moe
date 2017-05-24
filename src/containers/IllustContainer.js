@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-component';
-import { Layout, Header, Content, Icon, Chip, ChipContact, Button, List, ListItem, ListItemContent } from 'react-mdl';
+import { Layout, Header, Content, Icon, Chip, ChipContact, Button, List } from 'react-mdl';
 import shortid from 'shortid';
 import time from 'locutus/php/datetime/time';
 import Img from 'react-image';
@@ -13,7 +13,7 @@ import Img from 'react-image';
 import config from '@/config';
 
 import { IllustActions } from '@/actions';
-import { Alert, Loading, Message } from '@/components';
+import { Alert, Comment, Loading, Message } from '@/components';
 import { LoginContainer } from '@/containers';
 import { cachedFetch, EmojiParser, moment, Storage } from '@/utils';
 
@@ -202,18 +202,18 @@ export class IllustContainerWithoutStore extends React.Component {
             </Button>
           </div>
           <div className={ 'detail' }>
-            <p>
-              <span className={ 'author' }>
+            <div>
+              <div className={ 'author' }>
                 <a
                   target={ '_blank' }
                   href={ `http://pixiv.me/${this.props.illust.item.user.account}` }>
                   { this.props.illust.item.user.name }
                 </a>
-              </span>
+              </div>
               <time>
                 { `${moment(this.props.illust.item.created_time).format('LLL')}(JST)` }
               </time>
-            </p>
+            </div>
             <p>
               <a
                 target={ '_blank' }
@@ -228,17 +228,9 @@ export class IllustContainerWithoutStore extends React.Component {
               : <h4>コメント</h4> }
             <List style={ { width: 'auto' } }>
               { this.props.illust.comments.map((elem) => {
-                  return (
-                    <ListItem
-                      twoLine
-                      key={ elem.unique_id }>
-                      <ListItemContent
-                        avatar={ <img src={ elem.user.profile_image_urls.medium } /> }
-                        subtitle={ elem.comment }>
-                        { elem.user.name }
-                      </ListItemContent>
-                    </ListItem>
-                  );
+                  return <Comment
+                           key={ shortid.generate() }
+                           item={ elem } />;
                 }) }
             </List>
             <Loading isHidden={ this.props.illust.isFetchCommentsCompleted } />

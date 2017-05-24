@@ -24,7 +24,7 @@ module.exports = {
     './src/index'
   ],
   cache: true,
-  devtool: 'eval',
+  devtool: '#eval-source-map',
   module: {
     rules: [{
       test: /\.(js|jsx)$/,

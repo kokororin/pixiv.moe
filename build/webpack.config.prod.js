@@ -17,7 +17,7 @@ module.exports = {
     publicPath: '/assets/'
   },
   cache: false,
-  devtool: 'cheap-module-inline-source-map',
+  devtool: '#source-map',
   module: {
     rules: [{
       test: /\.(js|jsx)$/,

@@ -1,5 +1,5 @@
 export Alert from '@/components/Alert';
-// export AnimatedLocations from '@/components/AnimatedLocations';
+export Comment from '@/components/Comment';
 export Item from '@/components/Item';
 export List from '@/components/List';
 export Login from '@/components/Login';

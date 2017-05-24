@@ -12,7 +12,7 @@ describe('GalleryActions', () => {
 
   it('fire SET_FETCH_ERROR when fetching sources has been done', (done) => {
     nock(config.baseURL)
-      .get(`${config.galleryURI}/nico/1`)
+      .get(`${config.galleryURI}?tag=nico`)
       .reply(200);
 
     const expectedActions = [
