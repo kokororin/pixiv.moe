@@ -9,7 +9,6 @@ const mixin = ReactMixin.decorate;
 @mixin(RouteRenderingMixin)
 @mixin(RouterMixin)
 export default class AnimatedLocations extends React.Component {
-
   static defaultProps = {
     component: 'div'
   };
@@ -25,8 +24,10 @@ export default class AnimatedLocations extends React.Component {
     });
 
     // TransitionGroup takes in a `component` property, and so does AnimatedLocations, so we pass through
-    return <ReactCSSTransitionGroup {...this.props}>
-             { handler }
-           </ReactCSSTransitionGroup>;
+    return (
+      <ReactCSSTransitionGroup {...this.props}>
+        {handler}
+      </ReactCSSTransitionGroup>
+    );
   }
 }

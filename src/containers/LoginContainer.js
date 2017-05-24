@@ -8,7 +8,6 @@ import config from '@/config';
 
 @autobind
 export default class LoginContainer extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -49,7 +48,6 @@ export default class LoginContainer extends React.Component {
   }
 
   onLoginClick() {
-
     if (this.state.isSubmitting) {
       return;
     }
@@ -86,8 +84,7 @@ export default class LoginContainer extends React.Component {
         password
       })
     })
-      .then((data) => {
-
+      .then(data => {
         if (data.status === 'success') {
           const authData = data.data;
           authData.auth_time = time();
@@ -130,12 +127,13 @@ export default class LoginContainer extends React.Component {
     return (
       <div>
         <Login
-          ref={ (ref) => this.loginRef = ref }
-          onLoginClick={ this.onLoginClick }
-          onLogoutClick={ this.onLogoutClick }
-          isSubmitting={ this.state.isSubmitting }
-          authData={ this.state.authData } />
-        <Alert ref={ (ref) => this.alertRef = ref } />
+          ref={ref => (this.loginRef = ref)}
+          onLoginClick={this.onLoginClick}
+          onLogoutClick={this.onLogoutClick}
+          isSubmitting={this.state.isSubmitting}
+          authData={this.state.authData}
+        />
+        <Alert ref={ref => (this.alertRef = ref)} />
       </div>
     );
   }

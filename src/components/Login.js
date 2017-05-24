@@ -12,7 +12,6 @@ import { Storage } from '@/utils';
 
 @autobind
 export default class Login extends React.Component {
-
   static propTypes = {
     onLogoutClick: PropTypes.func,
     onLogoutClick: PropTypes.func,
@@ -44,7 +43,6 @@ export default class Login extends React.Component {
     });
   }
 
-
   close() {
     this.setState({
       isHidden: true
@@ -72,70 +70,74 @@ export default class Login extends React.Component {
   }
 
   renderContent() {
-
-    if (this.props.authData !== null && this.props.authData.expires_at > time()) {
-      return (<div>
-                <div className={ 'avatar' }>
-                  <span className={ 'name' }>ニックネーム 「{ this.props.authData.user.name }」</span>
-                </div>
-                <div className={ 'footer' }>
-                  <Button
-                    onClick={ this.props.onLogoutClick }
-                    raised
-                    accent
-                    ripple>
-                    ログアウト
-                  </Button>
-                </div>
-              </div>);
+    if (
+      this.props.authData !== null &&
+      this.props.authData.expires_at > time()
+    ) {
+      return (
+        <div>
+          <div className={'avatar'}>
+            <span className={'name'}>
+              ニックネーム 「{this.props.authData.user.name}」
+            </span>
+          </div>
+          <div className={'footer'}>
+            <Button onClick={this.props.onLogoutClick} raised accent ripple>
+              ログアウト
+            </Button>
+          </div>
+        </div>
+      );
     }
-    return (<div>
-              <Textfield
-                onChange={ (event) => this.setUsername(event.target.value) }
-                value={ this.getUsername() }
-                label={ 'メールアドレス / pixiv ID' }
-                spellCheck={ false }
-                floatingLabel
-                style={ { width: '100%' } } />
-              <Textfield
-                type={ 'password' }
-                onChange={ (event) => this.setPassword(event.target.value) }
-                value={ this.getPassword() }
-                label={ 'パスワード' }
-                floatingLabel
-                style={ { width: '100%' } } />
-              <div className={ 'footer' }>
-                <Button
-                  className={ classNames({
-                                'fn-disallow': this.props.isSubmitting
-                              }) }
-                  onClick={ this.props.onLoginClick }
-                  disabled={ this.props.isSubmitting }
-                  raised
-                  accent
-                  ripple>
-                  { this.props.isSubmitting ? 'ちょっとまって' : 'ログイン' }
-                </Button>
-              </div>
-            </div>);
+    return (
+      <div>
+        <Textfield
+          onChange={event => this.setUsername(event.target.value)}
+          value={this.getUsername()}
+          label={'メールアドレス / pixiv ID'}
+          spellCheck={false}
+          floatingLabel
+          style={{ width: '100%' }}
+        />
+        <Textfield
+          type={'password'}
+          onChange={event => this.setPassword(event.target.value)}
+          value={this.getPassword()}
+          label={'パスワード'}
+          floatingLabel
+          style={{ width: '100%' }}
+        />
+        <div className={'footer'}>
+          <Button
+            className={classNames({
+              'fn-disallow': this.props.isSubmitting
+            })}
+            onClick={this.props.onLoginClick}
+            disabled={this.props.isSubmitting}
+            raised
+            accent
+            ripple>
+            {this.props.isSubmitting ? 'ちょっとまって' : 'ログイン'}
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   render() {
     return (
       <Modal
-        className={ 'login-modal-body' }
-        overlayClassName={ 'login-modal-overlay' }
-        isOpen={ !this.state.isHidden }
-        onRequestClose={ this.close }
-        contentLabel={ 'login-modal' }>
-        <div
-          className={ 'clear' }
-          onClick={ this.close }>
-          <Icon name={ 'clear' } />
+        className={'login-modal-body'}
+        overlayClassName={'login-modal-overlay'}
+        isOpen={!this.state.isHidden}
+        onRequestClose={this.close}
+        contentLabel={'login-modal'}>
+        <div className={'clear'} onClick={this.close}>
+          <Icon name={'clear'} />
         </div>
-        <div className={ 'form' }>
-          <div className={ 'fields' }>
-            { this.renderContent() }
+        <div className={'form'}>
+          <div className={'fields'}>
+            {this.renderContent()}
           </div>
         </div>
       </Modal>

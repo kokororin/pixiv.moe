@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { FABButton, Icon } from 'react-mdl';
 
 export default class Refresh extends React.Component {
-
   static propTypes = {
     onClick: PropTypes.func
   };
@@ -21,14 +20,11 @@ export default class Refresh extends React.Component {
 
   render() {
     return (
-      <div className={ 'float-btn refresh' }>
-        <FABButton
-          {...this.props}
-          colored
-          ripple>
-          <Icon name={ 'refresh' } />
+      <div className={'float-btn refresh'}>
+        <FABButton {...this.props} colored ripple>
+          <Icon name={'refresh'} />
         </FABButton>
       </div>
-      );
+    );
   }
 }

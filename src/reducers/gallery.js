@@ -1,13 +1,16 @@
 import { GalleryActions } from '@/actions';
 
-export default function gallery(state = {
+export default function gallery(
+  state = {
     page: 1,
     isFetching: false,
     isError: false,
     items: [],
     images: [],
     contentScrollTop: 0
-  } ,action) {
+  },
+  action
+) {
   switch (action.type) {
     case GalleryActions.SET_ITEMS:
       return {

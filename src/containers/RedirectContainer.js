@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Message } from '@/components';
 
 export default class RedirectContainer extends React.Component {
-
   static propTypes = {
     illustId: PropTypes.string
   };
@@ -23,25 +22,23 @@ export default class RedirectContainer extends React.Component {
       this.setState({
         isError: false
       });
-      new Promise((resolve) => setTimeout(resolve, 1500))
-        .then(() => {
-          window.location.href = `http://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illustId}`;
-        });
+      new Promise(resolve => setTimeout(resolve, 1500)).then(() => {
+        window.location.href = `http://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illustId}`;
+      });
     } else {
       this.setState({
         isError: true
       });
     }
-
   }
 
   render() {
     return (
       <div>
-        { this.state.isError ?
-          <Message /> :
-          <Message text={ 'あなたはpixiv.netへリダイレクトしています' } /> }
+        {this.state.isError
+          ? <Message />
+          : <Message text={'あなたはpixiv.netへリダイレクトしています'} />}
       </div>
-      );
+    );
   }
 }

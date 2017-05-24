@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 @autobind
 export default class Message extends React.Component {
-
   static defaultProps = {
     isHidden: false,
     text: 'エラーが発生しました。URLを確認するか、しばらく時間を置いて再度アクセスしてください。'
@@ -23,12 +22,10 @@ export default class Message extends React.Component {
   render() {
     return this.props.isHidden
       ? null
-      : (
-      <div className={ 'message' }>
-        <p>
-          { this.props.text }
-        </p>
-      </div>
-      );
+      : <div className={'message'}>
+          <p>
+            {this.props.text}
+          </p>
+        </div>;
   }
 }

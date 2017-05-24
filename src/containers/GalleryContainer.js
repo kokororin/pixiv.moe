@@ -12,7 +12,6 @@ import { scrollTo, Storage } from '@/utils';
 
 @autobind
 export class GalleryContainerWithoutStore extends React.Component {
-
   constructor(props) {
     super(props);
   }
@@ -25,7 +24,9 @@ export class GalleryContainerWithoutStore extends React.Component {
     window.addEventListener('resize', this.resizeListener);
 
     const cachedTag = Storage.get('tag');
-    this.props.dispatch(GalleryActions.setTag(cachedTag === null ? 'ranking' : cachedTag));
+    this.props.dispatch(
+      GalleryActions.setTag(cachedTag === null ? 'ranking' : cachedTag)
+    );
 
     if (this.props.gallery.items.length === 0) {
       this.fetchSource(true);
@@ -66,7 +67,7 @@ export class GalleryContainerWithoutStore extends React.Component {
         for (const searchResult of searchResults) {
           Storage.remove(searchResult);
         }
-      } catch ( e ) {}
+      } catch (e) {}
     }
     this.props.dispatch(GalleryActions.clearSource());
     this.fetchSource(true);
@@ -77,13 +78,11 @@ export class GalleryContainerWithoutStore extends React.Component {
       this.props.dispatch(GalleryActions.setPage(1));
     }
     this.props.dispatch(GalleryActions.fetchSourceIfNeeded());
-
   }
 
   resizeListener() {
     /* reset size of masonry-container when window size change */
-    const node = this.rootRef,
-      cellClassName = 'cell';
+    const node = this.rootRef, cellClassName = 'cell';
 
     // try to get cell width
     const temp = document.createElement('div');
@@ -97,7 +96,7 @@ export class GalleryContainerWithoutStore extends React.Component {
 
     try {
       node.style.width = String(`${maxn * componentWidth}px`);
-    } catch ( e ) {}
+    } catch (e) {}
 
     document.body.removeChild(temp);
   }
@@ -115,7 +114,7 @@ export class GalleryContainerWithoutStore extends React.Component {
   renderKeywords() {
     const keywords = config.keywords;
 
-    return keywords.map((elem) => {
+    return keywords.map(elem => {
       let linkStyle = null,
         iconStyle = {
           display: 'none'
@@ -132,17 +131,15 @@ export class GalleryContainerWithoutStore extends React.Component {
       }
       return (
         <a
-          key={ shortid.generate() }
-          href={ '#' }
-          style={ linkStyle }
-          data-tag={ elem.en }
-          onTouchTap={ this.onKeywordClick }
-          onClick={ this.onKeywordClick }
-          className={ `nav-link__${elem.en}` }>
-          <Icon
-            style={ iconStyle }
-            name={ 'done' } />
-          { elem.jp }
+          key={shortid.generate()}
+          href={'#'}
+          style={linkStyle}
+          data-tag={elem.en}
+          onTouchTap={this.onKeywordClick}
+          onClick={this.onKeywordClick}
+          className={`nav-link__${elem.en}`}>
+          <Icon style={iconStyle} name={'done'} />
+          {elem.jp}
         </a>
       );
     });
@@ -153,10 +150,12 @@ export class GalleryContainerWithoutStore extends React.Component {
       tagName = target.tagName.toLowerCase(),
       classList = event.nativeEvent.target.classList;
 
-    if (!classList.contains('material-icons')
-      && !classList.contains('mdl-layout__drawer-button')
-      && !classList.contains('github-link')
-      && tagName !== 'img') {
+    if (
+      !classList.contains('material-icons') &&
+      !classList.contains('mdl-layout__drawer-button') &&
+      !classList.contains('github-link') &&
+      tagName !== 'img'
+    ) {
       scrollTo(this.contentDOMNode, 0, 900, 'easeInOutQuint');
     }
   }
@@ -164,35 +163,36 @@ export class GalleryContainerWithoutStore extends React.Component {
   render() {
     return (
       <Layout
-        ref={ (ref) => this.layoutRef = ref }
+        ref={ref => (this.layoutRef = ref)}
         fixedHeader
-        onScroll={ this.scrollListener }>
+        onScroll={this.scrollListener}>
         <Header
-          onClick={ this.onHeaderClick }
-          title={ <span>{ config.siteTitle }</span> }>
+          onClick={this.onHeaderClick}
+          title={<span>{config.siteTitle}</span>}>
           <Navigation>
             <a
-              className={ 'github-link' }
-              target={ '_blank' }
-              href={ config.projectLink }><img src={ require('@/images/GitHub-Mark-Light-32px.png') } /></a>
+              className={'github-link'}
+              target={'_blank'}
+              href={config.projectLink}>
+              <img src={require('@/images/GitHub-Mark-Light-32px.png')} />
+            </a>
           </Navigation>
         </Header>
-        <Drawer title={ 'タグ' }>
+        <Drawer title={'タグ'}>
           <Navigation>
-            { this.renderKeywords() }
+            {this.renderKeywords()}
           </Navigation>
         </Drawer>
         <Content>
-          <div
-            ref={ (ref) => this.rootRef = ref }
-            style={ { margin: '0 auto' } }>
-            <List items={ this.props.gallery.items } />
-            <Loading isHidden={ !this.props.gallery.isFetching } />
+          <div ref={ref => (this.rootRef = ref)} style={{ margin: '0 auto' }}>
+            <List items={this.props.gallery.items} />
+            <Loading isHidden={!this.props.gallery.isFetching} />
             <Message
-              ref={ (ref) => this.errorRef = ref }
-              text={ '読み込みに失敗しました' }
-              isHidden={ !this.props.gallery.isError } />
-            <Refresh onClick={ async () => await this.reRenderContent(true) } />
+              ref={ref => (this.errorRef = ref)}
+              text={'読み込みに失敗しました'}
+              isHidden={!this.props.gallery.isError}
+            />
+            <Refresh onClick={async () => await this.reRenderContent(true)} />
           </div>
         </Content>
       </Layout>
@@ -200,8 +200,8 @@ export class GalleryContainerWithoutStore extends React.Component {
   }
 }
 
-export default connect((state) => {
+export default connect(state => {
   return {
     gallery: state.gallery
-  }
+  };
 })(GalleryContainerWithoutStore);

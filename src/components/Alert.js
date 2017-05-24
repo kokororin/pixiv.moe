@@ -5,7 +5,6 @@ import Modal from 'react-modal';
 
 @autobind
 export default class Alert extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -37,14 +36,14 @@ export default class Alert extends React.Component {
   render() {
     return (
       <Modal
-        className={ 'alert-container' }
-        overlayClassName={ 'alert-modal-overlay' }
-        isOpen={ !this.state.isHidden }
-        contentLabel={ 'alert-modal' }>
-        <div className={ 'alert-wrap-1' }>
-          <div className={ 'alert-wrap-2' }>
-            <div className={ 'alert-body' }>
-              { this.state.content }
+        className={'alert-container'}
+        overlayClassName={'alert-modal-overlay'}
+        isOpen={!this.state.isHidden}
+        contentLabel={'alert-modal'}>
+        <div className={'alert-wrap-1'}>
+          <div className={'alert-wrap-2'}>
+            <div className={'alert-body'}>
+              {this.state.content}
             </div>
           </div>
         </div>

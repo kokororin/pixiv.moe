@@ -1,6 +1,7 @@
 import { IllustActions } from '@/actions';
 
-export default function illust(state = {
+export default function illust(
+  state = {
     item: {
       title: ''
     },
@@ -11,7 +12,9 @@ export default function illust(state = {
     isError: false,
     isFetchCommentsCompleted: false,
     isCommentsError: false
-  }, action) {
+  },
+  action
+) {
   switch (action.type) {
     case IllustActions.SET_ITEM:
       return {

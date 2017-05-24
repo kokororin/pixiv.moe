@@ -15,9 +15,9 @@ export default class Comment extends React.Component {
     return (
       <ListItem twoLine>
         <ListItemContent
-          avatar={ <img src={ this.props.item.user.profile_image_urls.medium } /> }
-          subtitle={ this.props.item.comment }>
-          { this.props.item.user.name }
+          avatar={<img src={this.props.item.user.profile_image_urls.medium} />}
+          subtitle={this.props.item.comment}>
+          {this.props.item.user.name}
         </ListItemContent>
       </ListItem>
     );

@@ -1,6 +1,5 @@
 // modify from https://github.com/joernroeder/piwik-react-router
 export default class Piwik {
-
   previousPath = null;
 
   unlistenFromHistory = null;
@@ -9,12 +8,22 @@ export default class Piwik {
 
   constructor(opts = {}) {
     this.opts = opts;
-    opts.trackErrors = ((opts.trackErrors !== undefined) ? opts.trackErrors : false);
-    opts.enableLinkTracking = ((opts.enableLinkTracking !== undefined) ? opts.enableLinkTracking : true);
-    opts.updateDocumentTitle = ((opts.updateDocumentTitle !== undefined) ? opts.updateDocumentTitle : true);
+    opts.trackErrors = opts.trackErrors !== undefined
+      ? opts.trackErrors
+      : false;
+    opts.enableLinkTracking = opts.enableLinkTracking !== undefined
+      ? opts.enableLinkTracking
+      : true;
+    opts.updateDocumentTitle = opts.updateDocumentTitle !== undefined
+      ? opts.updateDocumentTitle
+      : true;
 
     if (!opts.url || !opts.siteId) {
-      throw Error('PiwikTracker cannot be initialized! You haven\'t passed a url and sideId to it.');
+      /* eslint-disable */
+      throw Error(
+        `PiwikTracker cannot be initialized! You haven't passed a url and sideId to it.`
+      );
+      /* eslint-enable */
     }
     window._paq = window._paq || [];
 
@@ -30,38 +39,40 @@ export default class Piwik {
 
     // piwik initializer
     {
-    let u = null;
-    if (opts.url.indexOf('http://') !== -1 || opts.url.indexOf('https://') !== -1) {
-      u = opts.url + '/';
-    } else {
-      u = ((document.location.protocol === 'https:') ? 'https://' + opts.url + '/' : 'http://' + opts.url + '/');
+      let u = null;
+      if (
+        opts.url.indexOf('http://') !== -1 ||
+        opts.url.indexOf('https://') !== -1
+      ) {
+        u = opts.url + '/';
+      } else {
+        u = document.location.protocol === 'https:'
+          ? 'https://' + opts.url + '/'
+          : 'http://' + opts.url + '/';
+      }
+
+      this.push(['setSiteId', opts.siteId]);
+      this.push(['setTrackerUrl', u + 'piwik.php']);
+
+      if (opts.enableLinkTracking) {
+        this.push(['enableLinkTracking']);
+      }
+
+      const d = document,
+        g = d.createElement('script'),
+        s = d.getElementsByTagName('script')[0];
+      g.type = 'text/javascript';
+      g.defer = true;
+      g.async = true;
+      g.src = u + 'piwik.js';
+      s.parentNode.insertBefore(g, s);
     }
-
-    this.push(['setSiteId', opts.siteId]);
-    this.push(['setTrackerUrl', u + 'piwik.php']);
-
-    if (opts.enableLinkTracking) {
-      this.push(['enableLinkTracking']);
-    }
-
-    const d = document,
-      g = d.createElement('script'),
-      s = d.getElementsByTagName('script')[0];
-    g.type = 'text/javascript';
-    g.defer = true;
-    g.async = true;
-    g.src = u + 'piwik.js';
-    s.parentNode.insertBefore(g, s);
-    }
-
   }
-
 
   /**
    * Adds a page view for the the given location
    */
   track(currentPath) {
-
     if (this.previousPath === currentPath) {
       return;
     }
@@ -112,5 +123,4 @@ export default class Piwik {
       this.unlistenFromHistory();
     }
   }
-
 }

@@ -7,14 +7,18 @@ import { hashStr, Storage } from '@/utils';
 function getContent(content) {
   try {
     content = JSON.parse(content);
-  } catch ( e ) {}
+  } catch (e) {}
   return content;
 }
 
 export default function cachedFetch(url, options) {
   let cacheKey = undefined;
 
-  if ((typeof options.method === 'undefined' || options.method.toLowerCase() === 'get') && typeof options.data === 'object') {
+  if (
+    (typeof options.method === 'undefined' ||
+      options.method.toLowerCase() === 'get') &&
+    typeof options.data === 'object'
+  ) {
     url += '?' + httpBuildQuery(options.data);
   }
 
@@ -28,14 +32,13 @@ export default function cachedFetch(url, options) {
       // it was in localStorage! Yay!
       if (time() < parseInt(cachedExpiresAt, 10)) {
         const response = new Response(new Blob([JSON.stringify(cached)]));
-        return response.clone().text().then((content) => {
+        return response.clone().text().then(content => {
           content = getContent(content);
           return content;
         });
       }
       // We need to clean up this old key
-      Storage.remove(cacheKey)
-        .remove(cacheKey + ':ts');
+      Storage.remove(cacheKey).remove(cacheKey + ':ts');
     }
   }
 
@@ -43,19 +46,20 @@ export default function cachedFetch(url, options) {
     const timeoutId = setTimeout(() => {
       reject(new Error('request timeout'));
     }, options.timeout);
-    fetch(url, options).then((response) => {
+    fetch(url, options).then(response => {
       // let fetch supports timeout
       // let's only store in cache if the content-type is
       // JSON or something non-binary
       if (response.status === 200) {
         const ct = response.headers.get('Content-Type');
         if (ct && (ct.match(/application\/json/i) || ct.match(/text\//i))) {
-
-          response.clone().text().then((content) => {
+          response.clone().text().then(content => {
             content = getContent(content);
             if (typeof options.expiryKey === 'string') {
-              Storage.set(cacheKey, content)
-                .set(cacheKey + ':ts', content[options.expiryKey]);
+              Storage.set(cacheKey, content).set(
+                cacheKey + ':ts',
+                content[options.expiryKey]
+              );
             }
           });
         }
@@ -63,6 +67,6 @@ export default function cachedFetch(url, options) {
         resolve(response.json());
       }
       reject(new Error('response is not OK'));
-    })
+    });
   });
 }

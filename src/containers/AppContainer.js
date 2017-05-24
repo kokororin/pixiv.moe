@@ -12,7 +12,12 @@ import 'classlist-polyfill';
 
 import config from '@/config';
 import configureStore from '@/stores';
-import { GalleryContainer, IllustContainer, RedirectContainer, NotFoundContainer } from '@/containers';
+import {
+  GalleryContainer,
+  IllustContainer,
+  RedirectContainer,
+  NotFoundContainer
+} from '@/containers';
 import { Piwik } from '@/utils';
 
 injectTapEventPlugin();
@@ -20,7 +25,6 @@ const store = configureStore();
 
 @autobind
 export default class AppContainer extends React.Component {
-
   constructor(props) {
     super(props);
     ReactGA.initialize(config.trackingID);
@@ -34,33 +38,30 @@ export default class AppContainer extends React.Component {
         page: pageLink
       });
       ReactGA.pageview(pageLink);
-      this.piwik || (this.piwik = new Piwik({
-        url: config.piwikDomain,
-        siteId: config.piwikSiteId
-      }));
+      this.piwik ||
+        (this.piwik = new Piwik({
+          url: config.piwikDomain,
+          siteId: config.piwikSiteId
+        }));
       this.piwik.track(pageLink);
     }
 
-  // document.body.scrollTop = 0;
+    // document.body.scrollTop = 0;
   }
 
   render() {
     return (
-      <Provider store={ store }>
-        <Locations onNavigation={ this.onNavigation }>
+      <Provider store={store}>
+        <Locations onNavigation={this.onNavigation}>
+          <Location path={'/'} handler={GalleryContainer} />
           <Location
-            path={ '/' }
-            handler={ GalleryContainer } />
-          <Location
-            path={ /^\/illust\/([0-9]{0,}$)/ }
-            handler={ IllustContainer } />
-          <Location
-            path={ /^\/([0-9]{0,}$)/ }
-            handler={ RedirectContainer } />
-          <NotFound handler={ NotFoundContainer } />
+            path={/^\/illust\/([0-9]{0,}$)/}
+            handler={IllustContainer}
+          />
+          <Location path={/^\/([0-9]{0,}$)/} handler={RedirectContainer} />
+          <NotFound handler={NotFoundContainer} />
         </Locations>
       </Provider>
     );
   }
-
 }

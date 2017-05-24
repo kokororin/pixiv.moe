@@ -1,7 +1,6 @@
 import store from 'store';
 
 export default class Storage {
-
   static isSupport() {
     return store.enabled;
   }
@@ -35,8 +34,7 @@ export default class Storage {
       if (!query instanceof RegExp) {
         reject(new Error('query is not a RegExp'));
       }
-      const regx = new RegExp(query),
-        searchResults = [];
+      const regx = new RegExp(query), searchResults = [];
       store.each((value, key) => {
         const matches = key.match(regx);
         if (matches && matches.length > 0) {

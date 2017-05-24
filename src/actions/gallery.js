@@ -59,9 +59,9 @@ function fetchSource() {
           page: getState().gallery.page
         }
       })
-        .then((data) => {
+        .then(data => {
           if (data.status === 'success' && data.count > 0) {
-            Object.keys(data.response.works).map((key) => {
+            Object.keys(data.response.works).map(key => {
               const elem = data.response.works[key];
               dispatch(setItems(elem));
             });
@@ -87,9 +87,9 @@ function fetchSource() {
         page: getState().gallery.page
       }
     })
-      .then((data) => {
+      .then(data => {
         if (data.status === 'success' && data.count > 0) {
-          Object.keys(data.response).map((key) => {
+          Object.keys(data.response).map(key => {
             const elem = data.response[key];
             dispatch(setItems(elem));
           });

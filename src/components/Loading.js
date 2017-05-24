@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Spinner } from 'react-mdl';
 
 export default class Loading extends React.Component {
-
   static defaultProps = {
     isHidden: true
   };
@@ -22,10 +21,8 @@ export default class Loading extends React.Component {
     // it means ローディング
     return this.props.isHidden
       ? null
-      : (
-      <div className={ 'message' }>
-        <Spinner/>
-      </div>
-      );
+      : <div className={'message'}>
+          <Spinner />
+        </div>;
   }
 }
