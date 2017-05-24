@@ -5,8 +5,13 @@ const devMiddleware = require('webpack-dev-middleware');
 const hotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config');
 const compiler = webpack(config);
+const logUpdate = require('log-update');
 
 const app = new express();
+
+compiler.apply(new webpack.ProgressPlugin(function(percentage, msg) {
+  logUpdate('==> ' + (percentage * 100).toFixed(2) + '%', msg);
+}));
 
 app.use(devMiddleware(compiler, config.devServer));
 app.use(hotMiddleware(compiler));
@@ -19,7 +24,6 @@ app.listen(config.devServer.port, function onAppListening(err) {
   if (err) {
     console.error(err);
   } else {
-    console.info('==> Webpack development server listening on port %s', config.devServer.port);
-    console.info('==> Please wait for bundle finished');
+    console.info('==>');
   }
 });

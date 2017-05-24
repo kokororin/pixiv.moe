@@ -8,7 +8,8 @@ module.exports = {
     historyApiFallback: true,
     inline: true,
     port: 23333,
-    publicPath: 'http://localhost:23333/assets/',
+    host: '0.0.0.0',
+    publicPath: '/assets/',
     noInfo: false,
     hot: true,
     stats: {
@@ -18,7 +19,7 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',
-    'webpack-hot-middleware/client?reload=true&path=http://localhost:23333/__webpack_hmr',
+    'webpack-hot-middleware/client?reload=true',
     'whatwg-fetch',
     './src/index'
   ],
