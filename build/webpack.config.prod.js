@@ -90,7 +90,7 @@ module.exports = {
       xhr.open("GET", src, true);
       xhr.onload = function() {
         var res = xhr.responseText;
-        if (res && res.match(/^!function/)) {
+        if (res && res.match(/^!/)) {
           localStorage.bundle = res;
           runScript(localStorage.bundle);
           localStorage.hash = hash;
