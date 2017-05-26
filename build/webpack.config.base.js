@@ -5,9 +5,9 @@ const srcPath = path.join(__dirname, '/../src');
 
 module.exports = {
   output: {
-    path: path.join(__dirname, '/../dist/assets'),
+    path: path.join(__dirname, '/../dist'),
     filename: 'bundle.js',
-    publicPath: '/assets/'
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -29,7 +29,13 @@ module.exports = {
       loader: ['style-loader', 'css-loader', 'sass-loader']
     }, {
       test: /\.(png|jpg|gif|woff|woff2|ttf|svg|eot)(\?|\?[a-z0-9]+)?$/,
-      loader: 'url-loader?limit=8192'
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 8192,
+          name: 'assets/[hash].[ext]'
+        }
+      }]
     }]
   },
   plugins: [

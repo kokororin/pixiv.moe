@@ -74,7 +74,7 @@ export default function illust(
       return {
         ...state,
         comments: action.payload.comments,
-        page: action.payload.comments,
+        page: action.payload.page,
         isCommentsEnd: action.payload.isCommentsEnd
       };
 

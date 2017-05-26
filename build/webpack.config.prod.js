@@ -11,11 +11,6 @@ module.exports = {
     'whatwg-fetch',
     path.join(__dirname, '../src/index')
   ],
-  output: {
-    path: path.join(__dirname, '/../dist/assets'),
-    filename: 'bundle.js',
-    publicPath: '/assets/'
-  },
   cache: false,
   devtool: '#source-map',
   module: {

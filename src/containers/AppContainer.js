@@ -45,8 +45,6 @@ export default class AppContainer extends React.Component {
         }));
       this.piwik.track(pageLink);
     }
-
-    // document.body.scrollTop = 0;
   }
 
   render() {
