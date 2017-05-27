@@ -4103,6 +4103,10 @@ mute-stream@0.0.6:
   version "0.0.6"
   resolved "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.6.tgz#48962b19e169fd1dfc240b3f1e7317627bbc47db"
 
+namespaced-types@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/namespaced-types/-/namespaced-types-0.1.2.tgz#18d20b16b847df927408ecfe2d3c68c4c0ad1226"
+
 nan@^2.3.0, nan@^2.3.2:
   version "2.6.2"
   resolved "https://registry.npmjs.org/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
@@ -5279,6 +5283,10 @@ reduce-function-call@^1.0.1:
 redux-thunk@^2.1.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
+
+redux-types@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/redux-types/-/redux-types-1.0.0.tgz#19c776e152cbecb7a0a0c9a0b06c8e73f8893b19"
 
 redux@^3.6.0:
   version "3.6.0"

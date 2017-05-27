@@ -24,7 +24,7 @@ import config from '@/config';
 import { IllustActions } from '@/actions';
 import { Alert, Comment, Loading, Message } from '@/components';
 import { LoginContainer } from '@/containers';
-import { cachedFetch, EmojiParser, moment, Storage } from '@/utils';
+import { cachedFetch, moment, Storage } from '@/utils';
 
 @autobind
 export class IllustContainerWithoutStore extends React.Component {
@@ -49,24 +49,10 @@ export class IllustContainerWithoutStore extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.dispatch(IllustActions.setFetchStatus(false));
+    this.props.dispatch(IllustActions.setFetchStatus(true));
     this.props.dispatch(IllustActions.clearItem());
     this.props.dispatch(IllustActions.clearComments());
     clearInterval(this.authTimer);
-  }
-
-  componentDidUpdate() {
-    const commentListDOMNode = ReactDOM.findDOMNode(this.commentListRef);
-    if (commentListDOMNode) {
-      const commentContentDOMNodes = commentListDOMNode.querySelectorAll(
-        'span.mdl-list__item-sub-title'
-      );
-      for (const commentContentDOMNode of commentContentDOMNodes) {
-        commentContentDOMNode.innerHTML = EmojiParser.parse(
-          commentContentDOMNode.innerHTML
-        );
-      }
-    }
   }
 
   renderHeaderTitle() {
@@ -131,7 +117,7 @@ export class IllustContainerWithoutStore extends React.Component {
   }
 
   scrollListener(event) {
-    if (!this.props.illust.isFetchCommentsCompleted) {
+    if (this.props.illust.isFetchingComments) {
       return;
     }
     if (this.props.illust.isCommentsEnd) {
@@ -147,11 +133,10 @@ export class IllustContainerWithoutStore extends React.Component {
   }
 
   renderContent() {
-    const illust = this.props.illust;
-    if (!illust.isFetchCompleted) {
+    if (this.props.illust.isFetching) {
       return <Loading isHidden={false} />;
     }
-    if (illust.isError) {
+    if (this.props.illust.isError) {
       return <Message isHidden={false} text={'エラーが発生しました'} />;
     }
     try {
@@ -218,7 +203,7 @@ export class IllustContainerWithoutStore extends React.Component {
               </a>
             </p>
           </div>
-          <div className={'comments'} ref={ref => (this.commentListRef = ref)}>
+          <div className={'comments'}>
             {this.props.illust.comments.length === 0
               ? <h4>コメントはありません</h4>
               : <h4>コメント</h4>}
@@ -227,7 +212,7 @@ export class IllustContainerWithoutStore extends React.Component {
                 return <Comment key={shortid.generate()} item={elem} />;
               })}
             </List>
-            <Loading isHidden={this.props.illust.isFetchCommentsCompleted} />
+            <Loading isHidden={!this.props.illust.isFetchingComments} />
           </div>
           <LoginContainer ref={ref => (this.loginRef = ref)} />
           <Alert ref={ref => (this.alertRef = ref)} />

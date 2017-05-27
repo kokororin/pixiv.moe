@@ -99,6 +99,7 @@
     "material-design-icons": "^3.0.1",
     "material-design-lite": "^1.2.1",
     "moment": "^2.16.0",
+    "namespaced-types": "^0.1.2",
     "prop-types": "^15.5.10",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
@@ -113,6 +114,7 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
+    "redux-types": "^1.0.0",
     "shortid": "^2.2.6",
     "store": "^2.0.4",
     "whatwg-fetch": "^2.0.3"

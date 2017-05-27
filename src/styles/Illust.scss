@@ -10,7 +10,7 @@
     margin-right: 1rem;
   }
   #illust-title span {
-    vertical-align: -2px;
+    vertical-align: -1px;
   }
   .illust {
     padding: 20px;
@@ -83,6 +83,21 @@
     }
     .comments {
       width: 100%;
+      .comment-avatar {
+        width: 40px;
+        height: 40px;
+      }
+      .comment-content {
+        font-size: 13px;
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 18px;
+        color: rgba(0, 0, 0, 0.54);
+      }
+      .emoji-text {
+        display: inline-block;
+        width: 28px;
+      }
     }
   }
 }

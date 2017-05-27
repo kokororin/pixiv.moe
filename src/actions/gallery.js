@@ -1,19 +1,22 @@
-import config from '@/config';
+import namespacedTypes from 'namespaced-types';
 
+import config from '@/config';
 import { cachedFetch } from '@/utils';
 
-export const SET_ITEMS = 'SET_ITEMS';
-export const SET_IMAGES = 'SET_IMAGES';
-export const SET_PAGE = 'SET_PAGE';
-export const SET_FETCH_ERROR = 'SET_FETCH_ERROR';
-export const SET_FETCH_STATUS = 'SET_FETCH_STATUS';
-export const SET_TAG = 'SET_TAG';
-export const SET_CONTENT_SCROLLTOP = 'SET_CONTENT_SCROLLTOP';
-export const CLEAR_SOURCE = 'CLEAR_SOURCE';
+export const types = namespacedTypes('gallery', [
+  'SET_ITEMS',
+  'SET_IMAGES',
+  'SET_PAGE',
+  'SET_FETCH_ERROR',
+  'SET_FETCH_STATUS',
+  'SET_TAG',
+  'SET_CONTENT_SCROLLTOP',
+  'CLEAR_SOURCE'
+]);
 
 function setItems(data) {
   return {
-    type: SET_ITEMS,
+    type: types.SET_ITEMS,
     payload: {
       data
     }
@@ -22,7 +25,7 @@ function setItems(data) {
 
 export function setPage(page) {
   return {
-    type: SET_PAGE,
+    type: types.SET_PAGE,
     payload: {
       page
     }
@@ -31,7 +34,7 @@ export function setPage(page) {
 
 function setFetchError(isError) {
   return {
-    type: SET_FETCH_ERROR,
+    type: types.SET_FETCH_ERROR,
     payload: {
       isError
     }
@@ -40,7 +43,7 @@ function setFetchError(isError) {
 
 function setFetchStatus(isFetching) {
   return {
-    type: SET_FETCH_STATUS,
+    type: types.SET_FETCH_STATUS,
     payload: {
       isFetching
     }
@@ -118,7 +121,7 @@ export function fetchSourceIfNeeded() {
 
 export function setTag(tag) {
   return {
-    type: SET_TAG,
+    type: types.SET_TAG,
     payload: {
       tag
     }
@@ -127,7 +130,7 @@ export function setTag(tag) {
 
 export function setContentScrollTop(scrollTop) {
   return {
-    type: SET_CONTENT_SCROLLTOP,
+    type: types.SET_CONTENT_SCROLLTOP,
     payload: {
       contentScrollTop: scrollTop
     }
@@ -136,7 +139,7 @@ export function setContentScrollTop(scrollTop) {
 
 export function clearSource() {
   return {
-    type: CLEAR_SOURCE,
+    type: types.CLEAR_SOURCE,
     payload: {
       items: [],
       images: []

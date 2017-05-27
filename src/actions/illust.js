@@ -1,22 +1,24 @@
-import config from '@/config';
+import namespacedTypes from 'namespaced-types';
 
+import config from '@/config';
 import { cachedFetch } from '@/utils';
 
-export const SET_ITEM = 'SET_ITEM';
-export const SET_FETCH_ERROR = 'SET_FETCH_ERROR';
-export const SET_FETCH_STATUS = 'SET_FETCH_STATUS';
-export const CLEAR_ITEM = 'CLEAR_ITEM';
-export const SET_COMMENTS = 'SET_COMMENTS';
-export const SET_COMMENTS_PAGE = 'SET_COMMENTS_PAGE';
-export const SET_COMMENTS_END = 'SET_COMMENTS_END';
-export const SET_FETCH_COMMENTS_ERROR = 'SET_FETCH_COMMENTS_ERROR';
-export const SET_FETCH_COMMENTS_STATUS = 'SET_FETCH_COMMENTS_STATUS';
-export const CLEAR_COMMENTS = 'CLEAR_COMMENTS';
-
+export const types = namespacedTypes('illust', [
+  'SET_ITEM',
+  'SET_FETCH_ERROR',
+  'SET_FETCH_STATUS',
+  'CLEAR_ITEM',
+  'SET_COMMENTS',
+  'SET_COMMENTS_PAGE',
+  'SET_COMMENTS_END',
+  'SET_FETCH_COMMENTS_ERROR',
+  'SET_FETCH_COMMENTS_STATUS',
+  'CLEAR_COMMENTS'
+]);
 
 function setItem(data) {
   return {
-    type: SET_ITEM,
+    type: types.SET_ITEM,
     payload: {
       data
     }
@@ -25,30 +27,30 @@ function setItem(data) {
 
 function setFetchError(isError) {
   return {
-    type: SET_FETCH_ERROR,
+    type: types.SET_FETCH_ERROR,
     payload: {
       isError
     }
   };
 }
 
-export function setFetchStatus(isFetchCompleted) {
+export function setFetchStatus(isFetching) {
   return {
-    type: SET_FETCH_STATUS,
+    type: types.SET_FETCH_STATUS,
     payload: {
-      isFetchCompleted
+      isFetching
     }
   };
 }
 
 export function fetchItem(illustId) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(setFetchError(false));
     return cachedFetch(`${config.apiBaseURL}${config.illustURI}/${illustId}`, {
       mode: 'cors',
       timeout: 10e3
     })
-      .then((data) => {
+      .then(data => {
         if (data.status === 'success') {
           dispatch(setItem(data.response));
         } else {
@@ -56,10 +58,10 @@ export function fetchItem(illustId) {
         }
       })
       .then(() => {
-        dispatch(setFetchStatus(true));
+        dispatch(setFetchStatus(false));
       })
       .catch(() => {
-        dispatch(setFetchStatus(true));
+        dispatch(setFetchStatus(false));
         dispatch(setFetchError(true));
       });
   };
@@ -67,7 +69,7 @@ export function fetchItem(illustId) {
 
 export function clearItem() {
   return {
-    type: CLEAR_ITEM,
+    type: types.CLEAR_ITEM,
     payload: {
       item: {
         title: ''
@@ -78,7 +80,7 @@ export function clearItem() {
 
 function setComments(data) {
   return {
-    type: SET_COMMENTS,
+    type: types.SET_COMMENTS,
     payload: {
       data
     }
@@ -87,7 +89,7 @@ function setComments(data) {
 
 function setCommentsPage(page) {
   return {
-    type: SET_COMMENTS_PAGE,
+    type: types.SET_COMMENTS_PAGE,
     payload: {
       page
     }
@@ -96,7 +98,7 @@ function setCommentsPage(page) {
 
 function setCommentsEnd(isCommentsEnd) {
   return {
-    type: SET_COMMENTS_END,
+    type: types.SET_COMMENTS_END,
     payload: {
       isCommentsEnd
     }
@@ -105,34 +107,37 @@ function setCommentsEnd(isCommentsEnd) {
 
 function setFetchCommentsError(isError) {
   return {
-    type: SET_FETCH_COMMENTS_ERROR,
+    type: types.SET_FETCH_COMMENTS_ERROR,
     payload: {
       isError
     }
   };
 }
 
-export function setFetchCommentsStatus(isFetchCompleted) {
+function setFetchCommentsStatus(isFetching) {
   return {
-    type: SET_FETCH_COMMENTS_STATUS,
+    type: types.SET_FETCH_COMMENTS_STATUS,
     payload: {
-      isFetchCompleted
+      isFetching
     }
   };
 }
 
 export function fetchComments(illustId) {
   return (dispatch, getState) => {
-    dispatch(setFetchCommentsStatus(false));
+    dispatch(setFetchCommentsStatus(true));
     dispatch(setFetchCommentsError(false));
-    return cachedFetch(`${config.apiBaseURL}${config.commentsURI}/${illustId}`, {
-      mode: 'cors',
-      timeout: 10e3,
-      data: {
-        page: getState().illust.page
+    return cachedFetch(
+      `${config.apiBaseURL}${config.commentsURI}/${illustId}`,
+      {
+        mode: 'cors',
+        timeout: 10e3,
+        data: {
+          page: getState().illust.page
+        }
       }
-    })
-      .then((data) => {
+    )
+      .then(data => {
         if (data.next) {
           dispatch(setCommentsPage(getState().illust.page + 1));
         } else {
@@ -141,10 +146,10 @@ export function fetchComments(illustId) {
         dispatch(setComments(data.comments));
       })
       .then(() => {
-        dispatch(setFetchCommentsStatus(true));
+        dispatch(setFetchCommentsStatus(false));
       })
       .catch(() => {
-        dispatch(setFetchCommentsStatus(true));
+        dispatch(setFetchCommentsStatus(false));
         dispatch(setFetchCommentsError(true));
       });
   };
@@ -152,7 +157,7 @@ export function fetchComments(illustId) {
 
 export function clearComments() {
   return {
-    type: CLEAR_COMMENTS,
+    type: types.CLEAR_COMMENTS,
     payload: {
       comments: [],
       page: 1,

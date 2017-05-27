@@ -12,43 +12,43 @@ export default function gallery(
   action
 ) {
   switch (action.type) {
-    case GalleryActions.SET_ITEMS:
+    case GalleryActions.types.SET_ITEMS:
       return {
         ...state,
         items: [...state.items, ...[action.payload.data]]
       };
 
-    case GalleryActions.SET_FETCH_ERROR:
+    case GalleryActions.types.SET_FETCH_ERROR:
       return {
         ...state,
         isError: action.payload.isError
       };
 
-    case GalleryActions.SET_FETCH_STATUS:
+    case GalleryActions.types.SET_FETCH_STATUS:
       return {
         ...state,
         isFetching: action.payload.isFetching
       };
 
-    case GalleryActions.SET_PAGE:
+    case GalleryActions.types.SET_PAGE:
       return {
         ...state,
         page: action.payload.page
       };
 
-    case GalleryActions.SET_TAG:
+    case GalleryActions.types.SET_TAG:
       return {
         ...state,
         tag: action.payload.tag
       };
 
-    case GalleryActions.SET_CONTENT_SCROLLTOP:
+    case GalleryActions.types.SET_CONTENT_SCROLLTOP:
       return {
         ...state,
         contentScrollTop: action.payload.contentScrollTop
       };
 
-    case GalleryActions.CLEAR_SOURCE:
+    case GalleryActions.types.CLEAR_SOURCE:
       return {
         ...state,
         items: action.payload.items,
