@@ -17,7 +17,7 @@ describe('GalleryActions', () => {
 
     const expectedActions = [
       {
-        type: GalleryActions.SET_FETCH_ERROR,
+        type: GalleryActions.types.SET_FETCH_ERROR,
         payload: {
           isError: false
         }
