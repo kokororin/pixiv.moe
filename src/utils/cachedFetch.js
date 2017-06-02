@@ -11,7 +11,7 @@ function getContent(content) {
   return content;
 }
 
-export default function cachedFetch(url, options) {
+export default function cachedFetch(url, options = {}) {
   let cacheKey = undefined;
 
   if (

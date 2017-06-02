@@ -15,8 +15,7 @@ export default function mockStore(getState, expectedActions, done) {
   function mockStoreWithoutMiddleware() {
     return {
       getState() {
-        return typeof getState === 'function' ?
-          getState() : getState;
+        return typeof getState === 'function' ? getState() : getState;
       },
 
       dispatch(action) {
@@ -28,16 +27,16 @@ export default function mockStore(getState, expectedActions, done) {
             done();
           }
           return action;
-        } catch ( e ) {
+        } catch (e) {
           done(e);
         }
       }
-    }
+    };
   }
 
-  const mockStoreWithMiddleware = applyMiddleware(
-    ...middlewares
-  )(mockStoreWithoutMiddleware);
+  const mockStoreWithMiddleware = applyMiddleware(...middlewares)(
+    mockStoreWithoutMiddleware
+  );
 
   return mockStoreWithMiddleware();
 }

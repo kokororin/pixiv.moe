@@ -25,7 +25,7 @@ export default class Storage {
 
   static clear() {
     if (!Storage.isSupport()) return;
-    store.clear();
+    store.clearAll();
   }
 
   static search(query) {

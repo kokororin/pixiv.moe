@@ -19,6 +19,12 @@ import shallow from 'react-test-renderer/shallow';
  */
 export default function createComponent(component, props = {}, ...children) {
   const shallowRenderer = shallow.createRenderer();
-  shallowRenderer.render(React.createElement(component, props, children.length > 1 ? children : children[0]));
+  shallowRenderer.render(
+    React.createElement(
+      component,
+      props,
+      children.length > 1 ? children : children[0]
+    )
+  );
   return shallowRenderer.getRenderOutput();
 }

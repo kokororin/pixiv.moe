@@ -1,4 +1,3 @@
-'use strict';
 import createComponent from '../helpers/shallowRenderHelper';
 
 import { GalleryContainerWithoutStore } from '@/containers';
@@ -12,7 +11,7 @@ describe('GalleryContainer', () => {
     });
   });
 
-  it('GalleryContainer\'s mdl Layout has a scroll listener', () => {
-    expect(typeof(galleryContainer.props.onScroll)).to.equal('function');
+  it('GalleryContainerの mdl Layout has a scroll listener', () => {
+    expect(typeof galleryContainer.props.onScroll).to.equal('function');
   });
 });

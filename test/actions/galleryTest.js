@@ -1,4 +1,3 @@
-'use strict';
 import nock from 'nock';
 import mockStore from '../helpers/mockStoreHelper';
 
@@ -7,13 +6,11 @@ import { GalleryActions } from '@/actions';
 
 describe('GalleryActions', () => {
   afterEach(() => {
-    nock.cleanAll()
+    nock.cleanAll();
   });
 
-  it('fire SET_FETCH_ERROR when fetching sources has been done', (done) => {
-    nock(config.baseURL)
-      .get(`${config.galleryURI}?tag=nico`)
-      .reply(200);
+  it('fire SET_FETCH_ERROR when fetching sources has been done', done => {
+    nock(config.baseURL).get(`${config.galleryURI}?tag=nico`).reply(200);
 
     const expectedActions = [
       {
@@ -23,9 +20,13 @@ describe('GalleryActions', () => {
         }
       }
     ];
-    const store = mockStore({
-      gallery: {}
-    }, expectedActions, done)
+    const store = mockStore(
+      {
+        gallery: {}
+      },
+      expectedActions,
+      done
+    );
     store.dispatch(GalleryActions.fetchSourceIfNeeded());
   });
 });

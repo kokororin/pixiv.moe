@@ -14,7 +14,7 @@ export const types = namespacedTypes('gallery', [
   'CLEAR_SOURCE'
 ]);
 
-function setItems(data) {
+export function setItems(data) {
   return {
     type: types.SET_ITEMS,
     payload: {

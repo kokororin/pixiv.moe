@@ -1,5 +1,3 @@
-'use strict';
-
 require('babel-polyfill');
 
 // Add support for all files in the test directory
