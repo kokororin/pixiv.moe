@@ -3,12 +3,19 @@ const webpackCfg = require('./build/webpack.config.test');
 module.exports = function(config) {
   const configuration = {
     basePath: '',
-    browsers: ['Chrome'],
+    browsers: ['ChromeNoSandboxHeadless'],
     customLaunchers: {
-      Chrome_travis_ci: {
+      ChromeNoSandboxHeadless: {
         base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
+        flags: [
+          '--no-sandbox',
+          // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
+          '--headless',
+          '--disable-gpu',
+          // Without a remote debugging port, Google Chrome exits immediately.
+          ' --remote-debugging-port=9222',
+        ],
+      },
     },
     files: [
       'test/loadtests.js'
@@ -30,8 +37,7 @@ module.exports = function(config) {
     },
     coverageReporter: {
       dir: 'coverage/',
-      reporters: [
-        {
+      reporters: [{
           type: 'html'
         },
         {
@@ -40,11 +46,6 @@ module.exports = function(config) {
       ]
     }
   };
-  // We created a custom browser launcher that runs Chrome with the --no-sandbox option.
-  // And we only use it if the tests are running in Travis.
-  if (process.env.TRAVIS) {
-    configuration.browsers = ['Chrome_travis_ci'];
-  }
 
   config.set(configuration);
 };
