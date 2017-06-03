@@ -1,3 +1,4 @@
+const path = require('path');
 const webpackCfg = require('./build/webpack.config.test');
 
 module.exports = function(config) {
@@ -27,7 +28,7 @@ module.exports = function(config) {
       mocha: {}
     },
     singleRun: true,
-    reporters: ['mocha', 'coverage'],
+    reporters: ['coverage-istanbul'],
     preprocessors: {
       'test/loadtests.js': ['webpack', 'sourcemap']
     },
@@ -35,15 +36,16 @@ module.exports = function(config) {
     webpackServer: {
       noInfo: true
     },
-    coverageReporter: {
-      dir: 'coverage/',
-      reporters: [{
-          type: 'html'
-        },
-        {
-          type: 'text'
+    coverageIstanbulReporter: {
+      reports: ['html', 'lcovonly', 'text-summary'],
+      fixWebpackSourcePaths: true,
+      dir: path.join(__dirname, 'coverage'),
+      'report-config': {
+        html: {
+          // outputs the report in ./coverage/html
+          subdir: 'html'
         }
-      ]
+      },
     }
   };
 

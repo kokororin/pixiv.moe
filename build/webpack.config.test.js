@@ -10,6 +10,14 @@ module.exports = {
   devtool: 'eval',
   module: {
     rules: [{
+      test: /\.(js|jsx)$/,
+      enforce: 'post',
+      exclude: /node_modules|test/,
+      loader: 'istanbul-instrumenter-loader',
+      options: {
+        esModules: true
+      }
+    }, {
       test: /\.(png|jpg|gif|woff|woff2|css|sass|scss|less|styl)$/,
       loader: 'null-loader'
     }, {
