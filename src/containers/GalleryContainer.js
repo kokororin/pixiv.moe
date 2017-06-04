@@ -82,7 +82,8 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   resizeListener() {
     /* reset size of masonry-container when window size change */
-    const node = this.rootRef, cellClassName = 'cell';
+    const node = this.rootRef,
+      cellClassName = 'cell';
 
     // try to get cell width
     const temp = document.createElement('div');

@@ -69,7 +69,8 @@ export class IllustContainerWithoutStore extends React.Component {
     if (authData === null || authData.expires_at < time()) {
       return this.loginRef.open();
     }
-    const target = event.nativeEvent.target, body = document.body;
+    const target = event.nativeEvent.target,
+      body = document.body;
     if (target.classList.contains('fn-wait')) {
       return;
     }
@@ -110,7 +111,14 @@ export class IllustContainerWithoutStore extends React.Component {
 
   onTwitterClick() {
     window.open(
-      `https://twitter.com/intent/tweet?original_referer=${encodeURIComponent(window.location.href)}&ref_src=twsrc%5Etfw&text=${encodeURIComponent(`${this.props.illust.item.title} | ${this.props.illust.item.user.name} #pixiv`)}&tw_p=tweetbutton&url=${encodeURIComponent(`${config.baseURL}${this.props.illust.item.id}`)}`,
+      `https://twitter.com/intent/tweet?original_referer=${encodeURIComponent(
+        window.location.href
+      )}&ref_src=twsrc%5Etfw&text=${encodeURIComponent(
+        `${this.props.illust.item.title} | ${this.props.illust.item.user
+          .name} #pixiv`
+      )}&tw_p=tweetbutton&url=${encodeURIComponent(
+        `${config.baseURL}${this.props.illust.item.id}`
+      )}`,
       '_blank',
       'width=550,height=370'
     );
@@ -189,12 +197,15 @@ export class IllustContainerWithoutStore extends React.Component {
               <div className={'author'}>
                 <a
                   target={'_blank'}
-                  href={`http://pixiv.me/${this.props.illust.item.user.account}`}>
+                  href={`http://pixiv.me/${this.props.illust.item.user
+                    .account}`}>
                   {this.props.illust.item.user.name}
                 </a>
               </div>
               <time>
-                {`${moment(this.props.illust.item.created_time).format('LLL')}(JST)`}
+                {`${moment(this.props.illust.item.created_time).format(
+                  'LLL'
+                )}(JST)`}
               </time>
             </div>
             <p>

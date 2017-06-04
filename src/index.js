@@ -4,14 +4,14 @@ import { AppContainer as Root } from 'react-hot-loader';
 
 import { AppContainer } from '@/containers';
 
-
 // Render the main component into the dom
-const render = (Component) => {
+const render = Component => {
   ReactDOM.render(
     <Root>
-      <Component/>
-    </Root>
-    , document.getElementById('app'));
+      <Component />
+    </Root>,
+    document.getElementById('app')
+  );
 };
 
 render(AppContainer);
