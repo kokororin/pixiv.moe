@@ -9,5 +9,13 @@
   	"transform-decorators-legacy",
     "transform-object-assign",
     "react-hot-loader/babel"
-  ]
+  ],
+  "env": {
+    "test:mocha": {
+      "presets": [
+        "es2015",
+        "stage-0"
+      ]
+    }
+  }
 }

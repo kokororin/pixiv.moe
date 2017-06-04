@@ -28,7 +28,7 @@ module.exports = function(config) {
       mocha: {}
     },
     singleRun: true,
-    reporters: ['coverage-istanbul'],
+    reporters: ['mocha', 'coverage-istanbul'],
     preprocessors: {
       'test/loadtests.js': ['webpack', 'sourcemap']
     },
