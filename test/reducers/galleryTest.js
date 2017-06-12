@@ -6,6 +6,7 @@ describe('GalleryReducer', () => {
       page: 1,
       isFetching: false,
       isError: false,
+      errorTimes: 0,
       items: [],
       images: [],
       contentScrollTop: 0
