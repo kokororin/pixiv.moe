@@ -3,7 +3,7 @@ import '@/styles/Animation.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-component';
+import { Link } from 'react-router-dom';
 import { Icon } from 'react-mdl';
 
 @autobind
@@ -60,7 +60,7 @@ export default class Item extends React.Component {
       ? <div
           className={'cell animated fadeIn'}
           onMouseMove={this.onImageMouseMove}>
-          <Link className={'link'} href={`/illust/${this.props.item.work.id}`}>
+          <Link className={'link'} to={`/illust/${this.props.item.work.id}`}>
             <div className={'image-wrapper'}>
               <img
                 ref={ref => (this.imgRef = ref)}
@@ -80,7 +80,7 @@ export default class Item extends React.Component {
       : <div
           className={'cell animated fadeIn'}
           onMouseMove={this.onImageMouseMove}>
-          <Link className={'link'} href={`/illust/${this.props.item.id}`}>
+          <Link className={'link'} to={`/illust/${this.props.item.id}`}>
             <div className={'image-wrapper'}>
               <img
                 ref={ref => (this.imgRef = ref)}

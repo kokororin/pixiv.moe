@@ -17,7 +17,7 @@ export default class RedirectContainer extends React.Component {
   }
 
   componentDidMount() {
-    const illustId = this.props._[0];
+    const illustId = this.props.match.params.illustId;
     if (!isNaN(parseFloat(illustId)) && isFinite(illustId)) {
       this.setState({
         isError: false

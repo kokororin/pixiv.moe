@@ -4,7 +4,6 @@ import '@/styles/Animation.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-component';
 import {
   Layout,
   Header,
@@ -34,7 +33,7 @@ export class IllustContainerWithoutStore extends React.Component {
 
   componentDidMount() {
     this.layoutDOMNode = ReactDOM.findDOMNode(this.layoutRef);
-    this.illustId = this.props._[0];
+    this.illustId = this.props.match.params.illustId;
     this.props.dispatch(IllustActions.fetchItem(this.illustId));
     this.props.dispatch(IllustActions.fetchComments(this.illustId));
     this.authTimer = setInterval(() => {
@@ -56,12 +55,20 @@ export class IllustContainerWithoutStore extends React.Component {
   }
 
   renderHeaderTitle() {
-    const child = (
-      <Link href={'/'} className={'back-link'}>
-        <Icon className={'back-icon'} name={'arrow_back'} />
-      </Link>
+    return (
+      <span>
+        <a className={'back-link'} href={'#'} onClick={this.onBackClick}>
+          <Icon className={'back-icon'} name={'arrow_back'} />
+        </a>
+        <span>{this.props.illust.item.title}</span>
+      </span>
     );
-    return <span>{child} <span>{this.props.illust.item.title}</span></span>;
+  }
+
+  onBackClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.props.history.goBack();
   }
 
   onFavouriteClick(event) {

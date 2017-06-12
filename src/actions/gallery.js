@@ -11,7 +11,9 @@ export const types = namespacedTypes('gallery', [
   'SET_FETCH_STATUS',
   'SET_TAG',
   'SET_CONTENT_SCROLLTOP',
-  'CLEAR_SOURCE'
+  'CLEAR_SOURCE',
+  'SET_ERROR_TIMES',
+  'CLEAR_ERROR_TIMES'
 ]);
 
 export function setItems(data) {
@@ -50,6 +52,18 @@ function setFetchStatus(isFetching) {
   };
 }
 
+function setErrorTimes() {
+  return {
+    type: types.SET_ERROR_TIMES
+  };
+}
+
+export function clearErrorTimes() {
+  return {
+    type: types.CLEAR_ERROR_TIMES
+  };
+}
+
 function fetchSource() {
   return (dispatch, getState) => {
     dispatch(setFetchError(false));
@@ -70,6 +84,7 @@ function fetchSource() {
             });
           } else {
             dispatch(setFetchError(true));
+            dispatch(setErrorTimes());
           }
         })
         .then(() => {
@@ -98,6 +113,7 @@ function fetchSource() {
           });
         } else {
           dispatch(setFetchError(true));
+          dispatch(setErrorTimes());
         }
       })
       .then(() => {

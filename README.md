@@ -27,7 +27,7 @@ Table of Contents
 ## Tech Stack
 * react
 * react-dom
-* react-router-component
+* react-router
 * redux
 * redux-thunk
 * react-redux

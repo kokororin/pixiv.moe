@@ -5,6 +5,7 @@ export default function gallery(
     page: 1,
     isFetching: false,
     isError: false,
+    errorTimes: 0,
     items: [],
     images: [],
     contentScrollTop: 0
@@ -34,6 +35,18 @@ export default function gallery(
       return {
         ...state,
         page: action.payload.page
+      };
+
+    case GalleryActions.types.SET_ERROR_TIMES:
+      return {
+        ...state,
+        errorTimes: state.errorTimes + 1
+      };
+
+    case GalleryActions.types.CLEAR_ERROR_TIMES:
+      return {
+        ...state,
+        errorTimes: 0
       };
 
     case GalleryActions.types.SET_TAG:

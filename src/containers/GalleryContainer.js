@@ -56,7 +56,9 @@ export class GalleryContainerWithoutStore extends React.Component {
       scrollHeight = target.scrollHeight;
 
     if (scrollTop + targetHeight - scrollHeight > -200) {
-      this.fetchSource(false);
+      if (this.props.gallery.errorTimes < 3) {
+        this.fetchSource(false);
+      }
     }
   }
 
@@ -69,6 +71,7 @@ export class GalleryContainerWithoutStore extends React.Component {
         }
       } catch (e) {}
     }
+    this.props.dispatch(GalleryActions.clearErrorTimes());
     this.props.dispatch(GalleryActions.clearSource());
     this.fetchSource(true);
   }

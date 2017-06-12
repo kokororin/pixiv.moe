@@ -1,5 +1,6 @@
 import React from 'react';
-import { Locations, Location, NotFound } from 'react-router-component';
+import { Route, Switch } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import ReactGA from 'react-ga';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -11,7 +12,7 @@ import '@/styles/Reset.scss';
 import 'classlist-polyfill';
 
 import config from '@/config';
-import configureStore from '@/stores';
+import { configureStore, history } from '@/stores';
 import {
   GalleryContainer,
   IllustContainer,
@@ -29,11 +30,15 @@ export default class AppContainer extends React.Component {
     super(props);
     ReactGA.initialize(config.trackingID);
     this.onNavigation();
+    history.listen((location, action) => {
+      if (action === 'PUSH') {
+        this.onNavigation(location.pathname);
+      }
+    });
   }
 
-  onNavigation() {
+  onNavigation(pageLink = window.location.pathname) {
     if (process.env.NODE_ENV === 'production') {
-      const pageLink = window.location.pathname;
       ReactGA.set({
         page: pageLink
       });
@@ -50,15 +55,19 @@ export default class AppContainer extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Locations onNavigation={this.onNavigation}>
-          <Location path={'/'} handler={GalleryContainer} />
-          <Location
-            path={/^\/illust\/([0-9]{0,}$)/}
-            handler={IllustContainer}
-          />
-          <Location path={/^\/([0-9]{0,}$)/} handler={RedirectContainer} />
-          <NotFound handler={NotFoundContainer} />
-        </Locations>
+        <ConnectedRouter history={history}>
+          <div>
+              <Switch key={location.key} location={location}>
+                <Route exact path={'/'} component={GalleryContainer} />
+                <Route
+                  path="/illust/:illustId(\d+)"
+                  component={IllustContainer}
+                />
+                <Route path="/:illustId(\d+)" component={RedirectContainer} />
+                <Route component={NotFoundContainer} />
+              </Switch>
+          </div>
+        </ConnectedRouter>
       </Provider>
     );
   }
