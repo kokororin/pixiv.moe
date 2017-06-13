@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { Link } from 'react-router-dom';
-import { Icon } from 'react-mdl';
+import Icon from 'react-mdl/lib/Icon';
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Item extends React.Component {
@@ -58,9 +58,7 @@ export default class Item extends React.Component {
 
   render() {
     return this.props.item.hasOwnProperty('work')
-      ? <div
-          styleName={'cell'}
-          onMouseMove={this.onImageMouseMove}>
+      ? <div styleName={'cell'} onMouseMove={this.onImageMouseMove}>
           <Link styleName={'link'} to={`/illust/${this.props.item.work.id}`}>
             <div styleName={'image-wrapper'}>
               <img
@@ -78,9 +76,7 @@ export default class Item extends React.Component {
             </div>
           </Link>
         </div>
-      : <div
-          styleName={'cell'}
-          onMouseMove={this.onImageMouseMove}>
+      : <div styleName={'cell'} onMouseMove={this.onImageMouseMove}>
           <Link styleName={'link'} to={`/illust/${this.props.item.id}`}>
             <div styleName={'image-wrapper'}>
               <img

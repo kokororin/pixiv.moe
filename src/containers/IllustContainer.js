@@ -4,16 +4,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import CSSModules from 'react-css-modules';
-import {
-  Layout,
-  Header,
-  Content,
-  Icon,
-  Chip,
-  ChipContact,
-  Button,
-  List
-} from 'react-mdl';
+import Layout from 'react-mdl/lib/Layout/Layout';
+import Header from 'react-mdl/lib/Layout/Header';
+import Content from 'react-mdl/lib/Layout/Content';
+import Icon from 'react-mdl/lib/Icon';
+import { Chip, ChipContact } from 'react-mdl/lib/Chip';
+import Button from 'react-mdl/lib/Button';
+import { List } from 'react-mdl/lib/List';
 import shortid from 'shortid';
 import time from 'locutus/php/datetime/time';
 import Img from 'react-image';
@@ -24,7 +21,6 @@ import { IllustActions } from '@/actions';
 import { Alert, Comment, Loading, Message } from '@/components';
 import { LoginContainer } from '@/containers';
 import { cachedFetch, moment, Storage } from '@/utils';
-
 
 @CSSModules(styles, { allowMultiple: true })
 export class IllustContainerWithoutStore extends React.Component {
@@ -58,7 +54,10 @@ export class IllustContainerWithoutStore extends React.Component {
   renderHeaderTitle() {
     return (
       <span>
-        <a className={styles['back-link']} href={'#'} onClick={this.onBackClick}>
+        <a
+          className={styles['back-link']}
+          href={'#'}
+          onClick={this.onBackClick}>
           <Icon className={styles['back-icon']} name={'arrow_back'} />
         </a>
         <span>{this.props.illust.item.title}</span>

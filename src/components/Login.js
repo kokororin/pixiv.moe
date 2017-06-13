@@ -7,8 +7,9 @@ import CSSModules from 'react-css-modules';
 import Modal from 'react-modal';
 import classNames from 'classnames';
 import time from 'locutus/php/datetime/time';
-import { Button, Textfield, Icon } from 'react-mdl';
-
+import Button from 'react-mdl/lib/Button';
+import Textfield from 'react-mdl/lib/Textfield'
+import Icon from 'react-mdl/lib/Icon';
 import { Storage } from '@/utils';
 
 @CSSModules(styles, { allowMultiple: true })

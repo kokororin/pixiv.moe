@@ -4,7 +4,8 @@ import styles from '@/styles/Button.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import { FABButton, Icon } from 'react-mdl';
+import FABButton from 'react-mdl/lib/FABButton';
+import Icon from 'react-mdl/lib/Icon';
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Refresh extends React.Component {

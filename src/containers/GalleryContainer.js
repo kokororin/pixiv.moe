@@ -3,7 +3,12 @@ import styles from '@/styles/Item.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { Layout, Header, Navigation, Drawer, Content, Icon } from 'react-mdl';
+import Layout from 'react-mdl/lib/Layout/Layout';
+import Header from 'react-mdl/lib/Layout/Header';
+import Navigation from 'react-mdl/lib/Layout/Navigation';
+import Drawer from 'react-mdl/lib/Layout/Drawer';
+import Content from 'react-mdl/lib/Layout/Content';
+import Icon from 'react-mdl/lib/Icon';
 import shortid from 'shortid';
 
 import config from '@/config';

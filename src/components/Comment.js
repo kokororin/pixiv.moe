@@ -3,8 +3,8 @@ import styles from '@/styles/Illust.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import { ListItem, ListItemContent } from 'react-mdl';
-
+import ListItem from 'react-mdl/lib/List/ListItem';
+import ListItemContent from 'react-mdl/lib/List/ListItemContent';
 import { EmojiParser } from '@/utils';
 
 @CSSModules(styles, { allowMultiple: true })

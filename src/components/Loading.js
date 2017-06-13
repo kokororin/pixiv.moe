@@ -3,7 +3,7 @@ import styles from '@/styles/Message.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import { Spinner } from 'react-mdl';
+import Spinner from 'react-mdl/lib/Spinner';
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Loading extends React.Component {
