@@ -16,7 +16,7 @@
     "test": "cross-env NODE_ENV=test karma start && npm run test:api",
     "test:watch": "cross-env NODE_ENV=test karma start --autoWatch=true --singleRun=false",
     "test:api": "cross-env NODE_ENV=test:mocha mocha --compilers js:babel-register --require babel-polyfill --timeout 30000 test/**/*.mocha.js",
-    "deploy": "git subtree push --prefix dist origin gh-pages",
+    "deploy": "gh-pages -d dist",
     "ci-publish": "ci-publish",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "check": "yarn upgrade-interactive"
@@ -59,6 +59,7 @@
     "express": "^4.15.3",
     "fetch-mock": "^5.11.0",
     "file-loader": "^0.11.1",
+    "gh-pages": "^1.0.0",
     "glob": "^7.1.2",
     "html-minifier": "^3.5.0",
     "imports-loader": "^0.7.1",
