@@ -119,6 +119,10 @@ module.exports = {
             htmlFilePath.replace('index.html', '404.html'),
             htmlOutput
           );
+          fs.writeFileSync(
+            htmlFilePath.replace('index.html', '.gitignore'),
+            'report.html'
+          );
         }
       });
     }
