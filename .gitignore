@@ -29,5 +29,5 @@ node_modules
 # Bower
 bower_components/
 
-# Webpack Bundle Analyzer
-dist/report.html
+# dist folder
+dist

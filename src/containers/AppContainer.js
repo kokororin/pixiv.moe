@@ -3,8 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import '!style-loader!css-loader!material-design-icons/iconfont/material-icons.css';
-import '!style-loader!css-loader!sass-loader!@/styles/mdl/material-design-lite.scss';
 import 'react-mdl/extra/material.js';
 import '@/styles/Base.scss';
 import '@/styles/Reset.scss';
@@ -18,6 +16,11 @@ import {
   NotFoundContainer
 } from '@/containers';
 import { TrackPageView } from '@/components';
+
+if (process.env.NODE_ENV !== 'test') {
+  require('!style-loader!css-loader!material-design-icons/iconfont/material-icons.css');
+  require('!style-loader!css-loader!sass-loader!@/styles/mdl/material-design-lite.scss');
+}
 
 injectTapEventPlugin();
 const store = configureStore();
