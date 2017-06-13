@@ -6,7 +6,6 @@ import { cachedFetch, Storage } from '@/utils';
 
 import config from '@/config';
 
-@autobind
 export default class LoginContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +28,7 @@ export default class LoginContainer extends React.Component {
     document.removeEventListener('keydown', this.onKeydown);
   }
 
+  @autobind
   onKeydown(event) {
     if (event.keyCode === 27) {
       this.loginRef.close();
@@ -39,14 +39,17 @@ export default class LoginContainer extends React.Component {
     }
   }
 
+  @autobind
   open() {
     this.loginRef.open();
   }
 
+  @autobind
   close() {
     this.loginRef.close();
   }
 
+  @autobind
   onLoginClick() {
     if (this.state.isSubmitting) {
       return;
@@ -116,6 +119,7 @@ export default class LoginContainer extends React.Component {
       });
   }
 
+  @autobind
   onLogoutClick() {
     Storage.remove('auth');
     this.setState({

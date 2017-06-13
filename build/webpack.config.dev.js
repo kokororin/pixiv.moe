@@ -26,11 +26,13 @@ module.exports = {
   cache: true,
   devtool: '#eval-source-map',
   module: {
-    rules: [{
-      test: /\.(js|jsx)$/,
-      loader: ['react-hot-loader/webpack', 'babel-loader'],
-      include: path.join(__dirname, '/../src')
-    }]
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        loader: ['react-hot-loader/webpack', 'babel-loader'],
+        include: path.join(__dirname, '/../src')
+      }
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({

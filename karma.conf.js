@@ -14,13 +14,11 @@ module.exports = function(config) {
           '--headless',
           '--disable-gpu',
           // Without a remote debugging port, Google Chrome exits immediately.
-          ' --remote-debugging-port=9222',
-        ],
-      },
+          ' --remote-debugging-port=9222'
+        ]
+      }
     },
-    files: [
-      'test/loadtests.js'
-    ],
+    files: ['test/loadtests.js'],
     port: 3003,
     captureTimeout: 60000,
     frameworks: ['mocha', 'chai'],
@@ -45,7 +43,7 @@ module.exports = function(config) {
           // outputs the report in ./coverage/html
           subdir: 'html'
         }
-      },
+      }
     }
   };
 

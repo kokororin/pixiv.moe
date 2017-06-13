@@ -16,27 +16,34 @@ module.exports = {
     }
   },
   module: {
-    rules: [{
-      test: /\.(js|jsx)$/,
-      enforce: 'pre',
-      include: path.join(__dirname, '/../src'),
-      loader: 'eslint-loader'
-    }, {
-      test: /\.css$/,
-      loader: ['style-loader', 'css-loader']
-    }, {
-      test: /\.scss/,
-      loader: ['style-loader', 'css-loader', 'sass-loader']
-    }, {
-      test: /\.(png|jpg|gif|woff|woff2|ttf|svg|eot)(\?|\?[a-z0-9]+)?$/,
-      use: [{
-        loader: 'url-loader',
-        options: {
-          limit: 8192,
-          name: 'assets/[hash].[ext]'
-        }
-      }]
-    }]
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        enforce: 'pre',
+        include: path.join(__dirname, '/../src'),
+        loader: 'eslint-loader'
+      },
+      {
+        test: /(\.scss|\.css)$/,
+        loader: [
+          'style-loader',
+          'css-loader?modules&importLoaders=1&localIdentName=[hash:base64:8]',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif|woff|woff2|ttf|svg|eot)(\?|\?[a-z0-9]+)?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              name: 'assets/[hash].[ext]'
+            }
+          }
+        ]
+      }
+    ]
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),

@@ -1,15 +1,17 @@
-.fn-show {
-  display: block !important;
-}
+:global {
+  .fn-show {
+    display: block !important;
+  }
 
-.fn-hide {
-  display: none !important;
-}
+  .fn-hide {
+    display: none !important;
+  }
 
-.fn-disallow {
-  cursor: not-allowed;
-}
+  .fn-disallow {
+    cursor: not-allowed;
+  }
 
-.fn-wait {
-  cursor: wait;
+  .fn-wait {
+    cursor: wait;
+  }
 }

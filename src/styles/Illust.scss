@@ -1,103 +1,110 @@
-#illust-layout {
-  .mdl-layout__header-row {
-    padding: 0 20px;
-  }
-  .back-link {
-    color: #fff;
-  }
-  .back-icon {
-    float: left;
-    margin-right: 1rem;
-  }
-  #illust-title span {
-    vertical-align: -1px;
-  }
-  .illust {
-    padding: 20px;
-    .link {
-      cursor: default;
+:global {
+  #illust-layout {
+    .mdl-layout__header-row {
+      padding: 0 20px;
     }
-    .image {
-      overflow: hidden;
-      text-align: center;
-      img {
-        position: relative;
-        margin-top: 0px;
-        margin-right: auto;
-        margin-bottom: 10px;
-        margin-left: auto;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
-        border: 0;
-        z-index: 1;
-        transition: opacity 0.3s ease;
-        @media screen and (max-width: 768px) and (orientation: portrait) {
-          width: 100%;
-        }
-        @media screen and (max-width: 1024px) and (orientation: landscape) {
-          width: 100%;
-        }
-      }
+    #illust-title span {
+      vertical-align: -1px;
     }
-    .tags {
-      margin: 15px;
-      text-align: center;
-      .mdl-chip {
-        margin: 5px;
+  }
+}
+
+.back-link {
+  color: #fff;
+}
+.back-icon {
+  float: left;
+  margin-right: 1rem;
+}
+
+.illust {
+  padding: 20px;
+  .link {
+    cursor: default;
+  }
+  .image {
+    overflow: hidden;
+    text-align: center;
+    img {
+      position: relative;
+      margin-top: 0px;
+      margin-right: auto;
+      margin-bottom: 10px;
+      margin-left: auto;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+        0 3px 1px -2px rgba(0, 0, 0, .2),
+        0 1px 5px 0 rgba(0, 0, 0, .12);
+      border: 0;
+      z-index: 1;
+      transition: opacity 0.3s ease;
+      @media screen and (max-width: 768px) and (orientation: portrait) {
+        width: 100%;
       }
-      .mdl-chip__contact {
-        color: rgb(255, 255, 255)!important;
-        background-color: rgb(0, 150, 136)!important;
+      @media screen and (max-width: 1024px) and (orientation: landscape) {
+        width: 100%;
       }
     }
-    .actions {
-      margin: 15px;
-      text-align: center;
-      button {
-        margin: 8px;
-      }
-      .twitter {
-        width: 35px;
-        height: 35px;
-      }
+  }
+  .tags {
+    margin: 15px;
+    text-align: center;
+    :global(.mdl-chip) {
+      margin: 5px;
     }
-    .detail {
-      text-align: center;
-      color: rgb(255, 64, 129);
-      .author {
-        display: inline-block;
-        &:before {
-          content: "by";
-          margin-right: 5px;
-        }
-        a {
-          color: #258fb8;
-        }
-      }
-      time {
-        margin-left: 10px;
-        color: #999;
+    :global(.mdl-chip__contact) {
+      color: rgb(255, 255, 255) !important;
+      background-color: rgb(0, 150, 136) !important;
+    }
+  }
+  .actions {
+    margin: 15px;
+    text-align: center;
+    button {
+      margin: 8px;
+    }
+    .twitter {
+      width: 35px;
+      height: 35px;
+    }
+  }
+  .detail {
+    text-align: center;
+    color: rgb(255, 64, 129);
+    .author {
+      display: inline-block;
+      &:before {
+        content: "by";
+        margin-right: 5px;
       }
       a {
-        text-decoration: none;
+        color: #258fb8;
       }
     }
-    .comments {
-      width: 100%;
-      .comment-avatar {
-        width: 40px;
-        height: 40px;
-      }
-      .comment-content {
-        font-size: 13px;
-        font-weight: 400;
-        letter-spacing: 0;
-        line-height: 18px;
-        color: rgba(0, 0, 0, 0.54);
-      }
-      .emoji-text {
-        display: inline-block;
-        width: 28px;
-      }
+    time {
+      margin-left: 10px;
+      color: #999;
+    }
+    a {
+      text-decoration: none;
+    }
+  }
+  .comments {
+    width: 100%;
+    .comment-avatar {
+      width: 40px;
+      height: 40px;
+    }
+    .comment-content {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 18px;
+      color: rgba(0, 0, 0, 0.54);
+      display: block;
+    }
+    .emoji-text {
+      display: inline-block;
+      width: 28px;
     }
   }
 }

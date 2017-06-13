@@ -1,9 +1,9 @@
-import '@/styles/Illust.scss';
-import '@/styles/Animation.scss';
+import styles from '@/styles/Illust.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import CSSModules from 'react-css-modules';
 import {
   Layout,
   Header,
@@ -25,7 +25,8 @@ import { Alert, Comment, Loading, Message } from '@/components';
 import { LoginContainer } from '@/containers';
 import { cachedFetch, moment, Storage } from '@/utils';
 
-@autobind
+
+@CSSModules(styles, { allowMultiple: true })
 export class IllustContainerWithoutStore extends React.Component {
   constructor(props) {
     super(props);
@@ -57,20 +58,22 @@ export class IllustContainerWithoutStore extends React.Component {
   renderHeaderTitle() {
     return (
       <span>
-        <a className={'back-link'} href={'#'} onClick={this.onBackClick}>
-          <Icon className={'back-icon'} name={'arrow_back'} />
+        <a className={styles['back-link']} href={'#'} onClick={this.onBackClick}>
+          <Icon className={styles['back-icon']} name={'arrow_back'} />
         </a>
         <span>{this.props.illust.item.title}</span>
       </span>
     );
   }
 
+  @autobind
   onBackClick(event) {
     event.preventDefault();
     event.stopPropagation();
     this.props.history.goBack();
   }
 
+  @autobind
   onFavouriteClick(event) {
     const authData = Storage.get('auth');
     if (authData === null || authData.expires_at < time()) {
@@ -106,6 +109,7 @@ export class IllustContainerWithoutStore extends React.Component {
       });
   }
 
+  @autobind
   onDownloadClick() {
     const tempLink = document.createElement('a');
     tempLink.href = this.props.illust.item.image_urls.large;
@@ -116,6 +120,7 @@ export class IllustContainerWithoutStore extends React.Component {
     document.body.removeChild(tempLink);
   }
 
+  @autobind
   onTwitterClick() {
     window.open(
       `https://twitter.com/intent/tweet?original_referer=${encodeURIComponent(
@@ -131,6 +136,7 @@ export class IllustContainerWithoutStore extends React.Component {
     );
   }
 
+  @autobind
   scrollListener(event) {
     if (this.props.illust.isFetchingComments) {
       return;
@@ -156,8 +162,8 @@ export class IllustContainerWithoutStore extends React.Component {
     }
     try {
       return (
-        <div className={'illust'}>
-          <div className={'image'}>
+        <div styleName={'illust'}>
+          <div styleName={'image'}>
             {this.props.illust.item.metadata === null
               ? <Img
                   src={[
@@ -176,7 +182,7 @@ export class IllustContainerWithoutStore extends React.Component {
                   );
                 })}
           </div>
-          <div className={'tags'}>
+          <div styleName={'tags'}>
             {this.props.illust.item.tags.map(elem => {
               return (
                 <Chip key={shortid.generate()}>
@@ -188,7 +194,7 @@ export class IllustContainerWithoutStore extends React.Component {
               );
             })}
           </div>
-          <div className={'actions'}>
+          <div styleName={'actions'}>
             <Button raised ripple onClick={this.onFavouriteClick}>
               ブックマークに追加
             </Button>
@@ -199,9 +205,9 @@ export class IllustContainerWithoutStore extends React.Component {
               ツイート
             </Button>
           </div>
-          <div className={'detail'}>
+          <div styleName={'detail'}>
             <div>
-              <div className={'author'}>
+              <div styleName={'author'}>
                 <a
                   target={'_blank'}
                   href={`http://pixiv.me/${this.props.illust.item.user
@@ -221,7 +227,7 @@ export class IllustContainerWithoutStore extends React.Component {
               </a>
             </p>
           </div>
-          <div className={'comments'}>
+          <div styleName={'comments'}>
             {this.props.illust.comments.length === 0
               ? <h4>コメントはありません</h4>
               : <h4>コメント</h4>}

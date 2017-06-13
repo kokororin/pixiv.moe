@@ -107,6 +107,7 @@
     "namespaced-types": "^0.1.2",
     "prop-types": "^15.5.10",
     "react": "^15.0.0",
+    "react-css-modules": "^4.3.0",
     "react-dom": "^15.0.0",
     "react-ga": "^2.1.2",
     "react-image": "^1.0.1",

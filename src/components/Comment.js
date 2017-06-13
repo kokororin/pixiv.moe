@@ -1,9 +1,13 @@
+import styles from '@/styles/Illust.scss';
+
 import React from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from 'react-css-modules';
 import { ListItem, ListItemContent } from 'react-mdl';
 
 import { EmojiParser } from '@/utils';
 
+@CSSModules(styles, { allowMultiple: true })
 export default class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -25,8 +29,8 @@ export default class Comment extends React.Component {
             />
           }>
           {this.props.item.user.name}
-          <div
-            className={'comment-content'}
+          <span
+            styleName={'comment-content'}
             dangerouslySetInnerHTML={{
               __html: EmojiParser.parse(this.props.item.comment)
             }}

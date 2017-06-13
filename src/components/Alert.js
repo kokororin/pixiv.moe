@@ -1,9 +1,10 @@
-import '@/styles/Alert.scss';
+import styles from '@/styles/Alert.scss';
 
 import React from 'react';
+import CSSModules from 'react-css-modules';
 import Modal from 'react-modal';
 
-@autobind
+@CSSModules(styles, { allowMultiple: true })
 export default class Alert extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,7 @@ export default class Alert extends React.Component {
     };
   }
 
+  @autobind
   setContent(content) {
     if (!this.state.isHidden) {
       this.setState({
@@ -36,13 +38,13 @@ export default class Alert extends React.Component {
   render() {
     return (
       <Modal
-        className={'alert-container'}
-        overlayClassName={'alert-modal-overlay'}
+        styleName={'alert-container'}
+        overlayClassName={styles['alert-modal-overlay']}
         isOpen={!this.state.isHidden}
         contentLabel={'alert-modal'}>
-        <div className={'alert-wrap-1'}>
-          <div className={'alert-wrap-2'}>
-            <div className={'alert-body'}>
+        <div styleName={'alert-wrap-1'}>
+          <div styleName={'alert-wrap-2'}>
+            <div styleName={'alert-body'}>
               {this.state.content}
             </div>
           </div>

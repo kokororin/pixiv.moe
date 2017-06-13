@@ -1,9 +1,11 @@
-import '@/styles/Message.scss';
+import styles from '@/styles/Message.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from 'react-css-modules';
 import { Spinner } from 'react-mdl';
 
+@CSSModules(styles, { allowMultiple: true })
 export default class Loading extends React.Component {
   static defaultProps = {
     isHidden: true
@@ -21,7 +23,7 @@ export default class Loading extends React.Component {
     // it means ローディング
     return this.props.isHidden
       ? null
-      : <div className={'message'}>
+      : <div styleName={'message'}>
           <Spinner />
         </div>;
   }

@@ -9,9 +9,11 @@ const logUpdate = require('log-update');
 
 const app = new express();
 
-compiler.apply(new webpack.ProgressPlugin(function(percentage, msg) {
-  logUpdate('==> ' + (percentage * 100).toFixed(2) + '%', msg);
-}));
+compiler.apply(
+  new webpack.ProgressPlugin(function(percentage, msg) {
+    logUpdate('==> ' + (percentage * 100).toFixed(2) + '%', msg);
+  })
+);
 
 app.use(devMiddleware(compiler, config.devServer));
 app.use(hotMiddleware(compiler));

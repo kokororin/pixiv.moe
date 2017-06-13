@@ -1,3 +1,5 @@
+import styles from '@/styles/Item.scss';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
@@ -10,7 +12,6 @@ import { GalleryActions } from '@/actions';
 import { List, Loading, Refresh, Message } from '@/components';
 import { scrollTo, Storage } from '@/utils';
 
-@autobind
 export class GalleryContainerWithoutStore extends React.Component {
   constructor(props) {
     super(props);
@@ -41,6 +42,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     window.removeEventListener('resize', this.resizeListener);
   }
 
+  @autobind
   scrollListener(event) {
     if (this.drawerDOMNode.classList.contains('is-visible')) {
       return;
@@ -62,6 +64,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     }
   }
 
+  @autobind
   async reRenderContent(clearCache) {
     if (clearCache) {
       try {
@@ -83,10 +86,11 @@ export class GalleryContainerWithoutStore extends React.Component {
     this.props.dispatch(GalleryActions.fetchSourceIfNeeded());
   }
 
+  @autobind
   resizeListener() {
     /* reset size of masonry-container when window size change */
     const node = this.rootRef,
-      cellClassName = 'cell';
+      cellClassName = styles.cell;
 
     // try to get cell width
     const temp = document.createElement('div');
@@ -105,6 +109,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     document.body.removeChild(temp);
   }
 
+  @autobind
   onKeywordClick(event) {
     event.nativeEvent.preventDefault();
 
@@ -149,6 +154,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     });
   }
 
+  @autobind
   onHeaderClick(event) {
     const target = event.nativeEvent.target,
       tagName = target.tagName.toLowerCase(),

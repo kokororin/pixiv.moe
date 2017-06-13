@@ -1,10 +1,12 @@
 import '@/styles/Fn.scss';
-import '@/styles/Button.scss';
+import styles from '@/styles/Button.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from 'react-css-modules';
 import { FABButton, Icon } from 'react-mdl';
 
+@CSSModules(styles, { allowMultiple: true })
 export default class Refresh extends React.Component {
   static propTypes = {
     onClick: PropTypes.func
@@ -20,7 +22,7 @@ export default class Refresh extends React.Component {
 
   render() {
     return (
-      <div className={'float-btn refresh'}>
+      <div styleName={'float-btn'}>
         <FABButton {...this.props} colored ripple>
           <Icon name={'refresh'} />
         </FABButton>

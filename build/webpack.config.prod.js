@@ -2,7 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const minify = require('html-minifier').minify;
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 const OptimizeJsPlugin = require('optimize-js-plugin');
 
 module.exports = {
@@ -14,11 +15,13 @@ module.exports = {
   cache: false,
   devtool: '#source-map',
   module: {
-    rules: [{
-      test: /\.(js|jsx)$/,
-      loader: 'babel-loader',
-      include: path.join(__dirname, '/../src')
-    }]
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        loader: 'babel-loader',
+        include: path.join(__dirname, '/../src')
+      }
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -98,8 +101,10 @@ module.exports = {
   } else {
     createScript(src);
   }
-})("${stats.hash}", "$2${stats.assetsByChunkName.main}?${stats.hash}", window.localStorage, document, window);
-</script>`);
+})("${stats.hash}", "$2${stats.assetsByChunkName
+              .main}?${stats.hash}", window.localStorage, document, window);
+</script>`
+          );
 
           htmlOutput = minify(htmlOutput, {
             collapseWhitespace: true,
@@ -110,7 +115,10 @@ module.exports = {
           });
 
           fs.writeFileSync(htmlFilePath, htmlOutput);
-          fs.writeFileSync(htmlFilePath.replace('index.html', '404.html'), htmlOutput);
+          fs.writeFileSync(
+            htmlFilePath.replace('index.html', '404.html'),
+            htmlOutput
+          );
         }
       });
     }

@@ -1,8 +1,9 @@
-import '@/styles/Login.scss';
+import styles from '@/styles/Login.scss';
 import '@/styles/Fn.scss';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import CSSModules from 'react-css-modules';
 import Modal from 'react-modal';
 import classNames from 'classnames';
 import time from 'locutus/php/datetime/time';
@@ -10,7 +11,7 @@ import { Button, Textfield, Icon } from 'react-mdl';
 
 import { Storage } from '@/utils';
 
-@autobind
+@CSSModules(styles, { allowMultiple: true })
 export default class Login extends React.Component {
   static propTypes = {
     onLogoutClick: PropTypes.func,
@@ -37,34 +38,40 @@ export default class Login extends React.Component {
     });
   }
 
+  @autobind
   open() {
     this.setState({
       isHidden: false
     });
   }
 
+  @autobind
   close() {
     this.setState({
       isHidden: true
     });
   }
 
+  @autobind
   setUsername(username) {
     this.setState({
       username
     });
   }
 
+  @autobind
   getUsername() {
     return this.state.username;
   }
 
+  @autobind
   setPassword(password) {
     this.setState({
       password
     });
   }
 
+  @autobind
   getPassword() {
     return this.state.password;
   }
@@ -76,12 +83,12 @@ export default class Login extends React.Component {
     ) {
       return (
         <div>
-          <div className={'avatar'}>
-            <span className={'name'}>
+          <div styleName={'avatar'}>
+            <span styleName={'name'}>
               ニックネーム 「{this.props.authData.user.name}」
             </span>
           </div>
-          <div className={'footer'}>
+          <div styleName={'footer'}>
             <Button onClick={this.props.onLogoutClick} raised accent ripple>
               ログアウト
             </Button>
@@ -107,7 +114,7 @@ export default class Login extends React.Component {
           floatingLabel
           style={{ width: '100%' }}
         />
-        <div className={'footer'}>
+        <div styleName={'footer'}>
           <Button
             className={classNames({
               'fn-disallow': this.props.isSubmitting
@@ -127,16 +134,16 @@ export default class Login extends React.Component {
   render() {
     return (
       <Modal
-        className={'login-modal-body'}
-        overlayClassName={'login-modal-overlay'}
+        styleName={'login-modal-body'}
+        overlayClassName={styles['login-modal-overlay']}
         isOpen={!this.state.isHidden}
         onRequestClose={this.close}
         contentLabel={'login-modal'}>
-        <div className={'clear'} onClick={this.close}>
+        <div styleName={'clear'} onClick={this.close}>
           <Icon name={'clear'} />
         </div>
-        <div className={'form'}>
-          <div className={'fields'}>
+        <div styleName={'form'}>
+          <div styleName={'fields'}>
             {this.renderContent()}
           </div>
         </div>

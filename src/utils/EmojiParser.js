@@ -1,3 +1,5 @@
+import styles from '@/styles/Illust.scss';
+
 export default class EmojiParser {
   static emojiSeries = [
     {
@@ -159,7 +161,7 @@ export default class EmojiParser {
       let replaceStr = '';
       for (const series of EmojiParser.emojiSeries) {
         if (match === `(${series.name})`) {
-          replaceStr += `<img class="emoji-text" src="https://source.pixiv.net/common/images/emoji/${series.id}.png" />`;
+          replaceStr += `<img class="${styles['emoji-text']}" src="https://source.pixiv.net/common/images/emoji/${series.id}.png" />`;
         }
       }
       return replaceStr === '' ? match : replaceStr;
