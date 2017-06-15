@@ -35,8 +35,8 @@ export default class AppContainer extends React.Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <TrackPageView>
-            <Switch key={location.key} location={location}>
-              <Route exact path={'/'} component={GalleryContainer} />
+            <Switch>
+              <Route exact path="/" component={GalleryContainer} />
               <Route
                 path="/illust/:illustId(\d+)"
                 component={IllustContainer}

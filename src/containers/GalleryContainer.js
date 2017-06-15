@@ -45,6 +45,9 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener);
+    this.props.dispatch(
+      GalleryActions.setContentScrollTop(this.contentDOMNode.scrollTop)
+    );
   }
 
   @autobind
@@ -52,8 +55,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     if (this.drawerDOMNode.classList.contains('is-visible')) {
       return;
     }
-    const contentScrollTop = this.contentDOMNode.scrollTop;
-    this.props.dispatch(GalleryActions.setContentScrollTop(contentScrollTop));
+
     if (this.props.gallery.isFetching) {
       return;
     }

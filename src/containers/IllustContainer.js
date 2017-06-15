@@ -69,7 +69,11 @@ export class IllustContainerWithoutStore extends React.Component {
   onBackClick(event) {
     event.preventDefault();
     event.stopPropagation();
-    this.props.history.goBack();
+    if (this.props.history.length > 1) {
+      this.props.history.goBack();
+    } else {
+      this.props.history.push('/');
+    }
   }
 
   @autobind
