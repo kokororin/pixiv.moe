@@ -25,9 +25,34 @@ module.exports = {
       },
       {
         test: /(\.scss|\.css)$/,
-        loader: [
+        exclude: /node_modules|material-design-lite\.scss/,
+        use: [
           'style-loader',
-          'css-loader?modules&importLoaders=1&localIdentName=[hash:base64:8]',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[hash:base64:8]',
+              minimize: process.env.NODE_ENV === 'production'
+            }
+          },
+          'postcss-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /(\.scss|\.css)$/,
+        include: /node_modules|material-design-lite\.scss/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              minimize: process.env.NODE_ENV === 'production'
+            }
+          },
+          'postcss-loader',
           'sass-loader'
         ]
       },
