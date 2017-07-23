@@ -12,7 +12,9 @@ export default function scrollTo(
   // easing: easing equation to use
 
   const scrollY = element.scrollTop;
-  if (scrollY === 0) return;
+  if (scrollY === 0) {
+    return;
+  }
 
   let currentTime = 0;
 

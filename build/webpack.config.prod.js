@@ -37,6 +37,7 @@ module.exports = {
       comments: false
     }),
     new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new OptimizeJsPlugin({
       sourceMap: false
     }),

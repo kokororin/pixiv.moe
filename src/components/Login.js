@@ -8,7 +8,7 @@ import Modal from 'react-modal';
 import classNames from 'classnames';
 import time from 'locutus/php/datetime/time';
 import Button from 'react-mdl/lib/Button';
-import Textfield from 'react-mdl/lib/Textfield'
+import Textfield from 'react-mdl/lib/Textfield';
 import Icon from 'react-mdl/lib/Icon';
 import { Storage } from '@/utils';
 

@@ -8,15 +8,12 @@ export default class Piwik {
 
   constructor(opts = {}) {
     this.opts = opts;
-    opts.trackErrors = opts.trackErrors !== undefined
-      ? opts.trackErrors
-      : false;
-    opts.enableLinkTracking = opts.enableLinkTracking !== undefined
-      ? opts.enableLinkTracking
-      : true;
-    opts.updateDocumentTitle = opts.updateDocumentTitle !== undefined
-      ? opts.updateDocumentTitle
-      : true;
+    opts.trackErrors =
+      opts.trackErrors !== undefined ? opts.trackErrors : false;
+    opts.enableLinkTracking =
+      opts.enableLinkTracking !== undefined ? opts.enableLinkTracking : true;
+    opts.updateDocumentTitle =
+      opts.updateDocumentTitle !== undefined ? opts.updateDocumentTitle : true;
 
     if (!opts.url || !opts.siteId) {
       /* eslint-disable */
@@ -46,9 +43,10 @@ export default class Piwik {
       ) {
         u = opts.url + '/';
       } else {
-        u = document.location.protocol === 'https:'
-          ? 'https://' + opts.url + '/'
-          : 'http://' + opts.url + '/';
+        u =
+          document.location.protocol === 'https:'
+            ? 'https://' + opts.url + '/'
+            : 'http://' + opts.url + '/';
       }
 
       this.push(['setSiteId', opts.siteId]);

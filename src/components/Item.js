@@ -40,7 +40,9 @@ export default class Item extends React.Component {
   renderRankText() {
     if (this.props.item.previous_rank === 0) {
       return (
-        <span styleName={'rank-text-outer no-previous-rank'}>{'初登场'}</span>
+        <span styleName={'rank-text-outer no-previous-rank'}>
+          {'初登场'}
+        </span>
       );
     }
     let icon;
@@ -68,11 +70,15 @@ export default class Item extends React.Component {
               />
             </div>
             <div styleName={'title'}>
-              <span>{this.props.item.work.title}</span>
+              <span>
+                {this.props.item.work.title}
+              </span>
             </div>
             <div styleName={'meta'}>
               <span styleName={'rank-num'}>{`${this.props.item.rank}位`}</span>
-              <span>{this.renderRankText()}</span>
+              <span>
+                {this.renderRankText()}
+              </span>
             </div>
           </Link>
         </div>
@@ -86,12 +92,13 @@ export default class Item extends React.Component {
               />
             </div>
             <div styleName={'title'}>
-              <span>{this.props.item.title}</span>
+              <span>
+                {this.props.item.title}
+              </span>
             </div>
             <div styleName={'meta'}>
               <span styleName={'count'}>
-                <Icon name={'star'} />
-                {' '}
+                <Icon name={'star'} />{' '}
                 {this.props.item.stats.favorited_count.public +
                   this.props.item.stats.favorited_count.private}
               </span>

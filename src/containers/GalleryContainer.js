@@ -185,7 +185,11 @@ export class GalleryContainerWithoutStore extends React.Component {
         onScroll={this.scrollListener}>
         <Header
           onClick={this.onHeaderClick}
-          title={<span>{config.siteTitle}</span>}>
+          title={
+            <span>
+              {config.siteTitle}
+            </span>
+          }>
           <Navigation>
             <a
               className={'github-link'}

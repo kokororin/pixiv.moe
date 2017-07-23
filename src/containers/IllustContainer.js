@@ -60,7 +60,9 @@ export class IllustContainerWithoutStore extends React.Component {
           onClick={this.onBackClick}>
           <Icon className={styles['back-icon']} name={'arrow_back'} />
         </a>
-        <span>{this.props.illust.item.title}</span>
+        <span>
+          {this.props.illust.item.title}
+        </span>
       </span>
     );
   }
@@ -189,9 +191,7 @@ export class IllustContainerWithoutStore extends React.Component {
             {this.props.illust.item.tags.map(elem => {
               return (
                 <Chip key={shortid.generate()}>
-                  <ChipContact>
-                    #
-                  </ChipContact>
+                  <ChipContact>#</ChipContact>
                   {elem}
                 </Chip>
               );
