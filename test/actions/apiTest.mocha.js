@@ -32,10 +32,4 @@ describe('api', () => {
     );
   });
 
-  it('Illust Comments', async () => {
-    const data = await request(
-      `${config.apiBaseURL}${config.commentsURI}/63167224`
-    );
-    assert.equal(Array.isArray(data.comments), true);
-  });
 });
