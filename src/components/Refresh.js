@@ -7,27 +7,15 @@ import CSSModules from 'react-css-modules';
 import FABButton from 'react-mdl/lib/FABButton';
 import Icon from 'react-mdl/lib/Icon';
 
-@CSSModules(styles, { allowMultiple: true })
-export default class Refresh extends React.Component {
-  static propTypes = {
-    onClick: PropTypes.func
-  };
+const Refresh = props =>
+  <div styleName={'float-btn'}>
+    <FABButton {...props} colored ripple>
+      <Icon name={'refresh'} />
+    </FABButton>
+  </div>;
 
-  constructor(props) {
-    super(props);
-  }
+Refresh.propTypes = {
+  onClick: PropTypes.func
+};
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
-  render() {
-    return (
-      <div styleName={'float-btn'}>
-        <FABButton {...this.props} colored ripple>
-          <Icon name={'refresh'} />
-        </FABButton>
-      </div>
-    );
-  }
-}
+export default CSSModules(Refresh, styles, { allowMultiple: true });
