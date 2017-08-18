@@ -43,9 +43,11 @@ export default function cachedFetch(url, options = {}) {
   }
 
   return new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      reject(new Error('request timeout'));
-    }, options.timeout);
+    if (options.timeout > 0) {
+      setTimeout(() => {
+        reject(new Error('request timeout'));
+      }, options.timeout);
+    }
     fetch(url, options).then(response => {
       // let fetch supports timeout
       // let's only store in cache if the content-type is
@@ -63,7 +65,6 @@ export default function cachedFetch(url, options = {}) {
             }
           });
         }
-        clearTimeout(timeoutId);
         resolve(response.json());
       }
       reject(new Error('response is not OK'));
