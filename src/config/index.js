@@ -6,6 +6,7 @@ export default {
   commentsURI: '/illust/comments',
   authURI: '/user/auth',
   favouriteURI: '/favourite',
+  logURI: '/log',
   baseURL: 'https://pixiv.moe/',
   trackingID: 'UA-70944432-2',
   piwikDomain: 'analytics.kotori.love',
