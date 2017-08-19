@@ -1,19 +1,28 @@
 {
   "presets": [
-    ["es2015", { "modules": false }],
+    ["env", { "modules": false }],
     "react",
     "stage-0"
   ],
   "plugins": [
   	"transform-async-to-generator",
   	"transform-decorators-legacy",
-    "transform-object-assign",
-    "react-hot-loader/babel"
+    ["transform-runtime", {"polyfill": false, "regenerator": true}]
   ],
   "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    },
+    "production": {
+      "plugins": [
+        ["transform-react-remove-prop-types", {"removeImport": true}]
+      ]
+    },
     "test:mocha": {
       "presets": [
-        "es2015",
+        "env",
         "stage-0"
       ]
     }
