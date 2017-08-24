@@ -10,7 +10,7 @@ export default {
   baseURL: 'https://pixiv.moe/',
   trackingID: 'UA-70944432-2',
   piwikDomain: 'analytics.kotori.love',
-  piwikSiteId: 1,
+  piwikSiteId: '2PMEnB',
   projectLink: 'https://github.com/LoveLiveSunshine/pixiv.moe',
   siteTitle: 'pixivギャラリー',
   keywords: [
