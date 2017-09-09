@@ -10,6 +10,7 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'whatwg-fetch',
+    'classlist-polyfill',
     path.join(__dirname, '../src/index')
   ],
   cache: false,

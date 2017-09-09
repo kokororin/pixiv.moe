@@ -1,8 +1,7 @@
 {
   "name": "pixiv.moe",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Source code of https://pixiv.moe",
-  "main": "server.js",
   "scripts": {
     "clean": "rimraf dist/*",
     "copy": "copyfiles -f ./src/index.html ./src/CNAME ./dist",
@@ -12,7 +11,7 @@
     "lint": "eslint --max-warnings 0 ./src",
     "lint:fix": "eslint --fix ./src",
     "posttest": "npm run lint",
-    "start": "cross-env NODE_ENV=development node build/dev-server.js",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --progress --config build/webpack.config.js",
     "test": "cross-env NODE_ENV=test karma start && npm run test:api",
     "test:watch": "cross-env NODE_ENV=test karma start --autoWatch=true --singleRun=false",
     "test:api": "cross-env NODE_ENV=test:mocha mocha --compilers js:babel-register --require babel-polyfill --timeout 30000 test/**/*.mocha.js",
@@ -60,7 +59,6 @@
     "eslint-loader": "^1.9.0",
     "eslint-plugin-react": "^7.2.1",
     "expect": "^1.20.2",
-    "express": "^4.15.4",
     "fetch-mock": "^5.12.2",
     "file-loader": "^0.11.2",
     "gh-pages": "^1.0.0",
@@ -76,7 +74,6 @@
     "karma-mocha-reporter": "^2.0.0",
     "karma-sourcemap-loader": "^0.3.5",
     "karma-webpack": "^2.0.4",
-    "log-update": "^2.1.0",
     "minimist": "^1.2.0",
     "mocha": "^3.5.0",
     "nock": "^9.0.14",
@@ -96,8 +93,7 @@
     "url-loader": "^0.5.9",
     "webpack": "^3.5.5",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-middleware": "^1.12.0",
-    "webpack-hot-middleware": "^2.18.2",
+    "webpack-dev-server": "^2.7.1",
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
@@ -122,7 +118,6 @@
     "react-modal": "^2.2.4",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.1.2",
-    "react-router-redux": "next",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.7.2",
     "redux-thunk": "^2.1.0",

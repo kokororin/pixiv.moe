@@ -19,8 +19,8 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',
-    'webpack-hot-middleware/client?reload=true',
     'whatwg-fetch',
+    'classlist-polyfill',
     './src/index'
   ],
   cache: true,
