@@ -71,7 +71,7 @@
   </noscript>
   <div id="app">
     <div id="index-loading" class="message">
-      <p>(・ω・)充填中<span id="wait"></span></p>
+      <p><span class="progress"></span> (・ω・)<span class="wait"></span></p>
     </div>
   </div>
   <script type="text/javascript">
@@ -79,7 +79,7 @@
     var t = setInterval(function() {
       var el = document.getElementById('index-loading');
       if (el != null) {
-        var wait = document.getElementById('wait');
+        var wait = el.getElementsByClassName('wait')[0];
         if (wait.innerHTML.length > 3) {
           wait.innerHTML = '';
         } else {

@@ -87,6 +87,14 @@ module.exports = {
     } else {
       var xhr = new XMLHttpRequest;
       xhr.open("GET", src, true);
+      xhr.onprogress = function(event) {
+        if (event.lengthComputable) {
+          var loading = document.getElementById('index-loading');
+          var progress = loading.getElementsByClassName('progress')[0];
+          var progressNumber = (event.loaded / event.total) * 100;
+          progress.innerHTML = progressNumber.toFixed(0) + '%';
+        }
+      };
       xhr.onload = function() {
         var res = xhr.responseText;
         if (res && res.match(/^!/)) {

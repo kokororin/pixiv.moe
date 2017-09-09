@@ -33,7 +33,7 @@ export default class TrackPageView extends React.Component {
         }));
       this.piwik.track(pageLink);
 
-      cachedFetch(`${config.apiBaseURL}${config.logURI}`);
+      cachedFetch(`${config.apiBaseURL}${config.logURI}`).catch(() => {});
     } else {
       console.log(pageLink); // eslint-disable-line
     }
