@@ -84,12 +84,12 @@ export default class Login extends React.Component {
     ) {
       return (
         <div>
-          <div styleName={'avatar'}>
-            <span styleName={'name'}>
+          <div styleName="avatar">
+            <span styleName="name">
               ニックネーム 「{this.props.authData.user.name}」
             </span>
           </div>
-          <div styleName={'footer'}>
+          <div styleName="footer">
             <Button onClick={this.props.onLogoutClick} raised accent ripple>
               ログアウト
             </Button>
@@ -102,20 +102,20 @@ export default class Login extends React.Component {
         <Textfield
           onChange={event => this.setUsername(event.target.value)}
           value={this.getUsername()}
-          label={'メールアドレス / pixiv ID'}
+          label="メールアドレス / pixiv ID"
           spellCheck={false}
           floatingLabel
           style={{ width: '100%' }}
         />
         <Textfield
-          type={'password'}
+          type="password"
           onChange={event => this.setPassword(event.target.value)}
           value={this.getPassword()}
-          label={'パスワード'}
+          label="パスワード"
           floatingLabel
           style={{ width: '100%' }}
         />
-        <div styleName={'footer'}>
+        <div styleName="footer">
           <Button
             className={classNames({
               'fn-disallow': this.props.isSubmitting
@@ -135,18 +135,16 @@ export default class Login extends React.Component {
   render() {
     return (
       <Modal
-        styleName={'login-modal-body'}
+        styleName="login-modal-body"
         overlayClassName={styles['login-modal-overlay']}
         isOpen={!this.state.isHidden}
         onRequestClose={this.close}
-        contentLabel={'login-modal'}>
-        <div styleName={'clear'} onClick={this.close}>
-          <Icon name={'clear'} />
+        contentLabel="login-modal">
+        <div styleName="clear" onClick={this.close}>
+          <Icon name="clear" />
         </div>
-        <div styleName={'form'}>
-          <div styleName={'fields'}>
-            {this.renderContent()}
-          </div>
+        <div styleName="form">
+          <div styleName="fields">{this.renderContent()}</div>
         </div>
       </Modal>
     );

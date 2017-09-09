@@ -38,15 +38,13 @@ export default class Alert extends React.Component {
   render() {
     return (
       <Modal
-        styleName={'alert-container'}
+        styleName="alert-container"
         overlayClassName={styles['alert-modal-overlay']}
         isOpen={!this.state.isHidden}
-        contentLabel={'alert-modal'}>
-        <div styleName={'alert-wrap-1'}>
-          <div styleName={'alert-wrap-2'}>
-            <div styleName={'alert-body'}>
-              {this.state.content}
-            </div>
+        contentLabel="alert-modal">
+        <div styleName="alert-wrap-1">
+          <div styleName="alert-wrap-2">
+            <div styleName="alert-body">{this.state.content}</div>
           </div>
         </div>
       </Modal>

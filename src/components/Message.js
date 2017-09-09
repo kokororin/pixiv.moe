@@ -5,13 +5,11 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 
 const Message = ({ isHidden, text }) => {
-  return isHidden
-    ? null
-    : <div styleName={'message'}>
-        <p>
-          {text}
-        </p>
-      </div>;
+  return isHidden ? null : (
+    <div styleName="message">
+      <p>{text}</p>
+    </div>
+  );
 };
 
 Message.defaultProps = {

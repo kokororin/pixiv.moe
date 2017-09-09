@@ -35,9 +35,11 @@ export default class RedirectContainer extends React.Component {
   render() {
     return (
       <div>
-        {this.state.isError
-          ? <Message />
-          : <Message text={'あなたはpixiv.netへリダイレクトしています'} />}
+        {this.state.isError ? (
+          <Message />
+        ) : (
+          <Message text="あなたはpixiv.netへリダイレクトしています" />
+        )}
       </div>
     );
   }

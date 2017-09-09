@@ -7,7 +7,7 @@ import ListItem from 'react-mdl/lib/List/ListItem';
 import ListItemContent from 'react-mdl/lib/List/ListItemContent';
 import { EmojiParser } from '@/utils';
 
-const Comment = ({ item }) =>
+const Comment = ({ item }) => (
   <ListItem>
     <ListItemContent
       avatar={
@@ -15,13 +15,14 @@ const Comment = ({ item }) =>
       }>
       {item.user.name}
       <span
-        styleName={'comment-content'}
+        styleName="comment-content"
         dangerouslySetInnerHTML={{
           __html: EmojiParser.parse(item.comment)
         }}
       />
     </ListItemContent>
-  </ListItem>;
+  </ListItem>
+);
 
 Comment.propTypes = {
   item: PropTypes.object

@@ -54,15 +54,10 @@ export class IllustContainerWithoutStore extends React.Component {
   renderHeaderTitle() {
     return (
       <span>
-        <a
-          className={styles['back-link']}
-          href={'#'}
-          onClick={this.onBackClick}>
-          <Icon className={styles['back-icon']} name={'arrow_back'} />
+        <a className={styles['back-link']} href="#" onClick={this.onBackClick}>
+          <Icon className={styles['back-icon']} name="arrow_back" />
         </a>
-        <span>
-          {this.props.illust.item.title}
-        </span>
+        <span>{this.props.illust.item.title}</span>
       </span>
     );
   }
@@ -163,31 +158,33 @@ export class IllustContainerWithoutStore extends React.Component {
       return <Loading isHidden={false} />;
     }
     if (this.props.illust.isError) {
-      return <Message isHidden={false} text={'エラーが発生しました'} />;
+      return <Message isHidden={false} text="エラーが発生しました" />;
     }
     try {
       return (
-        <div styleName={'illust'}>
-          <div styleName={'image'}>
-            {this.props.illust.item.metadata === null
-              ? <Img
-                  src={[
-                    this.props.illust.item.image_urls.large,
-                    this.props.illust.item.image_urls.px_480mw
-                  ]}
-                  loader={<Loading isHidden={false} />}
-                />
-              : this.props.illust.item.metadata.pages.map(elem => {
-                  return (
-                    <Img
-                      key={shortid.generate()}
-                      src={[elem.image_urls.large, elem.image_urls.px_480mw]}
-                      loader={<Loading isHidden={false} />}
-                    />
-                  );
-                })}
+        <div styleName="illust">
+          <div styleName="image">
+            {this.props.illust.item.metadata === null ? (
+              <Img
+                src={[
+                  this.props.illust.item.image_urls.large,
+                  this.props.illust.item.image_urls.px_480mw
+                ]}
+                loader={<Loading isHidden={false} />}
+              />
+            ) : (
+              this.props.illust.item.metadata.pages.map(elem => {
+                return (
+                  <Img
+                    key={shortid.generate()}
+                    src={[elem.image_urls.large, elem.image_urls.px_480mw]}
+                    loader={<Loading isHidden={false} />}
+                  />
+                );
+              })
+            )}
           </div>
-          <div styleName={'tags'}>
+          <div styleName="tags">
             {this.props.illust.item.tags.map(elem => {
               return (
                 <Chip key={shortid.generate()}>
@@ -197,7 +194,7 @@ export class IllustContainerWithoutStore extends React.Component {
               );
             })}
           </div>
-          <div styleName={'actions'}>
+          <div styleName="actions">
             <Button raised ripple onClick={this.onFavouriteClick}>
               ブックマークに追加
             </Button>
@@ -208,11 +205,11 @@ export class IllustContainerWithoutStore extends React.Component {
               ツイート
             </Button>
           </div>
-          <div styleName={'detail'}>
+          <div styleName="detail">
             <div>
-              <div styleName={'author'}>
+              <div styleName="author">
                 <a
-                  target={'_blank'}
+                  target="_blank"
                   href={`http://pixiv.me/${this.props.illust.item.user
                     .account}`}>
                   {this.props.illust.item.user.name}
@@ -225,15 +222,17 @@ export class IllustContainerWithoutStore extends React.Component {
               </time>
             </div>
             <p>
-              <a target={'_blank'} href={`/${this.props.illust.item.id}`}>
+              <a target="_blank" href={`/${this.props.illust.item.id}`}>
                 pixivにリダイレクトする
               </a>
             </p>
           </div>
-          <div styleName={'comments'}>
-            {this.props.illust.comments.length === 0
-              ? <h4>コメントはありません</h4>
-              : <h4>コメント</h4>}
+          <div styleName="comments">
+            {this.props.illust.comments.length === 0 ? (
+              <h4>コメントはありません</h4>
+            ) : (
+              <h4>コメント</h4>
+            )}
             <List style={{ width: 'auto' }}>
               {this.props.illust.comments.map(elem => {
                 return <Comment key={shortid.generate()} item={elem} />;
@@ -246,7 +245,7 @@ export class IllustContainerWithoutStore extends React.Component {
         </div>
       );
     } catch (e) {
-      return <Message isHidden={false} text={'エラーが発生しました'} />;
+      return <Message isHidden={false} text="エラーが発生しました" />;
     }
   }
 
@@ -254,13 +253,11 @@ export class IllustContainerWithoutStore extends React.Component {
     return (
       <Layout
         fixedHeader
-        id={'illust-layout'}
+        id="illust-layout"
         ref={ref => (this.layoutRef = ref)}
         onScroll={this.scrollListener}>
-        <Header id={'illust-title'} title={this.renderHeaderTitle()} />
-        <Content>
-          {this.renderContent()}
-        </Content>
+        <Header id="illust-title" title={this.renderHeaderTitle()} />
+        <Content>{this.renderContent()}</Content>
       </Layout>
     );
   }

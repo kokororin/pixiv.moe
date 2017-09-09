@@ -7,12 +7,13 @@ import CSSModules from 'react-css-modules';
 import FABButton from 'react-mdl/lib/FABButton';
 import Icon from 'react-mdl/lib/Icon';
 
-const Refresh = props =>
-  <div styleName={'float-btn'}>
+const Refresh = props => (
+  <div styleName="float-btn">
     <FABButton {...props} colored ripple>
-      <Icon name={'refresh'} />
+      <Icon name="refresh" />
     </FABButton>
-  </div>;
+  </div>
+);
 
 Refresh.propTypes = {
   onClick: PropTypes.func

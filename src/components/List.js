@@ -17,8 +17,8 @@ export default class List extends React.Component {
     return (
       <Masonry
         ref={ref => (this.masonryRef = ref)}
-        className={'masonry'}
-        elementType={'div'}
+        className="masonry"
+        elementType="div"
         options={{ transitionDuration: 0 }}
         disableImagesLoaded={false}
         updateOnEachImageLoad={false}>

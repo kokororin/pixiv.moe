@@ -7,11 +7,11 @@ import Spinner from 'react-mdl/lib/Spinner';
 
 const Loading = ({ isHidden }) => {
   // it means ローディング
-  return isHidden
-    ? null
-    : <div styleName={'message'}>
-        <Spinner />
-      </div>;
+  return isHidden ? null : (
+    <div styleName="message">
+      <Spinner />
+    </div>
+  );
 };
 
 Loading.propTypes = {
