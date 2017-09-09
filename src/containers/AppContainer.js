@@ -17,7 +17,7 @@ import {
   RedirectContainer,
   NotFoundContainer
 } from '@/containers';
-import { TrackPageView } from '@/components';
+import { ScrollContext, TrackPageView } from '@/components';
 
 injectTapEventPlugin();
 const store = configureStore();
@@ -31,17 +31,19 @@ export default class AppContainer extends React.Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <TrackPageView>
-            <Switch>
-              <Route exact path="/" component={GalleryContainer} />
-              <Route
-                path="/illust/:illustId(\d+)"
-                component={IllustContainer}
-              />
-              <Route path="/:illustId(\d+)" component={RedirectContainer} />
-              <Route component={NotFoundContainer} />
-            </Switch>
-          </TrackPageView>
+          <ScrollContext>
+            <TrackPageView>
+              <Switch>
+                <Route exact path="/" component={GalleryContainer} />
+                <Route
+                  path="/illust/:illustId(\d+)"
+                  component={IllustContainer}
+                />
+                <Route path="/:illustId(\d+)" component={RedirectContainer} />
+                <Route component={NotFoundContainer} />
+              </Switch>
+            </TrackPageView>
+          </ScrollContext>
         </ConnectedRouter>
       </Provider>
     );

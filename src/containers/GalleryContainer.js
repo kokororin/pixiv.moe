@@ -36,8 +36,6 @@ export class GalleryContainerWithoutStore extends React.Component {
 
     if (this.props.gallery.items.length === 0) {
       this.fetchSource(true);
-    } else {
-      this.contentDOMNode.scrollTop = this.props.gallery.contentScrollTop;
     }
 
     this.resizeListener();
@@ -45,9 +43,6 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener);
-    this.props.dispatch(
-      GalleryActions.setContentScrollTop(this.contentDOMNode.scrollTop)
-    );
   }
 
   @autobind

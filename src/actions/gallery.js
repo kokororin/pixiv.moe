@@ -10,7 +10,6 @@ export const types = namespacedTypes('gallery', [
   'SET_FETCH_ERROR',
   'SET_FETCH_STATUS',
   'SET_TAG',
-  'SET_CONTENT_SCROLLTOP',
   'CLEAR_SOURCE',
   'SET_ERROR_TIMES',
   'CLEAR_ERROR_TIMES'
@@ -140,15 +139,6 @@ export function setTag(tag) {
     type: types.SET_TAG,
     payload: {
       tag
-    }
-  };
-}
-
-export function setContentScrollTop(scrollTop) {
-  return {
-    type: types.SET_CONTENT_SCROLLTOP,
-    payload: {
-      contentScrollTop: scrollTop
     }
   };
 }

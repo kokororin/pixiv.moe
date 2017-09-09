@@ -7,8 +7,7 @@ export default function gallery(
     isError: false,
     errorTimes: 0,
     items: [],
-    images: [],
-    contentScrollTop: 0
+    images: []
   },
   action
 ) {
@@ -53,12 +52,6 @@ export default function gallery(
       return {
         ...state,
         tag: action.payload.tag
-      };
-
-    case GalleryActions.types.SET_CONTENT_SCROLLTOP:
-      return {
-        ...state,
-        contentScrollTop: action.payload.contentScrollTop
       };
 
     case GalleryActions.types.CLEAR_SOURCE:
