@@ -1,5 +1,7 @@
 import { GalleryActions } from '@/actions';
 
+const types = GalleryActions.types;
+
 export default function gallery(
   state = {
     page: 1,
@@ -12,49 +14,49 @@ export default function gallery(
   action
 ) {
   switch (action.type) {
-    case GalleryActions.types.SET_ITEMS:
+    case types.SET_ITEMS:
       return {
         ...state,
         items: [...state.items, ...[action.payload.data]]
       };
 
-    case GalleryActions.types.SET_FETCH_ERROR:
+    case types.SET_FETCH_ERROR:
       return {
         ...state,
         isError: action.payload.isError
       };
 
-    case GalleryActions.types.SET_FETCH_STATUS:
+    case types.SET_FETCH_STATUS:
       return {
         ...state,
         isFetching: action.payload.isFetching
       };
 
-    case GalleryActions.types.SET_PAGE:
+    case types.SET_PAGE:
       return {
         ...state,
         page: action.payload.page
       };
 
-    case GalleryActions.types.SET_ERROR_TIMES:
+    case types.SET_ERROR_TIMES:
       return {
         ...state,
         errorTimes: state.errorTimes + 1
       };
 
-    case GalleryActions.types.CLEAR_ERROR_TIMES:
+    case types.CLEAR_ERROR_TIMES:
       return {
         ...state,
         errorTimes: 0
       };
 
-    case GalleryActions.types.SET_TAG:
+    case types.SET_TAG:
       return {
         ...state,
         tag: action.payload.tag
       };
 
-    case GalleryActions.types.CLEAR_SOURCE:
+    case types.CLEAR_SOURCE:
       return {
         ...state,
         items: action.payload.items,

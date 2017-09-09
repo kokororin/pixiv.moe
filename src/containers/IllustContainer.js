@@ -137,6 +137,18 @@ export class IllustContainerWithoutStore extends React.Component {
   }
 
   @autobind
+  onTagClick(tag) {
+    const link = document.createElement('a');
+    link.href = `https://www.pixiv.net/search.php?s_mode=s_tag_full&word=${encodeURIComponent(
+      tag
+    )}`;
+    link.setAttribute('target', '_blank');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  @autobind
   scrollListener(event) {
     if (this.props.illust.isFetchingComments) {
       return;
@@ -187,7 +199,9 @@ export class IllustContainerWithoutStore extends React.Component {
           <div styleName="tags">
             {this.props.illust.item.tags.map(elem => {
               return (
-                <Chip key={shortid.generate()}>
+                <Chip
+                  key={shortid.generate()}
+                  onClick={() => this.onTagClick(elem)}>
                   <ChipContact>#</ChipContact>
                   {elem}
                 </Chip>
