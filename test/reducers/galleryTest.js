@@ -8,8 +8,7 @@ describe('GalleryReducer', () => {
       isError: false,
       errorTimes: 0,
       items: [],
-      images: [],
-      contentScrollTop: 0
+      images: []
     });
   });
 });
