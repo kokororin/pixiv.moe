@@ -10,6 +10,10 @@ export default class ScrollContext extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    document.addEventListener('scroll', this.onScroll, true);
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.location === prevProps.location) {
       return;
@@ -18,10 +22,6 @@ export default class ScrollContext extends React.Component {
     if (scrollTop && this.scrollingElement) {
       this.scrollingElement.scrollTop = scrollTop;
     }
-  }
-
-  componentDidMount() {
-    document.addEventListener('scroll', this.onScroll, true);
   }
 
   componentWillUnmount() {

@@ -15,28 +15,19 @@ import {
 } from '@/containers';
 import { ScrollContext, TrackPageView } from '@/components';
 
-export default class AppContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const AppContainer = () => (
+  <Router history={history}>
+    <ScrollContext>
+      <TrackPageView>
+        <Switch>
+          <Route exact path="/" component={GalleryContainer} />
+          <Route path="/illust/:illustId(\d+)" component={IllustContainer} />
+          <Route path="/:illustId(\d+)" component={RedirectContainer} />
+          <Route component={NotFoundContainer} />
+        </Switch>
+      </TrackPageView>
+    </ScrollContext>
+  </Router>
+);
 
-  render() {
-    return (
-      <Router history={history}>
-        <ScrollContext>
-          <TrackPageView>
-            <Switch>
-              <Route exact path="/" component={GalleryContainer} />
-              <Route
-                path="/illust/:illustId(\d+)"
-                component={IllustContainer}
-              />
-              <Route path="/:illustId(\d+)" component={RedirectContainer} />
-              <Route component={NotFoundContainer} />
-            </Switch>
-          </TrackPageView>
-        </ScrollContext>
-      </Router>
-    );
-  }
-}
+export default AppContainer;

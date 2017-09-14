@@ -2,12 +2,6 @@ import React from 'react';
 
 import { Message } from '@/components';
 
-export default class NotFoundContainer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const NotFoundContainer = () => <Message />;
 
-  render() {
-    return <Message />;
-  }
-}
+export default NotFoundContainer;

@@ -32,7 +32,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: true,
-              importLoaders: 1,
+              importLoaders: 2,
               localIdentName: '[hash:base64:8]',
               minimize: process.env.NODE_ENV === 'production'
             }
@@ -49,6 +49,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
+              importLoaders: 2,
               minimize: process.env.NODE_ENV === 'production'
             }
           },
