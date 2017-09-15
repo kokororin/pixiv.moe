@@ -89,78 +89,81 @@ curl 'https://api.pixiv.moe/v1/ranking?page=1'
 ```
 
 ##### response
+<details>
+<summary>JSON</summary>
+
 ```json
 {
-    "status":"success",
-    "response":{
-        "content":"all",
-        "mode":"daily",
-        "date":"2017-05-21",
-        "works":[
-            {
-                "rank":1,
-                "previous_rank":6,
-                "work":{
-                    "id":62984197,
-                    "title":"★",
-                    "caption":null,
-                    "tags":[
-                        "SUKJA",
-                        "オリジナル",
-                        "ゴスロリ"
-                    ],
-                    "tools":null,
-                    "image_urls":{
-                        "large":"https://api.pixiv.moe/v1/image/Ly9pMi5waXhpdi5uZXQvaW1nLW9yaWdpbmFsL2ltZy8yMDE3LzA1LzIwLzE3LzE1LzM5LzYyOTg0MTk3X3AwLnBuZw==",
-                        "px_480mw":"https://api.pixiv.moe/v1/image/Ly9pMi5waXhpdi5uZXQvYy80ODB4OTYwL2ltZy1tYXN0ZXIvaW1nLzIwMTcvMDUvMjAvMTcvMTUvMzkvNjI5ODQxOTdfcDBfbWFzdGVyMTIwMC5qcGc="
-                    },
-                    "width":700,
-                    "height":1000,
-                    "stats":{
-                        "scored_count":2470,
-                        "score":24700,
-                        "views_count":33130,
-                        "favorited_count":{
-                            "public":null,
-                            "private":null
-                        },
-                        "commented_count":null
-                    },
-                    "publicity":0,
-                    "age_limit":"all-age",
-                    "created_time":"2017-05-20 17:15:00",
-                    "reuploaded_time":"2017-05-20 17:15:39",
-                    "user":{
-                        "id":4889903,
-                        "account":"sorolp",
-                        "name":"SUKJA",
-                        "is_following":null,
-                        "is_follower":null,
-                        "is_friend":null,
-                        "is_premium":null,
-                        "profile_image_urls":{
-                            "px_50x50":"https://api.pixiv.moe/v1/image/Ly9pMy5waXhpdi5uZXQvdXNlci1wcm9maWxlL2ltZy8yMDE2LzExLzI1LzE4LzI4LzI1LzExNzk0MDM4X2ViNGViYjkzOWE5ZTVmNTAzZGUyYjdkMjU0N2IxMjUzXzUwLmpwZw=="
-                        },
-                        "stats":null,
-                        "profile":null
-                    },
-                    "is_manga":null,
-                    "is_liked":null,
-                    "favorite_id":null,
-                    "page_count":1,
-                    "book_style":"none",
-                    "type":"illustration",
-                    "metadata":null,
-                    "content_type":null,
-                    "sanity_level":"white"
-                },
-                "unique_id":"2uba8cM"
-            }
-        ]
-    },
-    "count":1
+  "status": "success",
+  "response": {
+    "content": "all",
+    "mode": "daily",
+    "date": "2017-05-21",
+    "works": [
+      {
+        "rank": 1,
+        "previous_rank": 6,
+        "work": {
+          "id": 62984197,
+          "title": "★",
+          "caption": null,
+          "tags": ["SUKJA", "オリジナル", "ゴスロリ"],
+          "tools": null,
+          "image_urls": {
+            "large":
+              "https://api.pixiv.moe/v1/image/Ly9pMi5waXhpdi5uZXQvaW1nLW9yaWdpbmFsL2ltZy8yMDE3LzA1LzIwLzE3LzE1LzM5LzYyOTg0MTk3X3AwLnBuZw==",
+            "px_480mw":
+              "https://api.pixiv.moe/v1/image/Ly9pMi5waXhpdi5uZXQvYy80ODB4OTYwL2ltZy1tYXN0ZXIvaW1nLzIwMTcvMDUvMjAvMTcvMTUvMzkvNjI5ODQxOTdfcDBfbWFzdGVyMTIwMC5qcGc="
+          },
+          "width": 700,
+          "height": 1000,
+          "stats": {
+            "scored_count": 2470,
+            "score": 24700,
+            "views_count": 33130,
+            "favorited_count": {
+              "public": null,
+              "private": null
+            },
+            "commented_count": null
+          },
+          "publicity": 0,
+          "age_limit": "all-age",
+          "created_time": "2017-05-20 17:15:00",
+          "reuploaded_time": "2017-05-20 17:15:39",
+          "user": {
+            "id": 4889903,
+            "account": "sorolp",
+            "name": "SUKJA",
+            "is_following": null,
+            "is_follower": null,
+            "is_friend": null,
+            "is_premium": null,
+            "profile_image_urls": {
+              "px_50x50":
+                "https://api.pixiv.moe/v1/image/Ly9pMy5waXhpdi5uZXQvdXNlci1wcm9maWxlL2ltZy8yMDE2LzExLzI1LzE4LzI4LzI1LzExNzk0MDM4X2ViNGViYjkzOWE5ZTVmNTAzZGUyYjdkMjU0N2IxMjUzXzUwLmpwZw=="
+            },
+            "stats": null,
+            "profile": null
+          },
+          "is_manga": null,
+          "is_liked": null,
+          "favorite_id": null,
+          "page_count": 1,
+          "book_style": "none",
+          "type": "illustration",
+          "metadata": null,
+          "content_type": null,
+          "sanity_level": "white"
+        },
+        "unique_id": "2uba8cM"
+      }
+    ]
+  },
+  "count": 1
 }
 ```
+</details>
 
 #### Illust List
 
@@ -173,6 +176,9 @@ curl 'https://api.pixiv.moe/v1/gallery?tag=nico&page=1'
 ```
 
 ##### response
+<details>
+<summary>JSON</summary>
+
 ```json
 {
     "status":"success",
@@ -212,6 +218,7 @@ curl 'https://api.pixiv.moe/v1/gallery?tag=nico&page=1'
     "expires_at":1478517054
 }
 ```
+</details>
 
 #### Illust Detail
 
@@ -225,6 +232,8 @@ curl 'https://api.pixiv.moe/v1/illust/50110342'
 ```
 
 ##### response
+<details>
+<summary>JSON</summary>
 
 ```json
 {
@@ -291,6 +300,7 @@ curl 'https://api.pixiv.moe/v1/illust/50110342'
     }
 }
 ```
+</details>
 
 #### Illust Comments
 
@@ -303,6 +313,9 @@ curl 'https://api.pixiv.moe/v1/illust/comments/47527196?page=1'
 ```
 
 ##### response
+<details>
+<summary>JSON</summary>
+
 ```json
 {
     "total_comments":8,
@@ -422,6 +435,7 @@ curl 'https://api.pixiv.moe/v1/illust/comments/47527196?page=1'
     ]
 }
 ```
+</details>
 
 #### Auth
 
@@ -444,6 +458,9 @@ curl 'https://api.pixiv.moe/v1/user/auth' \
 ```
 
 ##### response
+
+<details>
+<summary>JSON</summary>
 
 ```json
 {
@@ -478,6 +495,7 @@ curl 'https://api.pixiv.moe/v1/user/auth' \
     "message":"Login error: 103:pixiv ID、またはメールアドレス、パスワードが正しいかチェックしてください。"
 }
 ```
+</details>
 
 #### Add Favourite
 
@@ -494,6 +512,10 @@ curl 'https://api.pixiv.moe/v1/favourite/46453302' \
 ```
 
 ##### response
+
+<details>
+<summary>JSON</summary>
+
 ```json
 {
     "status":"success",
@@ -514,6 +536,7 @@ curl 'https://api.pixiv.moe/v1/favourite/46453302' \
     "message":"再度ログインログインセッションの有効期限が切れていてください。"
 }
 ```
+</details>
 
 ## Contribute
 Feel free to contribute (PR-s and issues welcomed).
