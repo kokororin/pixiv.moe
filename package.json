@@ -4,7 +4,7 @@
   "description": "Source code of https://pixiv.moe",
   "scripts": {
     "clean": "rimraf dist/*",
-    "copy": "copyfiles -f ./src/index.html ./src/CNAME ./dist",
+    "copy": "copyfiles -f ./src/index.html ./dist",
     "predist": "npm run clean && npm run copy",
     "dist": "cross-env NODE_ENV=production webpack --progress --config build/webpack.config.js",
     "postdist": "copyfiles -f ./src/icons/*.ico ./src/icons/*.png ./dist/assets",
