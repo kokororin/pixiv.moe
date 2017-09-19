@@ -1,8 +1,7 @@
 import React from 'react';
-import time from 'locutus/php/datetime/time';
 
 import { Alert, Login } from '@/components';
-import { cachedFetch, Storage } from '@/utils';
+import { cachedFetch, moment, Storage } from '@/utils';
 
 import config from '@/config';
 
@@ -90,7 +89,7 @@ export default class LoginContainer extends React.Component {
       .then(data => {
         if (data.status === 'success') {
           const authData = data.data;
-          authData.auth_time = time();
+          authData.auth_time = moment().unix();
           authData.expires_at = authData.auth_time + authData.expires_in;
           Storage.set('auth', authData);
           this.setState({

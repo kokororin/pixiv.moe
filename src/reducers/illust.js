@@ -4,9 +4,7 @@ const types = IllustActions.types;
 
 export default function illust(
   state = {
-    item: {
-      title: ''
-    },
+    items: {},
     comments: [],
     page: 1,
     isCommentsEnd: false,
@@ -21,7 +19,12 @@ export default function illust(
     case types.SET_ITEM:
       return {
         ...state,
-        item: action.payload.data
+        items: {
+          ...state.items,
+          ...{
+            [action.payload.data.id]: action.payload.data
+          }
+        }
       };
 
     case types.SET_FETCH_ERROR:
@@ -34,12 +37,6 @@ export default function illust(
       return {
         ...state,
         isFetching: action.payload.isFetching
-      };
-
-    case types.CLEAR_ITEM:
-      return {
-        ...state,
-        item: action.payload.item
       };
 
     case types.SET_COMMENTS:

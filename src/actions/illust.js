@@ -7,7 +7,6 @@ export const types = namespacedTypes('illust', [
   'SET_ITEM',
   'SET_FETCH_ERROR',
   'SET_FETCH_STATUS',
-  'CLEAR_ITEM',
   'SET_COMMENTS',
   'SET_COMMENTS_PAGE',
   'SET_COMMENTS_END',
@@ -45,6 +44,7 @@ export function setFetchStatus(isFetching) {
 
 export function fetchItem(illustId) {
   return dispatch => {
+    dispatch(setFetchStatus(true));
     dispatch(setFetchError(false));
     return cachedFetch(`${config.apiBaseURL}${config.illustURI}/${illustId}`, {
       mode: 'cors',
@@ -64,17 +64,6 @@ export function fetchItem(illustId) {
         dispatch(setFetchStatus(false));
         dispatch(setFetchError(true));
       });
-  };
-}
-
-export function clearItem() {
-  return {
-    type: types.CLEAR_ITEM,
-    payload: {
-      item: {
-        title: ''
-      }
-    }
   };
 }
 

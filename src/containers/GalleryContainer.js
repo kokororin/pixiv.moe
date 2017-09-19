@@ -210,8 +210,6 @@ export class GalleryContainerWithoutStore extends React.Component {
   }
 }
 
-export default connect(state => {
-  return {
-    gallery: state.gallery
-  };
-})(GalleryContainerWithoutStore);
+export default connect(state => ({ gallery: state.gallery }))(
+  GalleryContainerWithoutStore
+);

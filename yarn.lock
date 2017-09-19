@@ -4501,10 +4501,6 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-locutus@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.npmjs.org/locutus/-/locutus-2.0.9.tgz#e265af1e85fd19173e74386373888560783a02fc"
-
 lodash-es@^4.2.0, lodash-es@^4.2.1:
   version "4.17.4"
   resolved "https://registry.npmjs.org/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"

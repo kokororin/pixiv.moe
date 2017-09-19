@@ -77,7 +77,7 @@ function fetchSource() {
       })
         .then(data => {
           if (data.status === 'success' && data.count > 0) {
-            Object.keys(data.response.works).map(key => {
+            Object.keys(data.response.works).forEach(key => {
               const elem = data.response.works[key];
               dispatch(setItems(elem));
             });
@@ -106,7 +106,7 @@ function fetchSource() {
     })
       .then(data => {
         if (data.status === 'success' && data.count > 0) {
-          Object.keys(data.response).map(key => {
+          Object.keys(data.response).forEach(key => {
             const elem = data.response[key];
             dispatch(setItems(elem));
           });

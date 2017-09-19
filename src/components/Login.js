@@ -6,11 +6,10 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import Modal from 'react-modal';
 import classNames from 'classnames';
-import time from 'locutus/php/datetime/time';
 import Button from 'react-mdl/lib/Button';
 import Textfield from 'react-mdl/lib/Textfield';
 import Icon from 'react-mdl/lib/Icon';
-import { Storage } from '@/utils';
+import { moment, Storage } from '@/utils';
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Login extends React.Component {
@@ -80,7 +79,7 @@ export default class Login extends React.Component {
   renderContent() {
     if (
       this.props.authData !== null &&
-      this.props.authData.expires_at > time()
+      this.props.authData.expires_at > moment().unix()
     ) {
       return (
         <div>

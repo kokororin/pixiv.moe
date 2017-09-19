@@ -1,8 +1,25 @@
 // modify from https://www.sitepoint.com/cache-fetched-ajax-requests/
-import time from 'locutus/php/datetime/time';
-import httpBuildQuery from 'locutus/php/url/http_build_query';
+import { hashStr, moment, Storage } from '@/utils';
 
-import { hashStr, Storage } from '@/utils';
+function buildURL(url, params) {
+  if (!params) {
+    return url;
+  }
+
+  const uris = [];
+
+  Object.keys(params).forEach(key => {
+    let value = params[key];
+    if (typeof value === 'object') {
+      value = JSON.stringify(value);
+    }
+    uris.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+  });
+
+  url += (url.indexOf('?') === -1 ? '?' : '&') + uris.join('&');
+
+  return url;
+}
 
 function getContent(content) {
   try {
@@ -19,7 +36,7 @@ export default function cachedFetch(url, options = {}) {
       options.method.toLowerCase() === 'get') &&
     typeof options.data === 'object'
   ) {
-    url += '?' + httpBuildQuery(options.data);
+    url = buildURL(url, options.data);
   }
 
   if (typeof options.expiryKey === 'string') {
@@ -30,12 +47,15 @@ export default function cachedFetch(url, options = {}) {
     const cachedExpiresAt = Storage.get(cacheKey + ':ts');
     if (cached !== null && cachedExpiresAt !== null) {
       // it was in localStorage! Yay!
-      if (time() < parseInt(cachedExpiresAt, 10)) {
+      if (moment().unix() < parseInt(cachedExpiresAt, 10)) {
         const response = new Response(new Blob([JSON.stringify(cached)]));
-        return response.clone().text().then(content => {
-          content = getContent(content);
-          return content;
-        });
+        return response
+          .clone()
+          .text()
+          .then(content => {
+            content = getContent(content);
+            return content;
+          });
       }
       // We need to clean up this old key
       Storage.remove(cacheKey).remove(cacheKey + ':ts');
@@ -55,15 +75,18 @@ export default function cachedFetch(url, options = {}) {
       if (response.status === 200) {
         const ct = response.headers.get('Content-Type');
         if (ct && (ct.match(/application\/json/i) || ct.match(/text\//i))) {
-          response.clone().text().then(content => {
-            content = getContent(content);
-            if (typeof options.expiryKey === 'string') {
-              Storage.set(cacheKey, content).set(
-                cacheKey + ':ts',
-                content[options.expiryKey]
-              );
-            }
-          });
+          response
+            .clone()
+            .text()
+            .then(content => {
+              content = getContent(content);
+              if (typeof options.expiryKey === 'string') {
+                Storage.set(cacheKey, content).set(
+                  cacheKey + ':ts',
+                  content[options.expiryKey]
+                );
+              }
+            });
         }
         resolve(response.json());
       }

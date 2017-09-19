@@ -12,7 +12,6 @@ import { Chip, ChipContact } from 'react-mdl/lib/Chip';
 import Button from 'react-mdl/lib/Button';
 import { List } from 'react-mdl/lib/List';
 import shortid from 'shortid';
-import time from 'locutus/php/datetime/time';
 import Img from 'react-image';
 
 import config from '@/config';
@@ -26,29 +25,41 @@ import { cachedFetch, moment, Storage } from '@/utils';
 export class IllustContainerWithoutStore extends React.Component {
   constructor(props) {
     super(props);
+
+    this.illustId = this.props.match.params.illustId;
   }
 
   componentDidMount() {
     this.layoutDOMNode = ReactDOM.findDOMNode(this.layoutRef);
-    this.illustId = this.props.match.params.illustId;
-    this.props.dispatch(IllustActions.fetchItem(this.illustId));
+
+    if (!this.item.id) {
+      this.props.dispatch(IllustActions.fetchItem(this.illustId));
+    }
+
     this.props.dispatch(IllustActions.fetchComments(this.illustId));
     this.authTimer = setInterval(() => {
       const authData = Storage.get('auth');
       if (authData === null) {
         return;
       }
-      if (authData.expires_at < time()) {
+      if (authData.expires_at < moment().unix()) {
         Storage.remove('auth');
       }
     }, 500);
   }
 
   componentWillUnmount() {
-    this.props.dispatch(IllustActions.setFetchStatus(true));
-    this.props.dispatch(IllustActions.clearItem());
     this.props.dispatch(IllustActions.clearComments());
     clearInterval(this.authTimer);
+  }
+
+  get item() {
+    if (!this.props.illust.items[this.illustId]) {
+      return {
+        title: ''
+      };
+    }
+    return this.props.illust.items[this.illustId];
   }
 
   renderHeaderTitle() {
@@ -57,7 +68,7 @@ export class IllustContainerWithoutStore extends React.Component {
         <a className={styles['back-link']} href="#" onClick={this.onBackClick}>
           <Icon className={styles['back-icon']} name="arrow_back" />
         </a>
-        <span>{this.props.illust.item.title}</span>
+        <span>{this.item.title}</span>
       </span>
     );
   }
@@ -76,7 +87,7 @@ export class IllustContainerWithoutStore extends React.Component {
   @autobind
   onFavouriteClick(event) {
     const authData = Storage.get('auth');
-    if (authData === null || authData.expires_at < time()) {
+    if (authData === null || authData.expires_at < moment().unix()) {
       return this.loginRef.open();
     }
     const target = event.nativeEvent.target,
@@ -112,8 +123,8 @@ export class IllustContainerWithoutStore extends React.Component {
   @autobind
   onDownloadClick() {
     const tempLink = document.createElement('a');
-    tempLink.href = this.props.illust.item.image_urls.large;
-    tempLink.setAttribute('download', `${this.props.illust.item.title}.jpg`);
+    tempLink.href = this.item.image_urls.large;
+    tempLink.setAttribute('download', `${this.item.title}.jpg`);
     tempLink.setAttribute('target', '_blank');
     document.body.appendChild(tempLink);
     tempLink.click();
@@ -126,10 +137,9 @@ export class IllustContainerWithoutStore extends React.Component {
       `https://twitter.com/intent/tweet?original_referer=${encodeURIComponent(
         window.location.href
       )}&ref_src=twsrc%5Etfw&text=${encodeURIComponent(
-        `${this.props.illust.item.title} | ${this.props.illust.item.user
-          .name} #pixiv`
+        `${this.item.title} | ${this.item.user.name} #pixiv`
       )}&tw_p=tweetbutton&url=${encodeURIComponent(
-        `${config.baseURL}${this.props.illust.item.id}`
+        `${config.baseURL}${this.item.id}`
       )}`,
       '_blank',
       'width=550,height=370'
@@ -176,16 +186,16 @@ export class IllustContainerWithoutStore extends React.Component {
       return (
         <div styleName="illust">
           <div styleName="image">
-            {this.props.illust.item.metadata === null ? (
+            {this.item.metadata === null ? (
               <Img
                 src={[
-                  this.props.illust.item.image_urls.large,
-                  this.props.illust.item.image_urls.px_480mw
+                  this.item.image_urls.large,
+                  this.item.image_urls.px_480mw
                 ]}
                 loader={<Loading isHidden={false} />}
               />
             ) : (
-              this.props.illust.item.metadata.pages.map(elem => {
+              this.item.metadata.pages.map(elem => {
                 return (
                   <Img
                     key={shortid.generate()}
@@ -197,7 +207,7 @@ export class IllustContainerWithoutStore extends React.Component {
             )}
           </div>
           <div styleName="tags">
-            {this.props.illust.item.tags.map(elem => {
+            {this.item.tags.map(elem => {
               return (
                 <Chip
                   key={shortid.generate()}
@@ -224,19 +234,16 @@ export class IllustContainerWithoutStore extends React.Component {
               <div styleName="author">
                 <a
                   target="_blank"
-                  href={`http://pixiv.me/${this.props.illust.item.user
-                    .account}`}>
-                  {this.props.illust.item.user.name}
+                  href={`http://pixiv.me/${this.item.user.account}`}>
+                  {this.item.user.name}
                 </a>
               </div>
               <time>
-                {`${moment(this.props.illust.item.created_time).format(
-                  'LLL'
-                )}(JST)`}
+                {`${moment(this.item.created_time).format('LLL')}(JST)`}
               </time>
             </div>
             <p>
-              <a target="_blank" href={`/${this.props.illust.item.id}`}>
+              <a target="_blank" href={`/${this.item.id}`}>
                 pixivにリダイレクトする
               </a>
             </p>
@@ -277,8 +284,6 @@ export class IllustContainerWithoutStore extends React.Component {
   }
 }
 
-export default connect(state => {
-  return {
-    illust: state.illust
-  };
-})(IllustContainerWithoutStore);
+export default connect(state => ({ illust: state.illust }))(
+  IllustContainerWithoutStore
+);
