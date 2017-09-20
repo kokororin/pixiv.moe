@@ -32,4 +32,4 @@ after_script:
 
 after_success:
   - npm run ci-publish || true
-  - if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then npm run dist && npm run archive && curl -F "dist=@./dist/dist.tar.gz" "https://api.kotori.love/github/hook/pixiv?token=$PIXIV_DEPLOY_TOKEN" ; fi
+  - if [[ "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run dist && npm run archive && curl -F "dist=@./dist/dist.tar.gz" "https://api.kotori.love/github/hook/pixiv?token=$PIXIV_DEPLOY_TOKEN" ; fi
