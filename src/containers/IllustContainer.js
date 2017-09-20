@@ -208,10 +208,11 @@ export class IllustContainerWithoutStore extends React.Component {
             )}
           </div>
           <div styleName="caption">
-            {this.item.caption
-              .replace(/(\r\n|\n\r|\r|\n)/g, '\n')
-              .split('\n')
-              .map(elem => <p key={shortid.generate()}>{elem}</p>)}
+            {typeof this.item.caption === 'string' &&
+              this.item.caption
+                .replace(/(\r\n|\n\r|\r|\n)/g, '\n')
+                .split('\n')
+                .map(elem => <p key={shortid.generate()}>{elem}</p>)}
           </div>
           <div styleName="tags">
             {this.item.tags.map(elem => {
@@ -251,7 +252,9 @@ export class IllustContainerWithoutStore extends React.Component {
               <div styleName="metas">
                 <span styleName="divide">{`${this.item.width}x${this.item
                   .height}`}</span>
-                <span styleName="divide">{this.item.tools.join(' / ')}</span>
+                {Array.isArray(this.item.tools) && (
+                  <span styleName="divide">{this.item.tools.join(' / ')}</span>
+                )}
               </div>
             </div>
             <p>
