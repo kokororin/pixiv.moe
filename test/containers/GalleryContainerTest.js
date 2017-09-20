@@ -1,6 +1,7 @@
 import createComponent from '../helpers/shallowRenderHelper';
 
 import { GalleryContainerWithoutStore } from '@/containers';
+import config from '@/config';
 
 describe('GalleryContainer', () => {
   let galleryContainer;
@@ -11,7 +12,7 @@ describe('GalleryContainer', () => {
     });
   });
 
-  it('GalleryContainerの mdl Layout has a scroll listener', () => {
-    expect(typeof galleryContainer.props.onScroll).to.equal('function');
+  it('GalleryContainerの has a title', () => {
+    expect(galleryContainer.props.title).to.equal(config.siteTitle);
   });
 });

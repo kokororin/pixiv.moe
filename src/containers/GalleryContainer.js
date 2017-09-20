@@ -10,6 +10,7 @@ import Drawer from 'react-mdl/lib/Layout/Drawer';
 import Content from 'react-mdl/lib/Layout/Content';
 import Icon from 'react-mdl/lib/Icon';
 import shortid from 'shortid';
+import DocumentTitle from 'react-document-title';
 
 import config from '@/config';
 
@@ -146,7 +147,6 @@ export class GalleryContainerWithoutStore extends React.Component {
           href="#"
           style={linkStyle}
           data-tag={elem.en}
-          onTouchTap={this.onKeywordClick}
           onClick={this.onKeywordClick}
           className={`nav-link__${elem.en}`}>
           <Icon style={iconStyle} name="done" />
@@ -174,38 +174,40 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   render() {
     return (
-      <Layout
-        ref={ref => (this.layoutRef = ref)}
-        fixedHeader
-        onScroll={this.scrollListener}>
-        <Header
-          onClick={this.onHeaderClick}
-          title={<span>{config.siteTitle}</span>}>
-          <Navigation>
-            <a
-              className="github-link"
-              target="_blank"
-              href={config.projectLink}>
-              <img src={require('@/images/GitHub-Mark-Light-32px.png')} />
-            </a>
-          </Navigation>
-        </Header>
-        <Drawer title="タグ">
-          <Navigation>{this.renderKeywords()}</Navigation>
-        </Drawer>
-        <Content>
-          <div ref={ref => (this.rootRef = ref)} style={{ margin: '0 auto' }}>
-            <List items={this.props.gallery.items} />
-            <Loading isHidden={!this.props.gallery.isFetching} />
-            <Message
-              ref={ref => (this.errorRef = ref)}
-              text="読み込みに失敗しました"
-              isHidden={!this.props.gallery.isError}
-            />
-            <Refresh onClick={async () => await this.reRenderContent(true)} />
-          </div>
-        </Content>
-      </Layout>
+      <DocumentTitle title={config.siteTitle}>
+        <Layout
+          ref={ref => (this.layoutRef = ref)}
+          fixedHeader
+          onScroll={this.scrollListener}>
+          <Header
+            onClick={this.onHeaderClick}
+            title={<span>{config.siteTitle}</span>}>
+            <Navigation>
+              <a
+                className="github-link"
+                target="_blank"
+                href={config.projectLink}>
+                <img src={require('@/images/GitHub-Mark-Light-32px.png')} />
+              </a>
+            </Navigation>
+          </Header>
+          <Drawer title="タグ">
+            <Navigation>{this.renderKeywords()}</Navigation>
+          </Drawer>
+          <Content>
+            <div ref={ref => (this.rootRef = ref)} style={{ margin: '0 auto' }}>
+              <List items={this.props.gallery.items} />
+              <Loading isHidden={!this.props.gallery.isFetching} />
+              <Message
+                ref={ref => (this.errorRef = ref)}
+                text="読み込みに失敗しました"
+                isHidden={!this.props.gallery.isError}
+              />
+              <Refresh onClick={async () => await this.reRenderContent(true)} />
+            </div>
+          </Content>
+        </Layout>
+      </DocumentTitle>
     );
   }
 }

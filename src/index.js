@@ -2,12 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer as Root } from 'react-hot-loader';
 import { Provider } from 'react-redux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import { configureStore } from '@/stores';
 import AppContainer from '@/containers/AppContainer';
-
-injectTapEventPlugin();
 
 const store = configureStore();
 

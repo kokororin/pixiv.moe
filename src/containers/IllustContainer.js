@@ -13,6 +13,7 @@ import Button from 'react-mdl/lib/Button';
 import { List } from 'react-mdl/lib/List';
 import shortid from 'shortid';
 import Img from 'react-image';
+import DocumentTitle from 'react-document-title';
 
 import config from '@/config';
 
@@ -206,6 +207,12 @@ export class IllustContainerWithoutStore extends React.Component {
               })
             )}
           </div>
+          <div styleName="caption">
+            {this.item.caption
+              .replace(/(\r\n|\n\r|\r|\n)/g, '\n')
+              .split('\n')
+              .map(elem => <p key={shortid.generate()}>{elem}</p>)}
+          </div>
           <div styleName="tags">
             {this.item.tags.map(elem => {
               return (
@@ -241,6 +248,11 @@ export class IllustContainerWithoutStore extends React.Component {
               <time>
                 {`${moment(this.item.created_time).format('LLL')}(JST)`}
               </time>
+              <div styleName="metas">
+                <span styleName="divide">{`${this.item.width}x${this.item
+                  .height}`}</span>
+                <span styleName="divide">{this.item.tools.join(' / ')}</span>
+              </div>
             </div>
             <p>
               <a target="_blank" href={`/${this.item.id}`}>
@@ -272,14 +284,17 @@ export class IllustContainerWithoutStore extends React.Component {
 
   render() {
     return (
-      <Layout
-        fixedHeader
-        id="illust-layout"
-        ref={ref => (this.layoutRef = ref)}
-        onScroll={this.scrollListener}>
-        <Header id="illust-title" title={this.renderHeaderTitle()} />
-        <Content>{this.renderContent()}</Content>
-      </Layout>
+      <DocumentTitle
+        title={this.item.title === '' ? config.siteTitle : this.item.title}>
+        <Layout
+          fixedHeader
+          id="illust-layout"
+          ref={ref => (this.layoutRef = ref)}
+          onScroll={this.scrollListener}>
+          <Header id="illust-title" title={this.renderHeaderTitle()} />
+          <Content>{this.renderContent()}</Content>
+        </Layout>
+      </DocumentTitle>
     );
   }
 }

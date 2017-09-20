@@ -32,4 +32,4 @@ after_script:
 
 after_success:
   - npm run ci-publish || true
-  - curl "https://api.kotori.love/github/hook/pixiv?token=$PIXIV_DEPLOY_TOKEN"
+  - if [[ "$TRAVIS_BRANCH" == 'gh-pages' ]]; then curl "https://api.kotori.love/github/hook/pixiv?token=$PIXIV_DEPLOY_TOKEN" ; fi

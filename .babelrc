@@ -6,8 +6,10 @@
   ],
   "plugins": [
   	"transform-async-to-generator",
-  	"transform-decorators-legacy",
-    ["transform-runtime", {"polyfill": false, "regenerator": true}]
+    "transform-decorators-legacy",
+    ["transform-runtime", {"polyfill": false, "regenerator": true}],
+    "minify-dead-code-elimination",
+    "minify-guarded-expressions"
   ],
   "env": {
     "development": {
