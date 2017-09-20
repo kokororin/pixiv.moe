@@ -1,3 +1,4 @@
+/* eslint prefer-arrow-callback: 0 */
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
@@ -50,11 +51,11 @@ module.exports = {
     }),
     function() {
       this.plugin('done', function(statsData) {
-        let stats = statsData.toJson();
+        const stats = statsData.toJson();
         if (!stats.errors.length) {
-          let htmlFileName = '/../dist/index.html';
-          let htmlFilePath = path.join(__dirname, htmlFileName);
-          let html = fs.readFileSync(htmlFilePath, 'utf8');
+          const htmlFileName = '/../dist/index.html';
+          const htmlFilePath = path.join(__dirname, htmlFileName);
+          const html = fs.readFileSync(htmlFilePath, 'utf8');
 
           // let htmlOutput = html.replace(
           //   /<script\s+src=(["'])(.+?)bundle\.js\1/i,

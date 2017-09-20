@@ -8,6 +8,7 @@
     "predist": "npm run clean && npm run copy",
     "dist": "cross-env NODE_ENV=production webpack --progress --config build/webpack.config.js",
     "postdist": "copyfiles -f ./src/icons/*.ico ./src/icons/*.png ./dist/assets",
+    "archive": "cd dist && tar -czvf dist.tar.gz * --exclude=*.gz",
     "lint": "eslint --max-warnings 0 ./src",
     "lint:fix": "eslint --fix ./src",
     "posttest": "npm run lint",
@@ -15,7 +16,6 @@
     "test": "cross-env NODE_ENV=test karma start && npm run test:api",
     "test:watch": "cross-env NODE_ENV=test karma start --autoWatch=true --singleRun=false",
     "test:api": "cross-env NODE_ENV=test:mocha mocha --compilers js:babel-register --require babel-polyfill --timeout 30000 test/**/*.mocha.js",
-    "deploy": "gh-pages -d dist",
     "ci-publish": "ci-publish",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "check": "yarn upgrade-interactive"
@@ -62,7 +62,6 @@
     "expect": "^1.20.2",
     "fetch-mock": "^5.12.2",
     "file-loader": "^0.11.2",
-    "gh-pages": "^1.0.0",
     "glob": "^7.1.2",
     "html-minifier": "^3.5.3",
     "imports-loader": "^0.7.1",
