@@ -18,7 +18,7 @@ import DocumentTitle from 'react-document-title';
 import config from '@/config';
 
 import { IllustActions } from '@/actions';
-import { Alert, Comment, Loading, Message } from '@/components';
+import { Alert, Comment, InfiniteScroll, Loading, Message } from '@/components';
 import { LoginContainer } from '@/containers';
 import { cachedFetch, moment, Storage } from '@/utils';
 
@@ -159,23 +159,6 @@ export class IllustContainerWithoutStore extends React.Component {
     document.body.removeChild(link);
   }
 
-  @autobind
-  scrollListener(event) {
-    if (this.props.illust.isFetchingComments) {
-      return;
-    }
-    if (this.props.illust.isCommentsEnd) {
-      return;
-    }
-    const target = event.nativeEvent.target,
-      targetHeight = target.clientHeight,
-      scrollTop = target.scrollTop,
-      scrollHeight = target.scrollHeight;
-    if (scrollTop + targetHeight - scrollHeight > -200) {
-      this.props.dispatch(IllustActions.fetchComments(this.illustId));
-    }
-  }
-
   renderContent() {
     if (this.props.illust.isFetching) {
       return <Loading isHidden={false} />;
@@ -263,19 +246,26 @@ export class IllustContainerWithoutStore extends React.Component {
               </a>
             </p>
           </div>
-          <div styleName="comments">
-            {this.props.illust.comments.length === 0 ? (
-              <h4>コメントはありません</h4>
-            ) : (
-              <h4>コメント</h4>
-            )}
-            <List style={{ width: 'auto' }}>
-              {this.props.illust.comments.map(elem => {
-                return <Comment key={shortid.generate()} item={elem} />;
-              })}
-            </List>
-            <Loading isHidden={!this.props.illust.isFetchingComments} />
-          </div>
+          <InfiniteScroll
+            distance={200}
+            onLoadMore={() =>
+              this.props.dispatch(IllustActions.fetchComments(this.illustId))}
+            isLoading={this.props.illust.isFetchingComments}
+            hasMore={!this.props.illust.isCommentsEnd}>
+            <div styleName="comments">
+              {this.props.illust.comments.length === 0 ? (
+                <h4>コメントはありません</h4>
+              ) : (
+                <h4>コメント</h4>
+              )}
+              <List style={{ width: 'auto' }}>
+                {this.props.illust.comments.map(elem => {
+                  return <Comment key={shortid.generate()} item={elem} />;
+                })}
+              </List>
+              <Loading isHidden={!this.props.illust.isFetchingComments} />
+            </div>
+          </InfiniteScroll>
           <LoginContainer ref={ref => (this.loginRef = ref)} />
           <Alert ref={ref => (this.alertRef = ref)} />
         </div>

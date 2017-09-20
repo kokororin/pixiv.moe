@@ -15,7 +15,7 @@ import DocumentTitle from 'react-document-title';
 import config from '@/config';
 
 import { GalleryActions } from '@/actions';
-import { List, Loading, Refresh, Message } from '@/components';
+import { InfiniteScroll, List, Loading, Refresh, Message } from '@/components';
 import { scrollTo, Storage } from '@/utils';
 
 export class GalleryContainerWithoutStore extends React.Component {
@@ -47,23 +47,13 @@ export class GalleryContainerWithoutStore extends React.Component {
   }
 
   @autobind
-  scrollListener(event) {
+  onLoadMore() {
     if (this.drawerDOMNode.classList.contains('is-visible')) {
       return;
     }
 
-    if (this.props.gallery.isFetching) {
-      return;
-    }
-    const target = event.nativeEvent.target,
-      targetHeight = target.clientHeight,
-      scrollTop = target.scrollTop,
-      scrollHeight = target.scrollHeight;
-
-    if (scrollTop + targetHeight - scrollHeight > -200) {
-      if (this.props.gallery.errorTimes < 3) {
-        this.fetchSource(false);
-      }
+    if (this.props.gallery.errorTimes < 3) {
+      this.fetchSource(false);
     }
   }
 
@@ -175,10 +165,7 @@ export class GalleryContainerWithoutStore extends React.Component {
   render() {
     return (
       <DocumentTitle title={config.siteTitle}>
-        <Layout
-          ref={ref => (this.layoutRef = ref)}
-          fixedHeader
-          onScroll={this.scrollListener}>
+        <Layout ref={ref => (this.layoutRef = ref)} fixedHeader>
           <Header
             onClick={this.onHeaderClick}
             title={<span>{config.siteTitle}</span>}>
@@ -194,18 +181,28 @@ export class GalleryContainerWithoutStore extends React.Component {
           <Drawer title="タグ">
             <Navigation>{this.renderKeywords()}</Navigation>
           </Drawer>
-          <Content>
-            <div ref={ref => (this.rootRef = ref)} style={{ margin: '0 auto' }}>
-              <List items={this.props.gallery.items} />
-              <Loading isHidden={!this.props.gallery.isFetching} />
-              <Message
-                ref={ref => (this.errorRef = ref)}
-                text="読み込みに失敗しました"
-                isHidden={!this.props.gallery.isError}
-              />
-              <Refresh onClick={async () => await this.reRenderContent(true)} />
-            </div>
-          </Content>
+          <InfiniteScroll
+            distance={200}
+            onLoadMore={this.onLoadMore}
+            isLoading={this.props.gallery.isFetching}
+            hasMore>
+            <Content>
+              <div
+                ref={ref => (this.rootRef = ref)}
+                style={{ margin: '0 auto' }}>
+                <List items={this.props.gallery.items} />
+                <Loading isHidden={!this.props.gallery.isFetching} />
+                <Message
+                  ref={ref => (this.errorRef = ref)}
+                  text="読み込みに失敗しました"
+                  isHidden={!this.props.gallery.isError}
+                />
+                <Refresh
+                  onClick={async () => await this.reRenderContent(true)}
+                />
+              </div>
+            </Content>
+          </InfiniteScroll>
         </Layout>
       </DocumentTitle>
     );
