@@ -8,18 +8,13 @@ import ListItemContent from 'react-mdl/lib/List/ListItemContent';
 import { EmojiParser } from '@/utils';
 
 const Comment = ({ item }) => {
-  let passed = true;
-  Comment.badWords.forEach(badWord => {
+  for (const badWord of Comment.badWords) {
     if (
       typeof item.comment === 'string' &&
-      item.comment.indexOf(badWord) > -1
+      item.comment.toLowerCase().indexOf(badWord.toLowerCase()) > -1
     ) {
-      passed = false;
+      return null;
     }
-  });
-
-  if (!passed) {
-    return null;
   }
 
   return (
