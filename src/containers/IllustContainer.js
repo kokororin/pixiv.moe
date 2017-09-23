@@ -3,6 +3,7 @@ import styles from '@/styles/Illust.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import CSSModules from 'react-css-modules';
 import Layout from 'react-mdl/lib/Layout/Layout';
 import Header from 'react-mdl/lib/Layout/Header';
@@ -236,7 +237,14 @@ export class IllustContainerWithoutStore extends React.Component {
                 <span styleName="divide">{`${this.item.width}x${this.item
                   .height}`}</span>
                 {Array.isArray(this.item.tools) && (
-                  <span styleName="divide">{this.item.tools.join(' / ')}</span>
+                  <span
+                    styleName={classNames({
+                      divide:
+                        Array.isArray(this.item.tools) &&
+                        this.item.tools.length > 0
+                    })}>
+                    {this.item.tools.join(' / ')}
+                  </span>
                 )}
               </div>
             </div>
