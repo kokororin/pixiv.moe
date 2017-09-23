@@ -7,22 +7,55 @@ import ListItem from 'react-mdl/lib/List/ListItem';
 import ListItemContent from 'react-mdl/lib/List/ListItemContent';
 import { EmojiParser } from '@/utils';
 
-const Comment = ({ item }) => (
-  <ListItem>
-    <ListItemContent
-      avatar={
-        <img width={40} height={40} src={item.user.profile_image_urls.medium} />
-      }>
-      {item.user.name}
-      <span
-        styleName="comment-content"
-        dangerouslySetInnerHTML={{
-          __html: EmojiParser.parse(item.comment)
-        }}
-      />
-    </ListItemContent>
-  </ListItem>
-);
+const Comment = ({ item }) => {
+  let passed = true;
+  Comment.badWords.forEach(badWord => {
+    if (
+      typeof item.comment === 'string' &&
+      item.comment.indexOf(badWord) > -1
+    ) {
+      passed = false;
+    }
+  });
+
+  if (!passed) {
+    return null;
+  }
+
+  return (
+    <ListItem>
+      <ListItemContent
+        avatar={
+          <img
+            width={40}
+            height={40}
+            src={item.user.profile_image_urls.medium}
+          />
+        }>
+        {item.user.name}
+        <span
+          styleName="comment-content"
+          dangerouslySetInnerHTML={{
+            __html: EmojiParser.parse(item.comment)
+          }}
+        />
+      </ListItemContent>
+    </ListItem>
+  );
+};
+
+Comment.badWords = [
+  '墙',
+  'VPN',
+  '登上了',
+  'http',
+  'hosts',
+  '科学上网',
+  '撕逼',
+  '好酸',
+  '醋意',
+  'P站'
+];
 
 Comment.propTypes = {
   item: PropTypes.object
