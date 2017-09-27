@@ -53,6 +53,7 @@ export function fetchItem(illustId) {
       .then(data => {
         if (data.status === 'success') {
           if (
+            data.response.metadata !== null &&
             typeof data.response.metadata.zip_urls === 'object' &&
             data.response.metadata.zip_urls !== null
           ) {
@@ -69,6 +70,7 @@ export function fetchItem(illustId) {
                 dispatch(setFetchStatus(false));
               });
           } else {
+            dispatch(setItem(data.response));
             dispatch(setFetchStatus(false));
           }
         } else {

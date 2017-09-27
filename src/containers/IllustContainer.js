@@ -210,7 +210,14 @@ export class IllustContainerWithoutStore extends React.Component {
               this.item.caption
                 .replace(/(\r\n|\n\r|\r|\n)/g, '\n')
                 .split('\n')
-                .map(elem => <p key={shortid.generate()}>{elem}</p>)}
+                .map(elem => (
+                  <p
+                    key={shortid.generate()}
+                    dangerouslySetInnerHTML={{
+                      __html: elem
+                    }}
+                  />
+                ))}
           </div>
           <div styleName="tags">
             {this.item.tags.map(elem => {
