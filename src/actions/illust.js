@@ -1,7 +1,7 @@
 import namespacedTypes from 'namespaced-types';
 
 import config from '@/config';
-import { cachedFetch } from '@/utils';
+import { cachedFetch, getImagesFromZip } from '@/utils';
 
 export const types = namespacedTypes('illust', [
   'SET_ITEM',
@@ -52,13 +52,28 @@ export function fetchItem(illustId) {
     })
       .then(data => {
         if (data.status === 'success') {
-          dispatch(setItem(data.response));
+          if (
+            typeof data.response.metadata.zip_urls === 'object' &&
+            data.response.metadata.zip_urls !== null
+          ) {
+            const zipURL =
+              data.response.metadata.zip_urls[
+                Object.keys(data.response.metadata.zip_urls)[0]
+              ];
+            getImagesFromZip(zipURL)
+              .then(images => {
+                data.response.metadata.zip_images = images;
+                dispatch(setItem(data.response));
+              })
+              .then(() => {
+                dispatch(setFetchStatus(false));
+              });
+          } else {
+            dispatch(setFetchStatus(false));
+          }
         } else {
           dispatch(setFetchError(true));
         }
-      })
-      .then(() => {
-        dispatch(setFetchStatus(false));
       })
       .catch(() => {
         dispatch(setFetchStatus(false));

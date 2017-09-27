@@ -1,5 +1,6 @@
 export Alert from '@/components/Alert';
 export Comment from '@/components/Comment';
+export GifPlayer from '@/components/GifPlayer';
 export InfiniteScroll from '@/components/InfiniteScroll';
 export Item from '@/components/Item';
 export List from '@/components/List';

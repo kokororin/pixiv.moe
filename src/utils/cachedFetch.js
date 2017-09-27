@@ -88,7 +88,11 @@ export default function cachedFetch(url, options = {}) {
               }
             });
         }
-        resolve(response.json());
+        if (options.blob === true) {
+          resolve(response.blob());
+        } else {
+          resolve(response.json());
+        }
       }
       reject(new Error('response is not OK'));
     });

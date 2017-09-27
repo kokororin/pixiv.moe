@@ -19,7 +19,14 @@ import DocumentTitle from 'react-document-title';
 import config from '@/config';
 
 import { IllustActions } from '@/actions';
-import { Alert, Comment, InfiniteScroll, Loading, Message } from '@/components';
+import {
+  Alert,
+  Comment,
+  GifPlayer,
+  InfiniteScroll,
+  Loading,
+  Message
+} from '@/components';
 import { LoginContainer } from '@/containers';
 import { cachedFetch, moment, Storage } from '@/utils';
 
@@ -161,10 +168,7 @@ export class IllustContainerWithoutStore extends React.Component {
   }
 
   renderImage() {
-    if (
-      this.item.metadata === null ||
-      typeof this.item.metadata.zip_urls === 'object'
-    ) {
+    if (this.item.metadata === null) {
       return (
         <Img
           src={[this.item.image_urls.large, this.item.image_urls.px_480mw]}
@@ -183,6 +187,10 @@ export class IllustContainerWithoutStore extends React.Component {
           />
         );
       });
+    }
+
+    if (Array.isArray(this.item.metadata.zip_images)) {
+      return <GifPlayer images={this.item.metadata.zip_images} />;
     }
   }
 
