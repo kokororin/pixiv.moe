@@ -160,6 +160,32 @@ export class IllustContainerWithoutStore extends React.Component {
     document.body.removeChild(link);
   }
 
+  renderImage() {
+    if (
+      this.item.metadata === null ||
+      typeof this.item.metadata.zip_urls === 'object'
+    ) {
+      return (
+        <Img
+          src={[this.item.image_urls.large, this.item.image_urls.px_480mw]}
+          loader={<Loading isHidden={false} />}
+        />
+      );
+    }
+
+    if (Array.isArray(this.item.metadata.pages)) {
+      return this.item.metadata.pages.map(elem => {
+        return (
+          <Img
+            key={shortid.generate()}
+            src={[elem.image_urls.large, elem.image_urls.px_480mw]}
+            loader={<Loading isHidden={false} />}
+          />
+        );
+      });
+    }
+  }
+
   renderContent() {
     if (this.props.illust.isFetching) {
       return <Loading isHidden={false} />;
@@ -170,27 +196,7 @@ export class IllustContainerWithoutStore extends React.Component {
     try {
       return (
         <div styleName="illust">
-          <div styleName="image">
-            {this.item.metadata === null ? (
-              <Img
-                src={[
-                  this.item.image_urls.large,
-                  this.item.image_urls.px_480mw
-                ]}
-                loader={<Loading isHidden={false} />}
-              />
-            ) : (
-              this.item.metadata.pages.map(elem => {
-                return (
-                  <Img
-                    key={shortid.generate()}
-                    src={[elem.image_urls.large, elem.image_urls.px_480mw]}
-                    loader={<Loading isHidden={false} />}
-                  />
-                );
-              })
-            )}
-          </div>
+          <div styleName="image">{this.renderImage()}</div>
           <div styleName="caption">
             {typeof this.item.caption === 'string' &&
               this.item.caption
