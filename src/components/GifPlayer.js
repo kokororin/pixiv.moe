@@ -8,10 +8,6 @@ export default class GifPlayer extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      index: -1
-    };
   }
 
   componentDidMount() {
@@ -24,17 +20,24 @@ export default class GifPlayer extends React.Component {
 
   timer = null;
   isPlaying = false;
+  index = -1;
 
   play() {
     if (!this.isPlaying) {
       this.timer = setInterval(() => {
-        let index = this.state.index;
-        if (index < 0 || index + 1 >= this.props.images.length) {
-          index = 0;
+        if (this.index < 0 || this.index + 1 >= this.props.images.length) {
+          this.index = 0;
         } else {
-          index++;
+          this.index++;
         }
-        this.setState({ index });
+        const ctx = this.canvasRef.getContext('2d');
+        const img = document.createElement('img');
+        img.onload = () => {
+          this.canvasRef.width = img.width;
+          this.canvasRef.height = img.height;
+          ctx.drawImage(img, 0, 0);
+        };
+        img.src = this.props.images[this.index];
       }, 80);
       this.isPlaying = true;
     }
@@ -58,10 +61,7 @@ export default class GifPlayer extends React.Component {
 
   render() {
     return (
-      <img
-        onClick={this.onImageClick}
-        src={this.state.index < 0 ? '' : this.props.images[this.state.index]}
-      />
+      <canvas ref={ref => (this.canvasRef = ref)} onClick={this.onImageClick} />
     );
   }
 }

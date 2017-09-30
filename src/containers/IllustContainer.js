@@ -1,7 +1,6 @@
 import styles from '@/styles/Illust.scss';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import CSSModules from 'react-css-modules';
@@ -39,8 +38,6 @@ export class IllustContainerWithoutStore extends React.Component {
   }
 
   componentDidMount() {
-    this.layoutDOMNode = ReactDOM.findDOMNode(this.layoutRef);
-
     if (!this.item.id) {
       this.props.dispatch(IllustActions.fetchItem(this.illustId));
     }
@@ -308,11 +305,7 @@ export class IllustContainerWithoutStore extends React.Component {
     return (
       <DocumentTitle
         title={this.item.title === '' ? config.siteTitle : this.item.title}>
-        <Layout
-          fixedHeader
-          id="illust-layout"
-          ref={ref => (this.layoutRef = ref)}
-          onScroll={this.scrollListener}>
+        <Layout fixedHeader id="illust-layout" onScroll={this.scrollListener}>
           <Header id="illust-title" title={this.renderHeaderTitle()} />
           <Content>{this.renderContent()}</Content>
         </Layout>
