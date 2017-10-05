@@ -1,6 +1,6 @@
 {
   "name": "pixiv.moe",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Source code of https://pixiv.moe",
   "scripts": {
     "clean": "rimraf dist/*",

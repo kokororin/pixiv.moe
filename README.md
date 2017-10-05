@@ -541,5 +541,16 @@ curl 'https://api.pixiv.moe/v1/favourite/46453302' \
 ## Contribute
 Feel free to contribute (PR-s and issues welcomed).
 
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+| [<img src="https://avatars0.githubusercontent.com/u/10093992?v=4" width="100px;"/><br /><sub>そらヽ(･ω･ゞ)</sub>](http://kokororin.github.io)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Code") [📖](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Documentation") [🎨](#design-kokororin "Design") [⚠️](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Tests") | [<img src="https://avatars0.githubusercontent.com/u/12712012?v=4" width="100px;"/><br /><sub>吟夢ちゃん</sub>](https://kirainmoe.com/)<br />[🐛](https://github.com/LoveLiveSunshine/pixiv.moe/issues?q=author%3Akirainmoe "Bug reports") [💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kirainmoe "Code") [🤔](#ideas-kirainmoe "Ideas, Planning, & Feedback") |
+| :---: | :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
+
 ## License
 [MIT license](http://opensource.org/licenses/mit-license.php)
