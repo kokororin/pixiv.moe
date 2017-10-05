@@ -21,6 +21,7 @@ Table of Contents
      * [Commands](#commands)
      * [API](#api)
   * [Contribute](#contribute)
+  * [Contributors](#contributors)
   * [License](#license)
 
 
