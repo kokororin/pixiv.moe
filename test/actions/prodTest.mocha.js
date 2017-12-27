@@ -30,9 +30,7 @@ describe('prod', () => {
       return document.title;
     });
 
-    for (const keyword of config.keywords) {
-      expect(title).to.equal('ラブライブ性転換詰');
-    }
+    expect(title).to.equal('ラブライブ性転換詰');
 
     await browser.close();
   });

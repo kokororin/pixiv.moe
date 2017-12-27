@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { hashStr } from '@/utils';
 
 describe('hashStr', () => {

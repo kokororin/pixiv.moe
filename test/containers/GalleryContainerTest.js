@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import createComponent from '../helpers/shallowRenderHelper';
 
 import { GalleryContainerWithoutStore } from '@/containers';

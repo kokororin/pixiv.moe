@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { moment } from '@/utils';
 
 describe('moment', () => {

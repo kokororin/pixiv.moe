@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import gallery from '@/reducers/gallery';
 
 describe('GalleryReducer', () => {

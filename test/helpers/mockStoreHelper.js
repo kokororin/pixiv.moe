@@ -1,4 +1,4 @@
-import expect from 'expect';
+import { expect } from 'chai';
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
@@ -22,7 +22,7 @@ export default function mockStore(getState, expectedActions, done) {
         const expectedAction = expectedActions.shift();
 
         try {
-          expect(action).toEqual(expectedAction);
+          expect(action).to.deep.equal(expectedAction);
           if (done && !expectedActions.length) {
             done();
           }

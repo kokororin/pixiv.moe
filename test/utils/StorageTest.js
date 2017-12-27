@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { Storage } from '@/utils';
 
 describe('Storage', () => {

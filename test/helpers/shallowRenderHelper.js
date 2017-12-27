@@ -6,7 +6,6 @@
  * @author somonsmith
  */
 import React from 'react';
-import TestUtils from 'react-dom/test-utils';
 import shallow from 'react-test-renderer/shallow';
 
 /**

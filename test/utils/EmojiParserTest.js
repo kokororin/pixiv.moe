@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { EmojiParser } from '@/utils';
 
 describe('EmojiParser', () => {
