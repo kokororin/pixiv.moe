@@ -15,7 +15,6 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --progress --config build/webpack.config.js",
     "test": "cross-env NODE_ENV=test karma start",
     "test:watch": "cross-env NODE_ENV=test karma start --autoWatch=true --singleRun=false",
-    "test:mocha": "cross-env NODE_ENV=test:mocha mocha --compilers js:babel-register --require babel-polyfill --timeout 30000 test/**/*.mocha.js",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "check": "yarn upgrade-interactive"
   },

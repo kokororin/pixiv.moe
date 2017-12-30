@@ -21,12 +21,6 @@
       "plugins": [
         ["transform-react-remove-prop-types", {"removeImport": true}]
       ]
-    },
-    "test:mocha": {
-      "presets": [
-        "env",
-        "stage-0"
-      ]
     }
   }
 }
