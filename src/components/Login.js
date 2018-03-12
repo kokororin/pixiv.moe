@@ -29,6 +29,8 @@ export default class Login extends React.Component {
       username: '',
       password: ''
     };
+
+    Modal.setAppElement('#app');
   }
 
   componentDidMount() {

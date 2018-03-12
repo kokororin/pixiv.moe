@@ -13,6 +13,8 @@ export default class Alert extends React.Component {
       isHidden: true,
       content: ''
     };
+
+    Modal.setAppElement('#app');
   }
 
   @autobind
