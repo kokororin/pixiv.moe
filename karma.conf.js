@@ -6,7 +6,13 @@ process.env.CHROME_BIN = require('puppeteer').executablePath();
 module.exports = function(config) {
   const configuration = {
     basePath: '',
-    browsers: ['ChromeHeadless'],
+    browsers: ['KarmaChromeHeadless'],
+    customLaunchers: {
+      KarmaChromeHeadless: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
     files: ['test/loadtests.js'],
     port: 3003,
     captureTimeout: 60000,
