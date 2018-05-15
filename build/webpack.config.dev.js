@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
@@ -37,6 +38,11 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"development"'
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '/../src/index.ejs'),
+      inject: 'body',
+      minify: false
     }),
     new OpenBrowserPlugin({ url: 'http://localhost:23333' }),
     new webpack.HotModuleReplacementPlugin(),

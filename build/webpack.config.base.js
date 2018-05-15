@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = {
   output: {
     path: path.join(__dirname, '/../dist'),
-    filename: 'bundle.js',
+    filename: process.env.NODE_ENV === 'production' ? 'app.[hash].js' : 'app.js',
     publicPath: '/'
   },
   resolve: {

@@ -1,8 +1,9 @@
 /* eslint prefer-arrow-callback: 0 */
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
-const minify = require('html-minifier').minify;
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 const OptimizeJsPlugin = require('optimize-js-plugin');
@@ -43,99 +44,35 @@ module.exports = {
     new OptimizeJsPlugin({
       sourceMap: false
     }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '/../src/index.ejs'),
+      inject: true,
+      hash: false,
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeAttributeQuotes: false,
+        minifyJS: true,
+        minifyCSS: true,
+        processConditionalComments: true
+      }
+    }),
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'pixiv-moe-app',
+      filename: 'service-worker.js',
+      minify: true,
+      navigateFallback: '/index.html',
+      navigateFallbackWhitelist: [/^(?!\/__).*/],
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
+    }),
+    new ManifestPlugin({
+      fileName: 'asset-manifest.json'
+    }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       reportFilename: path.join(__dirname, '/../dist/report.html'),
       openAnalyzer: false,
       generateStatsFile: false
-    }),
-    function() {
-      this.plugin('done', function(statsData) {
-        const stats = statsData.toJson();
-        if (!stats.errors.length) {
-          const htmlFileName = '/../dist/index.html';
-          const htmlFilePath = path.join(__dirname, htmlFileName);
-          const html = fs.readFileSync(htmlFilePath, 'utf8');
-
-          // let htmlOutput = html.replace(
-          //   /<script\s+src=(["'])(.+?)bundle\.js\1/i,
-          //   '<script src=$1$2' + stats.assetsByChunkName.main + '?' + stats.hash + '$1');
-
-          let htmlOutput = html.replace(
-            /<script\s+src=(["'])(.+?)bundle\.js(.*)<\/script>/i,
-            `<script type="text/javascript">
-(function(hash, src, localStorage, document, window) {
-  var createScript = function(url) {
-    var script = document.createElement("script");
-    script.setAttribute("src", url);
-    document.body.appendChild(script);
-  };
-
-  var runScript = function(code) {
-    if (window.execScript) {
-      window.execScript(code);
-    } else {
-      var head = document.head;
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.text = code;
-      head.removeChild(head.appendChild(script));
-    }
-  };
-
-  if (localStorage) {
-    if (localStorage.bundle && localStorage.hash == hash) {
-      runScript(localStorage.bundle);
-    } else {
-      var xhr = new XMLHttpRequest;
-      xhr.open("GET", src, true);
-      xhr.onprogress = function(event) {
-        if (event.lengthComputable) {
-          var loading = document.getElementById('index-loading');
-          var progress = loading.getElementsByClassName('progress')[0];
-          var progressNumber = (event.loaded / event.total) * 100;
-          progress.innerHTML = progressNumber.toFixed(0) + '%';
-        }
-      };
-      xhr.onload = function() {
-        var res = xhr.responseText;
-        if (res && res.match(/^!/)) {
-          localStorage.bundle = res;
-          runScript(localStorage.bundle);
-          localStorage.hash = hash;
-        } else {
-          createScript(src);
-        }
-      };
-      xhr.send();
-    }
-  } else {
-    createScript(src);
-  }
-})("${stats.hash}", "$2${stats.assetsByChunkName
-              .main}?${stats.hash}", window.localStorage, document, window);
-</script>`
-          );
-
-          htmlOutput = minify(htmlOutput, {
-            collapseWhitespace: true,
-            removeComments: true,
-            minifyJS: true,
-            minifyCSS: true,
-            processConditionalComments: true
-          });
-
-          fs.writeFileSync(htmlFilePath, htmlOutput);
-          fs.writeFileSync(
-            htmlFilePath.replace('index.html', '404.html'),
-            htmlOutput
-          );
-          fs.writeFileSync(
-            htmlFilePath.replace('index.html', '.gitignore'),
-            'report.html'
-          );
-        }
-      });
-    }
+    })
   ]
 };
