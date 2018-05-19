@@ -3,6 +3,7 @@ import styles from '@/styles/Illust.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import Img from 'react-image';
 import ListItem from 'react-mdl/lib/List/ListItem';
 import ListItemContent from 'react-mdl/lib/List/ListItemContent';
 import { EmojiParser } from '@/utils';
@@ -21,11 +22,14 @@ const Comment = ({ item }) => {
     <ListItem>
       <ListItemContent
         avatar={
-          <img
-            width={40}
-            height={40}
-            src={item.user.profile_image_urls.medium}
-          />
+          <div>
+            <Img
+              src={[item.user.profile_image_urls.medium]}
+              loader={
+                <img src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" />
+              }
+            />
+          </div>
         }>
         {item.user.name}
         <span

@@ -1,6 +1,7 @@
 :global {
   .mdl-layout {
-    .mdl-layout__drawer-button, a.mdl-navigation__link {
+    .mdl-layout__drawer-button,
+    a.mdl-navigation__link {
       outline: 0 none;
     }
   }
@@ -20,10 +21,19 @@
   .mdl-navigation {
     .nav-link__ranking {
       color: #ef5350 !important;
-      border-bottom: 1px solid rgba(0, 0, 0, .12);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     }
     .nav-link__sunshine {
-      border-top: 1px solid rgba(0, 0, 0, .12);
+      border-top: 1px solid rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  .mdl-list__item-avatar {
+    background: #fff;
+    img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
     }
   }
 }
