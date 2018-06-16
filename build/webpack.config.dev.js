@@ -30,7 +30,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: ['react-hot-loader/webpack', 'babel-loader'],
+        loader: ['babel-loader'],
         include: path.join(__dirname, '/../src')
       }
     ]
