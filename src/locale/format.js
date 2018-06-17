@@ -1,9 +1,6 @@
 import { injectIntl, intlShape } from 'react-intl';
 
-const ChildComponent = ({ intl, id, values }) => {
-  const message = intl.formatMessage({ id }, values);
-  return message;
-};
+const ChildComponent = ({ intl, id, values }) => intl.formatMessage({ id }, values);
 
 ChildComponent.propTypes = {
   intl: intlShape.isRequired

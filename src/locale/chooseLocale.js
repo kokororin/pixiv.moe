@@ -7,7 +7,7 @@ const chooseLocale = (language) => {
     // case 'zh':
     // return 'zh_CN';
     default:
-		  addLocaleData(jaLocaleData);
+      addLocaleData(jaLocaleData);
       return { lang: 'ja', message: ja };
   }
 };
