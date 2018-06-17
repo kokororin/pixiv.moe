@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class InfiniteScroll extends React.Component {
-  static scrollingClassName = 'mdl-layout__content';
-
   static propTypes = {
     distance: PropTypes.number.isRequired,
     onLoadMore: PropTypes.func.isRequired,
     hasMore: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired
   };
+
+  static scrollingClassName = 'mdl-layout__content';
 
   constructor(props) {
     super(props);
