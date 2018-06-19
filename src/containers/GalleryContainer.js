@@ -11,6 +11,7 @@ import Content from 'react-mdl/lib/Layout/Content';
 import Icon from 'react-mdl/lib/Icon';
 import shortid from 'shortid';
 import DocumentTitle from 'react-document-title';
+import { injectIntl } from 'react-intl';
 
 import config from '@/config';
 
@@ -18,6 +19,7 @@ import { GalleryActions } from '@/actions';
 import { InfiniteScroll, List, Loading, Refresh, Message } from '@/components';
 import { scrollTo, Storage } from '@/utils';
 
+@injectIntl
 export class GalleryContainerWithoutStore extends React.Component {
   constructor(props) {
     super(props);
@@ -178,7 +180,7 @@ export class GalleryContainerWithoutStore extends React.Component {
               </a>
             </Navigation>
           </Header>
-          <Drawer title="タグ">
+          <Drawer title={this.props.intl.formatMessage({ id: 'Tags' })}>
             <Navigation>{this.renderKeywords()}</Navigation>
           </Drawer>
           <InfiniteScroll
@@ -194,7 +196,7 @@ export class GalleryContainerWithoutStore extends React.Component {
                 <Loading isHidden={!this.props.gallery.isFetching} />
                 <Message
                   ref={ref => (this.errorRef = ref)}
-                  text="読み込みに失敗しました"
+                  text={this.props.intl.formatMessage({ id: 'Failed to Load' })}
                   isHidden={!this.props.gallery.isError}
                 />
                 <Refresh

@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 
 import { Message } from '@/components';
 
+@injectIntl
 export default class RedirectContainer extends React.Component {
   static propTypes = {
     illustId: PropTypes.string
@@ -38,7 +40,11 @@ export default class RedirectContainer extends React.Component {
         {this.state.isError ? (
           <Message />
         ) : (
-          <Message text="あなたはpixiv.netへリダイレクトしています" />
+          <Message
+            text={this.props.intl.formatMessage({
+              id: 'Redirecting to pixiv.net'
+            })}
+          />
         )}
       </div>
     );

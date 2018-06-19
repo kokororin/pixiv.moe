@@ -60,4 +60,5 @@ Comment.propTypes = {
   item: PropTypes.object
 };
 
+// eslint-disable-next-line babel/new-cap
 export default CSSModules(Comment, styles, { allowMultiple: true });

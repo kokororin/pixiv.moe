@@ -1,11 +1,12 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
 
 import { Alert, Login } from '@/components';
-import { cachedFetch, moment, Storage } from '@/utils';
+import { cachedFetch, moment, Storage, withRef } from '@/utils';
 
 import config from '@/config';
 
-export default class LoginContainer extends React.Component {
+class LoginContainer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -30,22 +31,25 @@ export default class LoginContainer extends React.Component {
   @autobind
   onKeydown(event) {
     if (event.keyCode === 27) {
-      this.loginRef.close();
+      this.loginRef.getRef().close();
     }
 
-    if (this.loginRef.state.isHidden === false && event.keyCode === 13) {
+    if (
+      this.loginRef.getRef().state.isHidden === false &&
+      event.keyCode === 13
+    ) {
       this.onLoginClick();
     }
   }
 
   @autobind
   open() {
-    this.loginRef.open();
+    this.loginRef.getRef().open();
   }
 
   @autobind
   close() {
-    this.loginRef.close();
+    this.loginRef.getRef().close();
   }
 
   @autobind
@@ -55,18 +59,28 @@ export default class LoginContainer extends React.Component {
     }
 
     if (!Storage.isSupport()) {
-      return this.alertRef.setContent('localStorageをサポートしていないブラウザ');
+      return this.alertRef.setContent(
+        this.props.intl.formatMessage({
+          id: 'Web Browser does not support localStorage'
+        })
+      );
     }
 
-    const username = this.loginRef.getUsername();
-    const password = this.loginRef.getPassword();
+    const username = this.loginRef.getRef().getUsername();
+    const password = this.loginRef.getRef().getPassword();
 
     if (username === '') {
-      return this.alertRef.setContent('pixiv ID、またはメールアドレスが未記入です');
+      return this.alertRef.setContent(
+        this.props.intl.formatMessage({
+          id: 'pixiv ID or Email Address is Blank'
+        })
+      );
     }
 
     if (password === '') {
-      return this.alertRef.setContent('パスワードが未記入です');
+      return this.alertRef.setContent(
+        this.props.intl.formatMessage({ id: 'Password is Blank' })
+      );
     }
 
     this.setState({
@@ -97,8 +111,8 @@ export default class LoginContainer extends React.Component {
           });
           setTimeout(() => {
             this.close();
-            this.loginRef.setUsername('');
-            this.loginRef.setPassword('');
+            this.loginRef.getRef().setUsername('');
+            this.loginRef.getRef().setPassword('');
           }, 1500);
         } else {
           this.alertRef.setContent(data.message);
@@ -113,8 +127,9 @@ export default class LoginContainer extends React.Component {
         this.setState({
           isSubmitting: false
         });
-        // text from SIF
-        this.alertRef.setContent('通信エラーが発生しました');
+        this.alertRef.setContent(
+          this.props.intl.formatMessage({ id: 'Communication Error Occurred' })
+        );
       });
   }
 
@@ -141,3 +156,5 @@ export default class LoginContainer extends React.Component {
     );
   }
 }
+
+export default withRef(LoginContainer, injectIntl);

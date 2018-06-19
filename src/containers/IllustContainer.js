@@ -14,6 +14,7 @@ import { List } from 'react-mdl/lib/List';
 import shortid from 'shortid';
 import Img from 'react-image';
 import DocumentTitle from 'react-document-title';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import config from '@/config';
 
@@ -29,6 +30,7 @@ import {
 import { LoginContainer } from '@/containers';
 import { cachedFetch, moment, Storage } from '@/utils';
 
+@injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export class IllustContainerWithoutStore extends React.Component {
   constructor(props) {
@@ -94,7 +96,7 @@ export class IllustContainerWithoutStore extends React.Component {
   onFavouriteClick(event) {
     const authData = Storage.get('auth');
     if (authData === null || authData.expires_at < moment().unix()) {
-      return this.loginRef.open();
+      return this.loginRef.getRef().open();
     }
     const target = event.nativeEvent.target,
       body = document.body;
@@ -121,8 +123,9 @@ export class IllustContainerWithoutStore extends React.Component {
       .catch(() => {
         target.classList.remove('fn-wait');
         body.classList.remove('fn-wait');
-        // text from SIF
-        this.alertRef.setContent('通信エラーが発生しました');
+        this.alertRef.setContent(
+          this.props.intl.formatMessage({ id: 'Communication Error Occurred' })
+        );
       });
   }
 
@@ -196,7 +199,12 @@ export class IllustContainerWithoutStore extends React.Component {
       return <Loading isHidden={false} />;
     }
     if (this.props.illust.isError) {
-      return <Message isHidden={false} text="エラーが発生しました" />;
+      return (
+        <Message
+          isHidden={false}
+          text={this.props.intl.formatMessage({ id: 'An Error Occurred' })}
+        />
+      );
     }
     try {
       return (
@@ -230,13 +238,13 @@ export class IllustContainerWithoutStore extends React.Component {
           </div>
           <div styleName="actions">
             <Button raised ripple onClick={this.onFavouriteClick}>
-              ブックマークに追加
+              <FormattedMessage id="Add to Bookmarks" />
             </Button>
             <Button raised ripple onClick={this.onDownloadClick}>
-              ダウンロード
+              <FormattedMessage id="Download" />
             </Button>
             <Button raised ripple onClick={this.onTwitterClick}>
-              ツイート
+              <FormattedMessage id="Tweet" />
             </Button>
           </div>
           <div styleName="detail">
@@ -252,8 +260,9 @@ export class IllustContainerWithoutStore extends React.Component {
                 {`${moment(this.item.created_time).format('LLL')}(JST)`}
               </time>
               <div styleName="metas">
-                <span styleName="divide">{`${this.item.width}x${this.item
-                  .height}`}</span>
+                <span styleName="divide">{`${this.item.width}x${
+                  this.item.height
+                }`}</span>
                 {Array.isArray(this.item.tools) && (
                   <span
                     styleName={classNames({
@@ -268,22 +277,27 @@ export class IllustContainerWithoutStore extends React.Component {
             </div>
             <p>
               <a target="_blank" href={`/${this.item.id}`}>
-                pixivにリダイレクトする
+                <FormattedMessage id="Redirect to pixiv" />
               </a>
             </p>
           </div>
           <InfiniteScroll
             distance={200}
             onLoadMore={() =>
-              this.props.dispatch(IllustActions.fetchComments(this.illustId))}
+              this.props.dispatch(IllustActions.fetchComments(this.illustId))
+            }
             isLoading={this.props.illust.isFetchingComments}
             hasMore={!this.props.illust.isCommentsEnd}>
             <div styleName="comments">
-              {this.props.illust.comments.length === 0 ? (
-                <h4>コメントはありません</h4>
-              ) : (
-                <h4>コメント</h4>
-              )}
+              <h4>
+                <FormattedMessage
+                  id={
+                    this.props.illust.comments.length === 0
+                      ? 'No Comments'
+                      : 'Comments'
+                  }
+                />
+              </h4>
               <List style={{ width: 'auto' }}>
                 {this.props.illust.comments.map(elem => {
                   return <Comment key={shortid.generate()} item={elem} />;
@@ -297,7 +311,12 @@ export class IllustContainerWithoutStore extends React.Component {
         </div>
       );
     } catch (e) {
-      return <Message isHidden={false} text="エラーが発生しました" />;
+      return (
+        <Message
+          isHidden={false}
+          text={this.props.intl.formatMessage({ id: 'An Error Occurred' })}
+        />
+      );
     }
   }
 

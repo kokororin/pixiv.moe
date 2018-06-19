@@ -3,17 +3,17 @@ import styles from '@/styles/Message.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
+import { FormattedMessage } from 'react-intl';
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Message extends React.Component {
-  static defaultProps = {
-    isHidden: false,
-    text: 'エラーが発生しました。URLを確認するか、しばらく時間を置いて再度アクセスしてください。'
-  };
-
   static propTypes = {
     isHidden: PropTypes.bool,
     text: PropTypes.string
+  };
+
+  static defaultProps = {
+    isHidden: false
   };
 
   constructor(props) {
@@ -23,7 +23,13 @@ export default class Message extends React.Component {
   render() {
     return this.props.isHidden ? null : (
       <div styleName="message">
-        <p>{this.props.text}</p>
+        <p>
+          {this.props.text ? (
+            this.props.text
+          ) : (
+            <FormattedMessage id="An error occurred. Check the URL or wait for a while and access again." />
+          )}
+        </p>
       </div>
     );
   }
