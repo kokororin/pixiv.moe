@@ -1,16 +1,18 @@
-import React from 'react';
 import { chooseLocale } from '@/locale';
-import ReactDOMServer from 'react-dom/server';
-import { injectIntl, intlShape, IntlProvider } from 'react-intl';
-
-const ChildComponent = ({ intl, id, value }) => intl.formatMessage({ id }, value);
-
-ChildComponent.propTypes = { intl: intlShape.isRequired };
-
-const FormatMessage = injectIntl(ChildComponent);
 
 const lang = chooseLocale();
 
 // TODO: Centrilized language manager, a store system
 
-export default (id, value) => ReactDOMServer.renderToStaticMarkup(<IntlProvider locale={lang.lang} messages={lang.message}><FormatMessage id={id} value={value} /></IntlProvider>);
+export default (id, values) => {
+  if (lang.message[id] === undefined) {
+    console.warn(`Translation for id: ${id} at ${lang.lang} does not exsit`);
+  }
+  let message = lang.message[id] || id;
+  for (const value in values) {
+    if (values.hasOwnProperty(value)) {
+      message = message.split(`{${value}}`).join(values[value]);
+    }
+  }
+  return message;
+};
