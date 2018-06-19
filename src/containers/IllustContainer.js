@@ -270,7 +270,7 @@ export class IllustContainerWithoutStore extends React.Component {
             </div>
             <p>
               <a target="_blank" href={`/${this.item.id}`}>
-                pixivにリダイレクトする
+                {translate('pixivにリダイレクトする')}
               </a>
             </p>
           </div>
@@ -282,9 +282,9 @@ export class IllustContainerWithoutStore extends React.Component {
             hasMore={!this.props.illust.isCommentsEnd}>
             <div styleName="comments">
               {this.props.illust.comments.length === 0 ? (
-                <h4>コメントはありません</h4>
+                <h4>{translate('コメントはありません')}</h4>
               ) : (
-                <h4>コメント</h4>
+                <h4>{translate('コメント')}</h4>
               )}
               <List style={{ width: 'auto' }}>
                 {this.props.illust.comments.map(elem => {
