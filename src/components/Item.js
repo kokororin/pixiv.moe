@@ -50,7 +50,7 @@ export default class Item extends React.Component {
     }
     return (
       <span styleName="rank-text-outer">
-        {icon} <FormatMessage id="前日x位" values={{rank: this.props.item.previous_rank}} />
+        {icon} <FormatMessage id="前日x位" value={{rank: this.props.item.previous_rank}} />
       </span>
     );
   }
@@ -70,7 +70,7 @@ export default class Item extends React.Component {
             <span>{this.props.item.work.title}</span>
           </div>
           <div styleName="meta">
-            <span styleName="rank-num">{`${this.props.item.rank}位`}</span>
+            <span styleName="rank-num"><FormatMessage id="x位" value={{rank: this.props.item.rank}} /></span>
             <span>{this.renderRankText()}</span>
           </div>
         </Link>
