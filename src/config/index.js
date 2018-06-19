@@ -1,4 +1,4 @@
-import { formatString } from '@/locale';
+import { translate } from '@/locale';
 
 export default {
   apiBaseURL: 'https://api.pixiv.moe/v1',
@@ -14,7 +14,7 @@ export default {
   piwikDomain: 'analytics.kotori.love',
   piwikSiteId: '2PMEnB',
   projectLink: 'https://github.com/LoveLiveSunshine/pixiv.moe',
-  siteTitle: formatString('siteTitle'),
+  siteTitle: translate('siteTitle'),
   keywords: [
     {
       en: 'ranking',
