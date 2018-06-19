@@ -63,12 +63,12 @@ A: Pixiv change the `REFRESH TOKEN` auth method, so re-login with refresh_token 
 # Start for development
 $ git clone https://github.com/LoveLiveSunshine/pixiv.moe
 $ cd pixiv.moe
-$ npm install
+$ yarn
 $ npm start
 ```
 
 ### Commands
-- Install dependencies: `npm install`
+- Install dependencies: `yarn`
 - Run: `npm start`
 - Test: `npm test`
 - Build: `npm run dist`
