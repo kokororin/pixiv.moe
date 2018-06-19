@@ -29,6 +29,8 @@ import {
 import { LoginContainer } from '@/containers';
 import { cachedFetch, moment, Storage } from '@/utils';
 
+import { translate } from '@/locale';
+
 @CSSModules(styles, { allowMultiple: true })
 export class IllustContainerWithoutStore extends React.Component {
   constructor(props) {
@@ -230,13 +232,13 @@ export class IllustContainerWithoutStore extends React.Component {
           </div>
           <div styleName="actions">
             <Button raised ripple onClick={this.onFavouriteClick}>
-              ブックマークに追加
+              {translate('ブックマークに追加')}
             </Button>
             <Button raised ripple onClick={this.onDownloadClick}>
-              ダウンロード
+              {translate('ダウンロード')}
             </Button>
             <Button raised ripple onClick={this.onTwitterClick}>
-              ツイート
+              {translate('ツイート')}
             </Button>
           </div>
           <div styleName="detail">
