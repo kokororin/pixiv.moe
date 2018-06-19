@@ -9,7 +9,7 @@ ChildComponent.propTypes = { intl: intlShape.isRequired };
 
 const FormatMessage = injectIntl(ChildComponent);
 
-const lang = chooseLocale(navigator.language);
+const lang = chooseLocale();
 
 // TODO: Centrilized language manager, a store system
 
