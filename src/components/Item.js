@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { Link } from 'react-router-dom';
 import Icon from 'react-mdl/lib/Icon';
+import { FormatMessage } from '@/locale';
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Item extends React.Component {
@@ -39,7 +40,7 @@ export default class Item extends React.Component {
 
   renderRankText() {
     if (this.props.item.previous_rank === 0) {
-      return <span styleName="rank-text-outer no-previous-rank">初登场</span>;
+      return <span styleName="rank-text-outer no-previous-rank"><FormatMessage id="初登场" /></span>;
     }
     let icon;
     if (this.props.item.previous_rank < this.props.item.rank) {
@@ -49,7 +50,7 @@ export default class Item extends React.Component {
     }
     return (
       <span styleName="rank-text-outer">
-        {icon} {'前日 ' + this.props.item.previous_rank + '位'}
+        {icon} <FormatMessage id="前日x位" values={{rank: this.props.item.previous_rank}} />
       </span>
     );
   }
