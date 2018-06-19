@@ -124,7 +124,7 @@ export class IllustContainerWithoutStore extends React.Component {
         target.classList.remove('fn-wait');
         body.classList.remove('fn-wait');
         // text from SIF
-        this.alertRef.setContent('通信エラーが発生しました');
+        this.alertRef.setContent(translate('通信エラーが発生しました'));
       });
   }
 
@@ -198,7 +198,7 @@ export class IllustContainerWithoutStore extends React.Component {
       return <Loading isHidden={false} />;
     }
     if (this.props.illust.isError) {
-      return <Message isHidden={false} text="エラーが発生しました" />;
+      return <Message isHidden={false} text={translate('エラーが発生しました')} />;
     }
     try {
       return (
@@ -299,7 +299,7 @@ export class IllustContainerWithoutStore extends React.Component {
         </div>
       );
     } catch (e) {
-      return <Message isHidden={false} text="エラーが発生しました" />;
+      return <Message isHidden={false} text={translate('エラーが発生しました')} />;
     }
   }
 
