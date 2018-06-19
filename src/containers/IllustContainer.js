@@ -29,6 +29,8 @@ import {
 import { LoginContainer } from '@/containers';
 import { cachedFetch, moment, Storage } from '@/utils';
 
+import { translate } from '@/locale';
+
 @CSSModules(styles, { allowMultiple: true })
 export class IllustContainerWithoutStore extends React.Component {
   constructor(props) {
@@ -122,7 +124,7 @@ export class IllustContainerWithoutStore extends React.Component {
         target.classList.remove('fn-wait');
         body.classList.remove('fn-wait');
         // text from SIF
-        this.alertRef.setContent('通信エラーが発生しました');
+        this.alertRef.setContent(translate('通信エラーが発生しました'));
       });
   }
 
@@ -196,7 +198,7 @@ export class IllustContainerWithoutStore extends React.Component {
       return <Loading isHidden={false} />;
     }
     if (this.props.illust.isError) {
-      return <Message isHidden={false} text="エラーが発生しました" />;
+      return <Message isHidden={false} text={translate('エラーが発生しました')} />;
     }
     try {
       return (
@@ -230,13 +232,13 @@ export class IllustContainerWithoutStore extends React.Component {
           </div>
           <div styleName="actions">
             <Button raised ripple onClick={this.onFavouriteClick}>
-              ブックマークに追加
+              {translate('ブックマークに追加')}
             </Button>
             <Button raised ripple onClick={this.onDownloadClick}>
-              ダウンロード
+              {translate('ダウンロード')}
             </Button>
             <Button raised ripple onClick={this.onTwitterClick}>
-              ツイート
+              {translate('ツイート')}
             </Button>
           </div>
           <div styleName="detail">
@@ -249,7 +251,7 @@ export class IllustContainerWithoutStore extends React.Component {
                 </a>
               </div>
               <time>
-                {`${moment(this.item.created_time).format('LLL')}(JST)`}
+                {`${moment(this.item.created_time).format('LLL')}(${translate('timeZone')})`}
               </time>
               <div styleName="metas">
                 <span styleName="divide">{`${this.item.width}x${this.item
@@ -268,7 +270,7 @@ export class IllustContainerWithoutStore extends React.Component {
             </div>
             <p>
               <a target="_blank" href={`/${this.item.id}`}>
-                pixivにリダイレクトする
+                {translate('pixivにリダイレクトする')}
               </a>
             </p>
           </div>
@@ -280,9 +282,9 @@ export class IllustContainerWithoutStore extends React.Component {
             hasMore={!this.props.illust.isCommentsEnd}>
             <div styleName="comments">
               {this.props.illust.comments.length === 0 ? (
-                <h4>コメントはありません</h4>
+                <h4>{translate('コメントはありません')}</h4>
               ) : (
-                <h4>コメント</h4>
+                <h4>{translate('コメント')}</h4>
               )}
               <List style={{ width: 'auto' }}>
                 {this.props.illust.comments.map(elem => {
@@ -297,7 +299,7 @@ export class IllustContainerWithoutStore extends React.Component {
         </div>
       );
     } catch (e) {
-      return <Message isHidden={false} text="エラーが発生しました" />;
+      return <Message isHidden={false} text={translate('エラーが発生しました')} />;
     }
   }
 

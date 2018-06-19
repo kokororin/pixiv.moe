@@ -1,7 +1,18 @@
-import { injectIntl, intlShape } from 'react-intl';
+import { chooseLocale } from '@/locale';
 
-const ChildComponent = ({ intl, id, values }) => intl.formatMessage({ id }, values);
+const lang = chooseLocale();
 
-ChildComponent.propTypes = { intl: intlShape.isRequired };
+// TODO: Centrilized language manager, a store system
 
-export default injectIntl(ChildComponent);
+export default (id, values) => {
+  if (lang.message[id] === undefined) {
+    console.warn(`Translation for id: ${id} at ${lang.lang} does not exsit`);
+  }
+  let message = lang.message[id] || id;
+  for (const value in values) {
+    if (values.hasOwnProperty(value)) {
+      message = message.split(`{${value}}`).join(values[value]);
+    }
+  }
+  return message;
+};

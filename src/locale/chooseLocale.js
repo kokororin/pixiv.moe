@@ -1,13 +1,11 @@
-import { addLocaleData } from 'react-intl';
-import jaLocaleData from 'react-intl/locale-data/ja';
 import ja from '@/locale/ja';
+import zh from '@/locale/zh';
 
-const chooseLocale = (language) => {
-	switch (language.split('_')[0]) {
-    // case 'zh':
-    // return 'zh_CN';
+const chooseLocale = () => {
+  switch (navigator.language) {
+    case 'zh-CN':
+      return { lang: 'zh', message: zh };
     default:
-      addLocaleData(jaLocaleData);
       return { lang: 'ja', message: ja };
   }
 };

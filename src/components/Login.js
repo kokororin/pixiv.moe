@@ -11,6 +11,8 @@ import Textfield from 'react-mdl/lib/Textfield';
 import Icon from 'react-mdl/lib/Icon';
 import { moment, Storage } from '@/utils';
 
+import { translate } from '@/locale';
+
 @CSSModules(styles, { allowMultiple: true })
 export default class Login extends React.Component {
   static propTypes = {
@@ -103,7 +105,7 @@ export default class Login extends React.Component {
         <Textfield
           onChange={event => this.setUsername(event.target.value)}
           value={this.getUsername()}
-          label="メールアドレス / pixiv ID"
+          label={translate('pixivId')}
           spellCheck={false}
           floatingLabel
           style={{ width: '100%' }}
@@ -112,7 +114,7 @@ export default class Login extends React.Component {
           type="password"
           onChange={event => this.setPassword(event.target.value)}
           value={this.getPassword()}
-          label="パスワード"
+          label={translate('パスワード')}
           floatingLabel
           style={{ width: '100%' }}
         />
@@ -126,7 +128,7 @@ export default class Login extends React.Component {
             raised
             accent
             ripple>
-            {this.props.isSubmitting ? 'ちょっとまって' : 'ログイン'}
+            {this.props.isSubmitting ? translate('ちょっとまって') : translate('ログイン')}
           </Button>
         </div>
       </div>
