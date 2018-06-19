@@ -1,3 +1,5 @@
+import { formatString } from '@/locale';
+
 export default {
   apiBaseURL: 'https://api.pixiv.moe/v1',
   galleryURI: '/gallery',
@@ -12,7 +14,7 @@ export default {
   piwikDomain: 'analytics.kotori.love',
   piwikSiteId: '2PMEnB',
   projectLink: 'https://github.com/LoveLiveSunshine/pixiv.moe',
-  siteTitle: 'pixivギャラリー',
+  siteTitle: formatString('siteTitle'),
   keywords: [
     {
       en: 'ranking',
