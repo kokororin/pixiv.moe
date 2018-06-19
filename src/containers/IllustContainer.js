@@ -251,7 +251,7 @@ export class IllustContainerWithoutStore extends React.Component {
                 </a>
               </div>
               <time>
-                {`${moment(this.item.created_time).format('LLL')}(JST)`}
+                {`${moment(this.item.created_time).format('LLL')}(${translate('timeZone')})`}
               </time>
               <div styleName="metas">
                 <span styleName="divide">{`${this.item.width}x${this.item

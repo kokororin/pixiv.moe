@@ -11,7 +11,8 @@ const ja = {
   pixivId: 'メールアドレス / pixiv ID',
   パスワード: 'パスワード',
   ちょっとまって: 'ちょっとまって',
-  ログイン: 'ログイン'
+  ログイン: 'ログイン',
+  timeZone: 'JST'
 };
 
 export default ja;
