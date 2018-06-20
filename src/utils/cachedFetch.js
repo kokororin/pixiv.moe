@@ -1,5 +1,7 @@
 // modify from https://www.sitepoint.com/cache-fetched-ajax-requests/
-import { hashStr, moment, Storage } from '@/utils';
+import hashStr from '@/utils/hashStr';
+import moment from '@/utils/moment';
+import Storage from '@/utils/Storage';
 
 function buildURL(url, params) {
   if (!params) {

@@ -1,7 +1,7 @@
 import namespacedTypes from 'namespaced-types';
 
 import config from '@/config';
-import { cachedFetch } from '@/utils';
+import cachedFetch from '@/utils/cachedFetch';
 
 export const types = namespacedTypes('gallery', [
   'SET_ITEMS',

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { EmojiParser } from '@/utils';
+import EmojiParser from '@/utils/EmojiParser';
 
 describe('EmojiParser', () => {
   it('should parse out with a <img />', () => {

@@ -18,17 +18,17 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 
 import config from '@/config';
 
-import { IllustActions } from '@/actions';
-import {
-  Alert,
-  Comment,
-  GifPlayer,
-  InfiniteScroll,
-  Loading,
-  Message
-} from '@/components';
-import { LoginContainer } from '@/containers';
-import { cachedFetch, moment, Storage } from '@/utils';
+import * as IllustActions from '@/actions/illust';
+import Alert from '@/components/Alert';
+import Comment from '@/components/Comment';
+import GifPlayer from '@/components/GifPlayer';
+import InfiniteScroll from '@/components/InfiniteScroll';
+import Loading from '@/components/Loading';
+import Message from '@/components/Message';
+import LoginContainer from '@/containers/LoginContainer';
+import cachedFetch from '@/utils/cachedFetch';
+import moment from '@/utils/moment';
+import Storage from '@/utils/Storage';
 
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })

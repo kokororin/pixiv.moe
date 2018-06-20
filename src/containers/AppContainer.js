@@ -7,13 +7,13 @@ import '@/styles/Base.scss';
 import '@/styles/Reset.scss';
 
 import { history } from '@/stores';
-import {
-  GalleryContainer,
-  IllustContainer,
-  RedirectContainer,
-  NotFoundContainer
-} from '@/containers';
-import { ScrollContext, TrackPageView } from '@/components';
+import GalleryContainer from '@/containers/GalleryContainer';
+import IllustContainer from '@/containers/IllustContainer';
+import RedirectContainer from '@/containers/RedirectContainer';
+import NotFoundContainer from '@/containers/NotFoundContainer';
+
+import ScrollContext from '@/components/ScrollContext';
+import TrackPageView from '@/components/TrackPageView';
 
 const AppContainer = () => (
   <Router history={history}>

@@ -10,7 +10,9 @@ import Button from 'react-mdl/lib/Button';
 import Textfield from 'react-mdl/lib/Textfield';
 import Icon from 'react-mdl/lib/Icon';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { moment, Storage, withRef } from '@/utils';
+import moment from '@/utils/moment';
+import Storage from '@/utils/Storage';
+import withRef from '@/utils/withRef';
 
 class Login extends React.Component {
   static propTypes = {

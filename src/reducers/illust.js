@@ -1,4 +1,4 @@
-import { IllustActions } from '@/actions';
+import * as IllustActions from '@/actions/illust';
 
 const types = IllustActions.types;
 

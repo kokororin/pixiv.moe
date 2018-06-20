@@ -7,7 +7,7 @@ import { configureStore } from '@/stores';
 import AppContainer from '@/containers/AppContainer';
 
 import { IntlProvider } from 'react-intl';
-import { chooseLocale } from '@/locale';
+import chooseLocale from '@/locale/chooseLocale';
 
 const lang = chooseLocale(navigator.language);
 

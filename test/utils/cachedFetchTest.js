@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import fetchMock from 'fetch-mock';
-import { cachedFetch } from '@/utils';
+import cachedFetch from '@/utils/cachedFetch';
 
 describe('cachedFetch', () => {
   afterEach(() => {

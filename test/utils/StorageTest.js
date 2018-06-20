@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { Storage } from '@/utils';
+import Storage from '@/utils/Storage';
 
 describe('Storage', () => {
   it('set and get storage should work', () => {

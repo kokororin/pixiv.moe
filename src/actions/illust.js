@@ -1,7 +1,8 @@
 import namespacedTypes from 'namespaced-types';
 
 import config from '@/config';
-import { cachedFetch, getImagesFromZip } from '@/utils';
+import cachedFetch from '@/utils/cachedFetch';
+import getImagesFromZip from '@/utils/getImagesFromZip';
 
 export const types = namespacedTypes('illust', [
   'SET_ITEM',

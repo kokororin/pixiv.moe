@@ -15,9 +15,14 @@ import { injectIntl } from 'react-intl';
 
 import config from '@/config';
 
-import { GalleryActions } from '@/actions';
-import { InfiniteScroll, List, Loading, Refresh, Message } from '@/components';
-import { scrollTo, Storage } from '@/utils';
+import * as GalleryActions from '@/actions/gallery';
+import InfiniteScroll from '@/components/InfiniteScroll';
+import List from '@/components/List';
+import Loading from '@/components/Loading';
+import Refresh from '@/components/Refresh';
+import Message from '@/components/Message';
+import scrollTo from '@/utils/scrollTo';
+import Storage from '@/utils/Storage';
 
 @injectIntl
 export class GalleryContainerWithoutStore extends React.Component {

@@ -1,5 +1,5 @@
 import JSZip from 'jszip';
-import { cachedFetch } from '@/utils';
+import cachedFetch from '@/utils/cachedFetch';
 
 export default function getImagesFromZip(zipURL) {
   return new Promise(resolve => {

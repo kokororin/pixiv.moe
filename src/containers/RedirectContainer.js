@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 
-import { Message } from '@/components';
+import Message from '@/components/Message';
 
 @injectIntl
 export default class RedirectContainer extends React.Component {

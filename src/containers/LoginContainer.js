@@ -1,8 +1,12 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 
-import { Alert, Login } from '@/components';
-import { cachedFetch, moment, Storage, withRef } from '@/utils';
+import Alert from '@/components/Alert';
+import Login from '@/components/Login';
+import cachedFetch from '@/utils/cachedFetch';
+import moment from '@/utils/moment';
+import Storage from '@/utils/Storage';
+import withRef from '@/utils/withRef';
 
 import config from '@/config';
 
