@@ -1,6 +1,7 @@
 const ja = {
   Debut: '初登场',
   'Yesterday x rank': '前日 {rank}位',
+  'x rank': '{rank}位',
   'Redirect to pixiv': 'pixivにリダイレクトする',
   'Add to Bookmarks': 'ブックマークに追加',
   Download: 'ダウンロード',
@@ -24,7 +25,8 @@ const ja = {
     'エラーが発生しました。URLを確認するか、しばらく時間を置いて再度アクセスしてください。',
   'Failed to Load': '読み込みに失敗しました',
   Tags: 'タグ',
-  'Redirecting to pixiv.net': 'あなたはpixiv.netへリダイレクトしています'
+  'Redirecting to pixiv.net': 'あなたはpixiv.netへリダイレクトしています',
+  Language: '言語'
 };
 
 export default ja;

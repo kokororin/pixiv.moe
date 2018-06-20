@@ -98,7 +98,7 @@ export class IllustContainerWithoutStore extends React.Component {
     if (authData === null || authData.expires_at < moment().unix()) {
       return this.loginRef.getRef().open();
     }
-    const target = event.nativeEvent.target,
+    const target = event.target,
       body = document.body;
     if (target.classList.contains('fn-wait')) {
       return;

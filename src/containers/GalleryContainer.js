@@ -11,7 +11,8 @@ import Content from 'react-mdl/lib/Layout/Content';
 import Icon from 'react-mdl/lib/Icon';
 import shortid from 'shortid';
 import DocumentTitle from 'react-document-title';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import classNames from 'classnames';
 
 import config from '@/config';
 
@@ -110,43 +111,67 @@ export class GalleryContainerWithoutStore extends React.Component {
   }
 
   @autobind
-  onKeywordClick(event) {
-    event.nativeEvent.preventDefault();
+  onLanguageClick(event) {
+    event.preventDefault();
 
     this.layoutDOMNode.MaterialLayout.toggleDrawer();
-    const tag = event.nativeEvent.target.dataset.tag;
+    const value = event.target.dataset.value;
+    Storage.set('lang', value);
+    // TODO Create LocaleStore
+    location.reload();
+  }
+
+  @autobind
+  onKeywordClick(event) {
+    event.preventDefault();
+
+    this.layoutDOMNode.MaterialLayout.toggleDrawer();
+    const tag = event.target.dataset.tag;
     this.props.dispatch(GalleryActions.setTag(tag));
     this.reRenderContent(false);
     Storage.set('tag', tag);
+  }
+
+  renderLanguages() {
+    const languages = config.languages;
+
+    return languages.map(elem => {
+      const lang = Storage.get('lang');
+      const highlight = elem.value === lang;
+
+      return (
+        <a
+          key={shortid.generate()}
+          href="#"
+          data-value={elem.value}
+          onClick={this.onLanguageClick}
+          className={classNames({
+            'nav-link__highlight': highlight
+          })}>
+          {highlight && <Icon name="done" />}
+          {elem.name}
+        </a>
+      );
+    });
   }
 
   renderKeywords() {
     const keywords = config.keywords;
 
     return keywords.map(elem => {
-      let linkStyle = null,
-        iconStyle = {
-          display: 'none'
-        };
-      if (elem.en === this.props.gallery.tag) {
-        linkStyle = {
-          fontWeight: 'bold',
-          fontSize: '16px'
-        };
-        iconStyle = {
-          color: '#4caf50',
-          display: 'inline-block'
-        };
-      }
+      const highlight = elem.en === this.props.gallery.tag;
+
       return (
         <a
           key={shortid.generate()}
           href="#"
-          style={linkStyle}
           data-tag={elem.en}
           onClick={this.onKeywordClick}
-          className={`nav-link__${elem.en}`}>
-          <Icon style={iconStyle} name="done" />
+          className={classNames({
+            [`nav-link__${elem.en}`]: true,
+            'nav-link__highlight': highlight
+          })}>
+          {highlight && <Icon name="done" />}
           {elem.jp}
         </a>
       );
@@ -155,9 +180,9 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   @autobind
   onHeaderClick(event) {
-    const target = event.nativeEvent.target,
+    const target = event.target,
       tagName = target.tagName.toLowerCase(),
-      classList = event.nativeEvent.target.classList;
+      classList = event.target.classList;
 
     if (
       !classList.contains('material-icons') &&
@@ -185,8 +210,20 @@ export class GalleryContainerWithoutStore extends React.Component {
               </a>
             </Navigation>
           </Header>
-          <Drawer title={this.props.intl.formatMessage({ id: 'Tags' })}>
-            <Navigation>{this.renderKeywords()}</Navigation>
+          <Drawer>
+            <Navigation>
+              <span className="mdl-layout-title">
+                <FormattedMessage id="Language" />
+              </span>
+              {this.renderLanguages()}
+            </Navigation>
+
+            <Navigation>
+              <span className="mdl-layout-title">
+                <FormattedMessage id="Tags" />
+              </span>
+              {this.renderKeywords()}
+            </Navigation>
           </Drawer>
           <InfiniteScroll
             distance={200}
