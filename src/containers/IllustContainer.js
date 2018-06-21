@@ -30,9 +30,10 @@ import cachedFetch from '@/utils/cachedFetch';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
 
+@connect(state => ({ illust: state.illust }))
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
-export class IllustContainerWithoutStore extends React.Component {
+export default class IllustContainer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -332,7 +333,3 @@ export class IllustContainerWithoutStore extends React.Component {
     );
   }
 }
-
-export default connect(state => ({ illust: state.illust }))(
-  IllustContainerWithoutStore
-);

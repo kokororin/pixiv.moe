@@ -25,7 +25,8 @@ const en = {
   'Failed to Load': 'Failed to Load',
   Tags: 'Tags',
   'Redirecting to pixiv.net': 'Redirecting to pixiv.net',
-  Language: 'Language'
+  Language: 'Language',
+  Ranking: 'Ranking'
 };
 
 export default en;

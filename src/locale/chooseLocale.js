@@ -4,11 +4,12 @@ import ja from '@/locale/ja';
 import enLocaleData from 'react-intl/locale-data/en';
 import en from '@/locale/en';
 import Storage from '@/utils/Storage';
+import * as LocaleActions from '@/actions/locale';
 
-const chooseLocale = language => {
+const chooseLocale = (language, dispatch) => {
   const cachedLang = Storage.get('lang');
   let lang;
-  let message;
+  let messages;
 
   if (!cachedLang) {
     lang = language.split('-')[0];
@@ -20,20 +21,22 @@ const chooseLocale = language => {
     case 'en':
       addLocaleData(enLocaleData);
       lang = 'en';
-      message = en;
+      messages = en;
       break;
     default:
       addLocaleData(jaLocaleData);
       lang = 'ja';
-      message = ja;
+      messages = ja;
   }
 
   Storage.set('lang', lang);
 
-  return {
-    lang,
-    message
-  };
+  dispatch(
+    LocaleActions.setLocale({
+      lang,
+      messages
+    })
+  );
 };
 
 export default chooseLocale;

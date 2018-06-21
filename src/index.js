@@ -6,23 +6,23 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@/stores';
 import AppContainer from '@/containers/AppContainer';
 
-import { IntlProvider } from 'react-intl';
+import ConnectedIntlProvider from '@/components/ConnectedIntlProvider';
 import chooseLocale from '@/locale/chooseLocale';
 
-const lang = chooseLocale(navigator.language);
-
 const store = configureStore();
+
+chooseLocale(navigator.language, store.dispatch);
 
 // Render the main component into the dom
 const render = Component => {
   ReactDOM.render(
-    <IntlProvider locale={lang.lang} messages={lang.message}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ConnectedIntlProvider textComponent={React.Fragment}>
         <Root>
           <Component />
         </Root>
-      </Provider>
-    </IntlProvider>,
+      </ConnectedIntlProvider>
+    </Provider>,
     document.getElementById('app')
   );
 };

@@ -19,10 +19,6 @@ export default class Item extends React.Component {
     super(props);
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
   onImageMouseMove(event) {
     event = event.nativeEvent;
     const target = event.target;
@@ -78,7 +74,12 @@ export default class Item extends React.Component {
             <span>{this.props.item.work.title}</span>
           </div>
           <div styleName="meta">
-            <span styleName="rank-num">{`${this.props.item.rank}位`}</span>
+            <span styleName="rank-num">
+              <FormattedMessage
+                id="x rank"
+                values={{ rank: this.props.item.rank }}
+              />
+            </span>
             <span>{this.renderRankText()}</span>
           </div>
         </Link>

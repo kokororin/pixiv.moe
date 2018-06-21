@@ -25,8 +25,11 @@ import Message from '@/components/Message';
 import scrollTo from '@/utils/scrollTo';
 import Storage from '@/utils/Storage';
 
+import chooseLocale from '@/locale/chooseLocale';
+
+@connect(state => ({ gallery: state.gallery }))
 @injectIntl
-export class GalleryContainerWithoutStore extends React.Component {
+export default class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -117,8 +120,7 @@ export class GalleryContainerWithoutStore extends React.Component {
     this.layoutDOMNode.MaterialLayout.toggleDrawer();
     const value = event.target.dataset.value;
     Storage.set('lang', value);
-    // TODO Create LocaleStore
-    location.reload();
+    chooseLocale(value, this.props.dispatch);
   }
 
   @autobind
@@ -172,7 +174,9 @@ export class GalleryContainerWithoutStore extends React.Component {
             'nav-link__highlight': highlight
           })}>
           {highlight && <Icon name="done" />}
-          {elem.jp}
+          {elem.en === 'ranking'
+            ? this.props.intl.formatMessage({ id: 'Ranking' })
+            : elem.jp}
         </a>
       );
     });
@@ -252,7 +256,3 @@ export class GalleryContainerWithoutStore extends React.Component {
     );
   }
 }
-
-export default connect(state => ({ gallery: state.gallery }))(
-  GalleryContainerWithoutStore
-);

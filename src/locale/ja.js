@@ -26,7 +26,8 @@ const ja = {
   'Failed to Load': '読み込みに失敗しました',
   Tags: 'タグ',
   'Redirecting to pixiv.net': 'あなたはpixiv.netへリダイレクトしています',
-  Language: '言語'
+  Language: '言語',
+  Ranking: 'ランキング'
 };
 
 export default ja;
