@@ -20,6 +20,7 @@ Table of Contents
   * [Dev](#dev)
      * [Commands](#commands)
      * [API](#api)
+  * [Localization](#localization)
   * [Contribute](#contribute)
   * [Contributors](#contributors)
   * [License](#license)
@@ -539,8 +540,15 @@ curl 'https://api.pixiv.moe/v1/favourite/46453302' \
 ```
 </details>
 
+## Localization
+
+App will auto detect your browser language and use the localization. You can set language manually in drawer.  
+Now the app supports Japanese and English.  
+Help us if you can translate this app. Please follow the guide in `src/locale`.
+
 ## Contribute
-Feel free to contribute (PR-s and issues welcomed).
+Feel free to contribute (PR-s and issues welcomed).  
+Only `1.x-dev` branch is accepted.
 
 ## Contributors
 
