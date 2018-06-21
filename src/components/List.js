@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Masonry from 'react-masonry-component';
 
-import { Item } from '@/components';
+import Item from '@/components/Item';
 
 export default class List extends React.Component {
   static propTypes = {

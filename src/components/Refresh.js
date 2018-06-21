@@ -19,4 +19,5 @@ Refresh.propTypes = {
   onClick: PropTypes.func
 };
 
+// eslint-disable-next-line babel/new-cap
 export default CSSModules(Refresh, styles, { allowMultiple: true });

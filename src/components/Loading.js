@@ -6,7 +6,6 @@ import CSSModules from 'react-css-modules';
 import Spinner from 'react-mdl/lib/Spinner';
 
 const Loading = ({ isHidden }) => {
-  // it means ローディング
   return isHidden ? null : (
     <div styleName="message">
       <Spinner />
@@ -18,4 +17,5 @@ Loading.propTypes = {
   isHidden: PropTypes.bool
 };
 
+// eslint-disable-next-line babel/new-cap
 export default CSSModules(Loading, styles, { allowMultiple: true });

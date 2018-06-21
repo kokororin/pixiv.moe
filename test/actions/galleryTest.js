@@ -2,7 +2,7 @@ import nock from 'nock';
 import mockStore from '../helpers/mockStoreHelper';
 
 import config from '@/config';
-import { GalleryActions } from '@/actions';
+import * as GalleryActions from '@/actions/gallery';
 
 describe('GalleryActions', () => {
   afterEach(() => {
@@ -10,7 +10,9 @@ describe('GalleryActions', () => {
   });
 
   it('fire SET_FETCH_ERROR when fetching sources has been done', done => {
-    nock(config.baseURL).get(`${config.galleryURI}?tag=nico`).reply(200);
+    nock(config.baseURL)
+      .get(`${config.galleryURI}?tag=nico`)
+      .reply(200);
 
     const expectedActions = [
       {

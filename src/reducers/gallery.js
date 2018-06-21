@@ -1,4 +1,4 @@
-import { GalleryActions } from '@/actions';
+import * as GalleryActions from '@/actions/gallery';
 
 const types = GalleryActions.types;
 

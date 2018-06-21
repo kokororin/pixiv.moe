@@ -109,7 +109,7 @@ export default class Piwik {
   }
 
   connectToHistory(history) {
-    this.unlistenFromHistory = history.listen(function(loc) {
+    this.unlistenFromHistory = history.listen(loc => {
       this.track(loc);
     });
 

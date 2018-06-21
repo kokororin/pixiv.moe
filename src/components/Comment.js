@@ -6,7 +6,7 @@ import CSSModules from 'react-css-modules';
 import Img from 'react-image';
 import ListItem from 'react-mdl/lib/List/ListItem';
 import ListItemContent from 'react-mdl/lib/List/ListItemContent';
-import { EmojiParser } from '@/utils';
+import EmojiParser from '@/utils/EmojiParser';
 
 const Comment = ({ item }) => {
   for (const badWord of Comment.badWords) {
@@ -60,4 +60,5 @@ Comment.propTypes = {
   item: PropTypes.object
 };
 
+// eslint-disable-next-line babel/new-cap
 export default CSSModules(Comment, styles, { allowMultiple: true });

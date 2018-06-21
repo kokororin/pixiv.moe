@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { moment } from '@/utils';
+import moment from '@/utils/moment';
 
 describe('moment', () => {
   it('convert YYYY-MM-DD H:i:s to JST', () => {

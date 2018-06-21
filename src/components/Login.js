@@ -9,10 +9,12 @@ import classNames from 'classnames';
 import Button from 'react-mdl/lib/Button';
 import Textfield from 'react-mdl/lib/Textfield';
 import Icon from 'react-mdl/lib/Icon';
-import { moment, Storage } from '@/utils';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import moment from '@/utils/moment';
+import Storage from '@/utils/Storage';
+import withRef from '@/utils/withRef';
 
-@CSSModules(styles, { allowMultiple: true })
-export default class Login extends React.Component {
+class Login extends React.Component {
   static propTypes = {
     onLogoutClick: PropTypes.func,
     onLogoutClick: PropTypes.func,
@@ -87,12 +89,14 @@ export default class Login extends React.Component {
         <div>
           <div styleName="avatar">
             <span styleName="name">
-              ニックネーム 「{this.props.authData.user.name}」
+              <FormattedMessage id="Nickname" /> 「{
+                this.props.authData.user.name
+              }」
             </span>
           </div>
           <div styleName="footer">
             <Button onClick={this.props.onLogoutClick} raised accent ripple>
-              ログアウト
+              <FormattedMessage id="Logout" />
             </Button>
           </div>
         </div>
@@ -103,7 +107,9 @@ export default class Login extends React.Component {
         <Textfield
           onChange={event => this.setUsername(event.target.value)}
           value={this.getUsername()}
-          label="メールアドレス / pixiv ID"
+          label={this.props.intl.formatMessage({
+            id: 'Email Address / pixiv ID'
+          })}
           spellCheck={false}
           floatingLabel
           style={{ width: '100%' }}
@@ -112,7 +118,9 @@ export default class Login extends React.Component {
           type="password"
           onChange={event => this.setPassword(event.target.value)}
           value={this.getPassword()}
-          label="パスワード"
+          label={this.props.intl.formatMessage({
+            id: 'Password'
+          })}
           floatingLabel
           style={{ width: '100%' }}
         />
@@ -126,7 +134,9 @@ export default class Login extends React.Component {
             raised
             accent
             ripple>
-            {this.props.isSubmitting ? 'ちょっとまって' : 'ログイン'}
+            <FormattedMessage
+              id={this.props.isSubmitting ? 'Wait a Moment' : 'Login'}
+            />
           </Button>
         </div>
       </div>
@@ -151,3 +161,9 @@ export default class Login extends React.Component {
     );
   }
 }
+
+export default withRef(
+  // eslint-disable-next-line babel/new-cap
+  CSSModules(Login, styles, { allowMultiple: true }),
+  injectIntl
+);

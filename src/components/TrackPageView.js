@@ -3,7 +3,8 @@ import ReactGA from 'react-ga';
 import { Route } from 'react-router-dom';
 
 import config from '@/config';
-import { Piwik, cachedFetch } from '@/utils';
+import Piwik from '@/utils/Piwik';
+import cachedFetch from '@/utils/cachedFetch';
 
 export default class TrackPageView extends React.Component {
   constructor(props) {

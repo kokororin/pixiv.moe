@@ -11,14 +11,25 @@ import Content from 'react-mdl/lib/Layout/Content';
 import Icon from 'react-mdl/lib/Icon';
 import shortid from 'shortid';
 import DocumentTitle from 'react-document-title';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import classNames from 'classnames';
 
 import config from '@/config';
 
-import { GalleryActions } from '@/actions';
-import { InfiniteScroll, List, Loading, Refresh, Message } from '@/components';
-import { scrollTo, Storage } from '@/utils';
+import * as GalleryActions from '@/actions/gallery';
+import InfiniteScroll from '@/components/InfiniteScroll';
+import List from '@/components/List';
+import Loading from '@/components/Loading';
+import Refresh from '@/components/Refresh';
+import Message from '@/components/Message';
+import scrollTo from '@/utils/scrollTo';
+import Storage from '@/utils/Storage';
 
-export class GalleryContainerWithoutStore extends React.Component {
+import chooseLocale from '@/locale/chooseLocale';
+
+@connect(state => ({ gallery: state.gallery }))
+@injectIntl
+export default class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -103,44 +114,69 @@ export class GalleryContainerWithoutStore extends React.Component {
   }
 
   @autobind
-  onKeywordClick(event) {
-    event.nativeEvent.preventDefault();
+  onLanguageClick(event) {
+    event.preventDefault();
 
     this.layoutDOMNode.MaterialLayout.toggleDrawer();
-    const tag = event.nativeEvent.target.dataset.tag;
+    const value = event.target.dataset.value;
+    Storage.set('lang', value);
+    chooseLocale(value, this.props.dispatch);
+  }
+
+  @autobind
+  onKeywordClick(event) {
+    event.preventDefault();
+
+    this.layoutDOMNode.MaterialLayout.toggleDrawer();
+    const tag = event.target.dataset.tag;
     this.props.dispatch(GalleryActions.setTag(tag));
     this.reRenderContent(false);
     Storage.set('tag', tag);
+  }
+
+  renderLanguages() {
+    const languages = config.languages;
+
+    return languages.map(elem => {
+      const lang = Storage.get('lang');
+      const highlight = elem.value === lang;
+
+      return (
+        <a
+          key={shortid.generate()}
+          href="#"
+          data-value={elem.value}
+          onClick={this.onLanguageClick}
+          className={classNames({
+            'nav-link__highlight': highlight
+          })}>
+          {highlight && <Icon name="done" />}
+          {elem.name}
+        </a>
+      );
+    });
   }
 
   renderKeywords() {
     const keywords = config.keywords;
 
     return keywords.map(elem => {
-      let linkStyle = null,
-        iconStyle = {
-          display: 'none'
-        };
-      if (elem.en === this.props.gallery.tag) {
-        linkStyle = {
-          fontWeight: 'bold',
-          fontSize: '16px'
-        };
-        iconStyle = {
-          color: '#4caf50',
-          display: 'inline-block'
-        };
-      }
+      const highlight = elem.en === this.props.gallery.tag;
+
       return (
         <a
           key={shortid.generate()}
           href="#"
-          style={linkStyle}
           data-tag={elem.en}
           onClick={this.onKeywordClick}
-          className={`nav-link__${elem.en}`}>
-          <Icon style={iconStyle} name="done" />
-          {elem.jp}
+          className={classNames({
+            [`nav-link__${elem.en}`]: true,
+            'nav-link__highlight': highlight
+          })}>
+          {highlight && <Icon name="done" />}
+          {elem.en === 'ranking'
+            ? this.props.intl.formatMessage({ id: 'Ranking' })
+            : elem.jp}
         </a>
       );
     });
@@ -148,9 +184,9 @@ export class GalleryContainerWithoutStore extends React.Component {
 
   @autobind
   onHeaderClick(event) {
-    const target = event.nativeEvent.target,
+    const target = event.target,
       tagName = target.tagName.toLowerCase(),
-      classList = event.nativeEvent.target.classList;
+      classList = event.target.classList;
 
     if (
       !classList.contains('material-icons') &&
@@ -178,8 +214,20 @@ export class GalleryContainerWithoutStore extends React.Component {
               </a>
             </Navigation>
           </Header>
-          <Drawer title="タグ">
-            <Navigation>{this.renderKeywords()}</Navigation>
+          <Drawer>
+            <Navigation>
+              <span className="mdl-layout-title">
+                <FormattedMessage id="Language" />
+              </span>
+              {this.renderLanguages()}
+            </Navigation>
+
+            <Navigation>
+              <span className="mdl-layout-title">
+                <FormattedMessage id="Tags" />
+              </span>
+              {this.renderKeywords()}
+            </Navigation>
           </Drawer>
           <InfiniteScroll
             distance={200}
@@ -194,7 +242,7 @@ export class GalleryContainerWithoutStore extends React.Component {
                 <Loading isHidden={!this.props.gallery.isFetching} />
                 <Message
                   ref={ref => (this.errorRef = ref)}
-                  text="読み込みに失敗しました"
+                  text={this.props.intl.formatMessage({ id: 'Failed to Load' })}
                   isHidden={!this.props.gallery.isError}
                 />
                 <Refresh
@@ -208,7 +256,3 @@ export class GalleryContainerWithoutStore extends React.Component {
     );
   }
 }
-
-export default connect(state => ({ gallery: state.gallery }))(
-  GalleryContainerWithoutStore
-);

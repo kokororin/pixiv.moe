@@ -20,6 +20,7 @@ Table of Contents
   * [Dev](#dev)
      * [Commands](#commands)
      * [API](#api)
+  * [Localization](#localization)
   * [Contribute](#contribute)
   * [Contributors](#contributors)
   * [License](#license)
@@ -63,12 +64,12 @@ A: Pixiv change the `REFRESH TOKEN` auth method, so re-login with refresh_token 
 # Start for development
 $ git clone https://github.com/LoveLiveSunshine/pixiv.moe
 $ cd pixiv.moe
-$ npm install
+$ yarn
 $ npm start
 ```
 
 ### Commands
-- Install dependencies: `npm install`
+- Install dependencies: `yarn`
 - Run: `npm start`
 - Test: `npm test`
 - Build: `npm run dist`
@@ -539,16 +540,24 @@ curl 'https://api.pixiv.moe/v1/favourite/46453302' \
 ```
 </details>
 
+## Localization
+
+App will auto detect your browser language and use the localization. You can set language manually in drawer.  
+Now the app supports Japanese and English.  
+Help us if you can translate this app. Please follow the guide in `src/locale`.
+
 ## Contribute
-Feel free to contribute (PR-s and issues welcomed).
+Feel free to contribute (PR-s and issues welcomed).  
+Only `1.x-dev` branch is accepted.
 
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars0.githubusercontent.com/u/10093992?v=4" width="100px;"/><br /><sub>そら</sub>](http://kokororin.github.io)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Code") [📖](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Documentation") [🎨](#design-kokororin "Design") [⚠️](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Tests") | [<img src="https://avatars0.githubusercontent.com/u/12712012?v=4" width="100px;"/><br /><sub>吟夢ちゃん</sub>](https://kirainmoe.com/)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kirainmoe "Code") [🤔](#ideas-kirainmoe "Ideas, Planning, & Feedback") |
-| :---: | :---: |
+<!-- prettier-ignore -->
+| [<img src="https://avatars0.githubusercontent.com/u/10093992?v=4" width="100px;"/><br /><sub><b>そら</b></sub>](http://kokororin.github.io)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Code") [📖](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Documentation") [🎨](#design-kokororin "Design") [⚠️](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Tests") | [<img src="https://avatars0.githubusercontent.com/u/12712012?v=4" width="100px;"/><br /><sub><b>吟夢ちゃん</b></sub>](https://kirainmoe.com/)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kirainmoe "Code") [🤔](#ideas-kirainmoe "Ideas, Planning, & Feedback") | [<img src="https://avatars1.githubusercontent.com/u/12656264?v=4" width="100px;"/><br /><sub><b>simon3000</b></sub>](https://github.com/simon300000)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=simon300000 "Code") [🤔](#ideas-simon300000 "Ideas, Planning, & Feedback") [🌍](#translation-simon300000 "Translation") |
+| :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
