@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 
 import Alert from '@/components/Alert';
@@ -6,11 +7,19 @@ import Login from '@/components/Login';
 import cachedFetch from '@/utils/cachedFetch';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
-import withRef from '@/utils/withRef';
 
 import config from '@/config';
 
-class LoginContainer extends React.Component {
+@injectIntl
+export default class LoginContainer extends React.Component {
+  static propTypes = {
+    onRef: PropTypes.func
+  };
+
+  static defaultProps = {
+    onRef() {}
+  };
+
   constructor(props) {
     super(props);
 
@@ -21,6 +30,7 @@ class LoginContainer extends React.Component {
   }
 
   componentDidMount() {
+    this.props.onRef(this);
     const authData = Storage.get('auth');
     this.setState({
       authData
@@ -35,25 +45,22 @@ class LoginContainer extends React.Component {
   @autobind
   onKeydown(event) {
     if (event.keyCode === 27) {
-      this.loginRef.getRef().close();
+      this.loginRef.close();
     }
 
-    if (
-      this.loginRef.getRef().state.isHidden === false &&
-      event.keyCode === 13
-    ) {
+    if (this.loginRef.state.isHidden === false && event.keyCode === 13) {
       this.onLoginClick();
     }
   }
 
   @autobind
   open() {
-    this.loginRef.getRef().open();
+    this.loginRef.open();
   }
 
   @autobind
   close() {
-    this.loginRef.getRef().close();
+    this.loginRef.close();
   }
 
   @autobind
@@ -70,8 +77,8 @@ class LoginContainer extends React.Component {
       );
     }
 
-    const username = this.loginRef.getRef().getUsername();
-    const password = this.loginRef.getRef().getPassword();
+    const username = this.loginRef.getUsername();
+    const password = this.loginRef.getPassword();
 
     if (username === '') {
       return this.alertRef.setContent(
@@ -115,8 +122,8 @@ class LoginContainer extends React.Component {
           });
           setTimeout(() => {
             this.close();
-            this.loginRef.getRef().setUsername('');
-            this.loginRef.getRef().setPassword('');
+            this.loginRef.setUsername('');
+            this.loginRef.setPassword('');
           }, 1500);
         } else {
           this.alertRef.setContent(data.message);
@@ -149,7 +156,7 @@ class LoginContainer extends React.Component {
     return (
       <div>
         <Login
-          ref={ref => (this.loginRef = ref)}
+          onRef={ref => (this.loginRef = ref)}
           onLoginClick={this.onLoginClick}
           onLogoutClick={this.onLogoutClick}
           isSubmitting={this.state.isSubmitting}
@@ -160,5 +167,3 @@ class LoginContainer extends React.Component {
     );
   }
 }
-
-export default withRef(LoginContainer, injectIntl);
