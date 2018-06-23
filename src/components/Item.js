@@ -17,6 +17,28 @@ export default class Item extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      width: 0,
+      height: 0,
+      hasLoaded: false
+    };
+  }
+
+  componentDidMount() {
+    this.wait = setInterval(() => {
+      const width = this.imgRef.naturalWidth;
+      const height = this.imgRef.naturalHeight;
+      const offsetWidth = this.wrapper.offsetWidth;
+      if (width && height) {
+        this.setState({
+          width: offsetWidth,
+          // eslint-disable-next-line prettier/prettier
+          height: offsetWidth * height / width
+        });
+        clearInterval(this.wait);
+      }
+    }, 30);
   }
 
   onImageMouseMove(event) {
@@ -28,10 +50,19 @@ export default class Item extends React.Component {
   }
 
   @autobind
+  onImageLoad() {
+    this.setState({
+      hasLoaded: true
+    });
+    this.wait && clearInterval(this.wait);
+  }
+
+  @autobind
   onImageError() {
     this.imgRef.src = require('@/images/img-fail.jpg');
     typeof this.props.masonryRef !== 'undefined' &&
       this.props.masonryRef.performLayout();
+    this.wait && clearInterval(this.wait);
   }
 
   renderRankText() {
@@ -42,12 +73,14 @@ export default class Item extends React.Component {
         </span>
       );
     }
-    let icon;
-    if (this.props.item.previous_rank < this.props.item.rank) {
-      icon = <Icon styleName="trending_down" name="trending_down" />;
-    } else {
-      icon = <Icon styleName="trending_up" name="trending_up" />;
-    }
+
+    const icon =
+      this.props.item.previous_rank < this.props.item.rank ? (
+        <Icon styleName="trending-down" name="trending_down" />
+      ) : (
+        <Icon styleName="trending-up" name="trending_up" />
+      );
+
     return (
       <span styleName="rank-text-outer">
         {icon}
@@ -60,50 +93,61 @@ export default class Item extends React.Component {
   }
 
   render() {
-    return this.props.item.hasOwnProperty('work') ? (
+    const isRank = this.props.item.hasOwnProperty('work');
+    return (
       <div styleName="cell" onMouseMove={this.onImageMouseMove}>
-        <Link styleName="link" to={`/illust/${this.props.item.work.id}`}>
-          <div styleName="image-wrapper">
+        <Link
+          styleName="link"
+          to={`/illust/${
+            isRank ? this.props.item.work.id : this.props.item.id
+          }`}>
+          <div ref={ref => (this.wrapper = ref)} styleName="image-wrapper">
             <img
+              src={require('@/images/img-placeholder.gif')}
+              width={this.state.width}
+              height={this.state.height}
+              style={{
+                display: this.state.hasLoaded ? 'none' : 'block'
+              }}
+            />
+            <img
+              style={{
+                display: this.state.hasLoaded ? 'block' : 'none'
+              }}
               ref={ref => (this.imgRef = ref)}
-              src={this.props.item.work.image_urls.px_480mw}
+              src={
+                isRank
+                  ? this.props.item.work.image_urls.px_480mw
+                  : this.props.item.image_urls.px_480mw
+              }
+              onLoad={this.onImageLoad}
               onError={this.onImageError}
             />
           </div>
           <div styleName="title">
-            <span>{this.props.item.work.title}</span>
-          </div>
-          <div styleName="meta">
-            <span styleName="rank-num">
-              <FormattedMessage
-                id="x rank"
-                values={{ rank: this.props.item.rank }}
-              />
-            </span>
-            <span>{this.renderRankText()}</span>
-          </div>
-        </Link>
-      </div>
-    ) : (
-      <div styleName="cell" onMouseMove={this.onImageMouseMove}>
-        <Link styleName="link" to={`/illust/${this.props.item.id}`}>
-          <div styleName="image-wrapper">
-            <img
-              ref={ref => (this.imgRef = ref)}
-              src={this.props.item.image_urls.px_480mw}
-              onError={this.onImageError}
-            />
-          </div>
-          <div styleName="title">
-            <span>{this.props.item.title}</span>
-          </div>
-          <div styleName="meta">
-            <span styleName="count">
-              <Icon name="star" />
-              {this.props.item.stats.favorited_count.public +
-                this.props.item.stats.favorited_count.private}
+            <span>
+              {isRank ? this.props.item.work.title : this.props.item.title}
             </span>
           </div>
+          {isRank ? (
+            <div styleName="meta">
+              <span styleName="rank-num">
+                <FormattedMessage
+                  id="x rank"
+                  values={{ rank: this.props.item.rank }}
+                />
+              </span>
+              <span>{this.renderRankText()}</span>
+            </div>
+          ) : (
+            <div styleName="meta">
+              <span styleName="count">
+                <Icon name="star" />
+                {this.props.item.stats.favorited_count.public +
+                  this.props.item.stats.favorited_count.private}
+              </span>
+            </div>
+          )}
         </Link>
       </div>
     );
