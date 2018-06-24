@@ -12,14 +12,20 @@ import Icon from 'react-mdl/lib/Icon';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
-import withRef from '@/utils/withRef';
 
-class Login extends React.Component {
+@injectIntl
+@CSSModules(styles, { allowMultiple: true })
+export default class Login extends React.Component {
   static propTypes = {
+    onRef: PropTypes.func,
     onLogoutClick: PropTypes.func,
     onLogoutClick: PropTypes.func,
     isSubmitting: PropTypes.bool,
     authData: PropTypes.object
+  };
+
+  static defaultProps = {
+    onRef() {}
   };
 
   constructor(props) {
@@ -36,6 +42,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
+    this.props.onRef(this);
     const authData = Storage.get('auth');
     this.setState({
       authData
@@ -86,7 +93,7 @@ class Login extends React.Component {
       this.props.authData.expires_at > moment().unix()
     ) {
       return (
-        <div>
+        <React.Fragment>
           <div styleName="avatar">
             <span styleName="name">
               <FormattedMessage id="Nickname" /> 「{
@@ -99,11 +106,11 @@ class Login extends React.Component {
               <FormattedMessage id="Logout" />
             </Button>
           </div>
-        </div>
+        </React.Fragment>
       );
     }
     return (
-      <div>
+      <React.Fragment>
         <Textfield
           onChange={event => this.setUsername(event.target.value)}
           value={this.getUsername()}
@@ -139,7 +146,7 @@ class Login extends React.Component {
             />
           </Button>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 
@@ -161,9 +168,3 @@ class Login extends React.Component {
     );
   }
 }
-
-export default withRef(
-  // eslint-disable-next-line babel/new-cap
-  CSSModules(Login, styles, { allowMultiple: true }),
-  injectIntl
-);

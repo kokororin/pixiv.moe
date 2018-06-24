@@ -1,5 +1,8 @@
 :global {
   .mdl-layout {
+    .mdl-layout__content {
+      height: 100%;
+    }
     .mdl-layout__drawer-button,
     a.mdl-navigation__link {
       outline: 0 none;

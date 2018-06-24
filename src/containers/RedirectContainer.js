@@ -35,18 +35,14 @@ export default class RedirectContainer extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.state.isError ? (
-          <Message />
-        ) : (
-          <Message
-            text={this.props.intl.formatMessage({
-              id: 'Redirecting to pixiv.net'
-            })}
-          />
-        )}
-      </div>
+    return this.state.isError ? (
+      <Message />
+    ) : (
+      <Message
+        text={this.props.intl.formatMessage({
+          id: 'Redirecting to pixiv.net'
+        })}
+      />
     );
   }
 }

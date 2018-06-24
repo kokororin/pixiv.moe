@@ -97,7 +97,7 @@ export default class IllustContainer extends React.Component {
   onFavouriteClick(event) {
     const authData = Storage.get('auth');
     if (authData === null || authData.expires_at < moment().unix()) {
-      return this.loginRef.getRef().open();
+      return this.loginRef.open();
     }
     const target = event.target,
       body = document.body;
@@ -307,7 +307,7 @@ export default class IllustContainer extends React.Component {
               <Loading isHidden={!this.props.illust.isFetchingComments} />
             </div>
           </InfiniteScroll>
-          <LoginContainer ref={ref => (this.loginRef = ref)} />
+          <LoginContainer onRef={ref => (this.loginRef = ref)} />
           <Alert ref={ref => (this.alertRef = ref)} />
         </div>
       );
