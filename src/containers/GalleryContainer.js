@@ -1,27 +1,36 @@
-import styles from '@/styles/Item.scss';
+import galleryStyles from '@/styles/Gallery.scss';
+import itemStyles from '@/styles/Item.scss';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import Layout from 'react-mdl/lib/Layout/Layout';
-import Header from 'react-mdl/lib/Layout/Header';
-import Navigation from 'react-mdl/lib/Layout/Navigation';
-import Drawer from 'react-mdl/lib/Layout/Drawer';
-import Content from 'react-mdl/lib/Layout/Content';
-import Icon from 'react-mdl/lib/Icon';
+import CSSModules from 'react-css-modules';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import DoneIcon from '@material-ui/icons/Done';
+import GithubIcon from '@material-ui/docs/svgIcons/Github';
 import shortid from 'shortid';
 import DocumentTitle from 'react-document-title';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import classNames from 'classnames';
 
 import config from '@/config';
 
 import * as GalleryActions from '@/actions/gallery';
 import InfiniteScroll from '@/components/InfiniteScroll';
-import List from '@/components/List';
+import GalleryList from '@/components/List';
 import Loading from '@/components/Loading';
 import Refresh from '@/components/Refresh';
 import Message from '@/components/Message';
+import ScrollContext from '@/components/ScrollContext';
 import scrollTo from '@/utils/scrollTo';
 import Storage from '@/utils/Storage';
 
@@ -29,16 +38,17 @@ import chooseLocale from '@/locale/chooseLocale';
 
 @connect(state => ({ gallery: state.gallery }))
 @injectIntl
+@CSSModules(galleryStyles, { allowMultiple: true })
 export default class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isDrawerOpen: false
+    };
   }
 
   componentDidMount() {
-    this.layoutDOMNode = ReactDOM.findDOMNode(this.layoutRef);
-    this.contentDOMNode = this.layoutDOMNode.MaterialLayout.content_;
-    this.drawerDOMNode = this.layoutDOMNode.MaterialLayout.drawer_;
-
     window.addEventListener('resize', this.resizeListener);
 
     const cachedTag = Storage.get('tag');
@@ -59,10 +69,6 @@ export default class GalleryContainer extends React.Component {
 
   @autobind
   onLoadMore() {
-    if (this.drawerDOMNode.classList.contains('is-visible')) {
-      return;
-    }
-
     if (this.props.gallery.errorTimes < 3) {
       this.fetchSource(false);
     }
@@ -94,7 +100,7 @@ export default class GalleryContainer extends React.Component {
   resizeListener() {
     /* reset size of masonry-container when window size change */
     const node = this.rootRef,
-      cellClassName = styles.cell;
+      cellClassName = itemStyles.cell;
 
     // try to get cell width
     const temp = document.createElement('div');
@@ -114,21 +120,13 @@ export default class GalleryContainer extends React.Component {
   }
 
   @autobind
-  onLanguageClick(event) {
-    event.preventDefault();
-
-    this.layoutDOMNode.MaterialLayout.toggleDrawer();
-    const value = event.target.dataset.value;
+  onLanguageClick(value) {
     Storage.set('lang', value);
     chooseLocale(value, this.props.dispatch);
   }
 
   @autobind
-  onKeywordClick(event) {
-    event.preventDefault();
-
-    this.layoutDOMNode.MaterialLayout.toggleDrawer();
-    const tag = event.target.dataset.tag;
+  onKeywordClick(tag) {
     this.props.dispatch(GalleryActions.setTag(tag));
     this.reRenderContent(false);
     Storage.set('tag', tag);
@@ -142,17 +140,17 @@ export default class GalleryContainer extends React.Component {
       const highlight = elem.value === lang;
 
       return (
-        <a
+        <ListItem
           key={shortid.generate()}
-          href="#"
-          data-value={elem.value}
-          onClick={this.onLanguageClick}
-          className={classNames({
-            'nav-link__highlight': highlight
-          })}>
-          {highlight && <Icon name="done" />}
-          {elem.name}
-        </a>
+          button
+          onClick={() => this.onLanguageClick(elem.value)}>
+          {highlight && (
+            <ListItemIcon>
+              <DoneIcon style={{ color: '#4caf50' }} />
+            </ListItemIcon>
+          )}
+          <ListItemText primary={elem.name} />
+        </ListItem>
       );
     });
   }
@@ -164,94 +162,125 @@ export default class GalleryContainer extends React.Component {
       const highlight = elem.en === this.props.gallery.tag;
 
       return (
-        <a
+        <ListItem
           key={shortid.generate()}
-          href="#"
-          data-tag={elem.en}
-          onClick={this.onKeywordClick}
-          className={classNames({
-            [`nav-link__${elem.en}`]: true,
-            'nav-link__highlight': highlight
-          })}>
-          {highlight && <Icon name="done" />}
-          {elem.en === 'ranking'
-            ? this.props.intl.formatMessage({ id: 'Ranking' })
-            : elem.jp}
-        </a>
+          button
+          onClick={() => this.onKeywordClick(elem.en)}>
+          {highlight && (
+            <ListItemIcon>
+              <DoneIcon style={{ color: '#4caf50' }} />
+            </ListItemIcon>
+          )}
+          <ListItemText
+            primary={
+              elem.en === 'ranking'
+                ? this.props.intl.formatMessage({ id: 'Ranking' })
+                : elem.jp
+            }
+          />
+        </ListItem>
       );
     });
   }
 
   @autobind
   onHeaderClick(event) {
-    const target = event.target,
-      tagName = target.tagName.toLowerCase(),
-      classList = event.target.classList;
+    const target = event.target;
+    const tagName = target.tagName.toLowerCase();
 
-    if (
-      !classList.contains('material-icons') &&
-      !classList.contains('mdl-layout__drawer-button') &&
-      !classList.contains('github-link') &&
-      tagName !== 'img'
-    ) {
-      scrollTo(this.contentDOMNode, 0, 900, 'easeInOutQuint');
+    if (tagName !== 'button' && tagName !== 'span' && tagName !== 'svg') {
+      scrollTo(
+        document.querySelector(`.${ScrollContext.scrollingClassName}`),
+        0,
+        900,
+        'easeInOutQuint'
+      );
     }
+  }
+
+  @autobind
+  onToggleDrawer() {
+    this.setState({
+      isDrawerOpen: !this.state.isDrawerOpen
+    });
   }
 
   render() {
     return (
       <DocumentTitle title={config.siteTitle}>
-        <Layout ref={ref => (this.layoutRef = ref)} fixedHeader>
-          <Header
-            onClick={this.onHeaderClick}
-            title={<span>{config.siteTitle}</span>}>
-            <Navigation>
-              <a
-                className="github-link"
-                target="_blank"
-                href={config.projectLink}>
-                <img src={require('@/images/GitHub-Mark-Light-32px.png')} />
-              </a>
-            </Navigation>
-          </Header>
-          <Drawer>
-            <Navigation>
-              <span className="mdl-layout-title">
-                <FormattedMessage id="Language" />
-              </span>
-              {this.renderLanguages()}
-            </Navigation>
-
-            <Navigation>
-              <span className="mdl-layout-title">
-                <FormattedMessage id="Tags" />
-              </span>
-              {this.renderKeywords()}
-            </Navigation>
+        <React.Fragment>
+          <div styleName="appbar-root">
+            <AppBar position="static" onClick={this.onHeaderClick}>
+              <Toolbar>
+                <IconButton
+                  color="inherit"
+                  onClick={this.onToggleDrawer}
+                  aria-label="Menu">
+                  <MenuIcon />
+                </IconButton>
+                <Typography
+                  variant="title"
+                  color="inherit"
+                  styleName="appbar-title">
+                  {config.siteTitle}
+                </Typography>
+                <IconButton
+                  color="inherit"
+                  onClick={() =>
+                    (location.href =
+                      'https://github.com/LoveLiveSunshine/pixiv.moe')
+                  }>
+                  <GithubIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
+          </div>
+          <Drawer open={this.state.isDrawerOpen} onClose={this.onToggleDrawer}>
+            <div
+              tabIndex={0}
+              role="button"
+              onClick={this.onToggleDrawer}
+              onKeyDown={this.onToggleDrawer}>
+              <List
+                subheader={
+                  <ListSubheader>
+                    <FormattedMessage id="Language" />
+                  </ListSubheader>
+                }>
+                {this.renderLanguages()}
+              </List>
+              <Divider />
+              <List
+                subheader={
+                  <ListSubheader>
+                    <FormattedMessage id="Tags" />
+                  </ListSubheader>
+                }>
+                {this.renderKeywords()}
+              </List>
+            </div>
           </Drawer>
           <InfiniteScroll
             distance={200}
             onLoadMore={this.onLoadMore}
             isLoading={this.props.gallery.isFetching}
             hasMore>
-            <Content>
+            <ScrollContext.Container>
               <div
                 ref={ref => (this.rootRef = ref)}
                 style={{ margin: '0 auto' }}>
-                <List items={this.props.gallery.items} />
+                <GalleryList items={this.props.gallery.items} />
                 <Loading isHidden={!this.props.gallery.isFetching} />
                 <Message
                   ref={ref => (this.errorRef = ref)}
                   text={this.props.intl.formatMessage({ id: 'Failed to Load' })}
                   isHidden={!this.props.gallery.isError}
                 />
-                <Refresh
-                  onClick={async () => await this.reRenderContent(true)}
-                />
+                <Refresh onClick={() => this.reRenderContent(true)} />
               </div>
-            </Content>
+            </ScrollContext.Container>
           </InfiniteScroll>
-        </Layout>
+        </React.Fragment>
       </DocumentTitle>
     );
   }

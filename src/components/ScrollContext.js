@@ -1,10 +1,16 @@
+import styles from '@/styles/Base.scss';
+
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 @withRouter
 export default class ScrollContext extends React.Component {
   static prefix = '@@SCROLL/';
-  static scrollingClassName = 'mdl-layout__content';
+  static scrollingClassName = styles['scroll-context-container'];
+
+  static Container = props => (
+    <div className={ScrollContext.scrollingClassName} {...props} />
+  );
 
   constructor(props) {
     super(props);
@@ -45,6 +51,12 @@ export default class ScrollContext extends React.Component {
   }
 
   render() {
-    return this.props.children;
+    return (
+      <div className={styles['scroll-context']}>
+        <div className={styles['scroll-context-inner-container']}>
+          {this.props.children}
+        </div>
+      </div>
+    );
   }
 }

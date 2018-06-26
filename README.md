@@ -33,7 +33,8 @@ Table of Contents
 * redux
 * redux-thunk
 * react-redux
-* react-mdl
+* react-intl
+* material-ui
 * whatwg-fetch
 
 ## Online Site

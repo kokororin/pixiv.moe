@@ -1,22 +1,3 @@
-:global {
-  #illust-layout {
-    .mdl-layout__header-row {
-      padding: 0 20px;
-    }
-    #illust-title span {
-      vertical-align: -1px;
-    }
-  }
-}
-
-.back-link {
-  color: #fff;
-}
-.back-icon {
-  float: left;
-  margin-right: 1rem;
-}
-
 .illust {
   padding: 20px;
   .link {
@@ -54,12 +35,12 @@
   .tags {
     margin: 15px;
     text-align: center;
-    :global(.mdl-chip) {
+    > div {
       margin: 5px;
-    }
-    :global(.mdl-chip__contact) {
-      color: rgb(255, 255, 255) !important;
-      background-color: rgb(0, 150, 136) !important;
+      > div {
+        color: rgb(255, 255, 255) !important;
+        background-color: rgb(0, 150, 136) !important;
+      }
     }
   }
   .actions {
@@ -104,9 +85,49 @@
   }
   .comments {
     width: 100%;
+    ul.comment-list {
+      display: block;
+      padding: 8px 0;
+      list-style: none;
+      li.comment-list-item {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        min-height: 48px;
+        box-sizing: border-box;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        padding: 16px;
+        color: rgba(0, 0, 0, 0.87);
+        overflow: hidden;
+        .comment-main {
+          order: 0;
+          flex-grow: 2;
+          text-decoration: none;
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+
     .comment-avatar {
-      width: 40px;
+      margin-right: 16px;
       height: 40px;
+      width: 40px;
+      box-sizing: border-box;
+      border-radius: 50%;
+      font-size: 40px;
+      color: white;
+      img {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+      }
     }
     .comment-content {
       font-size: 13px;

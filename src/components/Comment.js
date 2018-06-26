@@ -4,8 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import Img from 'react-image';
-import ListItem from 'react-mdl/lib/List/ListItem';
-import ListItemContent from 'react-mdl/lib/List/ListItemContent';
 import EmojiParser from '@/utils/EmojiParser';
 
 const Comment = ({ item }) => {
@@ -19,27 +17,27 @@ const Comment = ({ item }) => {
   }
 
   return (
-    <ListItem>
-      <ListItemContent
-        avatar={
-          <div>
-            <Img
-              src={[item.user.profile_image_urls.medium]}
-              loader={
-                <img src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" />
-              }
-            />
-          </div>
-        }>
-        {item.user.name}
-        <span
-          styleName="comment-content"
-          dangerouslySetInnerHTML={{
-            __html: EmojiParser.parse(item.comment)
-          }}
-        />
-      </ListItemContent>
-    </ListItem>
+    <li styleName="comment-list-item">
+      <span styleName="comment-main">
+        <div styleName="comment-avatar">
+          <Img
+            src={[item.user.profile_image_urls.medium]}
+            loader={
+              <img src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" />
+            }
+          />
+        </div>
+        <span>
+          {item.user.name}
+          <span
+            styleName="comment-content"
+            dangerouslySetInnerHTML={{
+              __html: EmojiParser.parse(item.comment)
+            }}
+          />
+        </span>
+      </span>
+    </li>
   );
 };
 

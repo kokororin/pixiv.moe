@@ -4,13 +4,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import CSSModules from 'react-css-modules';
-import Layout from 'react-mdl/lib/Layout/Layout';
-import Header from 'react-mdl/lib/Layout/Header';
-import Content from 'react-mdl/lib/Layout/Content';
-import Icon from 'react-mdl/lib/Icon';
-import { Chip, ChipContact } from 'react-mdl/lib/Chip';
-import Button from 'react-mdl/lib/Button';
-import { List } from 'react-mdl/lib/List';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
+import Button from '@material-ui/core/Button';
 import shortid from 'shortid';
 import Img from 'react-image';
 import DocumentTitle from 'react-document-title';
@@ -25,6 +26,7 @@ import GifPlayer from '@/components/GifPlayer';
 import InfiniteScroll from '@/components/InfiniteScroll';
 import Loading from '@/components/Loading';
 import Message from '@/components/Message';
+import ScrollContext from '@/components/ScrollContext';
 import LoginContainer from '@/containers/LoginContainer';
 import cachedFetch from '@/utils/cachedFetch';
 import moment from '@/utils/moment';
@@ -69,17 +71,6 @@ export default class IllustContainer extends React.Component {
       };
     }
     return this.props.illust.items[this.illustId];
-  }
-
-  renderHeaderTitle() {
-    return (
-      <span>
-        <a className={styles['back-link']} href="#" onClick={this.onBackClick}>
-          <Icon className={styles['back-icon']} name="arrow_back" />
-        </a>
-        <span>{this.item.title}</span>
-      </span>
-    );
   }
 
   @autobind
@@ -230,21 +221,22 @@ export default class IllustContainer extends React.Component {
               return (
                 <Chip
                   key={shortid.generate()}
-                  onClick={() => this.onTagClick(elem)}>
-                  <ChipContact>#</ChipContact>
-                  {elem}
-                </Chip>
+                  avatar={<Avatar>#</Avatar>}
+                  label={elem}
+                  onClick={() => this.onTagClick(elem)}
+                  clickable
+                />
               );
             })}
           </div>
           <div styleName="actions">
-            <Button raised ripple onClick={this.onFavouriteClick}>
+            <Button variant="contained" onClick={this.onFavouriteClick}>
               <FormattedMessage id="Add to Bookmarks" />
             </Button>
-            <Button raised ripple onClick={this.onDownloadClick}>
+            <Button variant="contained" onClick={this.onDownloadClick}>
               <FormattedMessage id="Download" />
             </Button>
-            <Button raised ripple onClick={this.onTwitterClick}>
+            <Button variant="contained" onClick={this.onTwitterClick}>
               <FormattedMessage id="Tweet" />
             </Button>
           </div>
@@ -299,11 +291,11 @@ export default class IllustContainer extends React.Component {
                   }
                 />
               </h4>
-              <List style={{ width: 'auto' }}>
+              <ul styleName="comment-list">
                 {this.props.illust.comments.map(elem => {
                   return <Comment key={shortid.generate()} item={elem} />;
                 })}
-              </List>
+              </ul>
               <Loading isHidden={!this.props.illust.isFetchingComments} />
             </div>
           </InfiniteScroll>
@@ -325,10 +317,21 @@ export default class IllustContainer extends React.Component {
     return (
       <DocumentTitle
         title={this.item.title === '' ? config.siteTitle : this.item.title}>
-        <Layout fixedHeader id="illust-layout" onScroll={this.scrollListener}>
-          <Header id="illust-title" title={this.renderHeaderTitle()} />
-          <Content>{this.renderContent()}</Content>
-        </Layout>
+        <React.Fragment>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton color="inherit" onClick={this.onBackClick}>
+                <ArrowBackIcon />
+              </IconButton>
+              <Typography variant="title" color="inherit">
+                {this.item.title}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <ScrollContext.Container onScroll={this.scrollListener}>
+            {this.renderContent()}
+          </ScrollContext.Container>
+        </React.Fragment>
       </DocumentTitle>
     );
   }

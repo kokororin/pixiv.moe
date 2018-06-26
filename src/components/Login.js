@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import Modal from 'react-modal';
 import classNames from 'classnames';
-import Button from 'react-mdl/lib/Button';
-import Textfield from 'react-mdl/lib/Textfield';
-import Icon from 'react-mdl/lib/Icon';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import ClearIcon from '@material-ui/icons/Clear';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
@@ -111,36 +111,34 @@ export default class Login extends React.Component {
     }
     return (
       <React.Fragment>
-        <Textfield
+        <TextField
           onChange={event => this.setUsername(event.target.value)}
           value={this.getUsername()}
           label={this.props.intl.formatMessage({
             id: 'Email Address / pixiv ID'
           })}
-          spellCheck={false}
-          floatingLabel
-          style={{ width: '100%' }}
+          fullWidth
+          margin="normal"
         />
-        <Textfield
+        <TextField
           type="password"
           onChange={event => this.setPassword(event.target.value)}
           value={this.getPassword()}
           label={this.props.intl.formatMessage({
             id: 'Password'
           })}
-          floatingLabel
-          style={{ width: '100%' }}
+          fullWidth
+          margin="normal"
         />
         <div styleName="footer">
           <Button
+            variant="contained"
+            color="secondary"
             className={classNames({
               'fn-disallow': this.props.isSubmitting
             })}
             onClick={this.props.onLoginClick}
-            disabled={this.props.isSubmitting}
-            raised
-            accent
-            ripple>
+            disabled={this.props.isSubmitting}>
             <FormattedMessage
               id={this.props.isSubmitting ? 'Wait a Moment' : 'Login'}
             />
@@ -159,7 +157,7 @@ export default class Login extends React.Component {
         onRequestClose={this.close}
         contentLabel="login-modal">
         <div styleName="clear" onClick={this.close}>
-          <Icon name="clear" />
+          <ClearIcon />
         </div>
         <div styleName="form">
           <div styleName="fields">{this.renderContent()}</div>
