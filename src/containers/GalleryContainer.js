@@ -11,14 +11,12 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DoneIcon from '@material-ui/icons/Done';
 import GithubIcon from '@material-ui/docs/svgIcons/Github';
-import shortid from 'shortid';
 import DocumentTitle from 'react-document-title';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
@@ -30,11 +28,10 @@ import GalleryList from '@/components/List';
 import Loading from '@/components/Loading';
 import Refresh from '@/components/Refresh';
 import Message from '@/components/Message';
+import LanguageSelector from '@/components/LanguageSelector';
 import ScrollContext from '@/components/ScrollContext';
 import scrollTo from '@/utils/scrollTo';
 import Storage from '@/utils/Storage';
-
-import chooseLocale from '@/locale/chooseLocale';
 
 @connect(state => ({ gallery: state.gallery }))
 @injectIntl
@@ -53,7 +50,7 @@ export default class GalleryContainer extends React.Component {
 
     const cachedTag = Storage.get('tag');
     this.props.dispatch(
-      GalleryActions.setTag(cachedTag === null ? 'ranking' : cachedTag)
+      GalleryActions.setTag(cachedTag ? 'ranking' : cachedTag)
     );
 
     if (this.props.gallery.items.length === 0) {
@@ -120,39 +117,10 @@ export default class GalleryContainer extends React.Component {
   }
 
   @autobind
-  onLanguageClick(value) {
-    Storage.set('lang', value);
-    chooseLocale(value, this.props.dispatch);
-  }
-
-  @autobind
   onKeywordClick(tag) {
     this.props.dispatch(GalleryActions.setTag(tag));
     this.reRenderContent(false);
     Storage.set('tag', tag);
-  }
-
-  renderLanguages() {
-    const languages = config.languages;
-
-    return languages.map(elem => {
-      const lang = Storage.get('lang');
-      const highlight = elem.value === lang;
-
-      return (
-        <ListItem
-          key={shortid.generate()}
-          button
-          onClick={() => this.onLanguageClick(elem.value)}>
-          {highlight && (
-            <ListItemIcon>
-              <DoneIcon style={{ color: '#4caf50' }} />
-            </ListItemIcon>
-          )}
-          <ListItemText primary={elem.name} />
-        </ListItem>
-      );
-    });
   }
 
   renderKeywords() {
@@ -163,7 +131,7 @@ export default class GalleryContainer extends React.Component {
 
       return (
         <ListItem
-          key={shortid.generate()}
+          key={elem.en}
           button
           onClick={() => this.onKeywordClick(elem.en)}>
           {highlight && (
@@ -172,6 +140,7 @@ export default class GalleryContainer extends React.Component {
             </ListItemIcon>
           )}
           <ListItemText
+            style={{ fontWeight: 'bold' }}
             primary={
               elem.en === 'ranking'
                 ? this.props.intl.formatMessage({ id: 'Ranking' })
@@ -224,12 +193,8 @@ export default class GalleryContainer extends React.Component {
                   styleName="appbar-title">
                   {config.siteTitle}
                 </Typography>
-                <IconButton
-                  color="inherit"
-                  onClick={() =>
-                    (location.href =
-                      'https://github.com/LoveLiveSunshine/pixiv.moe')
-                  }>
+                <LanguageSelector />
+                <IconButton color="inherit" href={config.projectLink}>
                   <GithubIcon />
                 </IconButton>
               </Toolbar>
@@ -241,15 +206,6 @@ export default class GalleryContainer extends React.Component {
               role="button"
               onClick={this.onToggleDrawer}
               onKeyDown={this.onToggleDrawer}>
-              <List
-                subheader={
-                  <ListSubheader>
-                    <FormattedMessage id="Language" />
-                  </ListSubheader>
-                }>
-                {this.renderLanguages()}
-              </List>
-              <Divider />
               <List
                 subheader={
                   <ListSubheader>

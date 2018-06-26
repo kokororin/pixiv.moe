@@ -29,6 +29,9 @@ export default class Item extends React.Component {
 
   componentDidMount() {
     this.wait = setInterval(() => {
+      if (!this.imgRef) {
+        return;
+      }
       const width = this.imgRef.naturalWidth;
       const height = this.imgRef.naturalHeight;
       const offsetWidth = this.wrapper.offsetWidth;
@@ -41,6 +44,10 @@ export default class Item extends React.Component {
         clearInterval(this.wait);
       }
     }, 30);
+  }
+
+  componentWillUnmount() {
+    this.wait && clearInterval(this.wait);
   }
 
   onImageMouseMove(event) {
