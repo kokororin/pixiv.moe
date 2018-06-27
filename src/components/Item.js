@@ -22,32 +22,8 @@ export default class Item extends React.Component {
 
     this.state = {
       width: 0,
-      height: 0,
-      hasLoaded: false
+      height: 0
     };
-  }
-
-  componentDidMount() {
-    this.wait = setInterval(() => {
-      if (!this.imgRef) {
-        return;
-      }
-      const width = this.imgRef.naturalWidth;
-      const height = this.imgRef.naturalHeight;
-      const offsetWidth = this.wrapper.offsetWidth;
-      if (width && height) {
-        this.setState({
-          width: offsetWidth,
-          // eslint-disable-next-line prettier/prettier
-          height: (offsetWidth * height) / width
-        });
-        clearInterval(this.wait);
-      }
-    }, 30);
-  }
-
-  componentWillUnmount() {
-    this.wait && clearInterval(this.wait);
   }
 
   onImageMouseMove(event) {
@@ -59,19 +35,10 @@ export default class Item extends React.Component {
   }
 
   @autobind
-  onImageLoad() {
-    this.setState({
-      hasLoaded: true
-    });
-    this.wait && clearInterval(this.wait);
-  }
-
-  @autobind
   onImageError() {
     this.imgRef.src = require('@/images/img-fail.jpg');
     typeof this.props.masonryRef !== 'undefined' &&
       this.props.masonryRef.performLayout();
-    this.wait && clearInterval(this.wait);
   }
 
   renderRankText() {
@@ -110,26 +77,14 @@ export default class Item extends React.Component {
           to={`/illust/${
             isRank ? this.props.item.work.id : this.props.item.id
           }`}>
-          <div ref={ref => (this.wrapper = ref)} styleName="image-wrapper">
+          <div styleName="image-wrapper">
             <img
-              src={require('@/images/img-placeholder.gif')}
-              width={this.state.width}
-              height={this.state.height}
-              style={{
-                display: this.state.hasLoaded ? 'none' : 'block'
-              }}
-            />
-            <img
-              style={{
-                display: this.state.hasLoaded ? 'block' : 'none'
-              }}
               ref={ref => (this.imgRef = ref)}
               src={
                 isRank
                   ? this.props.item.work.image_urls.px_480mw
                   : this.props.item.image_urls.px_480mw
               }
-              onLoad={this.onImageLoad}
               onError={this.onImageError}
             />
           </div>
