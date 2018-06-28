@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import EventListener from 'react-event-listener';
 
 import ScrollContext from '@/components/ScrollContext';
 
@@ -13,14 +14,6 @@ export default class InfiniteScroll extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    this.scrollingElement.addEventListener('scroll', this.onScroll);
-  }
-
-  componentWillUnmount() {
-    this.scrollingElement.removeEventListener('scroll', this.onScroll);
   }
 
   @autobind
@@ -48,6 +41,16 @@ export default class InfiniteScroll extends React.Component {
   }
 
   render() {
-    return this.props.children;
+    return (
+      <React.Fragment>
+        {this.props.children}
+        {this.scrollingElement && (
+          <EventListener
+            target={this.scrollingElement}
+            onScroll={this.onScroll}
+          />
+        )}
+      </React.Fragment>
+    );
   }
 }

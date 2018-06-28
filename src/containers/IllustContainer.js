@@ -20,6 +20,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import config from '@/config';
 
 import * as IllustActions from '@/actions/illust';
+import * as GalleryActions from '@/actions/gallery';
 import Alert from '@/components/Alert';
 import Comment from '@/components/Comment';
 import GifPlayer from '@/components/GifPlayer';
@@ -100,7 +101,7 @@ export default class IllustContainer extends React.Component {
     cachedFetch(`${config.apiBaseURL}${config.favouriteURI}/${this.illustId}`, {
       mode: 'cors',
       method: 'put',
-      timeout: 10e3,
+      timeout: 30e3,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -149,14 +150,9 @@ export default class IllustContainer extends React.Component {
 
   @autobind
   onTagClick(tag) {
-    const link = document.createElement('a');
-    link.href = `https://www.pixiv.net/search.php?s_mode=s_tag_full&word=${encodeURIComponent(
-      tag
-    )}`;
-    link.setAttribute('target', '_blank');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    this.props.dispatch(GalleryActions.setWord(tag));
+    this.props.dispatch(GalleryActions.setFromIllust(true));
+    this.props.history.push('/');
   }
 
   renderImage() {

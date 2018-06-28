@@ -2,6 +2,7 @@ export default {
   apiBaseURL: 'https://api.pixiv.moe/v1',
   galleryURI: '/gallery',
   rankingURI: '/ranking',
+  searchURI: '/search',
   illustURI: '/illust',
   commentsURI: '/illust/comments',
   authURI: '/user/auth',

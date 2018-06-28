@@ -2,6 +2,7 @@ import styles from '@/styles/Base.scss';
 
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import EventListener, { withOptions } from 'react-event-listener';
 
 @withRouter
 export default class ScrollContext extends React.Component {
@@ -16,10 +17,6 @@ export default class ScrollContext extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    document.addEventListener('scroll', this.onScroll, true);
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.location === prevProps.location) {
       return;
@@ -28,10 +25,6 @@ export default class ScrollContext extends React.Component {
     if (scrollTop && this.scrollingElement) {
       this.scrollingElement.scrollTop = scrollTop;
     }
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('scroll', this.onScroll, true);
   }
 
   @autobind
@@ -56,6 +49,12 @@ export default class ScrollContext extends React.Component {
         <div className={styles['scroll-context-inner-container']}>
           {this.props.children}
         </div>
+        <EventListener
+          target={document}
+          onScroll={withOptions(this.onScroll, {
+            capture: true
+          })}
+        />
       </div>
     );
   }

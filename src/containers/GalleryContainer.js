@@ -17,8 +17,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DoneIcon from '@material-ui/icons/Done';
 import GithubIcon from '@material-ui/docs/svgIcons/Github';
+
 import DocumentTitle from 'react-document-title';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import EventListener from 'react-event-listener';
 
 import config from '@/config';
 
@@ -29,6 +31,7 @@ import Loading from '@/components/Loading';
 import Refresh from '@/components/Refresh';
 import Message from '@/components/Message';
 import LanguageSelector from '@/components/LanguageSelector';
+import SearchInput from '@/components/SearchInput';
 import ScrollContext from '@/components/ScrollContext';
 import scrollTo from '@/utils/scrollTo';
 import Storage from '@/utils/Storage';
@@ -46,22 +49,21 @@ export default class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.resizeListener);
+    if (this.props.gallery.fromIllust) {
+      this.onSearch(this.props.gallery.word);
+      this.props.dispatch(GalleryActions.setFromIllust(false));
+    } else {
+      const cachedWord = Storage.get('word');
+      this.props.dispatch(
+        GalleryActions.setWord(cachedWord ? cachedWord : 'ranking')
+      );
 
-    const cachedTag = Storage.get('tag');
-    this.props.dispatch(
-      GalleryActions.setTag(cachedTag ? 'ranking' : cachedTag)
-    );
-
-    if (this.props.gallery.items.length === 0) {
-      this.fetchSource(true);
+      if (this.props.gallery.items.length === 0) {
+        this.fetchSource(true);
+      }
     }
 
     this.resizeListener();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeListener);
   }
 
   @autobind
@@ -94,6 +96,15 @@ export default class GalleryContainer extends React.Component {
   }
 
   @autobind
+  onSearch(word) {
+    Storage.set('word', word);
+    this.props.dispatch(GalleryActions.clearErrorTimes());
+    this.props.dispatch(GalleryActions.clearSource());
+    this.props.dispatch(GalleryActions.setWord(word));
+    this.fetchSource(true);
+  }
+
+  @autobind
   resizeListener() {
     /* reset size of masonry-container when window size change */
     const node = this.rootRef,
@@ -117,39 +128,67 @@ export default class GalleryContainer extends React.Component {
   }
 
   @autobind
-  onKeywordClick(tag) {
-    this.props.dispatch(GalleryActions.setTag(tag));
+  onKeywordClick(word) {
+    this.props.dispatch(GalleryActions.setWord(word));
     this.reRenderContent(false);
-    Storage.set('tag', tag);
+    Storage.set('word', word);
   }
 
   renderKeywords() {
     const keywords = config.keywords;
 
-    return keywords.map(elem => {
-      const highlight = elem.en === this.props.gallery.tag;
+    const word = String(this.props.gallery.word);
+    let found = false;
+    for (const item of keywords) {
+      if (item.jp === word) {
+        found = true;
+        break;
+      }
+    }
 
-      return (
-        <ListItem
-          key={elem.en}
-          button
-          onClick={() => this.onKeywordClick(elem.en)}>
-          {highlight && (
-            <ListItemIcon>
-              <DoneIcon style={{ color: '#4caf50' }} />
-            </ListItemIcon>
+    return (
+      <React.Fragment>
+        {!found &&
+          word !== 'ranking' &&
+          word.trim() !== '' && (
+            <ListItem button onClick={() => this.onKeywordClick(word)}>
+              <ListItemIcon>
+                <DoneIcon style={{ color: '#4caf50' }} />
+              </ListItemIcon>
+              <ListItemText style={{ fontWeight: 'bold' }} primary={word} />
+            </ListItem>
           )}
-          <ListItemText
-            style={{ fontWeight: 'bold' }}
-            primary={
-              elem.en === 'ranking'
-                ? this.props.intl.formatMessage({ id: 'Ranking' })
-                : elem.jp
-            }
-          />
-        </ListItem>
-      );
-    });
+        {keywords.map(elem => {
+          const ranking = elem.en === 'ranking';
+          const highlight =
+            elem.jp === this.props.gallery.word ||
+            (this.props.gallery.word === 'ranking' && ranking);
+
+          return (
+            <ListItem
+              key={elem.en}
+              button
+              onClick={() =>
+                this.onKeywordClick(ranking ? 'ranking' : elem.jp)
+              }>
+              {highlight && (
+                <ListItemIcon>
+                  <DoneIcon style={{ color: '#4caf50' }} />
+                </ListItemIcon>
+              )}
+              <ListItemText
+                style={{ fontWeight: 'bold' }}
+                primary={
+                  ranking
+                    ? this.props.intl.formatMessage({ id: 'Ranking' })
+                    : elem.jp
+                }
+              />
+            </ListItem>
+          );
+        })}
+      </React.Fragment>
+    );
   }
 
   @autobind
@@ -178,28 +217,28 @@ export default class GalleryContainer extends React.Component {
     return (
       <DocumentTitle title={config.siteTitle}>
         <React.Fragment>
-          <div styleName="appbar-root">
-            <AppBar position="static" onClick={this.onHeaderClick}>
-              <Toolbar>
-                <IconButton
-                  color="inherit"
-                  onClick={this.onToggleDrawer}
-                  aria-label="Menu">
-                  <MenuIcon />
-                </IconButton>
-                <Typography
-                  variant="title"
-                  color="inherit"
-                  styleName="appbar-title">
-                  {config.siteTitle}
-                </Typography>
-                <LanguageSelector />
-                <IconButton color="inherit" href={config.projectLink}>
-                  <GithubIcon />
-                </IconButton>
-              </Toolbar>
-            </AppBar>
-          </div>
+          <AppBar position="static" onClick={this.onHeaderClick}>
+            <Toolbar styleName="appbar-toolbar">
+              <IconButton
+                color="inherit"
+                onClick={this.onToggleDrawer}
+                aria-label="Menu">
+                <MenuIcon />
+              </IconButton>
+              <Typography
+                variant="title"
+                color="inherit"
+                styleName="appbar-title">
+                {config.siteTitle}
+              </Typography>
+              <div styleName="appbar-middle" />
+              <SearchInput onSearch={this.onSearch} />
+              <LanguageSelector />
+              <IconButton color="inherit" href={config.projectLink}>
+                <GithubIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
           <Drawer open={this.state.isDrawerOpen} onClose={this.onToggleDrawer}>
             <div
               tabIndex={0}
@@ -208,7 +247,7 @@ export default class GalleryContainer extends React.Component {
               onKeyDown={this.onToggleDrawer}>
               <List
                 subheader={
-                  <ListSubheader>
+                  <ListSubheader disableSticky>
                     <FormattedMessage id="Tags" />
                   </ListSubheader>
                 }>
@@ -236,6 +275,7 @@ export default class GalleryContainer extends React.Component {
               </div>
             </ScrollContext.Container>
           </InfiniteScroll>
+          <EventListener target="window" onResize={this.resizeListener} />
         </React.Fragment>
       </DocumentTitle>
     );

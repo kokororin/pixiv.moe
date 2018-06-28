@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
+import EventListener from 'react-event-listener';
 
 import Alert from '@/components/Alert';
 import Login from '@/components/Login';
@@ -35,11 +36,6 @@ export default class LoginContainer extends React.Component {
     this.setState({
       authData
     });
-    document.addEventListener('keydown', this.onKeydown);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.onKeydown);
   }
 
   @autobind
@@ -163,6 +159,7 @@ export default class LoginContainer extends React.Component {
           authData={this.state.authData}
         />
         <Alert ref={ref => (this.alertRef = ref)} />
+        <EventListener target={document} onKeydown={this.onKeydown} />
       </React.Fragment>
     );
   }

@@ -111,6 +111,7 @@
     "react-css-modules": "^4.7.1",
     "react-document-title": "^2.0.3",
     "react-dom": "^16.4.1",
+    "react-event-listener": "^0.6.1",
     "react-ga": "^2.1.2",
     "react-image": "^1.0.1",
     "react-intl": "^2.4.0",
