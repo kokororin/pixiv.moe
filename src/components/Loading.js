@@ -3,12 +3,12 @@ import styles from '@/styles/Message.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import MDSpinner from 'react-md-spinner';
 
 const Loading = ({ isHidden }) => {
   return isHidden ? null : (
     <div styleName="message">
-      <CircularProgress size={30} />
+      <MDSpinner size={30} />
     </div>
   );
 };

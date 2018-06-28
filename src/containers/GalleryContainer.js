@@ -74,15 +74,7 @@ export default class GalleryContainer extends React.Component {
   }
 
   @autobind
-  async reRenderContent(clearCache) {
-    if (clearCache) {
-      try {
-        const searchResults = await Storage.search('cf_(.*)');
-        for (const searchResult of searchResults) {
-          Storage.remove(searchResult);
-        }
-      } catch (e) {}
-    }
+  reRenderContent() {
     this.props.dispatch(GalleryActions.clearErrorTimes());
     this.props.dispatch(GalleryActions.clearSource());
     this.fetchSource(true);
@@ -130,7 +122,7 @@ export default class GalleryContainer extends React.Component {
   @autobind
   onKeywordClick(word) {
     this.props.dispatch(GalleryActions.setWord(word));
-    this.reRenderContent(false);
+    this.reRenderContent();
     Storage.set('word', word);
   }
 
@@ -276,7 +268,7 @@ export default class GalleryContainer extends React.Component {
                   text={this.props.intl.formatMessage({ id: 'Failed to Load' })}
                   isHidden={!this.props.gallery.isError}
                 />
-                <Refresh onClick={() => this.reRenderContent(true)} />
+                <Refresh onClick={this.reRenderContent} />
               </div>
             </ScrollContext.Container>
           </InfiniteScroll>
