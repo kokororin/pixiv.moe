@@ -16,6 +16,7 @@ import shortid from 'shortid';
 import Img from 'react-image';
 import DocumentTitle from 'react-document-title';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import honoka from 'honoka';
 
 import config from '@/config';
 
@@ -29,7 +30,6 @@ import Loading from '@/components/Loading';
 import Message from '@/components/Message';
 import ScrollContext from '@/components/ScrollContext';
 import LoginContainer from '@/containers/LoginContainer';
-import cachedFetch from '@/utils/cachedFetch';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
 
@@ -98,16 +98,14 @@ export default class IllustContainer extends React.Component {
     }
     target.classList.add('fn-wait');
     body.classList.add('fn-wait');
-    cachedFetch(`${config.apiBaseURL}${config.favouriteURI}/${this.illustId}`, {
-      mode: 'cors',
-      method: 'put',
-      timeout: 30e3,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Token': authData.access_token
-      }
-    })
+    honoka
+      .put(`${config.favouriteURI}/${this.illustId}`, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Token': authData.access_token
+        }
+      })
       .then(data => {
         target.classList.remove('fn-wait');
         body.classList.remove('fn-wait');

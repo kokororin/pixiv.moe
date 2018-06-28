@@ -1,7 +1,7 @@
 import namespacedTypes from 'namespaced-types';
+import honoka from 'honoka';
 
 import config from '@/config';
-import cachedFetch from '@/utils/cachedFetch';
 
 export const types = namespacedTypes('gallery', [
   'SET_ITEMS',
@@ -69,17 +69,15 @@ function fetchSource() {
     dispatch(setFetchError(false));
     dispatch(setFetchStatus(true));
     if (getState().gallery.word === 'ranking') {
-      return cachedFetch(`${config.apiBaseURL}${config.rankingURI}`, {
-        mode: 'cors',
-        timeout: 30e3,
-        data: {
-          page: getState().gallery.page
-        }
-      })
+      return honoka
+        .get(config.rankingURI, {
+          data: {
+            page: getState().gallery.page
+          }
+        })
         .then(data => {
           if (data.status === 'success' && data.count > 0) {
-            Object.keys(data.response.works).forEach(key => {
-              const elem = data.response.works[key];
+            data.response.works.forEach(elem => {
               dispatch(setItems(elem));
             });
           } else {
@@ -96,18 +94,18 @@ function fetchSource() {
           dispatch(setFetchError(true));
         });
     }
-    return cachedFetch(`${config.apiBaseURL}${config.searchURI}`, {
-      mode: 'cors',
-      timeout: 30e3,
-      data: {
-        word: getState().gallery.word,
-        page: getState().gallery.page
-      }
-    })
+    return honoka
+      .get(config.searchURI, {
+        mode: 'cors',
+        timeout: 30e3,
+        data: {
+          word: getState().gallery.word,
+          page: getState().gallery.page
+        }
+      })
       .then(data => {
         if (data.status === 'success' && data.count > 0) {
-          Object.keys(data.response).forEach(key => {
-            const elem = data.response[key];
+          data.response.forEach(elem => {
             dispatch(setItems(elem));
           });
         } else {

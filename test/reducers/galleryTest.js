@@ -9,7 +9,9 @@ describe('GalleryReducer', () => {
       isError: false,
       errorTimes: 0,
       items: [],
-      images: []
+      images: [],
+      word: 'ranking',
+      fromIllust: false
     });
   });
 });

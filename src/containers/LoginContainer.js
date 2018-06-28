@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import EventListener from 'react-event-listener';
+import honoka from 'honoka';
 
 import Alert from '@/components/Alert';
 import Login from '@/components/Login';
-import cachedFetch from '@/utils/cachedFetch';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
 
@@ -94,19 +94,17 @@ export default class LoginContainer extends React.Component {
       isSubmitting: true
     });
 
-    cachedFetch(`${config.apiBaseURL}${config.authURI}`, {
-      mode: 'cors',
-      method: 'post',
-      timeout: 10e3,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username,
-        password
+    honoka
+      .post(config.authURI, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        data: {
+          username,
+          password
+        }
       })
-    })
       .then(data => {
         if (data.status === 'success') {
           const authData = data.data;

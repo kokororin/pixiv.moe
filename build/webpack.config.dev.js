@@ -20,7 +20,6 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',
-    'whatwg-fetch',
     'classlist-polyfill',
     './src/index'
   ],

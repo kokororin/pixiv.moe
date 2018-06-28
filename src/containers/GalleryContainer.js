@@ -196,7 +196,12 @@ export default class GalleryContainer extends React.Component {
     const target = event.target;
     const tagName = target.tagName.toLowerCase();
 
-    if (tagName !== 'button' && tagName !== 'span' && tagName !== 'svg') {
+    if (
+      tagName !== 'button' &&
+      tagName !== 'span' &&
+      tagName !== 'svg' &&
+      tagName !== 'input'
+    ) {
       scrollTo(
         document.querySelector(`.${ScrollContext.scrollingClassName}`),
         0,

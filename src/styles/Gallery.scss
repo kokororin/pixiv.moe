@@ -8,7 +8,7 @@
   flex: 1;
   height: 21px;
   @media screen and (max-width: 649px) {
-    display: none;
+    display: none !important;
   }
 }
 
