@@ -18,4 +18,4 @@ Loading.propTypes = {
 };
 
 // eslint-disable-next-line babel/new-cap
-export default CSSModules(Loading, styles, { allowMultiple: true });
+export default CSSModules(Loading, styles);

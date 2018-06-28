@@ -4,7 +4,7 @@ import React from 'react';
 import CSSModules from 'react-css-modules';
 import Modal from 'react-modal';
 
-@CSSModules(styles, { allowMultiple: true })
+@CSSModules(styles)
 export default class Alert extends React.Component {
   constructor(props) {
     super(props);

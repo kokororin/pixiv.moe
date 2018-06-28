@@ -35,7 +35,7 @@ import Storage from '@/utils/Storage';
 
 @connect(state => ({ illust: state.illust }))
 @injectIntl
-@CSSModules(styles, { allowMultiple: true })
+@CSSModules(styles)
 export default class IllustContainer extends React.Component {
   constructor(props) {
     super(props);

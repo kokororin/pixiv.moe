@@ -38,7 +38,7 @@ import Storage from '@/utils/Storage';
 
 @connect(state => ({ gallery: state.gallery }))
 @injectIntl
-@CSSModules(galleryStyles, { allowMultiple: true })
+@CSSModules(galleryStyles)
 export default class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);

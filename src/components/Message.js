@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { FormattedMessage } from 'react-intl';
 
-@CSSModules(styles, { allowMultiple: true })
+@CSSModules(styles)
 export default class Message extends React.Component {
   static propTypes = {
     isHidden: PropTypes.bool,

@@ -14,7 +14,7 @@ import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
 
 @injectIntl
-@CSSModules(styles, { allowMultiple: true })
+@CSSModules(styles)
 export default class Login extends React.Component {
   static propTypes = {
     onRef: PropTypes.func,

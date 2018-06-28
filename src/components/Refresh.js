@@ -20,4 +20,4 @@ Refresh.propTypes = {
 };
 
 // eslint-disable-next-line babel/new-cap
-export default CSSModules(Refresh, styles, { allowMultiple: true });
+export default CSSModules(Refresh, styles);

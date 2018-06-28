@@ -6,7 +6,7 @@ import CSSModules from 'react-css-modules';
 import EventListener from 'react-event-listener';
 import SearchIcon from '@material-ui/icons/Search';
 
-@CSSModules(styles, { allowMultiple: true })
+@CSSModules(styles)
 export default class SearchInput extends React.Component {
   static propTypes = {
     onSearch: PropTypes.func
