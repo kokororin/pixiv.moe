@@ -4,7 +4,8 @@ const webpack = require('webpack');
 module.exports = {
   output: {
     path: path.join(__dirname, '/../dist'),
-    filename: process.env.NODE_ENV === 'production' ? 'app.[hash].js' : 'app.js',
+    filename:
+      process.env.NODE_ENV === 'production' ? 'app.[hash].js' : 'app.js',
     publicPath: '/'
   },
   resolve: {
@@ -23,7 +24,7 @@ module.exports = {
       },
       {
         test: /(\.scss|\.css)$/,
-        exclude: /node_modules|material-design-lite\.scss/,
+        exclude: /node_modules/,
         use: [
           'style-loader',
           {
@@ -41,7 +42,7 @@ module.exports = {
       },
       {
         test: /(\.scss|\.css)$/,
-        include: /node_modules|material-design-lite\.scss/,
+        include: /node_modules/,
         use: [
           'style-loader',
           {

@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { Route } from 'react-router-dom';
+import honoka from 'honoka';
 
 import config from '@/config';
 import Piwik from '@/utils/Piwik';
-import cachedFetch from '@/utils/cachedFetch';
 
 export default class TrackPageView extends React.Component {
   constructor(props) {
@@ -34,7 +34,7 @@ export default class TrackPageView extends React.Component {
         }));
       this.piwik.track(pageLink);
 
-      cachedFetch(`${config.apiBaseURL}${config.logURI}`).catch(() => {});
+      honoka.get(config.logURI).catch(() => {});
     } else {
       console.log(pageLink); // eslint-disable-line
     }

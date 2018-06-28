@@ -1,7 +1,7 @@
 import namespacedTypes from 'namespaced-types';
+import honoka from 'honoka';
 
 import config from '@/config';
-import cachedFetch from '@/utils/cachedFetch';
 import getImagesFromZip from '@/utils/getImagesFromZip';
 
 export const types = namespacedTypes('illust', [
@@ -47,10 +47,8 @@ export function fetchItem(illustId) {
   return dispatch => {
     dispatch(setFetchStatus(true));
     dispatch(setFetchError(false));
-    return cachedFetch(`${config.apiBaseURL}${config.illustURI}/${illustId}`, {
-      mode: 'cors',
-      timeout: 10e3
-    })
+    return honoka
+      .get(`${config.illustURI}/${illustId}`)
       .then(data => {
         if (data.status === 'success') {
           if (
@@ -134,16 +132,12 @@ export function fetchComments(illustId) {
   return (dispatch, getState) => {
     dispatch(setFetchCommentsStatus(true));
     dispatch(setFetchCommentsError(false));
-    return cachedFetch(
-      `${config.apiBaseURL}${config.commentsURI}/${illustId}`,
-      {
-        mode: 'cors',
-        timeout: 10e3,
+    return honoka
+      .get(`${config.commentsURI}/${illustId}`, {
         data: {
           page: getState().illust.page
         }
-      }
-    )
+      })
       .then(data => {
         if (data.next) {
           dispatch(setCommentsPage(getState().illust.page + 1));

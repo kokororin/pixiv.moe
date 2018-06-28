@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import Icon from 'react-mdl/lib/Icon';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import TrendingDownIcon from '@material-ui/icons/TrendingDown';
+import StarIcon from '@material-ui/icons/Star';
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Item extends React.Component {
@@ -20,25 +22,8 @@ export default class Item extends React.Component {
 
     this.state = {
       width: 0,
-      height: 0,
-      hasLoaded: false
+      height: 0
     };
-  }
-
-  componentDidMount() {
-    this.wait = setInterval(() => {
-      const width = this.imgRef.naturalWidth;
-      const height = this.imgRef.naturalHeight;
-      const offsetWidth = this.wrapper.offsetWidth;
-      if (width && height) {
-        this.setState({
-          width: offsetWidth,
-          // eslint-disable-next-line prettier/prettier
-          height: offsetWidth * height / width
-        });
-        clearInterval(this.wait);
-      }
-    }, 30);
   }
 
   onImageMouseMove(event) {
@@ -50,19 +35,10 @@ export default class Item extends React.Component {
   }
 
   @autobind
-  onImageLoad() {
-    this.setState({
-      hasLoaded: true
-    });
-    this.wait && clearInterval(this.wait);
-  }
-
-  @autobind
   onImageError() {
     this.imgRef.src = require('@/images/img-fail.jpg');
     typeof this.props.masonryRef !== 'undefined' &&
       this.props.masonryRef.performLayout();
-    this.wait && clearInterval(this.wait);
   }
 
   renderRankText() {
@@ -76,9 +52,9 @@ export default class Item extends React.Component {
 
     const icon =
       this.props.item.previous_rank < this.props.item.rank ? (
-        <Icon styleName="trending-down" name="trending_down" />
+        <TrendingDownIcon style={{ color: '#3f51b5' }} />
       ) : (
-        <Icon styleName="trending-up" name="trending_up" />
+        <TrendingUpIcon style={{ color: '#d32f2f' }} />
       );
 
     return (
@@ -101,26 +77,14 @@ export default class Item extends React.Component {
           to={`/illust/${
             isRank ? this.props.item.work.id : this.props.item.id
           }`}>
-          <div ref={ref => (this.wrapper = ref)} styleName="image-wrapper">
+          <div styleName="image-wrapper">
             <img
-              src={require('@/images/img-placeholder.gif')}
-              width={this.state.width}
-              height={this.state.height}
-              style={{
-                display: this.state.hasLoaded ? 'none' : 'block'
-              }}
-            />
-            <img
-              style={{
-                display: this.state.hasLoaded ? 'block' : 'none'
-              }}
               ref={ref => (this.imgRef = ref)}
               src={
                 isRank
                   ? this.props.item.work.image_urls.px_480mw
                   : this.props.item.image_urls.px_480mw
               }
-              onLoad={this.onImageLoad}
               onError={this.onImageError}
             />
           </div>
@@ -142,7 +106,7 @@ export default class Item extends React.Component {
           ) : (
             <div styleName="meta">
               <span styleName="count">
-                <Icon name="star" />
+                <StarIcon />
                 {this.props.item.stats.favorited_count.public +
                   this.props.item.stats.favorited_count.private}
               </span>

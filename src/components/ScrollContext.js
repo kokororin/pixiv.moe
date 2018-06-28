@@ -1,17 +1,20 @@
+import styles from '@/styles/Base.scss';
+
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import EventListener, { withOptions } from 'react-event-listener';
 
 @withRouter
 export default class ScrollContext extends React.Component {
   static prefix = '@@SCROLL/';
-  static scrollingClassName = 'mdl-layout__content';
+  static scrollingClassName = styles['scroll-context-container'];
+
+  static Container = props => (
+    <div className={ScrollContext.scrollingClassName} {...props} />
+  );
 
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    document.addEventListener('scroll', this.onScroll, true);
   }
 
   componentDidUpdate(prevProps) {
@@ -22,10 +25,6 @@ export default class ScrollContext extends React.Component {
     if (scrollTop && this.scrollingElement) {
       this.scrollingElement.scrollTop = scrollTop;
     }
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('scroll', this.onScroll, true);
   }
 
   @autobind
@@ -45,6 +44,18 @@ export default class ScrollContext extends React.Component {
   }
 
   render() {
-    return this.props.children;
+    return (
+      <div className={styles['scroll-context']}>
+        <div className={styles['scroll-context-inner-container']}>
+          {this.props.children}
+        </div>
+        <EventListener
+          target={document}
+          onScroll={withOptions(this.onScroll, {
+            capture: true
+          })}
+        />
+      </div>
+    );
   }
 }

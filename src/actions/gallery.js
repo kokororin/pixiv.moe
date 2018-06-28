@@ -1,7 +1,7 @@
 import namespacedTypes from 'namespaced-types';
+import honoka from 'honoka';
 
 import config from '@/config';
-import cachedFetch from '@/utils/cachedFetch';
 
 export const types = namespacedTypes('gallery', [
   'SET_ITEMS',
@@ -9,10 +9,11 @@ export const types = namespacedTypes('gallery', [
   'SET_PAGE',
   'SET_FETCH_ERROR',
   'SET_FETCH_STATUS',
-  'SET_TAG',
+  'SET_WORD',
   'CLEAR_SOURCE',
   'SET_ERROR_TIMES',
-  'CLEAR_ERROR_TIMES'
+  'CLEAR_ERROR_TIMES',
+  'SET_FROM_ILLUST'
 ]);
 
 export function setItems(data) {
@@ -67,18 +68,16 @@ function fetchSource() {
   return (dispatch, getState) => {
     dispatch(setFetchError(false));
     dispatch(setFetchStatus(true));
-    if (getState().gallery.tag === 'ranking') {
-      return cachedFetch(`${config.apiBaseURL}${config.rankingURI}`, {
-        mode: 'cors',
-        timeout: 10e3,
-        data: {
-          page: getState().gallery.page
-        }
-      })
+    if (getState().gallery.word === 'ranking') {
+      return honoka
+        .get(config.rankingURI, {
+          data: {
+            page: getState().gallery.page
+          }
+        })
         .then(data => {
           if (data.status === 'success' && data.count > 0) {
-            Object.keys(data.response.works).forEach(key => {
-              const elem = data.response.works[key];
+            data.response.works.forEach(elem => {
               dispatch(setItems(elem));
             });
           } else {
@@ -95,19 +94,18 @@ function fetchSource() {
           dispatch(setFetchError(true));
         });
     }
-    return cachedFetch(`${config.apiBaseURL}${config.galleryURI}`, {
-      mode: 'cors',
-      timeout: 10e3,
-      expiryKey: 'expires_at',
-      data: {
-        tag: getState().gallery.tag,
-        page: getState().gallery.page
-      }
-    })
+    return honoka
+      .get(config.searchURI, {
+        mode: 'cors',
+        timeout: 30e3,
+        data: {
+          word: getState().gallery.word,
+          page: getState().gallery.page
+        }
+      })
       .then(data => {
         if (data.status === 'success' && data.count > 0) {
-          Object.keys(data.response).forEach(key => {
-            const elem = data.response[key];
+          data.response.forEach(elem => {
             dispatch(setItems(elem));
           });
         } else {
@@ -134,11 +132,11 @@ export function fetchSourceIfNeeded() {
   };
 }
 
-export function setTag(tag) {
+export function setWord(word) {
   return {
-    type: types.SET_TAG,
+    type: types.SET_WORD,
     payload: {
-      tag
+      word
     }
   };
 }
@@ -150,5 +148,12 @@ export function clearSource() {
       items: [],
       images: []
     }
+  };
+}
+
+export function setFromIllust(fromIllust) {
+  return {
+    type: types.SET_FROM_ILLUST,
+    payload: fromIllust
   };
 }

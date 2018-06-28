@@ -4,14 +4,14 @@ import styles from '@/styles/Button.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules';
-import FABButton from 'react-mdl/lib/FABButton';
-import Icon from 'react-mdl/lib/Icon';
+import Button from '@material-ui/core/Button';
+import RefreshIcon from '@material-ui/icons/Refresh';
 
 const Refresh = props => (
   <div styleName="float-btn">
-    <FABButton {...props} colored ripple>
-      <Icon name="refresh" />
-    </FABButton>
+    <Button variant="fab" color="secondary" aria-label="add" {...props}>
+      <RefreshIcon />
+    </Button>
   </div>
 );
 

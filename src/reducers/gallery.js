@@ -9,7 +9,9 @@ export default function gallery(
     isError: false,
     errorTimes: 0,
     items: [],
-    images: []
+    images: [],
+    word: 'ranking',
+    fromIllust: false
   },
   action
 ) {
@@ -50,10 +52,10 @@ export default function gallery(
         errorTimes: 0
       };
 
-    case types.SET_TAG:
+    case types.SET_WORD:
       return {
         ...state,
-        tag: action.payload.tag
+        word: action.payload.word
       };
 
     case types.CLEAR_SOURCE:
@@ -61,6 +63,12 @@ export default function gallery(
         ...state,
         items: action.payload.items,
         images: action.payload.images
+      };
+
+    case types.SET_FROM_ILLUST:
+      return {
+        ...state,
+        fromIllust: action.payload
       };
 
     default:

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import EventListener from 'react-event-listener';
+
+import ScrollContext from '@/components/ScrollContext';
 
 export default class InfiniteScroll extends React.Component {
-  static scrollingClassName = 'mdl-layout__content';
-
   static propTypes = {
     distance: PropTypes.number.isRequired,
     onLoadMore: PropTypes.func.isRequired,
@@ -13,14 +14,6 @@ export default class InfiniteScroll extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-    this.scrollingElement.addEventListener('scroll', this.onScroll);
-  }
-
-  componentWillUnmount() {
-    this.scrollingElement.removeEventListener('scroll', this.onScroll);
   }
 
   @autobind
@@ -44,10 +37,20 @@ export default class InfiniteScroll extends React.Component {
   }
 
   get scrollingElement() {
-    return document.querySelector(`.${InfiniteScroll.scrollingClassName}`);
+    return document.querySelector(`.${ScrollContext.scrollingClassName}`);
   }
 
   render() {
-    return this.props.children;
+    return (
+      <React.Fragment>
+        {this.props.children}
+        {this.scrollingElement && (
+          <EventListener
+            target={this.scrollingElement}
+            onScroll={this.onScroll}
+          />
+        )}
+      </React.Fragment>
+    );
   }
 }
