@@ -4,7 +4,6 @@ const webpack = require('webpack');
 module.exports = {
   entry: [
     'babel-polyfill',
-    'whatwg-fetch',
     'classlist-polyfill',
     path.join(__dirname, '../src/index')
   ],
