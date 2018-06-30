@@ -23,40 +23,6 @@ module.exports = {
         loader: 'eslint-loader'
       },
       {
-        test: /(\.scss|\.css)$/,
-        exclude: /node_modules/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 2,
-              localIdentName: '[hash:base64:8]',
-              minimize: process.env.NODE_ENV === 'production'
-            }
-          },
-          'postcss-loader',
-          'sass-loader'
-        ]
-      },
-      {
-        test: /(\.scss|\.css)$/,
-        include: /node_modules/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 2,
-              minimize: process.env.NODE_ENV === 'production'
-            }
-          },
-          'postcss-loader',
-          'sass-loader'
-        ]
-      },
-      {
         test: /\.(png|jpg|gif|woff|woff2|ttf|svg|eot)(\?|\?[a-z0-9]+)?$/,
         use: [
           {

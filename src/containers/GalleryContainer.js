@@ -1,9 +1,6 @@
-import galleryStyles from '@/styles/Gallery.scss';
-import itemStyles from '@/styles/Item.scss';
-
 import React from 'react';
 import { connect } from 'react-redux';
-import CSSModules from 'react-css-modules';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -20,7 +17,6 @@ import GithubIcon from '@material-ui/docs/svgIcons/Github';
 
 import DocumentTitle from 'react-document-title';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import EventListener from 'react-event-listener';
 
 import config from '@/config';
 
@@ -32,13 +28,30 @@ import Refresh from '@/components/Refresh';
 import Message from '@/components/Message';
 import LanguageSelector from '@/components/LanguageSelector';
 import SearchInput from '@/components/SearchInput';
-import ScrollContext from '@/components/ScrollContext';
-import scrollTo from '@/utils/scrollTo';
+import Content from '@/components/Content';
 import Storage from '@/utils/Storage';
+
+const styles = {
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative'
+  },
+  toolbarTitle: {
+    flex: 1,
+    height: 21,
+    '@media screen and (max-width: 649px)': {
+      display: 'none'
+    }
+  },
+  toolbarMiddle: {
+    flex: 1
+  }
+};
 
 @connect(state => ({ gallery: state.gallery }))
 @injectIntl
-@CSSModules(galleryStyles)
+@withStyles(styles)
 export default class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -62,8 +75,6 @@ export default class GalleryContainer extends React.Component {
         this.fetchSource(true);
       }
     }
-
-    this.resizeListener();
   }
 
   @autobind
@@ -94,29 +105,6 @@ export default class GalleryContainer extends React.Component {
     this.props.dispatch(GalleryActions.clearSource());
     this.props.dispatch(GalleryActions.setWord(word));
     this.fetchSource(true);
-  }
-
-  @autobind
-  resizeListener() {
-    /* reset size of masonry-container when window size change */
-    const node = this.rootRef,
-      cellClassName = itemStyles.cell;
-
-    // try to get cell width
-    const temp = document.createElement('div');
-    temp.setAttribute('class', cellClassName);
-    document.body.appendChild(temp);
-
-    const cellWidth = temp.offsetWidth,
-      cellMargin = 8,
-      componentWidth = cellWidth + 2 * cellMargin,
-      maxn = Math.floor(document.body.offsetWidth / componentWidth);
-
-    try {
-      node.style.width = String(`${maxn * componentWidth}px`);
-    } catch (e) {}
-
-    document.body.removeChild(temp);
   }
 
   @autobind
@@ -194,12 +182,7 @@ export default class GalleryContainer extends React.Component {
       tagName !== 'svg' &&
       tagName !== 'input'
     ) {
-      scrollTo(
-        document.querySelector(`.${ScrollContext.scrollingClassName}`),
-        0,
-        900,
-        'easeInOutQuint'
-      );
+      this.contentRef.toTop();
     }
   }
 
@@ -211,11 +194,13 @@ export default class GalleryContainer extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <DocumentTitle title={config.siteTitle}>
         <React.Fragment>
           <AppBar position="static" onClick={this.onHeaderClick}>
-            <Toolbar styleName="appbar-toolbar">
+            <Toolbar className={classes.toolbar}>
               <IconButton
                 color="inherit"
                 onClick={this.onToggleDrawer}
@@ -225,10 +210,10 @@ export default class GalleryContainer extends React.Component {
               <Typography
                 variant="title"
                 color="inherit"
-                styleName="appbar-title">
+                className={classes.toolbarTitle}>
                 {config.siteTitle}
               </Typography>
-              <div styleName="appbar-middle" />
+              <div className={classes.toolbarMiddle} />
               <SearchInput onSearch={this.onSearch} />
               <LanguageSelector />
               <IconButton color="inherit" href={config.projectLink}>
@@ -252,12 +237,12 @@ export default class GalleryContainer extends React.Component {
               </List>
             </div>
           </Drawer>
-          <InfiniteScroll
-            distance={200}
-            onLoadMore={this.onLoadMore}
-            isLoading={this.props.gallery.isFetching}
-            hasMore>
-            <ScrollContext.Container>
+          <Content onRef={ref => (this.contentRef = ref)}>
+            <InfiniteScroll
+              distance={200}
+              onLoadMore={this.onLoadMore}
+              isLoading={this.props.gallery.isFetching}
+              hasMore>
               <div
                 ref={ref => (this.rootRef = ref)}
                 style={{ margin: '0 auto' }}>
@@ -270,9 +255,8 @@ export default class GalleryContainer extends React.Component {
                 />
                 <Refresh onClick={this.reRenderContent} />
               </div>
-            </ScrollContext.Container>
-          </InfiniteScroll>
-          <EventListener target="window" onResize={this.resizeListener} />
+            </InfiniteScroll>
+          </Content>
         </React.Fragment>
       </DocumentTitle>
     );

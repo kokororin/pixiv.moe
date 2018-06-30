@@ -1,9 +1,7 @@
-import styles from '@/styles/Illust.scss';
-
 import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import CSSModules from 'react-css-modules';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -28,17 +26,117 @@ import GifPlayer from '@/components/GifPlayer';
 import InfiniteScroll from '@/components/InfiniteScroll';
 import Loading from '@/components/Loading';
 import Message from '@/components/Message';
-import ScrollContext from '@/components/ScrollContext';
+import Content from '@/components/Content';
 import LoginContainer from '@/containers/LoginContainer';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
 
+const styles = {
+  illust: {
+    padding: 20
+  },
+  link: {
+    cursor: 'default'
+  },
+  image: {
+    overflow: 'hidden',
+    textAlign: 'center',
+    '& img': {
+      position: 'relative',
+      marginTop: 0,
+      marginRight: 'auto',
+      marginBottom: 10,
+      marginLeft: 'auto',
+      maxWidth: '100%',
+      boxShadow:
+        '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12)',
+      border: 0,
+      zIndex: 1,
+      transition: 'opacity 0.3s ease',
+      '@media screen and (max-width: 768px) and (orientation: portrait)': {
+        width: '100%'
+      },
+      '@media screen and (max-width: 1024px) and (orientation: landscape)': {
+        width: '100%'
+      }
+    }
+  },
+  caption: {
+    margin: 15,
+    textAlign: 'center',
+    '& p': {
+      lineHeight: '18px'
+    }
+  },
+  tags: {
+    margin: 15,
+    textAlign: 'center'
+  },
+  tagItem: {
+    margin: 5,
+    '& div': {
+      color: 'rgb(255, 255, 255) !important',
+      backgroundColor: 'rgb(0, 150, 136) !important'
+    }
+  },
+  actions: {
+    margin: 15,
+    textAlign: 'center',
+    '& button': {
+      margin: 8
+    }
+  },
+  detail: {
+    textAlign: 'center',
+    color: 'rgb(255, 64, 129)',
+    '& time': {
+      marginLeft: 10,
+      color: '#999'
+    },
+    '& a': {
+      textDecoration: 'none'
+    }
+  },
+  author: {
+    display: 'inline-block',
+    '&:before': {
+      content: '"by"',
+      marginRight: 5
+    },
+    '& a': {
+      color: '#258fb8'
+    }
+  },
+  metas: {
+    color: '#666'
+  },
+  divide: {
+    '&:not(:first-child)': {
+      marginLeft: 4,
+      paddingLeft: 4,
+      borderLeft: '1px solid #ccc'
+    }
+  },
+  comments: {
+    width: '100%'
+  },
+  commentList: {
+    display: 'block',
+    padding: '8px 0',
+    listStyle: 'none'
+  }
+};
+
 @connect(state => ({ illust: state.illust }))
 @injectIntl
-@CSSModules(styles)
+@withStyles(styles)
 export default class IllustContainer extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      isSubmitting: false
+    };
 
     this.illustId = this.props.match.params.illustId;
   }
@@ -86,18 +184,15 @@ export default class IllustContainer extends React.Component {
   }
 
   @autobind
-  onFavouriteClick(event) {
+  onFavouriteClick() {
     const authData = Storage.get('auth');
     if (authData === null || authData.expires_at < moment().unix()) {
       return this.loginRef.open();
     }
-    const target = event.target,
-      body = document.body;
-    if (target.classList.contains('fn-wait')) {
-      return;
-    }
-    target.classList.add('fn-wait');
-    body.classList.add('fn-wait');
+
+    this.setState({
+      isSubmitting: true
+    });
     honoka
       .put(`${config.favouriteURI}/${this.illustId}`, {
         headers: {
@@ -107,13 +202,15 @@ export default class IllustContainer extends React.Component {
         }
       })
       .then(data => {
-        target.classList.remove('fn-wait');
-        body.classList.remove('fn-wait');
+        this.setState({
+          isSubmitting: false
+        });
         this.alertRef.setContent(data.message);
       })
       .catch(() => {
-        target.classList.remove('fn-wait');
-        body.classList.remove('fn-wait');
+        this.setState({
+          isSubmitting: false
+        });
         this.alertRef.setContent(
           this.props.intl.formatMessage({ id: 'Communication Error Occurred' })
         );
@@ -181,6 +278,8 @@ export default class IllustContainer extends React.Component {
   }
 
   renderContent() {
+    const { classes } = this.props;
+
     if (this.props.illust.isFetching) {
       return <Loading isHidden={false} />;
     }
@@ -194,9 +293,9 @@ export default class IllustContainer extends React.Component {
     }
     try {
       return (
-        <div styleName="illust">
-          <div styleName="image">{this.renderImage()}</div>
-          <div styleName="caption">
+        <div className={classes.illust}>
+          <div className={classes.image}>{this.renderImage()}</div>
+          <div className={classes.caption}>
             {typeof this.item.caption === 'string' &&
               this.item.caption
                 .replace(/(\r\n|\n\r|\r|\n)/g, '\n')
@@ -210,11 +309,12 @@ export default class IllustContainer extends React.Component {
                   />
                 ))}
           </div>
-          <div styleName="tags">
+          <div className={classes.tags}>
             {this.item.tags.map(elem => {
               return (
                 <Chip
                   key={shortid.generate()}
+                  className={classes.tagItem}
                   avatar={<Avatar>#</Avatar>}
                   label={elem}
                   onClick={() => this.onTagClick(elem)}
@@ -223,8 +323,11 @@ export default class IllustContainer extends React.Component {
               );
             })}
           </div>
-          <div styleName="actions">
-            <Button variant="contained" onClick={this.onFavouriteClick}>
+          <div className={classes.actions}>
+            <Button
+              variant="contained"
+              onClick={this.onFavouriteClick}
+              disabled={this.state.isSubmitting}>
               <FormattedMessage id="Add to Bookmarks" />
             </Button>
             <Button variant="contained" onClick={this.onDownloadClick}>
@@ -234,9 +337,9 @@ export default class IllustContainer extends React.Component {
               <FormattedMessage id="Tweet" />
             </Button>
           </div>
-          <div styleName="detail">
+          <div className={classes.detail}>
             <div>
-              <div styleName="author">
+              <div className={classes.author}>
                 <a
                   target="_blank"
                   href={`http://pixiv.me/${this.item.user.account}`}>
@@ -246,14 +349,14 @@ export default class IllustContainer extends React.Component {
               <time>
                 {`${moment(this.item.created_time).format('LLL')}(JST)`}
               </time>
-              <div styleName="metas">
-                <span styleName="divide">{`${this.item.width}x${
+              <div className={classes.metas}>
+                <span className={classes.divide}>{`${this.item.width}x${
                   this.item.height
                 }`}</span>
                 {Array.isArray(this.item.tools) && (
                   <span
-                    styleName={classNames({
-                      divide:
+                    className={classNames({
+                      [classes.divide]:
                         Array.isArray(this.item.tools) &&
                         this.item.tools.length > 0
                     })}>
@@ -275,7 +378,7 @@ export default class IllustContainer extends React.Component {
             }
             isLoading={this.props.illust.isFetchingComments}
             hasMore={!this.props.illust.isCommentsEnd}>
-            <div styleName="comments">
+            <div className={classes.comments}>
               <h4>
                 <FormattedMessage
                   id={
@@ -285,7 +388,7 @@ export default class IllustContainer extends React.Component {
                   }
                 />
               </h4>
-              <ul styleName="comment-list">
+              <ul className={classes.commentList}>
                 {this.props.illust.comments.map(elem => {
                   return <Comment key={shortid.generate()} item={elem} />;
                 })}
@@ -294,7 +397,7 @@ export default class IllustContainer extends React.Component {
             </div>
           </InfiniteScroll>
           <LoginContainer onRef={ref => (this.loginRef = ref)} />
-          <Alert ref={ref => (this.alertRef = ref)} />
+          <Alert onRef={ref => (this.alertRef = ref)} />
         </div>
       );
     } catch (e) {
@@ -322,9 +425,7 @@ export default class IllustContainer extends React.Component {
               </Typography>
             </Toolbar>
           </AppBar>
-          <ScrollContext.Container onScroll={this.scrollListener}>
-            {this.renderContent()}
-          </ScrollContext.Container>
+          <Content>{this.renderContent()}</Content>
         </React.Fragment>
       </DocumentTitle>
     );

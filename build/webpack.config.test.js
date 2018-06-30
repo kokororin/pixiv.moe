@@ -2,11 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    'classlist-polyfill',
-    path.join(__dirname, '../src/index')
-  ],
+  entry: ['babel-polyfill', path.join(__dirname, '../src/index')],
   devtool: 'eval',
   module: {
     rules: [
@@ -20,7 +16,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|jpg|gif|woff|woff2|css|sass|scss|less|styl)$/,
+        test: /\.(png|jpg|gif|woff|woff2)$/,
         loader: 'null-loader'
       },
       {

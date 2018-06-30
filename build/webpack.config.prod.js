@@ -9,11 +9,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const OptimizeJsPlugin = require('optimize-js-plugin');
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    'classlist-polyfill',
-    path.join(__dirname, '../src/index')
-  ],
+  entry: ['babel-polyfill', path.join(__dirname, '../src/index')],
   cache: false,
   devtool: '#source-map',
   module: {
