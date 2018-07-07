@@ -1,6 +1,6 @@
 import { addLocaleData } from 'react-intl';
-import jaLocaleData from 'react-intl/locale-data/id';
-import ja from '@/locale/id';
+import idLocaleData from 'react-intl/locale-data/id';
+import id from '@/locale/id';
 import jaLocaleData from 'react-intl/locale-data/ja';
 import ja from '@/locale/ja';
 import enLocaleData from 'react-intl/locale-data/en';
