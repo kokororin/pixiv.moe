@@ -21,7 +21,7 @@ const id = {
   Password: 'Kata Sandi',
   Nickname: 'Nama panggilan',
   'An error occurred. Check the URL or wait for a while and access again.':
-    'Terjadi kesalahan. Periksa URL atau tunggu beberapa saat dan akses lagi.',
+  'Terjadi kesalahan. Periksa URL atau tunggu beberapa saat dan akses lagi.',
   'Failed to Load': 'Gagal untuk memuat',
   Tags: 'Tags',
   'Redirecting to pixiv.net': 'Mengarahkan ke pixiv.net',
