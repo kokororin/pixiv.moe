@@ -19,17 +19,17 @@ const chooseLocale = (language, dispatch) => {
     lang = cachedLang;
   }
 
-  switch (lang) {
+    switch (lang) {
     case 'en':
       addLocaleData(enLocaleData);
       lang = 'en';
       messages = en;
       break;
-	  addLocaleData(idLocaleData);
-	  lang = 'id';
-	  messages = id;
-	  break;
-    default:
+      addLocaleData(idLocaleData);
+      lang = 'id';
+      messages = id;
+      break;
+      default:
       addLocaleData(jaLocaleData);
       lang = 'ja';
       messages = ja;
