@@ -1,4 +1,6 @@
 import { addLocaleData } from 'react-intl';
+import jaLocaleData from 'react-intl/locale-data/id';
+import ja from '@/locale/id';
 import jaLocaleData from 'react-intl/locale-data/ja';
 import ja from '@/locale/ja';
 import enLocaleData from 'react-intl/locale-data/en';
@@ -23,6 +25,10 @@ const chooseLocale = (language, dispatch) => {
       lang = 'en';
       messages = en;
       break;
+	  addLocaleData(idLocaleData);
+	  lang = 'id';
+	  messages = id;
+	  break;
     default:
       addLocaleData(jaLocaleData);
       lang = 'ja';
