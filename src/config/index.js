@@ -14,16 +14,6 @@ export default {
   piwikSiteId: '2PMEnB',
   projectLink: 'https://github.com/LoveLiveSunshine/pixiv.moe',
   siteTitle: 'pixivギャラリー',
-  languages: [
-    {
-      name: '日本語',
-      value: 'ja'
-    },
-    {
-      name: 'English',
-      value: 'en'
-    }
-  ],
   keywords: [
     {
       en: 'ranking',

@@ -13,6 +13,7 @@
   },
   "rules": {
     "new-cap": 0,
+    "linebreak-style": 1,
     "prettier/prettier": [1, {
       "singleQuote": true,
       "trailingComma": "none",
