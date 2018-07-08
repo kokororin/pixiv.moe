@@ -1,4 +1,6 @@
 import { addLocaleData } from 'react-intl';
+import idLocaleData from 'react-intl/locale-data/id';
+import id from '@/locale/id';
 import jaLocaleData from 'react-intl/locale-data/ja';
 import ja from '@/locale/ja';
 import enLocaleData from 'react-intl/locale-data/en';
@@ -17,13 +19,17 @@ const chooseLocale = (language, dispatch) => {
     lang = cachedLang;
   }
 
-  switch (lang) {
+    switch (lang) {
     case 'en':
       addLocaleData(enLocaleData);
       lang = 'en';
       messages = en;
       break;
-    default:
+      addLocaleData(idLocaleData);
+      lang = 'id';
+      messages = id;
+      break;
+      default:
       addLocaleData(jaLocaleData);
       lang = 'ja';
       messages = ja;
