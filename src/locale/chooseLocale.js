@@ -1,10 +1,28 @@
 import { addLocaleData } from 'react-intl';
+import idLocaleData from 'react-intl/locale-data/id';
+import id from '@/locale/id';
 import jaLocaleData from 'react-intl/locale-data/ja';
 import ja from '@/locale/ja';
 import enLocaleData from 'react-intl/locale-data/en';
 import en from '@/locale/en';
 import Storage from '@/utils/Storage';
 import * as LocaleActions from '@/actions/locale';
+import config from '@/config';
+
+config.languages = [
+  {
+    name: '日本語',
+    value: 'ja'
+  },
+  {
+    name: 'English',
+    value: 'en'
+  },
+  {
+    name: 'Bahasa indonesia',
+    value: 'id'
+  }
+];
 
 const chooseLocale = (language, dispatch) => {
   const cachedLang = Storage.get('lang');
@@ -22,6 +40,11 @@ const chooseLocale = (language, dispatch) => {
       addLocaleData(enLocaleData);
       lang = 'en';
       messages = en;
+      break;
+    case 'id':
+      addLocaleData(idLocaleData);
+      lang = 'id';
+      messages = id;
       break;
     default:
       addLocaleData(jaLocaleData);

@@ -1,11 +1,7 @@
-import styles from '@/styles/Login.scss';
-import '@/styles/Fn.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
+import { withStyles } from '@material-ui/core/styles';
 import Modal from 'react-modal';
-import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -13,8 +9,64 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
 
+const styles = {
+  modalOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+    zIndex: 1000
+  },
+  modalBody: {
+    position: 'fixed',
+    width: '24em',
+    left: '50%',
+    top: '50%',
+    zIndex: 1001,
+    background: '#fff',
+    transform: 'translate(-50%, -50%)',
+    boxShadow:
+      'rgba(0, 0, 0, 0.24706) 0 14px 45px, rgba(0, 0, 0, 0.21961) 0 10px 18px',
+    borderRadius: '2px',
+    outline: '0 none',
+    '@media screen and (max-width: 600px)': {
+      width: '18em'
+    }
+  },
+  clear: {
+    float: 'right',
+    cursor: 'pointer',
+    padding: 5
+  },
+  avatar: {
+    left: '50%',
+    '& img': {
+      borderRadius: '50%',
+      verticalAlign: 'middle'
+    }
+  },
+  avatarName: {
+    paddingLeft: 10,
+    fontSize: 16
+  },
+  form: {
+    height: 'auto',
+    opacity: 1,
+    padding: '3em'
+  },
+  fields: {
+    opacity: 1,
+    visibility: 'visible'
+  },
+  footer: {
+    paddingTop: '1em'
+  }
+};
+
 @injectIntl
-@CSSModules(styles, { allowMultiple: true })
+@withStyles(styles)
 export default class Login extends React.Component {
   static propTypes = {
     onRef: PropTypes.func,
@@ -88,21 +140,23 @@ export default class Login extends React.Component {
   }
 
   renderContent() {
+    const { classes } = this.props;
+
     if (
       this.props.authData !== null &&
       this.props.authData.expires_at > moment().unix()
     ) {
       return (
         <React.Fragment>
-          <div styleName="avatar">
-            <span styleName="name">
+          <div className={classes.avatar}>
+            <span className={classes.avatarName}>
               <FormattedMessage id="Nickname" /> 「{
                 this.props.authData.user.name
               }」
             </span>
           </div>
-          <div styleName="footer">
-            <Button onClick={this.props.onLogoutClick} raised accent ripple>
+          <div className={classes.footer}>
+            <Button variant="contained" onClick={this.props.onLogoutClick}>
               <FormattedMessage id="Logout" />
             </Button>
           </div>
@@ -130,13 +184,10 @@ export default class Login extends React.Component {
           fullWidth
           margin="normal"
         />
-        <div styleName="footer">
+        <div className={classes.footer}>
           <Button
             variant="contained"
             color="secondary"
-            className={classNames({
-              'fn-disallow': this.props.isSubmitting
-            })}
             onClick={this.props.onLoginClick}
             disabled={this.props.isSubmitting}>
             <FormattedMessage
@@ -149,18 +200,20 @@ export default class Login extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <Modal
-        styleName="login-modal-body"
-        overlayClassName={styles['login-modal-overlay']}
+        className={classes.modalBody}
+        overlayClassName={classes.modalOverlay}
         isOpen={!this.state.isHidden}
         onRequestClose={this.close}
         contentLabel="login-modal">
-        <div styleName="clear" onClick={this.close}>
+        <div className={classes.clear} onClick={this.close}>
           <ClearIcon />
         </div>
-        <div styleName="form">
-          <div styleName="fields">{this.renderContent()}</div>
+        <div className={classes.form}>
+          <div className={classes.fields}>{this.renderContent()}</div>
         </div>
       </Modal>
     );

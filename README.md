@@ -75,7 +75,6 @@ $ npm start
 - Run: `npm start`
 - Test: `npm test`
 - Build: `npm run dist`
-- Publish to gh-pages: `npm run deploy`
 
 ### API
 
@@ -528,8 +527,8 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars0.githubusercontent.com/u/10093992?v=4" width="100px;"/><br /><sub><b>そら</b></sub>](http://kokororin.github.io)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Code") [📖](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Documentation") [🎨](#design-kokororin "Design") [⚠️](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Tests") | [<img src="https://avatars0.githubusercontent.com/u/12712012?v=4" width="100px;"/><br /><sub><b>吟夢ちゃん</b></sub>](https://kirainmoe.com/)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kirainmoe "Code") [🤔](#ideas-kirainmoe "Ideas, Planning, & Feedback") | [<img src="https://avatars1.githubusercontent.com/u/12656264?v=4" width="100px;"/><br /><sub><b>simon3000</b></sub>](https://github.com/simon300000)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=simon300000 "Code") [🤔](#ideas-simon300000 "Ideas, Planning, & Feedback") [🌍](#translation-simon300000 "Translation") |
-| :---: | :---: | :---: |
+| [<img src="https://avatars0.githubusercontent.com/u/10093992?v=4" width="100px;"/><br /><sub><b>そら</b></sub>](http://kokororin.github.io)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Code") [📖](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Documentation") [🎨](#design-kokororin "Design") [⚠️](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Tests") | [<img src="https://avatars0.githubusercontent.com/u/12712012?v=4" width="100px;"/><br /><sub><b>吟夢ちゃん</b></sub>](https://kirainmoe.com/)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kirainmoe "Code") [🤔](#ideas-kirainmoe "Ideas, Planning, & Feedback") | [<img src="https://avatars1.githubusercontent.com/u/12656264?v=4" width="100px;"/><br /><sub><b>simon3000</b></sub>](https://github.com/simon300000)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=simon300000 "Code") [🤔](#ideas-simon300000 "Ideas, Planning, & Feedback") [🌍](#translation-simon300000 "Translation") | [<img src="https://avatars0.githubusercontent.com/u/29944979?v=4" width="100px;"/><br /><sub><b>Muhammad Iqbal Rifai</b></sub>](https://blog.0wo.me)<br />[🌍](#translation-py7hon "Translation") |
+| :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!

@@ -1,17 +1,32 @@
-import styles from '@/styles/Base.scss';
-
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import EventListener, { withOptions } from 'react-event-listener';
 
+const styles = {
+  context: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%'
+  },
+  contextInnerContainer: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    boxOrient: 'vertical',
+    boxDirection: 'normal',
+    flexDirection: 'column',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    position: 'relative',
+    WebkitOverflowScrolling: 'touch'
+  }
+};
+
 @withRouter
+@withStyles(styles)
 export default class ScrollContext extends React.Component {
   static prefix = '@@SCROLL/';
-  static scrollingClassName = styles['scroll-context-container'];
-
-  static Container = props => (
-    <div className={ScrollContext.scrollingClassName} {...props} />
-  );
 
   constructor(props) {
     super(props);
@@ -29,7 +44,7 @@ export default class ScrollContext extends React.Component {
 
   @autobind
   onScroll(event) {
-    if (event.target.className === ScrollContext.scrollingClassName) {
+    if (event.target.className === this.scrollingElement.className) {
       const scrollTop = event.target.scrollTop;
       sessionStorage.setItem(this.cacheKey, scrollTop);
     }
@@ -40,13 +55,15 @@ export default class ScrollContext extends React.Component {
   }
 
   get scrollingElement() {
-    return document.querySelector(`.${ScrollContext.scrollingClassName}`);
+    return document.querySelector('[data-component="Content"]');
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <div className={styles['scroll-context']}>
-        <div className={styles['scroll-context-inner-container']}>
+      <div className={classes.context}>
+        <div className={classes.contextInnerContainer}>
           {this.props.children}
         </div>
         <EventListener

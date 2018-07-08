@@ -156,7 +156,7 @@ export default class LoginContainer extends React.Component {
           isSubmitting={this.state.isSubmitting}
           authData={this.state.authData}
         />
-        <Alert ref={ref => (this.alertRef = ref)} />
+        <Alert onRef={ref => (this.alertRef = ref)} />
         <EventListener target={document} onKeydown={this.onKeydown} />
       </React.Fragment>
     );

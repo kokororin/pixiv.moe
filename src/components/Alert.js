@@ -1,11 +1,69 @@
-import styles from '@/styles/Alert.scss';
-
 import React from 'react';
-import CSSModules from 'react-css-modules';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Modal from 'react-modal';
 
-@CSSModules(styles, { allowMultiple: true })
+const styles = {
+  modalOverlay: {
+    display: 'block'
+  },
+  container: {
+    zIndex: 1005
+  },
+  close: {
+    display: 'none'
+  },
+  open: {
+    display: 'block',
+    animation: 'alert-open 0.7s'
+  },
+  '@keyframes alert-open': {
+    from: {
+      opacity: 0,
+      top: 0
+    },
+    to: {
+      opacity: 1,
+      top: '50%'
+    }
+  },
+  wrapOuter: {
+    boxSizing: 'border-box',
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 1004,
+    opacity: 1
+  },
+  wrap: {
+    color: 'rgba(0, 0, 0, 0.87059)',
+    backgroundColor: 'rgb(255, 255, 255)',
+    boxSizing: 'border-box',
+    boxShadow:
+      'rgba(0, 0, 0, 0.24706) 0 14px 45px, rgba(0, 0, 0, 0.21961) 0 10px 18px',
+    borderRadius: 2
+  },
+  body: {
+    fontSize: 16,
+    color: 'rgba(0, 0, 0, 0.6)',
+    padding: 24,
+    boxSizing: 'border-box',
+    overflowY: 'hidden',
+    maxHeight: 552
+  }
+};
+
+@withStyles(styles)
 export default class Alert extends React.Component {
+  static propTypes = {
+    onRef: PropTypes.func
+  };
+
+  static defaultProps = {
+    onRef() {}
+  };
+
   constructor(props) {
     super(props);
 
@@ -15,6 +73,10 @@ export default class Alert extends React.Component {
     };
 
     Modal.setAppElement('#app');
+  }
+
+  componentDidMount() {
+    this.props.onRef(this);
   }
 
   @autobind
@@ -38,15 +100,17 @@ export default class Alert extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <Modal
-        styleName="alert-container"
-        overlayClassName={styles['alert-modal-overlay']}
+        className={classes.container}
+        overlayClassName={classes.modalOverlay}
         isOpen={!this.state.isHidden}
         contentLabel="alert-modal">
-        <div styleName="alert-wrap-1">
-          <div styleName="alert-wrap-2">
-            <div styleName="alert-body">{this.state.content}</div>
+        <div className={classes.wrapOuter}>
+          <div className={classes.wrap}>
+            <div className={classes.body}>{this.state.content}</div>
           </div>
         </div>
       </Modal>

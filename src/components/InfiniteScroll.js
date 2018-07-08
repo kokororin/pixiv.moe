@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EventListener from 'react-event-listener';
 
-import ScrollContext from '@/components/ScrollContext';
-
 export default class InfiniteScroll extends React.Component {
   static propTypes = {
     distance: PropTypes.number.isRequired,
@@ -37,7 +35,7 @@ export default class InfiniteScroll extends React.Component {
   }
 
   get scrollingElement() {
-    return document.querySelector(`.${ScrollContext.scrollingClassName}`);
+    return document.querySelector('[data-component="Content"]');
   }
 
   render() {

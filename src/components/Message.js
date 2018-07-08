@@ -1,11 +1,20 @@
-import styles from '@/styles/Message.scss';
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules';
+import { withStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 
-@CSSModules(styles, { allowMultiple: true })
+export const styles = {
+  message: {
+    textAlign: 'center',
+    padding: '20px 0',
+    color: '#999',
+    '& p': {
+      fontSize: 15
+    }
+  }
+};
+
+@withStyles(styles)
 export default class Message extends React.Component {
   static propTypes = {
     isHidden: PropTypes.bool,
@@ -21,8 +30,10 @@ export default class Message extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return this.props.isHidden ? null : (
-      <div styleName="message">
+      <div className={classes.message}>
         <p>
           {this.props.text ? (
             this.props.text

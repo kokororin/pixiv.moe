@@ -18,8 +18,9 @@ export default class List extends React.Component {
       <Masonry
         ref={ref => (this.masonryRef = ref)}
         className="masonry"
+        style={{ margin: '0 auto' }}
         elementType="div"
-        options={{ transitionDuration: 0 }}
+        options={{ transitionDuration: 0, fitWidth: true }}
         disableImagesLoaded={false}
         updateOnEachImageLoad={false}>
         {this.props.items.map((elem, index) => {
