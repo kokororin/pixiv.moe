@@ -15,7 +15,8 @@
     "test": "cross-env NODE_ENV=test karma start",
     "test:watch": "cross-env NODE_ENV=test karma start --autoWatch=true --singleRun=false",
     "coverage": "cat ./coverage/lcov.info | coveralls",
-    "check": "yarn upgrade-interactive"
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "url": "https://github.com/LoveLiveSunshine/pixiv.moe/issues"
   },
   "devDependencies": {
+    "all-contributors-cli": "^5.2.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.2",
