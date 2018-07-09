@@ -71,7 +71,7 @@ const styles = {
       textDecoration: 'none'
     },
     '& svg': {
-      fontSize: 10
+      fontSize: 20
     }
   },
   count: {
