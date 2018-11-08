@@ -10,10 +10,6 @@ export default class InfiniteScroll extends React.Component {
     isLoading: PropTypes.bool.isRequired
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   @autobind
   onScroll(event) {
     if (this.props.isLoading) {

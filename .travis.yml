@@ -10,10 +10,6 @@ cache:
   - node_modules
   - $HOME/.yarn-cache
 
-env:
-  global:
-  - secure: Z95Knh2c/5m4RnFxihX32wjga9eXQ+/Xf6/1gUWhgtyFOuxbzU9tEbS27G6+5u2SNjdQ82ebZIIoF+4+gmvOSMNaJbTdYti4fg7up782I1IjkBG2hiE3v6E/iNUXTdktlmdeipDziz/n048ZrvhcN1a600LGBcPOLfDYKjW5sin7rqf+2Y5PNetg4bI5FmApVPr/MlFjBCg/ruxCbSPAv7dOhKA1x4TrhqlNPtkTqAgVBDLzJbaeGg5u9ZYr89MAAVFc3zD0/8W3f3vOmwrpeD4b3f8ZyANBO++fbuDwEn/2TTIHQ2FGeQXNLk7dvP/HKUievv3G+0JHLbIBKcYtLpQsRCgNC/HZEMG1svAJKHEvhBgKnqxBsEAvG1HRL7JYqRBhhs6bRx8pX2VPGoDM97IXyPB2PNoEZlG7BvRjhAro2vgJLITbafM5rZcdh5uXzY/jkM6zuzSjmShRk6ylksNgrf+JbnLiMWlFLQ0N3URMXE8aNt9hnlz6rNRdj9HId+65AH3APXnBf52EHevdLE6FJxLgXFsjjVHbuVLJNm24hZCr4gDxtzhkRWPKyzcmoDI41m8hECgwtdK6kICWuc6A+GusfrYGxFNa9CzxXNHtTBkJaH64eaFjpoNPX1I7FVAVPZIIjyydJMfIB5A97el/NRdBBKDROavfeleJVac=
-
 install:
   - yarn install
 
@@ -22,6 +18,3 @@ script:
 
 after_script:
   - npm run coverage
-
-after_success:
-  - if [[ ("$TRAVIS_BRANCH" == "master") && ("$TRAVIS_PULL_REQUEST" == "false") ]]; then npm run dist && npm run archive && curl -F "dist=@./dist/dist.tar.gz" "https://api.kotori.love/github/hook/pixiv?token=$PIXIV_DEPLOY_TOKEN" ; fi

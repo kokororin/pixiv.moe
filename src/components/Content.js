@@ -27,10 +27,6 @@ export default class Content extends React.Component {
     onRef() {}
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.onRef(this);
   }

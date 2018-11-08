@@ -1,5 +1,6 @@
 /* eslint prefer-arrow-callback: 0 */
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
@@ -68,6 +69,17 @@ module.exports = {
       reportFilename: path.join(__dirname, '/../dist/report.html'),
       openAnalyzer: false,
       generateStatsFile: false
-    })
+    }),
+    function() {
+      // eslint-disable-next-line
+      this.plugin('done', function() {
+        const htmlFileName = '/../dist/index.html';
+        const htmlFilePath = path.join(__dirname, htmlFileName);
+        fs.writeFileSync(
+          htmlFilePath.replace('index', '404'),
+          fs.readFileSync(htmlFilePath).toString()
+        );
+      });
+    }
   ]
 };

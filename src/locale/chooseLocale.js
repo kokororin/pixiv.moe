@@ -1,10 +1,4 @@
 import { addLocaleData } from 'react-intl';
-import idLocaleData from 'react-intl/locale-data/id';
-import id from '@/locale/id';
-import jaLocaleData from 'react-intl/locale-data/ja';
-import ja from '@/locale/ja';
-import enLocaleData from 'react-intl/locale-data/en';
-import en from '@/locale/en';
 import Storage from '@/utils/Storage';
 import * as LocaleActions from '@/actions/locale';
 import config from '@/config';
@@ -12,22 +6,27 @@ import config from '@/config';
 config.languages = [
   {
     name: '日本語',
-    value: 'ja'
+    value: 'ja',
+    messages: require('@/locale/ja').default,
+    localeData: require('react-intl/locale-data/ja')
   },
   {
     name: 'English',
-    value: 'en'
+    value: 'en',
+    messages: require('@/locale/en').default,
+    localeData: require('react-intl/locale-data/en')
   },
   {
     name: 'Bahasa indonesia',
-    value: 'id'
+    value: 'id',
+    messages: require('@/locale/id').default,
+    localeData: require('react-intl/locale-data/id')
   }
 ];
 
 const chooseLocale = (language, dispatch) => {
   const cachedLang = Storage.get('lang');
   let lang;
-  let messages;
 
   if (!cachedLang) {
     lang = language.split('-')[0];
@@ -35,22 +34,15 @@ const chooseLocale = (language, dispatch) => {
     lang = cachedLang;
   }
 
-  switch (lang) {
-    case 'en':
-      addLocaleData(enLocaleData);
-      lang = 'en';
-      messages = en;
-      break;
-    case 'id':
-      addLocaleData(idLocaleData);
-      lang = 'id';
-      messages = id;
-      break;
-    default:
-      addLocaleData(jaLocaleData);
-      lang = 'ja';
-      messages = ja;
+  let found = config.languages[0];
+  for (const item of config.languages) {
+    if (lang === item.value) {
+      found = item;
+    }
   }
+
+  addLocaleData(found.localeData);
+  const messages = found.messages;
 
   Storage.set('lang', lang);
 

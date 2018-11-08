@@ -25,10 +25,6 @@ export default class Message extends React.Component {
     isHidden: false
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { classes } = this.props;
 

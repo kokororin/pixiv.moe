@@ -150,9 +150,8 @@ export default class Login extends React.Component {
         <React.Fragment>
           <div className={classes.avatar}>
             <span className={classes.avatarName}>
-              <FormattedMessage id="Nickname" /> 「{
-                this.props.authData.user.name
-              }」
+              <FormattedMessage id="Nickname" /> 「
+              {this.props.authData.user.name}」
             </span>
           </div>
           <div className={classes.footer}>

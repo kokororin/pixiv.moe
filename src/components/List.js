@@ -9,10 +9,6 @@ export default class List extends React.Component {
     items: PropTypes.array
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Masonry
