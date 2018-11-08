@@ -6,10 +6,6 @@ export default class GifPlayer extends React.Component {
     images: PropTypes.array.isRequired
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.play();
   }

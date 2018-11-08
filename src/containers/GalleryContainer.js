@@ -128,16 +128,14 @@ export default class GalleryContainer extends React.Component {
 
     return (
       <React.Fragment>
-        {!found &&
-          word !== 'ranking' &&
-          word.trim() !== '' && (
-            <ListItem button onClick={() => this.onKeywordClick(word)}>
-              <ListItemIcon>
-                <DoneIcon style={{ color: '#4caf50' }} />
-              </ListItemIcon>
-              <ListItemText style={{ fontWeight: 'bold' }} primary={word} />
-            </ListItem>
-          )}
+        {!found && word !== 'ranking' && word.trim() !== '' && (
+          <ListItem button onClick={() => this.onKeywordClick(word)}>
+            <ListItemIcon>
+              <DoneIcon style={{ color: '#4caf50' }} />
+            </ListItemIcon>
+            <ListItemText style={{ fontWeight: 'bold' }} primary={word} />
+          </ListItem>
+        )}
         {keywords.map(elem => {
           const ranking = elem.en === 'ranking';
           const highlight =

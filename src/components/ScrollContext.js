@@ -28,10 +28,6 @@ const styles = {
 export default class ScrollContext extends React.Component {
   static prefix = '@@SCROLL/';
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.location === prevProps.location) {
       return;

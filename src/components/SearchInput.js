@@ -58,10 +58,6 @@ export default class SearchInput extends React.Component {
     onSearch() {}
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   @autobind
   onKeyDown(event) {
     if (event.keyCode === 13 && document.activeElement === this.inputRef) {
