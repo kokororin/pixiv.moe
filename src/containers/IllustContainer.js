@@ -414,7 +414,7 @@ export default class IllustContainer extends React.Component {
     return (
       <DocumentTitle
         title={this.item.title === '' ? config.siteTitle : this.item.title}>
-        <React.Fragment>
+        <>
           <AppBar position="static">
             <Toolbar>
               <IconButton color="inherit" onClick={this.onBackClick}>
@@ -426,7 +426,7 @@ export default class IllustContainer extends React.Component {
             </Toolbar>
           </AppBar>
           <Content>{this.renderContent()}</Content>
-        </React.Fragment>
+        </>
       </DocumentTitle>
     );
   }

@@ -41,7 +41,7 @@ export default class LanguageSelector extends React.Component {
     const languages = config.languages;
 
     return (
-      <React.Fragment>
+      <>
         <MenuItem disabled>
           <FormattedMessage id="Language" />
         </MenuItem>
@@ -61,13 +61,13 @@ export default class LanguageSelector extends React.Component {
             </MenuItem>
           );
         })}
-      </React.Fragment>
+      </>
     );
   }
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <IconButton color="inherit" onClick={this.onMenuOpen}>
           <LanguageIcon />
         </IconButton>
@@ -85,7 +85,7 @@ export default class LanguageSelector extends React.Component {
           onClose={this.onMenuClose}>
           {this.renderLanguages()}
         </Menu>
-      </React.Fragment>
+      </>
     );
   }
 }

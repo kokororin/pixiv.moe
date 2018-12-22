@@ -147,7 +147,7 @@ export default class Login extends React.Component {
       this.props.authData.expires_at > moment().unix()
     ) {
       return (
-        <React.Fragment>
+        <>
           <div className={classes.avatar}>
             <span className={classes.avatarName}>
               <FormattedMessage id="Nickname" /> 「
@@ -159,11 +159,11 @@ export default class Login extends React.Component {
               <FormattedMessage id="Logout" />
             </Button>
           </div>
-        </React.Fragment>
+        </>
       );
     }
     return (
-      <React.Fragment>
+      <>
         <TextField
           onChange={event => this.setUsername(event.target.value)}
           value={this.getUsername()}
@@ -194,7 +194,7 @@ export default class Login extends React.Component {
             />
           </Button>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 
