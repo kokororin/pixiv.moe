@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>pixivギャラリー</title>
+<% if (process.env.NODE_ENV === 'production') { %>
+  <link rel="manifest" href="/manifest.json">
+<% } %>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="pixiv.moe - pixivギャラリー - pixiv写真の壁" />
+  <meta name="keywords" content="pixiv,pixivギャラリー,pixiv写真の壁,pixiv lovelive,lovelive,ラブライブ,μ's,Aqours,高坂穂乃果,絢瀬絵里,南ことり,園田海未,星空凛,西木野真姫,東條希,小泉花陽,矢澤にこ,綺羅ツバサ,統堂英玲奈,優木あんじゅ,高海千歌,桜内梨子,松浦果南,黒澤ダイヤ,渡辺曜,津島善子,国木田花丸,小原鞠莉,黒澤ルビィ" />
+  <meta name="google-site-verification" content="aHrpJZ8M_WPQb07omJ2bwC2fg2DQMgFFEovu9wsSD0E" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="applicable-device" content="mobile">
+  <link rel="dns-prefetch" href="//api.pixiv.moe">
+  <link rel="dns-prefetch" href="//www.pixiv.net">
+  <link rel="shortcut icon" href="/assets/favicon.ico?v=1.11.4" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v=1.11.4" />
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/apple-touch-icon-57x57.png?v=1.11.4" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/apple-touch-icon-72x72.png?v=1.11.4" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/apple-touch-icon-76x76.png?v=1.11.4" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/apple-touch-icon-114x114.png?v=1.11.4" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/apple-touch-icon-120x120.png?v=1.11.4" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/apple-touch-icon-144x144.png?v=1.11.4" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/apple-touch-icon-152x152.png?v=1.11.4" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon-180x180.png?v=1.11.4" />
+  <style>
+  .message {
+    text-align: center;
+    padding: 20px 0;
+    color: #999;
+  }
+
+  .message p {
+    font-size: 15px;
+  }
+  </style>
+  <style>
+  #index-loading {
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+  }
+
+  #index-loading p {
+    font-size: 30px !important;
+    margin: 0 !important;
+    line-height: 0 !important;
+  }
+  </style>
+  <!--[if lte IE 10]>
+  <style>
+    #index-loading {
+      display: none;
+    }
+  </style>
+  <![endif]-->
+
+</head>
+
+<body>
+  <!--[if lte IE 10]>
+  <div class="message">
+    <p>古いInternet Explorerにサ終了！</p>
+  </div>
+  <![endif]-->
+  <noscript>
+    <div class="message">
+      <p>Javascriptが無効になっていると、サイト内の一部機能がご利用いただけません</p>
+    </div>
+  </noscript>
+  <div id="app">
+    <div id="index-loading" class="message">
+      <p><span class="progress"></span> (・ω・)<span class="wait"></span></p>
+    </div>
+  </div>
+  <script type="text/javascript">
+  (function() {
+    var t = setInterval(function() {
+      var el = document.getElementById('index-loading');
+      if (el != null) {
+        var wait = el.getElementsByClassName('wait')[0];
+        if (wait.innerHTML.length > 3) {
+          wait.innerHTML = '';
+        } else {
+          wait.innerHTML += '.';
+        }
+      } else {
+        clearInterval(t);
+      }
+    }, 400);
+  })();
+  </script>
+<% if (process.env.NODE_ENV === 'production') { %>
+  <script>
+  (function() {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  })();
+  </script>
+<% } %>
+</body>
+
+</html>

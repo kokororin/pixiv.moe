@@ -1,24 +1,43 @@
-import '../styles/Base.css';
-
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import { FormattedMessage } from 'react-intl';
 
-class MessageComponent extends React.Component {
+export const styles = {
+  message: {
+    textAlign: 'center',
+    padding: '20px 0',
+    color: '#999',
+    '& p': {
+      fontSize: 15
+    }
+  }
+};
 
+@withStyles(styles)
+export default class Message extends React.Component {
   static propTypes = {
-    text: React.PropTypes.string
+    isHidden: PropTypes.bool,
+    text: PropTypes.string
   };
 
-  constructor(props) {
-    super(props);
-  }
+  static defaultProps = {
+    isHidden: false
+  };
 
   render() {
-    return (<div className={ 'message' }>
-              <p>
-                { typeof this.props.text === 'undefined' ? 'エラーが発生しました。URLを確認するか、しばらく時間を置いて再度アクセスしてください。' : this.props.text }
-              </p>
-            </div>);
+    const { classes } = this.props;
+
+    return this.props.isHidden ? null : (
+      <div className={classes.message}>
+        <p>
+          {this.props.text ? (
+            this.props.text
+          ) : (
+            <FormattedMessage id="An error occurred. Check the URL or wait for a while and access again." />
+          )}
+        </p>
+      </div>
+    );
   }
 }
-
-export default MessageComponent;

@@ -1,0 +1,16 @@
+{
+  "short_name": "pixivギャラリー",
+  "name": "pixivギャラリー",
+  "description": "pixiv.moe - pixivギャラリー - pixiv写真の壁",
+  "icons": [
+    {
+      "src": "/assets/apple-touch-icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#2196F3",
+  "background_color": "#ffffff"
+}

@@ -1,7 +1,25 @@
 {
   "presets": [
-    "es2015",
-    "stage-0",
-    "react"
-  ]
+    ["env", { "modules": false }],
+    "react",
+    "stage-0"
+  ],
+  "plugins": [
+  	"transform-async-to-generator",
+    "transform-decorators-legacy",
+    "minify-dead-code-elimination",
+    "minify-guarded-expressions"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ]
+    },
+    "production": {
+      "plugins": [
+        ["transform-react-remove-prop-types", {"removeImport": true}]
+      ]
+    }
+  }
 }

@@ -28,3 +28,6 @@ node_modules
 
 # Bower
 bower_components/
+
+# dist folder
+dist
