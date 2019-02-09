@@ -13,7 +13,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DoneIcon from '@material-ui/icons/Done';
-import GithubIcon from '@material-ui/docs/svgIcons/Github';
 
 import DocumentTitle from 'react-document-title';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -30,6 +29,7 @@ import LanguageSelector from '@/components/LanguageSelector';
 import SearchInput from '@/components/SearchInput';
 import Content from '@/components/Content';
 import Storage from '@/utils/Storage';
+import GithubIcon from '@/icons/Github';
 
 const styles = {
   toolbar: {
