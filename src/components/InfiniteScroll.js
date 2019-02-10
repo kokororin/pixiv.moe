@@ -36,7 +36,7 @@ export default class InfiniteScroll extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         {this.props.children}
         {this.scrollingElement && (
           <EventListener
@@ -44,7 +44,7 @@ export default class InfiniteScroll extends React.Component {
             onScroll={this.onScroll}
           />
         )}
-      </React.Fragment>
+      </>
     );
   }
 }

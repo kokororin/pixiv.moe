@@ -17,7 +17,7 @@ module.exports = {
       colors: true
     }
   },
-  entry: ['babel-polyfill', 'react-hot-loader/patch', './src/index'],
+  entry: ['@babel/polyfill', 'react-hot-loader/patch', './src/index'],
   cache: true,
   devtool: '#eval-source-map',
   module: {

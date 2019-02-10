@@ -148,7 +148,7 @@ export default class LoginContainer extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <Login
           onRef={ref => (this.loginRef = ref)}
           onLoginClick={this.onLoginClick}
@@ -158,7 +158,7 @@ export default class LoginContainer extends React.Component {
         />
         <Alert onRef={ref => (this.alertRef = ref)} />
         <EventListener target={document} onKeydown={this.onKeydown} />
-      </React.Fragment>
+      </>
     );
   }
 }
