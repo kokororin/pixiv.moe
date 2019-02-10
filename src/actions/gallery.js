@@ -94,8 +94,12 @@ function fetchSource() {
           dispatch(setFetchError(true));
         });
     }
+
+    const sortByPopularity = arguments[0] !== undefined && arguments[0],
+      outsideSearchAPI = 'https://api.kirainmoe.com/pixiv/search';
+
     return honoka
-      .get(config.searchURI, {
+      .get(sortByPopularity ? outsideSearchAPI : config.searchURI, {
         mode: 'cors',
         timeout: 30e3,
         data: {
@@ -125,9 +129,10 @@ function fetchSource() {
 }
 
 export function fetchSourceIfNeeded() {
+  const sortByPopularity = arguments[0] !== undefined && arguments[0];
   return (dispatch, getState) => {
     if (!getState().gallery.isFetching) {
-      return dispatch(fetchSource());
+      return dispatch(fetchSource(sortByPopularity));
     }
   };
 }

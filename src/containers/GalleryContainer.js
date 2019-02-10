@@ -57,7 +57,8 @@ export default class GalleryContainer extends React.Component {
     super(props);
 
     this.state = {
-      isDrawerOpen: false
+      isDrawerOpen: false,
+      isSearchByPopularity: false
     };
   }
 
@@ -95,7 +96,9 @@ export default class GalleryContainer extends React.Component {
     if (isFirstLoad) {
       this.props.dispatch(GalleryActions.setPage(1));
     }
-    this.props.dispatch(GalleryActions.fetchSourceIfNeeded());
+    this.props.dispatch(
+      GalleryActions.fetchSourceIfNeeded(this.state.isSearchByPopularity)
+    );
   }
 
   @autobind
@@ -191,6 +194,12 @@ export default class GalleryContainer extends React.Component {
     });
   }
 
+  onCheckBoxChange() {
+    this.setState({
+      isSearchByPopularity: !this.state.isSearchByPopularity
+    });
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -212,7 +221,11 @@ export default class GalleryContainer extends React.Component {
                 {config.siteTitle}
               </Typography>
               <div className={classes.toolbarMiddle} />
-              <SearchInput onSearch={this.onSearch} />
+              <SearchInput
+                onSearch={this.onSearch}
+                onCheckBoxChange={() => this.onCheckBoxChange()}
+                isSearchByPopularity={this.state.isSearchByPopularity}
+              />
               <LanguageSelector />
               <IconButton color="inherit" href={config.projectLink}>
                 <GithubIcon />
