@@ -127,7 +127,7 @@ export default class GalleryContainer extends React.Component {
     }
 
     return (
-      <React.Fragment>
+      <>
         {!found && word !== 'ranking' && word.trim() !== '' && (
           <ListItem button onClick={() => this.onKeywordClick(word)}>
             <ListItemIcon>
@@ -165,7 +165,7 @@ export default class GalleryContainer extends React.Component {
             </ListItem>
           );
         })}
-      </React.Fragment>
+      </>
     );
   }
 
@@ -196,7 +196,7 @@ export default class GalleryContainer extends React.Component {
 
     return (
       <DocumentTitle title={config.siteTitle}>
-        <React.Fragment>
+        <>
           <AppBar position="static" onClick={this.onHeaderClick}>
             <Toolbar className={classes.toolbar}>
               <IconButton
@@ -255,7 +255,7 @@ export default class GalleryContainer extends React.Component {
               </div>
             </InfiniteScroll>
           </Content>
-        </React.Fragment>
+        </>
       </DocumentTitle>
     );
   }
