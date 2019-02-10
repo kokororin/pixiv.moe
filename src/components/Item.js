@@ -79,7 +79,13 @@ const styles = {
     backgroundColor: '#cceeff',
     borderRadius: 3,
     margin: '0 1px',
-    padding: '0 6px'
+    padding: '0 6px',
+    '& svg': {
+      verticalAlign: 'middle',
+      position: 'relative',
+      top: '-.1em',
+      fontSize: 14
+    }
   },
   rankNum: {
     color: '#555',

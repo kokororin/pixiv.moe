@@ -75,7 +75,7 @@
     "open-browser-webpack-plugin": "^0.0.5",
     "optimize-js-plugin": "^0.0.4",
     "prettier": "^1.15.3",
-    "puppeteer": "^1.5.0",
+    "puppeteer": "^1.12.2",
     "react-hot-loader": "next",
     "react-test-renderer": "^16.4.1",
     "rimraf": "^2.4.3",
@@ -89,7 +89,6 @@
   },
   "dependencies": {
     "@material-ui/core": "^1.3.0",
-    "@material-ui/docs": "^1.0.0-alpha.3",
     "@material-ui/icons": "^1.1.0",
     "animation-frame": "^0.3.0",
     "autobind-decorator": "^1.4.1",
