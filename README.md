@@ -2,9 +2,6 @@
 
 [![Build Status](http://img.shields.io/travis/LoveLiveSunshine/pixiv.moe.svg)](https://travis-ci.org/LoveLiveSunshine/pixiv.moe)
 [![Coverage Status](https://coveralls.io/repos/github/LoveLiveSunshine/pixiv.moe/badge.svg?branch=master)](https://coveralls.io/github/LoveLiveSunshine/pixiv.moe?branch=master)
-[![npm](https://img.shields.io/npm/dt/pixiv.moe.svg?maxAge=2592000)]()
-[![npm version](https://badge.fury.io/js/pixiv.moe.svg)](https://badge.fury.io/js/pixiv.moe)
-[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=pixivギャラリー)](https://pixiv.moe)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) order by popularity. Written with React.
@@ -27,6 +24,8 @@ Table of Contents
 
 
 ## Tech Stack
+
+### Front-end
 * react
 * react-dom
 * react-router
@@ -36,6 +35,10 @@ Table of Contents
 * react-intl
 * material-ui
 * whatwg-fetch
+
+### Back-end
+* express
+* pixiv-app-api
 
 ## ~~Online Site~~
 ~~[https://pixiv.moe](https://pixiv.moe)~~
@@ -64,10 +67,10 @@ $ npm start
 
 ### Commands
 - Install dependencies: `yarn`
-- Run Backend Server: `npm run backend:dev`
-- Run Frontend Server: `npm start`
+- Run Back-end Server: `npm run backend:dev`
+- Run Front-end Server: `npm start`
 - Test: `npm test`
-- Build Frontend: `npm run dist`
+- Build Front-end: `npm run dist`
 
 ### API
 
