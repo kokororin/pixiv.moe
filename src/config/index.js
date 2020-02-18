@@ -1,5 +1,5 @@
 export default {
-  apiBaseURL: 'https://api.pixiv.moe/v1',
+  apiBaseURL: 'http://localhost:3000/pixiv',
   galleryURI: '/gallery',
   rankingURI: '/ranking',
   searchURI: '/search',
@@ -10,8 +10,6 @@ export default {
   logURI: '/log',
   baseURL: 'https://pixiv.moe/',
   trackingID: 'UA-70944432-2',
-  piwikDomain: 'analytics.kotori.love',
-  piwikSiteId: '2PMEnB',
   projectLink: 'https://github.com/LoveLiveSunshine/pixiv.moe',
   siteTitle: 'pixivギャラリー',
   keywords: [

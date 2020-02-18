@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Img from 'react-image';
 import EmojiParser from '@/utils/EmojiParser';
+import getProxyImage from '@/utils/getProxyImage';
 
 const styles = {
   listItem: {
@@ -71,7 +72,7 @@ const Comment = ({ item, classes }) => {
       <span className={classes.main}>
         <div className={classes.avatar}>
           <Img
-            src={[item.user.profile_image_urls.medium]}
+            src={[getProxyImage(item.user.profile_image_urls.medium)]}
             loader={
               <img src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" />
             }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import EventListener from 'react-event-listener';
 import SearchIcon from '@material-ui/icons/Search';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
 
 const styles = {
   searchRoot: {
@@ -97,14 +97,14 @@ export default class SearchInput extends React.Component {
           ref={ref => (this.inputRef = ref)}
           className={classes.searchInput}
         />
-        <div className={classes.searchOptionCheckbox}>
+        {/* <div className={classes.searchOptionCheckbox}>
           <Checkbox
             onClick={() => this.props.onCheckBoxChange()}
             checked={this.props.isSearchByPopularity}
             color="primary"
           />
           <span>Search by popularity tags</span>
-        </div>
+        </div> */}
         <EventListener target="window" onKeyDown={this.onKeyDown} />
       </div>
     );

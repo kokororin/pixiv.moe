@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 import StarIcon from '@material-ui/icons/Star';
+import getProxyImage from '@/utils/getProxyImage';
 
 const styles = {
   cell: {
@@ -168,7 +169,8 @@ export default class Item extends React.Component {
   }
 
   render() {
-    const isRank = this.props.item.hasOwnProperty('work');
+    // const isRank = this.props.item.hasOwnProperty('work');
+    const isRank = false;
     const classes = this.props.classes;
 
     return (
@@ -181,11 +183,7 @@ export default class Item extends React.Component {
           <div className={classes.imageWrapper}>
             <img
               ref={ref => (this.imgRef = ref)}
-              src={
-                isRank
-                  ? this.props.item.work.image_urls.px_480mw
-                  : this.props.item.image_urls.px_480mw
-              }
+              src={getProxyImage(this.props.item.image_urls.medium)}
               onError={this.onImageError}
             />
           </div>
@@ -208,8 +206,7 @@ export default class Item extends React.Component {
             <div className={classes.meta}>
               <span className={classes.count}>
                 <StarIcon />
-                {this.props.item.stats.favorited_count.public +
-                  this.props.item.stats.favorited_count.private}
+                {this.props.item.total_bookmarks}
               </span>
             </div>
           )}

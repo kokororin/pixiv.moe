@@ -37,8 +37,8 @@ Table of Contents
 * material-ui
 * whatwg-fetch
 
-## Online Site
-[https://pixiv.moe](https://pixiv.moe)
+## ~~Online Site~~
+~~[https://pixiv.moe](https://pixiv.moe)~~
 
 ## Features
 
@@ -46,14 +46,6 @@ Table of Contents
 * Select keywords.
 * Search keywords order by popularity without pixiv Premium.
 * Login in pixiv and add bookmarks easily.
-
-## Privacy
-
-We would never record your password.  
-
-The authorized data is only stored in `localStorage` and `ACCESS_TOKEN` will expire in one hour. That is to say, **your login session will only remain for one hour!**
-
-
 
 ## Q&A
 
@@ -72,14 +64,15 @@ $ npm start
 
 ### Commands
 - Install dependencies: `yarn`
-- Run: `npm start`
+- Run Backend Server: `npm run backend:dev`
+- Run Frontend Server: `npm start`
 - Test: `npm test`
-- Build: `npm run dist`
+- Build Frontend: `npm run dist`
 
 ### API
 
 The API is based on HTTPS requests and JSON responses.The stable HTTPS endpoint for the latest version is:
-`https://api.pixiv.moe/v1`
+`http://localhost:3000`
 
 #### Ranking List
 
@@ -88,85 +81,8 @@ The API is based on HTTPS requests and JSON responses.The stable HTTPS endpoint 
 
 ###### example
 ```bash
-curl 'https://api.pixiv.moe/v1/ranking?page=1' 
+curl 'http://localhost:3000/ranking?page=1' 
 ```
-
-##### response
-<details>
-<summary>JSON</summary>
-
-```json
-{
-  "status": "success",
-  "response": {
-    "content": "all",
-    "mode": "daily",
-    "date": "2017-05-21",
-    "works": [
-      {
-        "rank": 1,
-        "previous_rank": 6,
-        "work": {
-          "id": 62984197,
-          "title": "★",
-          "caption": null,
-          "tags": ["SUKJA", "オリジナル", "ゴスロリ"],
-          "tools": null,
-          "image_urls": {
-            "large":
-              "https://api.pixiv.moe/v1/image/Ly9pMi5waXhpdi5uZXQvaW1nLW9yaWdpbmFsL2ltZy8yMDE3LzA1LzIwLzE3LzE1LzM5LzYyOTg0MTk3X3AwLnBuZw==",
-            "px_480mw":
-              "https://api.pixiv.moe/v1/image/Ly9pMi5waXhpdi5uZXQvYy80ODB4OTYwL2ltZy1tYXN0ZXIvaW1nLzIwMTcvMDUvMjAvMTcvMTUvMzkvNjI5ODQxOTdfcDBfbWFzdGVyMTIwMC5qcGc="
-          },
-          "width": 700,
-          "height": 1000,
-          "stats": {
-            "scored_count": 2470,
-            "score": 24700,
-            "views_count": 33130,
-            "favorited_count": {
-              "public": null,
-              "private": null
-            },
-            "commented_count": null
-          },
-          "publicity": 0,
-          "age_limit": "all-age",
-          "created_time": "2017-05-20 17:15:00",
-          "reuploaded_time": "2017-05-20 17:15:39",
-          "user": {
-            "id": 4889903,
-            "account": "sorolp",
-            "name": "SUKJA",
-            "is_following": null,
-            "is_follower": null,
-            "is_friend": null,
-            "is_premium": null,
-            "profile_image_urls": {
-              "px_50x50":
-                "https://api.pixiv.moe/v1/image/Ly9pMy5waXhpdi5uZXQvdXNlci1wcm9maWxlL2ltZy8yMDE2LzExLzI1LzE4LzI4LzI1LzExNzk0MDM4X2ViNGViYjkzOWE5ZTVmNTAzZGUyYjdkMjU0N2IxMjUzXzUwLmpwZw=="
-            },
-            "stats": null,
-            "profile": null
-          },
-          "is_manga": null,
-          "is_liked": null,
-          "favorite_id": null,
-          "page_count": 1,
-          "book_style": "none",
-          "type": "illustration",
-          "metadata": null,
-          "content_type": null,
-          "sanity_level": "white"
-        },
-        "unique_id": "2uba8cM"
-      }
-    ]
-  },
-  "count": 1
-}
-```
-</details>
 
 #### Search
 
@@ -175,189 +91,8 @@ curl 'https://api.pixiv.moe/v1/ranking?page=1'
 
 ###### example
 ```bash
-curl 'https://api.pixiv.moe/v1/search?word=fgo&page=1' 
+curl 'http://localhost:3000/search?word=fgo&page=1' 
 ```
-
-##### response
-<details>
-<summary>JSON</summary>
-
-```json
-{
-    "status":"success",
-    "response":[
-        {
-            "id":57808612,
-            "title":"邪ンヌ・オルタ",
-            "image_urls":{
-                "px_128x128":"https://api.pixiv.moe/v2/image/i.pximg.net/c/128x128/img-master/img/2016/07/09/00/10/10/57808612_p0_square1200.jpg",
-                "px_480mw":"https://api.pixiv.moe/v2/image/i.pximg.net/c/480x960/img-master/img/2016/07/09/00/10/10/57808612_p0_master1200.jpg",
-                "large":"https://api.pixiv.moe/v2/image/i.pximg.net/img-original/img/2016/07/09/00/10/10/57808612_p0.jpg",
-                "small":"https://api.pixiv.moe/v2/image/i.pximg.net/c/150x150/img-master/img/2016/07/09/00/10/10/57808612_p0_master1200.jpg",
-                "medium":"https://api.pixiv.moe/v2/image/i.pximg.net/c/600x600/img-master/img/2016/07/09/00/10/10/57808612_p0_master1200.jpg"
-            },
-            "stats":{
-                "scored_count":103183,
-                "score":1031301,
-                "views_count":626438,
-                "favorited_count":{
-                    "public":102372,
-                    "private":1832
-                },
-                "commented_count":255
-            },
-            "unique_id":"r9Earbs"
-        }
-    ],
-    "count":50,
-    "pagination":{
-        "previous":null,
-        "next":2,
-        "current":1,
-        "per_page":50,
-        "total":161174,
-        "pages":2000
-    }
-}
-```
-</details>
-
-#### Illust List
-
-##### request
-`GET /gallery?tag=[:tag]&page=[:page]`
-
-###### example
-```bash
-curl 'https://api.pixiv.moe/v1/gallery?tag=nico&page=1' 
-```
-
-##### response
-<details>
-<summary>JSON</summary>
-
-```json
-{
-    "status":"success",
-    "response":[
-        {
-            "id":55080228,
-            "title":"３年生組",
-            "image_urls":{
-                "px_128x128":"https://api.pixiv.moe/v2/image/i.pximg.net/c/128x128/img-master/img/2016/02/04/10/09/39/55080228_p0_square1200.jpg",
-                "px_480mw":"https://api.pixiv.moe/v2/image/i.pximg.net/c/480x960/img-master/img/2016/02/04/10/09/39/55080228_p0_master1200.jpg",
-                "large":"https://api.pixiv.moe/v2/image/i.pximg.net/img-original/img/2016/02/04/10/09/39/55080228_p0.jpg",
-                "small":"https://api.pixiv.moe/v2/image/i.pximg.net/c/150x150/img-master/img/2016/02/04/10/09/39/55080228_p0_master1200.jpg",
-                "medium":"https://api.pixiv.moe/v2/image/i.pximg.net/c/600x600/img-master/img/2016/02/04/10/09/39/55080228_p0_master1200.jpg"
-            },
-            "stats":{
-                "scored_count":14014,
-                "score":139358,
-                "views_count":388896,
-                "favorited_count":{
-                    "public":16567,
-                    "private":1463
-                },
-                "commented_count":228
-            },
-            "unique_id":"13KPDGM"
-        }
-    ],
-    "count":50,
-    "pagination":{
-        "previous":null,
-        "next":2,
-        "current":1,
-        "per_page":50,
-        "total":33863,
-        "pages":678
-    },
-    "expires_at":1478517054
-}
-```
-</details>
-
-#### Illust Detail
-
-##### request
-`GET /illust/[:illust_id]`
-
-###### example
-
-```bash
-curl 'https://api.pixiv.moe/v1/illust/50110342'
-```
-
-##### response
-<details>
-<summary>JSON</summary>
-
-```json
-{
-    "status":"success",
-    "count":1,
-    "response":{
-        "id":50110342,
-        "title":"ことにこと♥【COMIC1☆9】",
-        "caption":"５月２日、COMIC1☆9【ヤモセブン】せー50bでマイクロファイバークロスになります！",
-        "tags":[
-            "ラブライブ!",
-            "矢澤にこ",
-            "南ことり",
-            "にことり",
-            "胸囲の格差社会",
-            "水着",
-            "サイハイソックス",
-            "(・8・)",
-            "ラブライブ!1000users入り"
-        ],
-        "tools":[
-
-        ],
-        "image_urls":{
-            "px_128x128":"https://api.pixiv.moe/v2/image/i.pximg.net/c/128x128/img-master/img/2015/04/30/19/56/14/50110342_p0_square1200.jpg",
-            "px_480mw":"https://api.pixiv.moe/v2/image/i.pximg.net/c/480x960/img-master/img/2015/04/30/19/56/14/50110342_p0_master1200.jpg",
-            "large":"https://api.pixiv.moe/v2/image/i.pximg.net/img-original/img/2015/04/30/19/56/14/50110342_p0.png"
-        },
-        "width":784,
-        "height":704,
-        "stats":null,
-        "publicity":0,
-        "age_limit":"all-age",
-        "created_time":"2015-04-30 19:56:14",
-        "reuploaded_time":"2015-04-30 19:56:14",
-        "user":{
-            "id":2473967,
-            "account":"axial",
-            "name":"あゆま紗由",
-            "profile_image_urls":{
-                "px_50x50":"https://api.pixiv.moe/v2/image/i.pximg.net/user-profile/img/2016/07/13/11/20/47/11192925_b983eb7c8038bffa8db23d1341787d0e_50.jpg"
-            },
-            "stats":null,
-            "profile":null
-        },
-        "page_count":1,
-        "book_style":"right_to_left",
-        "type":"illustration",
-        "metadata":null,
-        "content_type":null
-    }
-}
-```
-
-```json
-{
-    "status":"failure",
-    "has_error":true,
-    "errors":{
-        "system":{
-            "message":"対象のイラストは見つかりませんでした。(illust_id:5)",
-            "code":206
-        }
-    }
-}
-```
-</details>
 
 #### Illust Comments
 
@@ -366,150 +101,8 @@ curl 'https://api.pixiv.moe/v1/illust/50110342'
 
 ###### example
 ```bash
-curl 'https://api.pixiv.moe/v1/illust/comments/47527196?page=1'
+curl 'http://localhost:3000/illust/comments/47527196?page=1'
 ```
-
-##### response
-<details>
-<summary>JSON</summary>
-
-```json
-{
-    "total_comments":8,
-    "comments":[
-        {
-            "id":59071954,
-            "comment":"凛ちゃん可愛い(๑////๑) 凛ちゃんロングでも似合う(๑////๑)",
-            "date":"2016-07-24T14:40:19+09:00",
-            "user":{
-                "id":17882671,
-                "name":"あかーし",
-                "account":"osomatsu0224",
-                "profile_image_urls":{
-                    "medium":"https://source.pixiv.net/common/images/no_profile.png"
-                }
-            },
-            "parent_comment":[
-
-            ]
-        },
-        {
-            "id":48082755,
-            "comment":"凛ちゃんかわいい！( ＝ω＝)",
-            "date":"2015-07-25T17:28:31+09:00",
-            "user":{
-                "id":14019593,
-                "name":"小原林檎",
-                "account":"ai888",
-                "profile_image_urls":{
-                    "medium":"https://api.pixiv.moe/v2/image/i.pximg.net/user-profile/img/2016/12/31/18/35/26/11938047_60df513a413dbc60ece3c2328e300a6c_170.jpg"
-                }
-            },
-            "parent_comment":[
-
-            ]
-        }
-    ]
-}
-```
-</details>
-
-#### Auth
-
-##### request
-`POST /user/auth`
-
-```json
-{
-    "username":"[:username]",
-    "password":"[:password]"
-}
-```
-
-###### example
-```bash
-curl 'https://api.pixiv.moe/v1/user/auth' \
--H 'content-type: application/json' \
--H 'accept: application/json' \
---data-binary '{"username":"abc","password":"mypassword"}'
-```
-
-##### response
-
-<details>
-<summary>JSON</summary>
-
-```json
-{
-    "status":"success",
-    "message":null,
-    "data":{
-        "access_token":"AAAAAAAAAAAAA",
-        "expires_in":3600,
-        "token_type":"bearer",
-        "scope":"unlimited",
-        "refresh_token":"BBBBBBBBBBBB",
-        "user":{
-            "profile_image_urls":{},
-            "id":"123456",
-            "name":"nickname",
-            "account":"username",
-            "is_premium":false,
-            "x_restrict":0,
-            "is_mail_authorized":true
-        }
-    }
-}
-```
-
-```json
-{
-    "status":"failure",
-    "message":"Login error: 103:pixiv ID、またはメールアドレス、パスワードが正しいかチェックしてください。"
-}
-```
-</details>
-
-#### Add Favourite
-
-##### request
-`PUT /favourite/[:illust_id]`
-
-###### example
-```bash
-curl 'https://api.pixiv.moe/v1/favourite/46453302' \
--X PUT \
--H 'access-token: AAA' \
--H 'content-type: application/json' \
--H 'accept: application/json'
-```
-
-##### response
-
-<details>
-<summary>JSON</summary>
-
-```json
-{
-    "status":"success",
-    "message":"をブックマークに追加しました"
-}
-```
-
-```json
-{
-    "status":"failure",
-    "message":"あなたは既にブックマークに追加しました"
-}
-```
-
-```json
-{
-    "status":"failure",
-    "message":"再度ログインログインセッションの有効期限が切れていてください。"
-}
-```
-</details>
 
 ## Localization
 

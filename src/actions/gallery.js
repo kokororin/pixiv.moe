@@ -76,8 +76,8 @@ function fetchSource() {
           }
         })
         .then(data => {
-          if (data.status === 'success' && data.count > 0) {
-            data.response.works.forEach(elem => {
+          if (data.status === 'success' && data.response.illusts) {
+            data.response.illusts.forEach(elem => {
               dispatch(setItems(elem));
             });
           } else {
@@ -95,11 +95,8 @@ function fetchSource() {
         });
     }
 
-    const sortByPopularity = arguments[0] !== undefined && arguments[0],
-      outsideSearchAPI = 'https://api.kirainmoe.com/pixiv/search';
-
     return honoka
-      .get(sortByPopularity ? outsideSearchAPI : config.searchURI, {
+      .get(config.searchURI, {
         mode: 'cors',
         timeout: 30e3,
         data: {
@@ -108,8 +105,8 @@ function fetchSource() {
         }
       })
       .then(data => {
-        if (data.status === 'success' && data.count > 0) {
-          data.response.forEach(elem => {
+        if (data.status === 'success' && data.response.illusts) {
+          data.response.illusts.forEach(elem => {
             dispatch(setItems(elem));
           });
         } else {
