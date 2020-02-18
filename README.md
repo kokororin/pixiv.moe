@@ -115,7 +115,6 @@ Help us if you can translate this app. Please follow the guide in `src/locale`.
 
 ## Contribute
 Feel free to contribute (PR-s and issues welcomed).  
-Only `1.x-dev` branch is accepted.
 
 ## Contributors
 
