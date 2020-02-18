@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { Route } from 'react-router-dom';
-import honoka from 'honoka';
-
 import config from '@/config';
-import Piwik from '@/utils/Piwik';
 
 export default class TrackPageView extends React.Component {
   constructor(props) {
@@ -27,14 +24,6 @@ export default class TrackPageView extends React.Component {
         page: pageLink
       });
       ReactGA.pageview(pageLink);
-      this.piwik ||
-        (this.piwik = new Piwik({
-          url: config.piwikDomain,
-          siteId: config.piwikSiteId
-        }));
-      this.piwik.track(pageLink);
-
-      honoka.get(config.logURI).catch(() => {});
     } else {
       console.log(pageLink); // eslint-disable-line
     }

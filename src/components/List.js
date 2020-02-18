@@ -22,7 +22,7 @@ export default class List extends React.Component {
         {this.props.items.map((elem, index) => {
           return (
             <Item
-              key={elem.unique_id}
+              key={index}
               index={index}
               item={elem}
               masonry={this.masonryRef}

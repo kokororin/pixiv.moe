@@ -76,8 +76,8 @@ function fetchSource() {
           }
         })
         .then(data => {
-          if (data.status === 'success' && data.count > 0) {
-            data.response.works.forEach(elem => {
+          if (data.status === 'success' && data.response.illusts) {
+            data.response.illusts.forEach(elem => {
               dispatch(setItems(elem));
             });
           } else {
@@ -94,6 +94,7 @@ function fetchSource() {
           dispatch(setFetchError(true));
         });
     }
+
     return honoka
       .get(config.searchURI, {
         mode: 'cors',
@@ -104,8 +105,8 @@ function fetchSource() {
         }
       })
       .then(data => {
-        if (data.status === 'success' && data.count > 0) {
-          data.response.forEach(elem => {
+        if (data.status === 'success' && data.response.illusts) {
+          data.response.illusts.forEach(elem => {
             dispatch(setItems(elem));
           });
         } else {
@@ -125,9 +126,10 @@ function fetchSource() {
 }
 
 export function fetchSourceIfNeeded() {
+  const sortByPopularity = arguments[0] !== undefined && arguments[0];
   return (dispatch, getState) => {
     if (!getState().gallery.isFetching) {
-      return dispatch(fetchSource());
+      return dispatch(fetchSource(sortByPopularity));
     }
   };
 }

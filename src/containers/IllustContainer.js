@@ -30,6 +30,7 @@ import Content from '@/components/Content';
 import LoginContainer from '@/containers/LoginContainer';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
+import getProxyImage from '@/utils/getProxyImage';
 
 const styles = {
   illust: {
@@ -251,28 +252,37 @@ export default class IllustContainer extends React.Component {
   }
 
   renderImage() {
-    if (this.item.metadata === null) {
-      return (
-        <Img
-          src={[this.item.image_urls.large, this.item.image_urls.px_480mw]}
-          loader={<Loading isHidden={false} />}
-        />
-      );
-    }
-
-    if (Array.isArray(this.item.metadata.pages)) {
-      return this.item.metadata.pages.map(elem => {
+    if (this.item.meta_pages && this.item.meta_pages.length > 0) {
+      return this.item.meta_pages.map(elem => {
         return (
           <Img
             key={shortid.generate()}
-            src={[elem.image_urls.large, elem.image_urls.px_480mw]}
+            src={[
+              getProxyImage(elem.image_urls.large),
+              getProxyImage(elem.image_urls.medium)
+            ]}
             loader={<Loading isHidden={false} />}
           />
         );
       });
     }
+    if (this.item.meta_pages && this.item.meta_pages.length === 0) {
+      return (
+        <Img
+          src={[
+            getProxyImage(this.item.image_urls.large),
+            getProxyImage(this.item.image_urls.medium)
+          ]}
+          loader={<Loading isHidden={false} />}
+        />
+      );
+    }
 
-    if (Array.isArray(this.item.metadata.zip_images)) {
+    if (
+      this.item.metadata &&
+      this.item.metadata.zip_images &&
+      this.item.metadata.zip_images.length > 0
+    ) {
       return <GifPlayer images={this.item.metadata.zip_images} />;
     }
   }
@@ -316,20 +326,20 @@ export default class IllustContainer extends React.Component {
                   key={shortid.generate()}
                   className={classes.tagItem}
                   avatar={<Avatar>#</Avatar>}
-                  label={elem}
-                  onClick={() => this.onTagClick(elem)}
+                  label={elem.name}
+                  onClick={() => this.onTagClick(elem.name)}
                   clickable
                 />
               );
             })}
           </div>
           <div className={classes.actions}>
-            <Button
+            {/* <Button
               variant="contained"
               onClick={this.onFavouriteClick}
               disabled={this.state.isSubmitting}>
               <FormattedMessage id="Add to Bookmarks" />
-            </Button>
+            </Button> */}
             <Button variant="contained" onClick={this.onDownloadClick}>
               <FormattedMessage id="Download" />
             </Button>
@@ -411,6 +421,7 @@ export default class IllustContainer extends React.Component {
   }
 
   render() {
+    console.log(this.item);
     return (
       <DocumentTitle
         title={this.item.title === '' ? config.siteTitle : this.item.title}>
