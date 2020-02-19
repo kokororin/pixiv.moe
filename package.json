@@ -76,7 +76,7 @@
     "nock": "^9.0.14",
     "nodemon": "^2.0.2",
     "null-loader": "^0.1.1",
-    "open": "0.0.5",
+    "open": "6.0.0",
     "open-browser-webpack-plugin": "^0.0.5",
     "optimize-js-plugin": "^0.0.4",
     "puppeteer": "^2.1.1",
