@@ -69,7 +69,11 @@ $ npm start
 ### API
 
 The API is based on HTTPS requests and JSON responses.The stable HTTPS endpoint for the latest version is:
-`http://localhost:3000`
+`http://localhost:3000`.
+
+Our online site's API Server uses `https://api.kotori.love/pixiv`
+
+To check whether our API server **could** connected to pixiv, you can visit [https://api.kotori.love/pixiv/ping](https://api.kotori.love/pixiv/ping).
 
 #### Ranking List
 

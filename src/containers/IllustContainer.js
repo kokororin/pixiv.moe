@@ -221,7 +221,7 @@ export default class IllustContainer extends React.Component {
   @autobind
   onDownloadClick() {
     const tempLink = document.createElement('a');
-    tempLink.href = this.item.image_urls.large;
+    tempLink.href = getProxyImage(this.item.image_urls.large);
     tempLink.setAttribute('download', `${this.item.title}.jpg`);
     tempLink.setAttribute('target', '_blank');
     document.body.appendChild(tempLink);
@@ -360,9 +360,10 @@ export default class IllustContainer extends React.Component {
                 {`${moment(this.item.created_time).format('LLL')}(JST)`}
               </time>
               <div className={classes.metas}>
-                <span className={classes.divide}>{`${this.item.width}x${
-                  this.item.height
-                }`}</span>
+                <span
+                  className={
+                    classes.divide
+                  }>{`${this.item.width}x${this.item.height}`}</span>
                 {Array.isArray(this.item.tools) && (
                   <span
                     className={classNames({
