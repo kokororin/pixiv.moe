@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 
 module.exports = {
   output: {
@@ -40,6 +41,7 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
       autobind: 'autobind-decorator'
-    })
+    }),
+    new SimpleProgressWebpackPlugin()
   ]
 };

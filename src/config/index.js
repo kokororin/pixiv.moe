@@ -1,5 +1,5 @@
 export default {
-  apiBaseURL: 'http://localhost:3000/pixiv',
+  apiBaseURL: 'https://api.kotori.love/pixiv',
   galleryURI: '/gallery',
   rankingURI: '/ranking',
   searchURI: '/search',
@@ -7,7 +7,7 @@ export default {
   commentsURI: '/illust/comments',
   authURI: '/user/auth',
   favouriteURI: '/favourite',
-  logURI: '/log',
+  proxyImageURI: 'https://i.pixiv.cat',
   baseURL: 'https://pixiv.moe/',
   trackingID: 'UA-70944432-2',
   projectLink: 'https://github.com/LoveLiveSunshine/pixiv.moe',

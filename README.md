@@ -40,21 +40,15 @@ Table of Contents
 * express
 * pixiv-app-api
 
-## ~~Online Site~~
-~~[https://pixiv.moe](https://pixiv.moe)~~
+## Online Site
+[https://pixiv.moe](https://pixiv.moe)
 
 ## Features
 
 * Pinterest-style layout illusts.
 * Select keywords.
 * Search keywords order by popularity without pixiv Premium.
-* Login in pixiv and add bookmarks easily.
-
-## Q&A
-
-Q: Why don't you use `REFRESH TOKEN`?
-
-A: Pixiv change the `REFRESH TOKEN` auth method, so re-login with refresh_token is failed.
+* ~~Login in pixiv and add bookmarks easily.~~
 
 ## Dev
 ```bash

@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = {
   devServer: {
@@ -15,7 +16,8 @@ module.exports = {
     hot: true,
     stats: {
       colors: true
-    }
+    },
+    quiet: true
   },
   entry: ['@babel/polyfill', 'react-hot-loader/patch', './src/index'],
   cache: true,
@@ -40,6 +42,7 @@ module.exports = {
     }),
     new OpenBrowserPlugin({ url: 'http://localhost:23333' }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
+    new webpack.NamedModulesPlugin(),
+    new FriendlyErrorsPlugin()
   ]
 };

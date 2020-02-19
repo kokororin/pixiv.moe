@@ -1,3 +1,9 @@
+import config from '@/config';
+
 export default function getProxyImage(url) {
-  return `https://api.pixiv.moe/v2/image/${url.replace(/^http?s:\/\//i, '')}`;
+  const regex = /^http?s:\/\/i\.pximg\.net/i;
+  if (regex.test(url)) {
+    return `${config.proxyImageURI}${url.replace(regex, '')}`;
+  }
+  return url;
 }
