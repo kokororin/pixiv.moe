@@ -35,8 +35,10 @@ const chooseLocale = (language, dispatch) => {
   }
 
   let found = config.languages[0];
+  let isFallback = true;
   for (const item of config.languages) {
     if (lang === item.value) {
+      isFallback = false;
       found = item;
     }
   }
@@ -48,7 +50,7 @@ const chooseLocale = (language, dispatch) => {
 
   dispatch(
     LocaleActions.setLocale({
-      lang,
+      lang: isFallback ? 'ja' : lang,
       messages
     })
   );

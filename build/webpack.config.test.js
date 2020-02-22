@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
+   mode: 'development',
   entry: ['@babel/polyfill', path.join(__dirname, '../src/index')],
   devtool: 'eval',
   module: {
@@ -34,14 +35,6 @@ module.exports = {
       '@': path.join(__dirname, '/../src')
     }
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"test"'
-    }),
-    new webpack.ProvidePlugin({
-      autobind: 'autobind-decorator'
-    })
-  ],
   externals: {
     cheerio: 'window',
     'react/addons': true,

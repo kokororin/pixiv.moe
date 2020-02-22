@@ -6,7 +6,6 @@
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     ["@babel/plugin-proposal-class-properties", { "loose": true }],
-    "@babel/transform-runtime",
     "@babel/transform-async-to-generator"
   ],
   "env": {

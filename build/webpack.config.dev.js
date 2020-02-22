@@ -5,6 +5,7 @@ const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   devServer: {
     contentBase: './src/',
     historyApiFallback: true,
@@ -26,15 +27,12 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: ['react-hot-loader/webpack', 'babel-loader'],
+        loader: 'babel-loader',
         include: path.join(__dirname, '/../src')
       }
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"development"'
-    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '/../src/index.ejs'),
       inject: 'body',

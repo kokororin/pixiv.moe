@@ -10,6 +10,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const OptimizeJsPlugin = require('optimize-js-plugin');
 
 module.exports = {
+  mode: 'production',
   entry: ['@babel/polyfill', path.join(__dirname, '../src/index')],
   cache: false,
   devtool: '#source-map',
@@ -23,18 +24,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
-    }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        drop_console: true
-      },
-      beautify: false,
-      comments: false
-    }),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new OptimizeJsPlugin({

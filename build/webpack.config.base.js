@@ -39,8 +39,11 @@ module.exports = {
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
     new webpack.ProvidePlugin({
-      autobind: 'autobind-decorator'
+      autobind: ['autobind-decorator', 'default']
     }),
     new SimpleProgressWebpackPlugin()
   ]
