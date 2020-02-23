@@ -1,19 +1,15 @@
-import nock from 'nock';
+import honoka from 'honoka';
 import mockStore from '../helpers/mockStoreHelper';
 
 import config from '@/config';
 import * as GalleryActions from '@/actions/gallery';
 
 describe('GalleryActions', () => {
-  afterEach(() => {
-    nock.cleanAll();
+  beforeEach(() => {
+    honoka.defaults.baseURL = config.apiBaseURL;
   });
 
   it('fire SET_FETCH_ERROR when fetching sources has been done', done => {
-    nock(config.baseURL)
-      .get(`${config.galleryURI}?tag=nico`)
-      .reply(200);
-
     const expectedActions = [
       {
         type: GalleryActions.types.SET_FETCH_ERROR,

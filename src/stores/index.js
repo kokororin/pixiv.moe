@@ -1,11 +1,11 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 
 import rootReducer from '@/reducers';
 
 // Create a history of your choosing (we're using a browser history in this case)
-export const history = createHistory();
+export const history = createBrowserHistory();
 // Build the middleware for intercepting and dispatching navigation actions
 const createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);
 

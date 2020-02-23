@@ -9,11 +9,11 @@ export default class TrackPageView extends React.Component {
     ReactGA.initialize(config.trackingID);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.track();
   }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     this.track();
   }
 
@@ -30,6 +30,6 @@ export default class TrackPageView extends React.Component {
   }
 
   render() {
-    return <Route children={this.props.children} />;
+    return <Route>{this.props.children}</Route>;
   }
 }

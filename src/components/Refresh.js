@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import RefreshIcon from '@material-ui/icons/Refresh';
+import { Fab } from '@material-ui/core';
+import { Refresh as RefreshIcon } from '@material-ui/icons';
 
 const styles = {
   floatBtn: {
@@ -15,9 +15,9 @@ const styles = {
 
 const Refresh = ({ classes, ...props }) => (
   <div className={classes.floatBtn}>
-    <Button variant="fab" color="secondary" aria-label="add" {...props}>
+    <Fab color="secondary" {...props}>
       <RefreshIcon />
-    </Button>
+    </Fab>
   </div>
 );
 

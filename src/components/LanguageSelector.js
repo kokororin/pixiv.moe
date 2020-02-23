@@ -1,12 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import DoneIcon from '@material-ui/icons/Done';
-import LanguageIcon from '@material-ui/icons/Language';
+import { IconButton, Menu, MenuItem } from '@material-ui/core';
+import { Done as DoneIcon, Language as LanguageIcon } from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
-
+import shortid from 'shortid';
 import config from '@/config';
 import Storage from '@/utils/Storage';
 import chooseLocale from '@/locale/chooseLocale';
@@ -40,29 +37,27 @@ export default class LanguageSelector extends React.Component {
   renderLanguages() {
     const languages = config.languages;
 
-    return (
-      <>
-        <MenuItem disabled>
-          <FormattedMessage id="Language" />
-        </MenuItem>
-        {languages.map(elem => {
-          const lang = Storage.get('lang');
-          const highlight = elem.value === lang;
+    return [
+      <MenuItem key={shortid.generate()} disabled>
+        <FormattedMessage id="Language" />
+      </MenuItem>,
+      ...languages.map(elem => {
+        const lang = Storage.get('lang');
+        const highlight = elem.value === lang;
 
-          return (
-            <MenuItem
-              key={elem.value}
-              onClick={() => {
-                this.onLanguageClick(elem.value);
-                this.onMenuClose();
-              }}>
-              {highlight && <DoneIcon style={{ color: '#4caf50' }} />}
-              {elem.name}
-            </MenuItem>
-          );
-        })}
-      </>
-    );
+        return (
+          <MenuItem
+            key={elem.value}
+            onClick={() => {
+              this.onLanguageClick(elem.value);
+              this.onMenuClose();
+            }}>
+            {highlight && <DoneIcon style={{ color: '#4caf50' }} />}
+            {elem.name}
+          </MenuItem>
+        );
+      })
+    ];
   }
 
   render() {

@@ -2,32 +2,34 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
-import Button from '@material-ui/core/Button';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Avatar,
+  Chip,
+  Button
+} from '@material-ui/core';
+import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
 import shortid from 'shortid';
 import Img from 'react-image';
 import DocumentTitle from 'react-document-title';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import honoka from 'honoka';
+// import honoka from 'honoka';
 
 import config from '@/config';
 
 import * as IllustActions from '@/actions/illust';
 import * as GalleryActions from '@/actions/gallery';
-import Alert from '@/components/Alert';
+// import Alert from '@/components/Alert';
 import Comment from '@/components/Comment';
 import GifPlayer from '@/components/GifPlayer';
 import InfiniteScroll from '@/components/InfiniteScroll';
 import Loading from '@/components/Loading';
 import Message from '@/components/Message';
 import Content from '@/components/Content';
-import LoginContainer from '@/containers/LoginContainer';
+// import LoginContainer from '@/containers/LoginContainer';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
 import getProxyImage from '@/utils/getProxyImage';
@@ -184,39 +186,39 @@ export default class IllustContainer extends React.Component {
     }
   }
 
-  @autobind
-  onFavouriteClick() {
-    const authData = Storage.get('auth');
-    if (authData === null || authData.expires_at < moment().unix()) {
-      return this.loginRef.open();
-    }
+  // @autobind
+  // onFavouriteClick() {
+  //   const authData = Storage.get('auth');
+  //   if (authData === null || authData.expires_at < moment().unix()) {
+  //     return this.loginRef.open();
+  //   }
 
-    this.setState({
-      isSubmitting: true
-    });
-    honoka
-      .put(`${config.favouriteURI}/${this.illustId}`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          'Access-Token': authData.access_token
-        }
-      })
-      .then(data => {
-        this.setState({
-          isSubmitting: false
-        });
-        this.alertRef.setContent(data.message);
-      })
-      .catch(() => {
-        this.setState({
-          isSubmitting: false
-        });
-        this.alertRef.setContent(
-          this.props.intl.formatMessage({ id: 'Communication Error Occurred' })
-        );
-      });
-  }
+  //   this.setState({
+  //     isSubmitting: true
+  //   });
+  //   honoka
+  //     .put(`${config.favouriteURI}/${this.illustId}`, {
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json',
+  //         'Access-Token': authData.access_token
+  //       }
+  //     })
+  //     .then(data => {
+  //       this.setState({
+  //         isSubmitting: false
+  //       });
+  //       this.alertRef.setContent(data.message);
+  //     })
+  //     .catch(() => {
+  //       this.setState({
+  //         isSubmitting: false
+  //       });
+  //       this.alertRef.setContent(
+  //         this.props.intl.formatMessage({ id: 'Communication Error Occurred' })
+  //       );
+  //     });
+  // }
 
   @autobind
   onDownloadClick() {
@@ -352,6 +354,7 @@ export default class IllustContainer extends React.Component {
               <div className={classes.author}>
                 <a
                   target="_blank"
+                  rel="noopener noreferrer"
                   href={`http://pixiv.me/${this.item.user.account}`}>
                   {this.item.user.name}
                 </a>
@@ -377,7 +380,10 @@ export default class IllustContainer extends React.Component {
               </div>
             </div>
             <p>
-              <a target="_blank" href={`/${this.item.id}`}>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`/${this.item.id}`}>
                 <FormattedMessage id="Redirect to pixiv" />
               </a>
             </p>
@@ -407,8 +413,8 @@ export default class IllustContainer extends React.Component {
               <Loading isHidden={!this.props.illust.isFetchingComments} />
             </div>
           </InfiniteScroll>
-          <LoginContainer onRef={ref => (this.loginRef = ref)} />
-          <Alert onRef={ref => (this.alertRef = ref)} />
+          {/* <LoginContainer onRef={ref => (this.loginRef = ref)} /> */}
+          {/* <Alert onRef={ref => (this.alertRef = ref)} /> */}
         </div>
       );
     } catch (e) {
@@ -422,7 +428,6 @@ export default class IllustContainer extends React.Component {
   }
 
   render() {
-    console.log(this.item);
     return (
       <DocumentTitle
         title={this.item.title === '' ? config.siteTitle : this.item.title}>
@@ -432,7 +437,7 @@ export default class IllustContainer extends React.Component {
               <IconButton color="inherit" onClick={this.onBackClick}>
                 <ArrowBackIcon />
               </IconButton>
-              <Typography variant="title" color="inherit">
+              <Typography variant="h6" color="inherit">
                 {this.item.title}
               </Typography>
             </Toolbar>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import {
+  StylesProvider,
   MuiThemeProvider,
   createMuiTheme,
   createGenerateClassName,
@@ -9,16 +10,10 @@ import {
 import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 import { create } from 'jss';
-import vendorPrefixer from 'jss-vendor-prefixer';
-import JssProvider from 'react-jss/lib/JssProvider';
 
 import honoka from 'honoka';
 
 import { history } from '@/stores';
-import GalleryContainer from '@/containers/GalleryContainer';
-import IllustContainer from '@/containers/IllustContainer';
-import RedirectContainer from '@/containers/RedirectContainer';
-import NotFoundContainer from '@/containers/NotFoundContainer';
 
 import Baseline from '@/components/Baseline';
 import ScrollContext from '@/components/ScrollContext';
@@ -33,34 +28,43 @@ const theme = createMuiTheme({
   }
 });
 
-const jss = create({ plugins: [...jssPreset().plugins, vendorPrefixer()] });
+const jss = create({ plugins: [...jssPreset().plugins] });
 const generateClassName = createGenerateClassName();
 
 honoka.defaults.baseURL = config.apiBaseURL;
 honoka.defaults.timeout = 30e3;
 
 const AppContainer = () => (
-  <JssProvider jss={jss} generateClassName={generateClassName}>
+  <StylesProvider jss={jss} generateClassName={generateClassName}>
     <MuiThemeProvider theme={theme}>
       <Baseline>
         <Router history={history}>
           <ScrollContext>
             <TrackPageView>
               <Switch>
-                <Route exact path="/" component={GalleryContainer} />
+                <Route
+                  exact
+                  path="/"
+                  component={require('@/containers/GalleryContainer').default}
+                />
                 <Route
                   path="/illust/:illustId(\d+)"
-                  component={IllustContainer}
+                  component={require('@/containers/IllustContainer').default}
                 />
-                <Route path="/:illustId(\d+)" component={RedirectContainer} />
-                <Route component={NotFoundContainer} />
+                <Route
+                  path="/:illustId(\d+)"
+                  component={require('@/containers/RedirectContainer').default}
+                />
+                <Route
+                  component={require('@/containers/NotFoundContainer').default}
+                />
               </Switch>
             </TrackPageView>
           </ScrollContext>
         </Router>
       </Baseline>
     </MuiThemeProvider>
-  </JssProvider>
+  </StylesProvider>
 );
 
 export default AppContainer;

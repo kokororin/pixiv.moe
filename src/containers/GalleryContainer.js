@@ -1,19 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import DoneIcon from '@material-ui/icons/Done';
-
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader
+} from '@material-ui/core';
+import { Menu as MenuIcon, Done as DoneIcon } from '@material-ui/icons';
 import DocumentTitle from 'react-document-title';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
@@ -39,13 +39,17 @@ const styles = {
   },
   toolbarTitle: {
     flex: 1,
-    height: 21,
     '@media screen and (max-width: 649px)': {
       display: 'none'
     }
   },
   toolbarMiddle: {
     flex: 1
+  },
+  root: {
+    margin: '0 auto'
+    // paddingLeft: 3,
+    // paddingRight: 20
   }
 };
 
@@ -103,6 +107,9 @@ export default class GalleryContainer extends React.Component {
 
   @autobind
   onSearch(word) {
+    if (!word) {
+      return;
+    }
     Storage.set('word', word);
     this.props.dispatch(GalleryActions.clearErrorTimes());
     this.props.dispatch(GalleryActions.clearSource());
@@ -215,7 +222,7 @@ export default class GalleryContainer extends React.Component {
                 <MenuIcon />
               </IconButton>
               <Typography
-                variant="title"
+                variant="h6"
                 color="inherit"
                 className={classes.toolbarTitle}>
                 {config.siteTitle}
@@ -254,10 +261,11 @@ export default class GalleryContainer extends React.Component {
               onLoadMore={this.onLoadMore}
               isLoading={this.props.gallery.isFetching}
               hasMore>
-              <div
-                ref={ref => (this.rootRef = ref)}
-                style={{ margin: '0 auto' }}>
-                <GalleryList items={this.props.gallery.items} />
+              <div ref={ref => (this.rootRef = ref)} className={classes.root}>
+                <GalleryList
+                  items={this.props.gallery.items}
+                  rootRef={this.rootRef}
+                />
                 <Loading isHidden={!this.props.gallery.isFetching} />
                 <Message
                   ref={ref => (this.errorRef = ref)}

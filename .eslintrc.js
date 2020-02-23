@@ -15,7 +15,8 @@ module.exports = {
     node: true,
     mocha: true
   },
-  extends: ['kotori'],
+  plugins: ['react', 'prettier'],
+  extends: ['kotori', 'plugin:react/recommended'],
   globals: {
     autobind: true
   },
@@ -26,6 +27,8 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 'error',
-    'react/sort-comp': 'off'
+    'react/sort-comp': 'off',
+    'react/prop-types': 'off',
+    'prettier/prettier': 'error'
   }
 };

@@ -76,7 +76,11 @@ function fetchSource() {
           }
         })
         .then(data => {
-          if (data.status === 'success' && data.response.illusts) {
+          if (
+            data.status === 'success' &&
+            data.response.illusts &&
+            data.response.illusts.length > 0
+          ) {
             data.response.illusts.forEach(elem => {
               dispatch(setItems(elem));
             });
@@ -105,7 +109,11 @@ function fetchSource() {
         }
       })
       .then(data => {
-        if (data.status === 'success' && data.response.illusts) {
+        if (
+          data.status === 'success' &&
+          data.response.illusts &&
+          data.response.illusts.length > 0
+        ) {
           data.response.illusts.forEach(elem => {
             dispatch(setItems(elem));
           });

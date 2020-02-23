@@ -111,15 +111,6 @@ export default class Item extends React.Component {
     masonry: PropTypes.object
   };
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      width: 0,
-      height: 0
-    };
-  }
-
   get classes() {
     return this.props.classes;
   }

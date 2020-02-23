@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import EventListener from 'react-event-listener';
-import SearchIcon from '@material-ui/icons/Search';
-// import Checkbox from '@material-ui/core/Checkbox';
+import { Search as SearchIcon } from '@material-ui/icons';
+// import { Checkbox } from '@material-ui/core';
 
 const styles = {
   searchRoot: {
