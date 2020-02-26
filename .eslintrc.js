@@ -1,12 +1,11 @@
 module.exports = {
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-      legacyDecorators: true
-    },
+    ecmaFeatures: { jsx: true },
     ecmaVersion: 2019,
-    sourceType: 'module'
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig-node.json'],
+    tsconfigRootDir: __dirname
   },
   env: {
     browser: true,
@@ -15,8 +14,12 @@ module.exports = {
     node: true,
     mocha: true
   },
-  plugins: ['react', 'prettier'],
-  extends: ['kotori', 'plugin:react/recommended'],
+  plugins: ['@typescript-eslint', 'react', 'prettier'],
+  extends: [
+    'kotori',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/eslint-recommended'
+  ],
   globals: {
     autobind: true
   },
@@ -26,9 +29,20 @@ module.exports = {
     }
   },
   rules: {
-    'linebreak-style': 'error',
+    'no-unused-vars': 'off',
+    'no-invalid-this': 'off',
+    'no-duplicate-imports': 'off',
     'react/sort-comp': 'off',
     'react/prop-types': 'off',
-    'prettier/prettier': 'error'
+    'react/display-name': 'off',
+    'linebreak-style': 'error',
+    'prettier/prettier': 'error',
+    // '@typescript-eslint/explicit-member-accessibility': ['error'],
+    '@typescript-eslint/array-type': ['error', { default: 'array' }],
+    '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+    '@typescript-eslint/prefer-namespace-keyword': 'error',
+    '@typescript-eslint/prefer-optional-chain': 'error',
+    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/require-await': 'error'
   }
 };
