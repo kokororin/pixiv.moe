@@ -55,10 +55,8 @@ const config: webpack.Configuration = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
-    new webpack.ProvidePlugin({
-      autobind: ['autobind-decorator', 'default']
-    }),
     new ForkTsCheckerWebpackPlugin(),
+    // @ts-ignore
     new SimpleProgressWebpackPlugin()
   ]
 };
