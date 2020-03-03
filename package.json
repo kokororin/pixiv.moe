@@ -17,7 +17,7 @@
     "test:watch": "cross-env NODE_ENV=test TS_NODE_PROJECT=\"tsconfig-node.json\" karma start --autoWatch=true --singleRun=false",
     "deploy": "gh-pages -d dist",
     "coverage": "cat ./coverage/lcov.info | coveralls",
-    "backend:dev": "cross-env NODE_ENV=development nodemon --watch ./server --exec \"ts-node --project ./tsconfig-node.json ./server/server.ts\"",
+    "backend:dev": "cross-env NODE_ENV=development nodemon --ext .ts --watch ./server --exec \"ts-node --project ./tsconfig-node.json ./server/server.ts\"",
     "backend:prod": "cross-env NODE_ENV=production ts-node --project ./tsconfig-node.json -T ./server/server.ts",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate"
