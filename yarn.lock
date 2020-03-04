@@ -3754,10 +3754,10 @@ escape-string-regexp@1.0.5, escape-string-regexp@^1.0.2, escape-string-regexp@^1
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-config-kotori@^0.4.3:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/eslint-config-kotori/-/eslint-config-kotori-0.4.5.tgz#8c8f126ea03fd0ff79baa7fcb2c4e70c2d5ab970"
-  integrity sha512-sww7NZqgKetOFhWNb4lnF0jjiYMaz6DVUys+WH2VO8FzbJKLI+XgXbHac/d4PLb2ifnku3IFun3jkNotsStmBQ==
+eslint-config-kotori@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-kotori/-/eslint-config-kotori-0.5.1.tgz#1099736b278765a321c4a9356ff7244ad03e1ca5"
+  integrity sha512-GI/TJNasmQwbMA6TSYhwMqdQOLoJhjCPvORlVsttOmZpS+DKRk9juVGYsg6rihPDbnG3yW3ezv79hJ7CeZIYkg==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^2.22.0"
     "@typescript-eslint/parser" "^2.22.0"
@@ -3765,6 +3765,7 @@ eslint-config-kotori@^0.4.3:
     eslint-plugin-react "^7.18.3"
     eslint-plugin-vue "^6.2.1"
     ptils "^0.3.0"
+    vue-eslint-parser "^7.0.0"
 
 eslint-loader@^3.0.3:
   version "3.0.3"

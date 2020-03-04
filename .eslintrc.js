@@ -4,7 +4,7 @@ module.exports = {
     tsconfigRootDir: __dirname
   },
   plugins: ['prettier'],
-  extends: ['kotori'],
+  extends: ['kotori/auto'],
   rules: {
     'no-duplicate-imports': 'off',
     'react/display-name': 'off',
