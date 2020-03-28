@@ -57,8 +57,8 @@ const config: webpack.Configuration = {
     }),
     new ForkTsCheckerWebpackPlugin(),
     // @ts-ignore
-    new SimpleProgressWebpackPlugin()
-  ]
+    process.env.CI ? null : new SimpleProgressWebpackPlugin()
+  ].filter(Boolean)
 };
 
 export default config;
