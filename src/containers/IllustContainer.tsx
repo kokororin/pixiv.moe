@@ -200,14 +200,10 @@ class IllustContainer extends React.Component<
     return this.props.illust.items[this.illustId];
   }
 
-  onBackClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  onBackClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    if (this.props.history.length > 1) {
-      this.props.history.goBack();
-    } else {
-      this.props.history.push('/');
-    }
+    this.props.history.push('/');
   };
 
   // @autobind

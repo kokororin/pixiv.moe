@@ -15,6 +15,7 @@ import {
   ListSubheader
 } from '@material-ui/core';
 import { Menu as MenuIcon, Done as DoneIcon } from '@material-ui/icons';
+import H from 'history';
 import DocumentTitle from 'react-document-title';
 import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
 
@@ -62,6 +63,7 @@ interface IGalleryContainerProps extends WithStyles<typeof styles> {
   dispatch: Dispatch<IGalleryAction> & TGalleryThunkDispatch;
   intl: InjectedIntl;
   gallery: IGalleryState;
+  location: H.Location;
 }
 
 interface IGalleryContainerState {
@@ -90,10 +92,14 @@ class GalleryContainer extends React.Component<
       this.onSearch(this.props.gallery.word);
       this.props.dispatch(GalleryActions.setFromIllust(false));
     } else {
-      const cachedWord = Storage.get('word');
-      this.props.dispatch(
-        GalleryActions.setWord(cachedWord ? cachedWord : 'ranking')
-      );
+      if (this.props.location.search === '?entry=ranking') {
+        this.props.dispatch(GalleryActions.setWord('ranking'));
+      } else {
+        const cachedWord = Storage.get('word');
+        this.props.dispatch(
+          GalleryActions.setWord(cachedWord ? cachedWord : 'ranking')
+        );
+      }
 
       if (this.props.gallery.items.length === 0) {
         this.fetchSource(true);
@@ -192,7 +198,7 @@ class GalleryContainer extends React.Component<
     );
   }
 
-  onHeaderClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  onHeaderClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLDivElement;
     const tagName = target.tagName.toLowerCase();
 
