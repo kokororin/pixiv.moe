@@ -75,35 +75,7 @@ Our online site's API Server uses `https://api.kotori.love/pixiv`
 
 To check whether our API server **could** connected to pixiv, you can visit [https://api.kotori.love/pixiv/ping](https://api.kotori.love/pixiv/ping).
 
-#### Ranking List
-
-##### request
-`GET /ranking?page=[:page]`
-
-###### example
-```bash
-curl 'http://localhost:3000/ranking?page=1' 
-```
-
-#### Search
-
-##### request
-`GET /ranking?word=[:word]&page=[:page]`
-
-###### example
-```bash
-curl 'http://localhost:3000/search?word=fgo&page=1' 
-```
-
-#### Illust Comments
-
-##### request
-`GET /illust/comments/[:illust_id]?page=[:page]`
-
-###### example
-```bash
-curl 'http://localhost:3000/illust/comments/47527196?page=1'
-```
+See more in [API Docs](https://api.kotori.love/docs/#/?id=pixiv).
 
 ## Localization
 
