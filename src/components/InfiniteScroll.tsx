@@ -8,15 +8,15 @@ interface IInfiniteScrollProps {
   isLoading: boolean;
 }
 
-export default class InfiniteScroll extends React.Component<
-  IInfiniteScrollProps
-> {
-  onScroll = (event: React.UIEvent) => {
-    if (this.props.isLoading) {
+const InfiniteScroll: React.SFC<IInfiniteScrollProps> = props => {
+  const scrollingElement = document.querySelector('[data-component="Content"]');
+
+  const onScroll = (event: React.UIEvent) => {
+    if (props.isLoading) {
       return;
     }
 
-    if (!this.props.hasMore) {
+    if (!props.hasMore) {
       return;
     }
 
@@ -25,27 +25,23 @@ export default class InfiniteScroll extends React.Component<
     const scrollTop = target.scrollTop;
     const scrollHeight = target.scrollHeight;
 
-    if (scrollTop + targetHeight - scrollHeight > -1 * this.props.distance) {
-      this.props.onLoadMore();
+    if (scrollTop + targetHeight - scrollHeight > -1 * props.distance) {
+      props.onLoadMore();
     }
   };
 
-  get scrollingElement() {
-    return document.querySelector('[data-component="Content"]');
-  }
+  return (
+    <>
+      {props.children}
+      {scrollingElement && (
+        <EventListener
+          target={scrollingElement}
+          // @ts-ignore
+          onScroll={onScroll}
+        />
+      )}
+    </>
+  );
+};
 
-  render() {
-    return (
-      <>
-        {this.props.children}
-        {this.scrollingElement && (
-          <EventListener
-            target={this.scrollingElement}
-            // @ts-ignore
-            onScroll={this.onScroll}
-          />
-        )}
-      </>
-    );
-  }
-}
+export default InfiniteScroll;

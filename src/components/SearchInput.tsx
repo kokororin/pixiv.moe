@@ -1,10 +1,10 @@
 import React from 'react';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import EventListener from 'react-event-listener';
 import { Search as SearchIcon } from '@material-ui/icons';
 // import { Checkbox } from '@material-ui/core';
 
-const styles = createStyles({
+const useStyles = makeStyles({
   searchRoot: {
     position: 'relative',
     background: 'rgba(255, 255, 255, 0.15)',
@@ -61,43 +61,35 @@ const styles = createStyles({
   }
 });
 
-interface ISearchInputProps extends WithStyles<typeof styles> {
+interface ISearchInputProps {
   onSearch: (value: string) => void;
   isSearchByPopularity: boolean;
 }
 
-const SearchInput = withStyles(styles)(
-  class extends React.Component<ISearchInputProps> {
-    static defaultProps = {
-      onSearch() {}
-    };
+const SearchInput: React.SFC<ISearchInputProps> = props => {
+  const classes = useStyles();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
-    inputRef: HTMLInputElement;
-
-    onKeyDown = (event: KeyboardEvent) => {
-      if (event.keyCode === 13 && document.activeElement === this.inputRef) {
-        this.inputRef.blur();
-        this.onSearch();
-      }
-    };
-
-    onSearch() {
-      this.props.onSearch(this.inputRef.value);
+  const onSearch = () => {
+    if (inputRef.current) {
+      props.onSearch(inputRef.current.value);
     }
+  };
 
-    render() {
-      const { classes } = this.props;
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.keyCode === 13 && document.activeElement === inputRef.current) {
+      inputRef?.current?.focus();
+      onSearch();
+    }
+  };
 
-      return (
-        <div className={classes.searchRoot}>
-          <div className={classes.search}>
-            <SearchIcon />
-          </div>
-          <input
-            ref={ref => (this.inputRef = ref as HTMLInputElement)}
-            className={classes.searchInput}
-          />
-          {/* <div className={classes.searchOptionCheckbox}>
+  return (
+    <div className={classes.searchRoot}>
+      <div className={classes.search}>
+        <SearchIcon />
+      </div>
+      <input ref={inputRef} className={classes.searchInput} />
+      {/* <div className={classes.searchOptionCheckbox}>
           <Checkbox
             onClick={() => this.props.onCheckBoxChange()}
             checked={this.props.isSearchByPopularity}
@@ -105,11 +97,13 @@ const SearchInput = withStyles(styles)(
           />
           <span>Search by popularity tags</span>
         </div> */}
-          <EventListener target="window" onKeyDown={this.onKeyDown} />
-        </div>
-      );
-    }
-  }
-);
+      <EventListener target="window" onKeyDown={onKeyDown} />
+    </div>
+  );
+};
+
+SearchInput.defaultProps = {
+  onSearch() {}
+};
 
 export default SearchInput;

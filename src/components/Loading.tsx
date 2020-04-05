@@ -1,19 +1,19 @@
 import React from 'react';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import MDSpinner from 'react-md-spinner';
 
-import { styles } from '@/components/Message';
+import { useStyles } from '@/components/Message';
 
-interface ILoadingProps extends WithStyles<typeof styles> {
+interface ILoadingProps {
   isHidden?: boolean;
 }
 
-const Loading = withStyles(styles)(({ isHidden, classes }: ILoadingProps) => {
+const Loading: React.SFC<ILoadingProps> = ({ isHidden }) => {
+  const classes = useStyles();
   return isHidden ? null : (
     <div className={classes.message}>
       <MDSpinner size={30} />
     </div>
   );
-});
+};
 
 export default Loading;

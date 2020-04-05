@@ -1,8 +1,8 @@
 import React from 'react';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 
-export const styles = createStyles({
+export const useStyles = makeStyles({
   message: {
     textAlign: 'center',
     padding: '20px 0',
@@ -13,24 +13,24 @@ export const styles = createStyles({
   }
 });
 
-interface IMessageProps extends WithStyles<typeof styles> {
+interface IMessageProps {
   isHidden?: boolean;
   text?: string;
 }
 
-const Message = withStyles(styles)(
-  ({ isHidden, text, classes }: IMessageProps) =>
-    isHidden ? null : (
-      <div className={classes.message}>
-        <p>
-          {text ? (
-            text
-          ) : (
-            <FormattedMessage id="An error occurred. Check the URL or wait for a while and access again." />
-          )}
-        </p>
-      </div>
-    )
-);
+const Message: React.SFC<IMessageProps> = ({ isHidden, text }) => {
+  const classes = useStyles();
+  return isHidden ? null : (
+    <div className={classes.message}>
+      <p>
+        {text ? (
+          text
+        ) : (
+          <FormattedMessage id="An error occurred. Check the URL or wait for a while and access again." />
+        )}
+      </p>
+    </div>
+  );
+};
 
 export default Message;

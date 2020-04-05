@@ -1,5 +1,7 @@
 import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
+import ScrollMemory from 'react-router-scroll-memory';
 import {
   StylesProvider,
   MuiThemeProvider,
@@ -34,32 +36,33 @@ const generateClassName = createGenerateClassName();
 honoka.defaults.baseURL = config.apiBaseURL;
 honoka.defaults.timeout = 30e3;
 
+const routes = [
+  {
+    exact: true,
+    path: '/',
+    component: require('@/containers/GalleryContainer').default
+  },
+  {
+    path: '/illust/:illustId',
+    component: require('@/containers/IllustContainer').default
+  },
+  {
+    path: '/:illustId',
+    component: require('@/containers/RedirectContainer').default
+  },
+  {
+    component: require('@/containers/NotFoundContainer').default
+  }
+];
+
 const AppContainer = () => (
   <StylesProvider jss={jss} generateClassName={generateClassName}>
     <MuiThemeProvider theme={theme}>
       <Baseline>
         <Router history={history}>
           <ScrollContext>
-            <TrackPageView>
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  component={require('@/containers/GalleryContainer').default}
-                />
-                <Route
-                  path="/illust/:illustId(\d+)"
-                  component={require('@/containers/IllustContainer').default}
-                />
-                <Route
-                  path="/:illustId(\d+)"
-                  component={require('@/containers/RedirectContainer').default}
-                />
-                <Route
-                  component={require('@/containers/NotFoundContainer').default}
-                />
-              </Switch>
-            </TrackPageView>
+            <ScrollMemory />
+            <TrackPageView>{renderRoutes(routes)}</TrackPageView>
           </ScrollContext>
         </Router>
       </Baseline>

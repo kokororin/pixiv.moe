@@ -1,14 +1,10 @@
 import React from 'react';
-import classNames from 'classnames';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import TrendingDownIcon from '@material-ui/icons/TrendingDown';
 import StarIcon from '@material-ui/icons/Star';
 import getProxyImage from '@/utils/getProxyImage';
 
-const styles = createStyles({
+const useStyles = makeStyles({
   cell: {
     width: 175,
     minHeight: 100,
@@ -102,113 +98,55 @@ const styles = createStyles({
   }
 });
 
-interface IItemProps extends WithStyles<typeof styles> {
+interface IItemProps {
   item: any;
   index: number;
   masonry: any;
 }
 
-const Item = withStyles(styles)(
-  class Item extends React.Component<IItemProps> {
-    imgRef: HTMLImageElement;
+const Item: React.SFC<IItemProps> = props => {
+  const classes = useStyles();
+  const imgRef = React.useRef<HTMLImageElement>(null);
 
-    get classes() {
-      return this.props.classes;
+  const onImageMouseMove = (event: React.MouseEvent) => {
+    const nativeEvent = event.nativeEvent;
+    const target = event.target as HTMLElement;
+    if (target.tagName.toLowerCase() === 'img') {
+      target.style.transformOrigin = `${nativeEvent.offsetX}px ${nativeEvent.offsetY}px`;
+    }
+  };
+
+  const onImageError = () => {
+    if (imgRef.current) {
+      imgRef.current.src = require('@/images/img-fail.jpg');
     }
 
-    onImageMouseMove(event: React.MouseEvent) {
-      const nativeEvent = event.nativeEvent;
-      const target = event.target as HTMLElement;
-      if (target.tagName.toLowerCase() === 'img') {
-        target.style.transformOrigin = `${nativeEvent.offsetX}px ${nativeEvent.offsetY}px`;
-      }
-    }
+    props?.masonry?.performLayout();
+  };
 
-    onImageError = () => {
-      this.imgRef.src = require('@/images/img-fail.jpg');
-      typeof this.props.masonry !== 'undefined' &&
-        this.props.masonry.performLayout();
-    };
-
-    renderRankText() {
-      const { classes } = this.props;
-      if (this.props.item.previous_rank === 0) {
-        return (
-          <span
-            className={classNames(
-              classes.rankTextOuter,
-              classes.noPreviousRank
-            )}>
-            <FormattedMessage id="Debut" />
-          </span>
-        );
-      }
-
-      const icon =
-        this.props.item.previous_rank < this.props.item.rank ? (
-          <TrendingDownIcon style={{ color: '#3f51b5' }} />
-        ) : (
-          <TrendingUpIcon style={{ color: '#d32f2f' }} />
-        );
-
-      return (
-        <span className={classes.rankTextOuter}>
-          {icon}
-          <FormattedMessage
-            id="Yesterday x rank"
-            values={{ rank: this.props.item.previous_rank }}
+  return (
+    <div className={classes.cell} onMouseMove={onImageMouseMove}>
+      <Link className={classes.link} to={`/illust/${props.item.id}`}>
+        <div className={classes.imageWrapper}>
+          <img
+            ref={imgRef}
+            src={getProxyImage(props.item.image_urls.medium)}
+            onError={onImageError}
           />
-        </span>
-      );
-    }
-
-    render() {
-      // const isRank = this.props.item.hasOwnProperty('work');
-      const isRank = false;
-      const classes = this.props.classes;
-
-      return (
-        <div className={classes.cell} onMouseMove={this.onImageMouseMove}>
-          <Link
-            className={classes.link}
-            to={`/illust/${
-              isRank ? this.props.item.work.id : this.props.item.id
-            }`}>
-            <div className={classes.imageWrapper}>
-              <img
-                ref={ref => (this.imgRef = ref as HTMLImageElement)}
-                src={getProxyImage(this.props.item.image_urls.medium)}
-                onError={this.onImageError}
-              />
-            </div>
-            <div className={classes.title}>
-              <span>
-                {isRank ? this.props.item.work.title : this.props.item.title}
-              </span>
-            </div>
-            {isRank ? (
-              <div className={classes.meta}>
-                <span className={classes.rankNum}>
-                  <FormattedMessage
-                    id="x rank"
-                    values={{ rank: this.props.item.rank }}
-                  />
-                </span>
-                <span>{this.renderRankText()}</span>
-              </div>
-            ) : (
-              <div className={classes.meta}>
-                <span className={classes.count}>
-                  <StarIcon />
-                  {this.props.item.total_bookmarks}
-                </span>
-              </div>
-            )}
-          </Link>
         </div>
-      );
-    }
-  }
-);
+        <div className={classes.title}>
+          <span>{props.item.title}</span>
+        </div>
+
+        <div className={classes.meta}>
+          <span className={classes.count}>
+            <StarIcon />
+            {props.item.total_bookmarks}
+          </span>
+        </div>
+      </Link>
+    </div>
+  );
+};
 
 export default Item;

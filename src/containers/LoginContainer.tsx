@@ -3,7 +3,7 @@ import { injectIntl, InjectedIntl } from 'react-intl';
 import EventListener from 'react-event-listener';
 import honoka from 'honoka';
 
-import Alert, { OriginalAlert } from '@/components/Alert';
+// import Alert, { OriginalAlert } from '@/components/Alert';
 import Login, { OrignalLogin } from '@/components/Login';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
@@ -28,7 +28,7 @@ class LoginContainer extends React.Component<
     onRef() {}
   };
 
-  alertRef: OriginalAlert;
+  alertRef: any;
   loginRef: OrignalLogin;
 
   constructor(props: ILoginContainerProps) {
@@ -161,7 +161,7 @@ class LoginContainer extends React.Component<
           isSubmitting={this.state.isSubmitting}
           authData={this.state.authData}
         />
-        <Alert onRef={ref => (this.alertRef = ref)} />
+        {/* <Alert onRef={ref => (this.alertRef = ref)} /> */}
         <EventListener
           target={document}
           // @ts-ignore

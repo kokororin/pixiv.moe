@@ -1,10 +1,10 @@
 import React from 'react';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Img from 'react-image';
 import EmojiParser from '@/utils/EmojiParser';
 import getProxyImage from '@/utils/getProxyImage';
 
-const styles = createStyles({
+const useStyles = makeStyles({
   listItem: {
     display: 'flex',
     alignItems: 'center',
@@ -56,11 +56,12 @@ const styles = createStyles({
   }
 });
 
-interface ICommentProps extends WithStyles<typeof styles> {
+interface ICommentProps {
   item: any;
 }
 
-const Comment = withStyles(styles)(({ item, classes }: ICommentProps) => {
+const Comment: React.SFC<ICommentProps> = ({ item }) => {
+  const classes = useStyles();
   const badWords = [
     '墙',
     'VPN',
@@ -105,6 +106,6 @@ const Comment = withStyles(styles)(({ item, classes }: ICommentProps) => {
       </span>
     </li>
   );
-});
+};
 
 export default Comment;

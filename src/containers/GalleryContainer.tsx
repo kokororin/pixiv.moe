@@ -30,7 +30,7 @@ import Refresh from '@/components/Refresh';
 import Message from '@/components/Message';
 import LanguageSelector from '@/components/LanguageSelector';
 import SearchInput from '@/components/SearchInput';
-import Content, { OriginalContent } from '@/components/Content';
+import Content, { IContentHandles } from '@/components/Content';
 import Storage from '@/utils/Storage';
 import GithubIcon from '@/icons/Github';
 
@@ -75,7 +75,7 @@ class GalleryContainer extends React.Component<
   IGalleryContainerProps,
   IGalleryContainerState
 > {
-  contentRef: OriginalContent;
+  contentRef = React.createRef<IContentHandles>();
   rootRef: HTMLDivElement;
 
   constructor(props: IGalleryContainerProps) {
@@ -208,7 +208,7 @@ class GalleryContainer extends React.Component<
       tagName !== 'svg' &&
       tagName !== 'input'
     ) {
-      this.contentRef.toTop();
+      this?.contentRef?.current?.toTop();
     }
   };
 
@@ -265,7 +265,7 @@ class GalleryContainer extends React.Component<
               </List>
             </div>
           </Drawer>
-          <Content onRef={ref => (this.contentRef = ref)}>
+          <Content ref={this.contentRef}>
             <InfiniteScroll
               distance={200}
               onLoadMore={this.onLoadMore}

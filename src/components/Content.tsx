@@ -1,8 +1,8 @@
 import React from 'react';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import scrollTo from '@/utils/scrollTo';
 
-const styles = createStyles({
+const useStyles = makeStyles({
   container: {
     width: '100%',
     position: 'relative',
@@ -15,39 +15,35 @@ const styles = createStyles({
   }
 });
 
-interface IContentProps extends WithStyles<typeof styles> {
-  onRef?: (ref: OriginalContent) => any;
+interface IContentProps {
+  children: JSX.Element;
 }
 
-export class OriginalContent extends React.Component<IContentProps> {
-  static defaultProps = {
-    onRef() {}
-  };
+export interface IContentHandles {
+  toTop: () => void;
+}
 
-  containerRef: HTMLDivElement;
+const Content = React.forwardRef<IContentHandles, IContentProps>(
+  (props, ref) => {
+    const classes = useStyles();
+    const containerRef = React.createRef<HTMLDivElement>();
 
-  componentDidMount() {
-    this.props.onRef!(this);
-  }
-
-  toTop() {
-    scrollTo(this.containerRef, 0, 900, 'easeInOutQuint');
-  }
-
-  render() {
-    const { classes } = this.props;
-
+    React.useImperativeHandle(ref, () => ({
+      toTop: () => {
+        if (containerRef.current) {
+          scrollTo(containerRef.current, 0, 900, 'easeInOutQuint');
+        }
+      }
+    }));
     return (
       <div
-        ref={ref => (this.containerRef = ref as HTMLDivElement)}
+        ref={containerRef}
         className={classes.container}
         data-component="Content">
-        {this.props.children}
+        {props.children}
       </div>
     );
   }
-}
-
-const Content = withStyles(styles)(OriginalContent);
+);
 
 export default Content;

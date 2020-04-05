@@ -1,7 +1,7 @@
 import React from 'react';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = createStyles({
+const useStyles = makeStyles({
   '@global': {
     html: {
       fontFamily:
@@ -88,14 +88,11 @@ const styles = createStyles({
   }
 });
 
-interface IBaselineProps extends WithStyles<typeof styles> {}
+interface IBaselineProps {}
 
-const Baseline = withStyles(styles)(
-  class extends React.Component<IBaselineProps> {
-    render() {
-      return this.props.children;
-    }
-  }
-);
+const Baseline: React.SFC<IBaselineProps> = props => {
+  useStyles();
+  return <>{props.children}</>;
+};
 
 export default Baseline;
