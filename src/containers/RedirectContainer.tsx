@@ -12,13 +12,13 @@ interface IRedirectContainerProps
   intl: InjectedIntl;
 }
 
-interface RedirectContainerState {
+interface IRedirectContainerState {
   isError: boolean;
 }
 
 class RedirectContainer extends React.Component<
   IRedirectContainerProps,
-  RedirectContainerState
+  IRedirectContainerState
 > {
   constructor(props: IRedirectContainerProps) {
     super(props);
