@@ -14,7 +14,6 @@ export default {
   commentsURI: '/illust/comments',
   authURI: '/user/auth',
   favouriteURI: '/favourite',
-  proxyImageURI: 'https://i.pixiv.cat',
   baseURL: 'https://pixiv.moe/',
   trackingID: 'UA-70944432-2',
   projectLink: 'https://github.com/LoveLiveSunshine/pixiv.moe',

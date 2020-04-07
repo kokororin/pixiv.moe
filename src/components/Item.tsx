@@ -118,7 +118,7 @@ const Item: React.SFC<IItemProps> = props => {
 
   const onImageError = () => {
     if (imgRef.current) {
-      imgRef.current.src = require('@/images/img-fail.jpg');
+      imgRef.current.src = require('@/images/img-fail.jpg').default;
     }
 
     props?.masonry?.performLayout();
