@@ -75,7 +75,7 @@ Our online site's API Server uses `https://api.kotori.love/pixiv`
 
 To check whether our API server **could** connected to pixiv, you can visit [https://api.kotori.love/pixiv/ping](https://api.kotori.love/pixiv/ping).
 
-See more in [API Docs](https://api.kotori.love/docs/#/?id=pixiv).
+See more in [API Docs](https://api.kotori.love/docs/#/pixiv).
 
 ## Localization
 
