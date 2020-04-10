@@ -1,7 +1,6 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
-import ScrollMemory from 'react-router-scroll-memory';
 import {
   StylesProvider,
   MuiThemeProvider,
@@ -31,7 +30,9 @@ const theme = createMuiTheme({
 });
 
 const jss = create({ plugins: [...jssPreset().plugins] });
-const generateClassName = createGenerateClassName();
+const generateClassName = createGenerateClassName({
+  productionPrefix: 'p'
+});
 
 honoka.defaults.baseURL = config.apiBaseURL;
 honoka.defaults.timeout = 30e3;
@@ -60,10 +61,13 @@ const AppContainer = () => (
     <MuiThemeProvider theme={theme}>
       <Baseline>
         <Router history={history}>
-          <ScrollContext>
-            <ScrollMemory />
-            <TrackPageView>{renderRoutes(routes)}</TrackPageView>
-          </ScrollContext>
+          <Route
+            render={({ location }) => (
+              <ScrollContext location={location}>
+                <TrackPageView>{renderRoutes(routes)}</TrackPageView>
+              </ScrollContext>
+            )}
+          />
         </Router>
       </Baseline>
     </MuiThemeProvider>
