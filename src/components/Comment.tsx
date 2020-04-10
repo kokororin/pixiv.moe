@@ -72,7 +72,9 @@ const Comment: React.SFC<ICommentProps> = ({ item }) => {
     '撕逼',
     '好酸',
     '醋意',
-    'P站'
+    'P站',
+    '滚粗',
+    '垃圾'
   ];
   for (const badWord of badWords) {
     if (
