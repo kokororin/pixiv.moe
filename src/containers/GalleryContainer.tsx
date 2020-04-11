@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { Menu as MenuIcon, Done as DoneIcon } from '@material-ui/icons';
 import H from 'history';
-import DocumentTitle from 'react-document-title';
+import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
 
 import config from '@/config';
@@ -24,7 +24,7 @@ import config from '@/config';
 import * as GalleryActions from '@/actions/gallery';
 import { IGalleryAction, TGalleryThunkDispatch } from '@/actions/gallery';
 import InfiniteScroll from '@/components/InfiniteScroll';
-import GalleryList from '@/components/List';
+import GalleryList from '@/components/GalleryList';
 import Loading from '@/components/Loading';
 import Refresh from '@/components/Refresh';
 import Message from '@/components/Message';
@@ -222,70 +222,71 @@ class GalleryContainer extends React.Component<
     const { classes } = this.props;
 
     return (
-      <DocumentTitle title={config.siteTitle}>
-        <>
-          <AppBar position="static" onClick={this.onHeaderClick}>
-            <Toolbar className={classes.toolbar}>
-              <IconButton
-                color="inherit"
-                onClick={this.onToggleDrawer}
-                aria-label="Menu">
-                <MenuIcon />
-              </IconButton>
-              <Typography
-                variant="h6"
-                color="inherit"
-                className={classes.toolbarTitle}>
-                {config.siteTitle}
-              </Typography>
-              <div className={classes.toolbarMiddle} />
-              <SearchInput
-                onSearch={this.onSearch}
-                isSearchByPopularity={this.state.isSearchByPopularity}
-              />
-              <LanguageSelector />
-              <IconButton color="inherit" href={config.projectLink}>
-                <GithubIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          <Drawer open={this.state.isDrawerOpen} onClose={this.onToggleDrawer}>
-            <div
-              tabIndex={0}
-              role="button"
+      <>
+        <Helmet>
+          <title>{config.siteTitle}</title>
+        </Helmet>
+        <AppBar position="static" onClick={this.onHeaderClick}>
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              color="inherit"
               onClick={this.onToggleDrawer}
-              onKeyDown={this.onToggleDrawer}>
-              <List
-                subheader={
-                  <ListSubheader disableSticky>
-                    <FormattedMessage id="Tags" />
-                  </ListSubheader>
-                }>
-                {this.renderKeywords()}
-              </List>
+              aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              color="inherit"
+              className={classes.toolbarTitle}>
+              {config.siteTitle}
+            </Typography>
+            <div className={classes.toolbarMiddle} />
+            <SearchInput
+              onSearch={this.onSearch}
+              isSearchByPopularity={this.state.isSearchByPopularity}
+            />
+            <LanguageSelector />
+            <IconButton color="inherit" href={config.projectLink}>
+              <GithubIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Drawer open={this.state.isDrawerOpen} onClose={this.onToggleDrawer}>
+          <div
+            tabIndex={0}
+            role="button"
+            onClick={this.onToggleDrawer}
+            onKeyDown={this.onToggleDrawer}>
+            <List
+              subheader={
+                <ListSubheader disableSticky>
+                  <FormattedMessage id="Tags" />
+                </ListSubheader>
+              }>
+              {this.renderKeywords()}
+            </List>
+          </div>
+        </Drawer>
+        <Content ref={this.contentRef}>
+          <InfiniteScroll
+            distance={200}
+            onLoadMore={this.onLoadMore}
+            isLoading={this.props.gallery.isFetching}
+            hasMore>
+            <div
+              ref={ref => (this.rootRef = ref as HTMLDivElement)}
+              className={classes.root}>
+              <GalleryList items={this.props.gallery.items} />
+              {this.props.gallery.isFetching && <Loading />}
+              <Message
+                text={this.props.intl.formatMessage({ id: 'Failed to Load' })}
+                isHidden={!this.props.gallery.isError}
+              />
+              <Refresh onClick={this.reRenderContent} />
             </div>
-          </Drawer>
-          <Content ref={this.contentRef}>
-            <InfiniteScroll
-              distance={200}
-              onLoadMore={this.onLoadMore}
-              isLoading={this.props.gallery.isFetching}
-              hasMore>
-              <div
-                ref={ref => (this.rootRef = ref as HTMLDivElement)}
-                className={classes.root}>
-                <GalleryList items={this.props.gallery.items} />
-                {this.props.gallery.isFetching && <Loading />}
-                <Message
-                  text={this.props.intl.formatMessage({ id: 'Failed to Load' })}
-                  isHidden={!this.props.gallery.isError}
-                />
-                <Refresh onClick={this.reRenderContent} />
-              </div>
-            </InfiniteScroll>
-          </Content>
-        </>
-      </DocumentTitle>
+          </InfiniteScroll>
+        </Content>
+      </>
     );
   }
 }

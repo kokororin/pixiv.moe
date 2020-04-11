@@ -98,13 +98,13 @@ const useStyles = makeStyles({
   }
 });
 
-interface IItemProps {
+interface IImageItemProps {
   item: any;
   index: number;
   masonry: any;
 }
 
-const Item: React.SFC<IItemProps> = props => {
+const ImageItem: React.SFC<IImageItemProps> = props => {
   const classes = useStyles();
   const imgRef = React.useRef<HTMLImageElement>(null);
 
@@ -149,4 +149,4 @@ const Item: React.SFC<IItemProps> = props => {
   );
 };
 
-export default Item;
+export default ImageItem;

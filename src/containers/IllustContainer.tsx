@@ -19,7 +19,7 @@ import {
 } from '@material-ui/icons';
 import shortid from 'shortid';
 import Img from 'react-image';
-import DocumentTitle from 'react-document-title';
+import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
 // import honoka from 'honoka';
 
@@ -40,7 +40,7 @@ import WeiboIcon from '@/icons/Weibo';
 import LineIcon from '@/icons/Line';
 // import LoginContainer from '@/containers/LoginContainer';
 import moment from '@/utils/moment';
-import Storage from '@/utils/Storage';
+// import Storage from '@/utils/Storage';
 import getProxyImage from '@/utils/getProxyImage';
 import { ICombinedState } from '@/reducers';
 import { IIllustState } from '@/reducers/illust';
@@ -187,20 +187,20 @@ class IllustContainer extends React.Component<
     }
 
     this.props.dispatch(IllustActions.fetchComments(this.illustId));
-    this.authTimer = window.setInterval(() => {
-      const authData = Storage.get('auth');
-      if (authData === null) {
-        return;
-      }
-      if (authData.expires_at < moment().unix()) {
-        Storage.remove('auth');
-      }
-    }, 500);
+    // this.authTimer = window.setInterval(() => {
+    //   const authData = Storage.get('auth');
+    //   if (authData === null) {
+    //     return;
+    //   }
+    //   if (authData.expires_at < moment().unix()) {
+    //     Storage.remove('auth');
+    //   }
+    // }, 500);
   }
 
   componentWillUnmount() {
     this.props.dispatch(IllustActions.clearComments());
-    clearInterval(this.authTimer);
+    // clearInterval(this.authTimer);
   }
 
   get item() {
@@ -498,29 +498,31 @@ class IllustContainer extends React.Component<
 
   render() {
     return (
-      <DocumentTitle
-        title={this.item.title === '' ? config.siteTitle : this.item.title}>
-        <>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton href="#" color="inherit" onClick={this.onBackClick}>
-                <ArrowBackIcon />
-              </IconButton>
-              <Typography variant="h6" color="inherit">
-                {this.item.title}
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Content>{this.renderContent()}</Content>
-          {this.state.showBox && (
-            <ImageBox
-              items={this.urls}
-              index={this.state.boxIndex}
-              onClose={this.onImageClose}
-            />
-          )}
-        </>
-      </DocumentTitle>
+      <>
+        <Helmet>
+          <title>
+            {this.item.title === '' ? config.siteTitle : this.item.title}
+          </title>
+        </Helmet>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton href="#" color="inherit" onClick={this.onBackClick}>
+              <ArrowBackIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit">
+              {this.item.title}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Content>{this.renderContent()}</Content>
+        {this.state.showBox && (
+          <ImageBox
+            items={this.urls}
+            index={this.state.boxIndex}
+            onClose={this.onImageClose}
+          />
+        )}
+      </>
     );
   }
 }

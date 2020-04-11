@@ -1,13 +1,13 @@
 import React from 'react';
 import Masonry from 'react-masonry-component';
 
-import Item from '@/components/Item';
+import ImageItem from '@/components/ImageItem';
 
-interface IListProps {
+interface IGalleryListProps {
   items: any[];
 }
 
-const List: React.SFC<IListProps> = props => {
+const GalleryList: React.SFC<IGalleryListProps> = props => {
   const masonryRef = React.useRef<any>(null);
   return (
     <Masonry
@@ -20,7 +20,7 @@ const List: React.SFC<IListProps> = props => {
       updateOnEachImageLoad={false}>
       {props.items.map((elem, index) => {
         return (
-          <Item
+          <ImageItem
             key={index}
             index={index}
             item={elem}
@@ -32,4 +32,4 @@ const List: React.SFC<IListProps> = props => {
   );
 };
 
-export default List;
+export default GalleryList;

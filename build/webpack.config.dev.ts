@@ -23,6 +23,11 @@ const config: webpack.Configuration = {
   entry: ['@babel/polyfill', 'react-hot-loader/patch', './src/index.tsx'],
   cache: true,
   devtool: '#eval-source-map',
+  resolve: {
+    alias: {
+      'react-dom': '@hot-loader/react-dom'
+    }
+  },
   module: {
     rules: [
       {
@@ -40,7 +45,6 @@ const config: webpack.Configuration = {
     }),
     new OpenBrowserPlugin({ url: 'http://localhost:23333' }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
     new FriendlyErrorsPlugin()
   ]
 };
