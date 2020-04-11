@@ -1,4 +1,4 @@
-const en = {
+export default {
   Debut: 'Debut',
   'Yesterday x rank': 'Yesterday #{rank}',
   'x rank': '#{rank}',
@@ -30,5 +30,3 @@ const en = {
   Language: 'Language',
   Ranking: 'Ranking'
 };
-
-export default en;

@@ -22,6 +22,12 @@ config.languages = [
     value: 'id',
     messages: require('@/locale/id').default,
     localeData: require('react-intl/locale-data/id')
+  },
+  {
+    name: '한국어',
+    value: 'ko',
+    messages: require('@/locale/ko').default,
+    localeData: require('react-intl/locale-data/ko')
   }
 ];
 
@@ -51,7 +57,7 @@ const chooseLocale = (language: string, dispatch: Dispatch) => {
 
   dispatch(
     LocaleActions.setLocale({
-      lang: isFallback ? 'ja' : lang,
+      lang: isFallback ? 'en' : lang,
       messages
     })
   );

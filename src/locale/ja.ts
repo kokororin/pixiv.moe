@@ -1,4 +1,4 @@
-const ja = {
+export default {
   Debut: '初登场',
   'Yesterday x rank': '前日 {rank}位',
   'x rank': '{rank}位',
@@ -31,5 +31,3 @@ const ja = {
   Language: '言語',
   Ranking: 'ランキング'
 };
-
-export default ja;

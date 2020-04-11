@@ -1,4 +1,4 @@
-const id = {
+export default {
   Debut: 'Debut',
   'Yesterday x rank': 'Kemarin #{rank}',
   'x rank': '#{rank}',
@@ -30,5 +30,3 @@ const id = {
   Language: 'Bahasa',
   Ranking: 'Rangking'
 };
-
-export default id;
