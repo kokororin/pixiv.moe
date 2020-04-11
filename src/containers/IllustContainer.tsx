@@ -13,7 +13,10 @@ import {
   Chip,
   Button
 } from '@material-ui/core';
-import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
+import {
+  ArrowBack as ArrowBackIcon,
+  Twitter as TwitterIcon
+} from '@material-ui/icons';
 import shortid from 'shortid';
 import Img from 'react-image';
 import DocumentTitle from 'react-document-title';
@@ -32,6 +35,9 @@ import InfiniteScroll from '@/components/InfiniteScroll';
 import Loading from '@/components/Loading';
 import Message from '@/components/Message';
 import Content from '@/components/Content';
+import ImageBox from '@/components/ImageBox';
+import WeiboIcon from '@/icons/Weibo';
+import LineIcon from '@/icons/Line';
 // import LoginContainer from '@/containers/LoginContainer';
 import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
@@ -50,6 +56,7 @@ const styles = createStyles({
     overflow: 'hidden',
     textAlign: 'center',
     '& img': {
+      display: 'block',
       position: 'relative',
       marginTop: 0,
       marginRight: 'auto',
@@ -60,6 +67,7 @@ const styles = createStyles({
         '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12)',
       border: 0,
       zIndex: 1,
+      cursor: 'zoom-in',
       transition: 'opacity 0.3s ease',
       '@media screen and (max-width: 768px) and (orientation: portrait)': {
         width: '100%'
@@ -150,6 +158,8 @@ interface IIllustContainerProps extends IIllustContainerCombinedProps {
 
 interface IIllustContainerState {
   isSubmitting: boolean;
+  boxIndex: number;
+  showBox: boolean;
 }
 
 class IllustContainer extends React.Component<
@@ -163,7 +173,9 @@ class IllustContainer extends React.Component<
     super(props);
 
     this.state = {
-      isSubmitting: false
+      isSubmitting: false,
+      boxIndex: 0,
+      showBox: false
     };
 
     this.illustId = this.props.match.params.illustId;
@@ -198,6 +210,16 @@ class IllustContainer extends React.Component<
       };
     }
     return this.props.illust.items[this.illustId];
+  }
+
+  get urls(): string[] {
+    if (this.item?.meta_single_page?.original_image_url) {
+      return [this.item.meta_single_page?.original_image_url];
+    }
+    if (this.item?.meta_pages?.length > 0) {
+      return this.item.meta_pages.map((page: any) => page.image_urls.original);
+    }
+    return [];
   }
 
   onBackClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -240,14 +262,12 @@ class IllustContainer extends React.Component<
   //     });
   // }
 
-  onDownloadClick = () => {
-    const tempLink = document.createElement('a');
-    tempLink.href = getProxyImage(this.item.image_urls.large);
-    tempLink.setAttribute('download', `${this.item.title}.jpg`);
-    tempLink.setAttribute('target', '_blank');
-    document.body.appendChild(tempLink);
-    tempLink.click();
-    document.body.removeChild(tempLink);
+  onImageClick = (index: number) => {
+    this.setState({ boxIndex: index, showBox: true });
+  };
+
+  onImageClose = () => {
+    this.setState({ boxIndex: 0, showBox: false });
   };
 
   onTwitterClick = () => {
@@ -257,7 +277,29 @@ class IllustContainer extends React.Component<
       )}&ref_src=twsrc%5Etfw&text=${encodeURIComponent(
         `${this.item.title} | ${this.item.user.name} #pixiv`
       )}&tw_p=tweetbutton&url=${encodeURIComponent(
-        `${config.baseURL}${this.item.id}`
+        `${config.baseURL}illust/${this.item.id}`
+      )}`,
+      '_blank',
+      'width=550,height=370'
+    );
+  };
+
+  onLineClick = () => {
+    window.open(
+      `https://social-plugins.line.me/lineit/share?url==${encodeURIComponent(
+        window.location.href
+      )}`,
+      '_blank',
+      'width=550,height=370'
+    );
+  };
+
+  onWeiboClick = () => {
+    window.open(
+      `http://service.weibo.com/share/share.php?url=${encodeURIComponent(
+        window.location.href
+      )}&title=${encodeURIComponent(
+        `${this.item.title} | ${this.item.user.name} #pixiv`
       )}`,
       '_blank',
       'width=550,height=370'
@@ -271,8 +313,8 @@ class IllustContainer extends React.Component<
   };
 
   renderImage() {
-    if (this.item.meta_pages && this.item.meta_pages.length > 0) {
-      return this.item.meta_pages.map((elem: any) => {
+    if (this.item.meta_pages?.length > 0) {
+      return this.item.meta_pages.map((elem: any, index: number) => {
         return (
           <Img
             key={shortid.generate()}
@@ -280,28 +322,26 @@ class IllustContainer extends React.Component<
               getProxyImage(elem.image_urls.large),
               getProxyImage(elem.image_urls.medium)
             ]}
-            loader={<Loading isHidden={false} />}
+            loader={<Loading />}
+            onClick={() => this.onImageClick(index)}
           />
         );
       });
     }
-    if (this.item.meta_pages && this.item.meta_pages.length === 0) {
+    if (this.item.meta_pages?.length === 0) {
       return (
         <Img
           src={[
             getProxyImage(this.item.image_urls.large),
             getProxyImage(this.item.image_urls.medium)
           ]}
-          loader={<Loading isHidden={false} />}
+          loader={<Loading />}
+          onClick={() => this.onImageClick(0)}
         />
       );
     }
 
-    if (
-      this.item.metadata &&
-      this.item.metadata.zip_images &&
-      this.item.metadata.zip_images.length > 0
-    ) {
+    if (this.item.metadata?.zip_images?.length > 0) {
       return <GifPlayer images={this.item.metadata.zip_images} />;
     }
   }
@@ -310,7 +350,7 @@ class IllustContainer extends React.Component<
     const { classes } = this.props;
 
     if (this.props.illust.isFetching) {
-      return <Loading isHidden={false} />;
+      return <Loading />;
     }
     if (this.props.illust.isError) {
       return (
@@ -359,11 +399,23 @@ class IllustContainer extends React.Component<
               disabled={this.state.isSubmitting}>
               <FormattedMessage id="Add to Bookmarks" />
             </Button> */}
-            <Button variant="contained" onClick={this.onDownloadClick}>
-              <FormattedMessage id="Download" />
-            </Button>
-            <Button variant="contained" onClick={this.onTwitterClick}>
+            <Button
+              variant="outlined"
+              startIcon={<TwitterIcon style={{ color: '#38A1F3' }} />}
+              onClick={this.onTwitterClick}>
               <FormattedMessage id="Tweet" />
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<LineIcon />}
+              onClick={this.onLineClick}>
+              <FormattedMessage id="LINE" />
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<WeiboIcon />}
+              onClick={this.onWeiboClick}>
+              <FormattedMessage id="Weibo" />
             </Button>
           </div>
           <div className={classes.detail}>
@@ -427,7 +479,7 @@ class IllustContainer extends React.Component<
                   return <Comment key={shortid.generate()} item={elem} />;
                 })}
               </ul>
-              <Loading isHidden={!this.props.illust.isFetchingComments} />
+              {this.props.illust.isFetchingComments && <Loading />}
             </div>
           </InfiniteScroll>
           {/* <LoginContainer onRef={ref => (this.loginRef = ref)} /> */}
@@ -460,6 +512,13 @@ class IllustContainer extends React.Component<
             </Toolbar>
           </AppBar>
           <Content>{this.renderContent()}</Content>
+          {this.state.showBox && (
+            <ImageBox
+              items={this.urls}
+              index={this.state.boxIndex}
+              onClose={this.onImageClose}
+            />
+          )}
         </>
       </DocumentTitle>
     );

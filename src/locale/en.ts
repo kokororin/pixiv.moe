@@ -6,6 +6,8 @@ const en = {
   'Add to Bookmarks': 'Add to Bookmarks',
   Download: 'Download',
   Tweet: 'Tweet',
+  LINE: 'LINE',
+  Weibo: 'Weibo',
   Comments: 'Comments',
   'No Comments': 'No Comments',
   'An Error Occurred': 'An Error Occurred',

@@ -6,6 +6,8 @@ const ja = {
   'Add to Bookmarks': 'ブックマークに追加',
   Download: 'ダウンロード',
   Tweet: 'ツイート',
+  LINE: 'LINE',
+  Weibo: 'ウェイボー',
   Comments: 'コメント',
   'No Comments': 'コメントはありません',
   'An Error Occurred': 'エラーが発生しました',

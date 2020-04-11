@@ -1,17 +1,15 @@
 import React from 'react';
-import MDSpinner from 'react-md-spinner';
+import { CircularProgress } from '@material-ui/core';
 
 import { useStyles } from '@/components/Message';
 
-interface ILoadingProps {
-  isHidden?: boolean;
-}
+interface ILoadingProps {}
 
-const Loading: React.SFC<ILoadingProps> = ({ isHidden }) => {
+const Loading: React.SFC<ILoadingProps> = () => {
   const classes = useStyles();
-  return isHidden ? null : (
+  return (
     <div className={classes.message}>
-      <MDSpinner size={30} />
+      <CircularProgress size={30} />
     </div>
   );
 };

@@ -6,6 +6,8 @@ const id = {
   'Add to Bookmarks': 'Tambahkan ke Bookmarks',
   Download: 'Unduh',
   Tweet: 'Tweet',
+  LINE: 'LINE',
+  Weibo: 'Weibo',
   Comments: 'Komentar',
   'No Comments': 'Tidak ada komentar',
   'An Error Occurred': 'Terjadi kesalahan',

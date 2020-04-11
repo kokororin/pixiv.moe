@@ -275,7 +275,7 @@ class GalleryContainer extends React.Component<
                 ref={ref => (this.rootRef = ref as HTMLDivElement)}
                 className={classes.root}>
                 <GalleryList items={this.props.gallery.items} />
-                <Loading isHidden={!this.props.gallery.isFetching} />
+                {this.props.gallery.isFetching && <Loading />}
                 <Message
                   text={this.props.intl.formatMessage({ id: 'Failed to Load' })}
                   isHidden={!this.props.gallery.isError}
