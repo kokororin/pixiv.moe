@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Img from 'react-image';
+import isMobile from 'is-mobile';
+import Hotkeys from 'react-hot-keys';
 import { Chip } from '@material-ui/core';
 import Loading from '@/components/Loading';
 import getProxyImage from '@/utils/getProxyImage';
@@ -31,6 +33,7 @@ const useStyles = makeStyles({
   image: {
     margin: 'auto',
     '& img': {
+      width: '100%',
       boxShadow:
         '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12)'
     }
@@ -115,7 +118,12 @@ interface IImageBoxProps {
 
 const ImageBox: React.SFC<IImageBoxProps> = props => {
   const classes = useStyles();
-  const [index, setIndex] = React.useState(props.index);
+  const [index, setIndex] = React.useState(0);
+
+  const onPrev = () =>
+    setIndex((index + props.items.length - 1) % props.items.length);
+  const onNext = () => setIndex((index + 1) % props.items.length);
+
   if (!props.items[index]) {
     return null;
   }
@@ -127,18 +135,16 @@ const ImageBox: React.SFC<IImageBoxProps> = props => {
           <Img src={getProxyImage(props.items[index])} loader={<Loading />} />
         </div>
       </div>
-      <div className={classes.buttons}>
-        <button
-          className={classes.prev}
-          onClick={() =>
-            setIndex((index + props.items.length - 1) % props.items.length)
-          }
-        />
-        <button
-          className={classes.next}
-          onClick={() => setIndex((index + 1) % props.items.length)}
-        />
-      </div>
+      {!isMobile() && (
+        <>
+          <div className={classes.buttons}>
+            <button className={classes.prev} onClick={onPrev} />
+            <button className={classes.next} onClick={onNext} />
+          </div>
+          <Hotkeys keyName="left,up" onKeyDown={onPrev} />
+          <Hotkeys keyName="right,down" onKeyDown={onNext} />
+        </>
+      )}
       <div className={classes.toolbar}>
         <Chip
           label={`${index + 1} / ${props.items.length}`}
