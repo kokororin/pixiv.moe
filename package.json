@@ -137,6 +137,7 @@
     "inobounce": "^0.2.0",
     "is-mobile": "^2.2.1",
     "jszip": "^3.1.4",
+    "material-ui-image": "^3.2.2",
     "moment": "^2.24.0",
     "namespaced-types": "^0.1.2",
     "node-cache": "^5.1.0",

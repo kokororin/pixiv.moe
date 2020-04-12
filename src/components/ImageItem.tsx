@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import Image from 'material-ui-image';
 import StarIcon from '@material-ui/icons/Star';
 import getProxyImage from '@/utils/getProxyImage';
 
@@ -106,7 +107,6 @@ interface IImageItemProps {
 
 const ImageItem: React.SFC<IImageItemProps> = props => {
   const classes = useStyles();
-  const imgRef = React.useRef<HTMLImageElement>(null);
 
   const onImageMouseMove = (event: React.MouseEvent) => {
     const nativeEvent = event.nativeEvent;
@@ -116,22 +116,13 @@ const ImageItem: React.SFC<IImageItemProps> = props => {
     }
   };
 
-  const onImageError = () => {
-    if (imgRef.current) {
-      imgRef.current.src = require('@/images/img-fail.jpg').default;
-    }
-
-    props?.masonry?.performLayout();
-  };
-
   return (
     <div className={classes.cell} onMouseMove={onImageMouseMove}>
       <Link className={classes.link} to={`/illust/${props.item.id}`}>
         <div className={classes.imageWrapper}>
-          <img
-            ref={imgRef}
+          <Image
+            aspectRatio={props.item.width / props.item.height}
             src={getProxyImage(props.item.image_urls.medium)}
-            onError={onImageError}
           />
         </div>
         <div className={classes.title}>
