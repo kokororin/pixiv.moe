@@ -13,6 +13,8 @@ import red from '@material-ui/core/colors/red';
 import { create } from 'jss';
 
 import honoka from 'honoka';
+import moment from 'moment';
+import 'moment/locale/ja';
 
 import { history } from '@/stores';
 
@@ -36,6 +38,7 @@ const generateClassName = createGenerateClassName({
 
 honoka.defaults.baseURL = config.apiBaseURL;
 honoka.defaults.timeout = 30e3;
+moment.locale('ja');
 
 const routes = [
   {

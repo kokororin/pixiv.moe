@@ -2,6 +2,7 @@ import React from 'react';
 import H from 'history';
 import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import EventListener, { withOptions } from 'react-event-listener';
+import Content from '@/components/Content';
 
 const styles = createStyles({
   context: {
@@ -54,7 +55,7 @@ const ScrollContext = withStyles(styles)(
     }
 
     get scrollingElement() {
-      return document.querySelector('[data-component="Content"]');
+      return Content.getElement();
     }
 
     render() {

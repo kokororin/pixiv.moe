@@ -2,10 +2,10 @@ import React from 'react';
 import { injectIntl, InjectedIntl } from 'react-intl';
 import EventListener from 'react-event-listener';
 import honoka from 'honoka';
+import moment from 'moment';
 
 // import Alert, { OriginalAlert } from '@/components/Alert';
 import Login, { OrignalLogin } from '@/components/Login';
-import moment from '@/utils/moment';
 import Storage from '@/utils/Storage';
 
 import config from '@/config';

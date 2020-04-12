@@ -19,6 +19,13 @@ interface IContentProps {
   children: JSX.Element;
 }
 
+interface IContent
+  extends React.ForwardRefExoticComponent<
+    IContentProps & React.RefAttributes<IContentHandles>
+  > {
+  getElement: () => Element | null;
+}
+
 export interface IContentHandles {
   toTop: () => void;
 }
@@ -28,6 +35,8 @@ const Content = React.forwardRef<IContentHandles, IContentProps>(
     const classes = useStyles();
     const containerRef = React.createRef<HTMLDivElement>();
 
+    Content.getElement = () => document.querySelector(`.${classes.container}`);
+
     React.useImperativeHandle(ref, () => ({
       toTop: () => {
         if (containerRef.current) {
@@ -36,14 +45,11 @@ const Content = React.forwardRef<IContentHandles, IContentProps>(
       }
     }));
     return (
-      <div
-        ref={containerRef}
-        className={classes.container}
-        data-component="Content">
+      <div ref={containerRef} className={classes.container}>
         {props.children}
       </div>
     );
   }
-);
+) as IContent;
 
 export default Content;

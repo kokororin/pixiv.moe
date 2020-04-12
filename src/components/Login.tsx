@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import { Button, TextField } from '@material-ui/core';
 import { Clear as ClearIcon } from '@material-ui/icons';
 import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
-import moment from '@/utils/moment';
+import moment from 'moment';
 import Storage from '@/utils/Storage';
 
 const styles = createStyles({

@@ -22,6 +22,7 @@ import Img from 'react-image';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
 // import honoka from 'honoka';
+import moment from 'moment';
 
 import config from '@/config';
 
@@ -39,9 +40,9 @@ import ImageBox from '@/components/ImageBox';
 import WeiboIcon from '@/icons/Weibo';
 import LineIcon from '@/icons/Line';
 // import LoginContainer from '@/containers/LoginContainer';
-import moment from '@/utils/moment';
 // import Storage from '@/utils/Storage';
 import getProxyImage from '@/utils/getProxyImage';
+import Social from '@/utils/Social';
 import { ICombinedState } from '@/reducers';
 import { IIllustState } from '@/reducers/illust';
 
@@ -270,40 +271,11 @@ class IllustContainer extends React.Component<
     this.setState({ boxIndex: 0, showBox: false });
   };
 
-  onTwitterClick = () => {
-    window.open(
-      `https://twitter.com/intent/tweet?original_referer=${encodeURIComponent(
-        window.location.href
-      )}&ref_src=twsrc%5Etfw&text=${encodeURIComponent(
-        `${this.item.title} | ${this.item.user.name} #pixiv`
-      )}&tw_p=tweetbutton&url=${encodeURIComponent(
-        `${config.baseURL}illust/${this.item.id}`
-      )}`,
-      '_blank',
-      'width=550,height=370'
-    );
-  };
-
-  onLineClick = () => {
-    window.open(
-      `https://social-plugins.line.me/lineit/share?url==${encodeURIComponent(
-        window.location.href
-      )}`,
-      '_blank',
-      'width=550,height=370'
-    );
-  };
-
-  onWeiboClick = () => {
-    window.open(
-      `http://service.weibo.com/share/share.php?url=${encodeURIComponent(
-        window.location.href
-      )}&title=${encodeURIComponent(
-        `${this.item.title} | ${this.item.user.name} #pixiv`
-      )}`,
-      '_blank',
-      'width=550,height=370'
-    );
+  onSocialClick = (type: 'toTwitter' | 'toLine' | 'toWeibo') => {
+    new Social({
+      text: `${this.item.title} | ${this.item.user.name} #pixiv`,
+      url: window.location.href
+    })[type]();
   };
 
   onTagClick = (tag: string) => {
@@ -402,19 +374,19 @@ class IllustContainer extends React.Component<
             <Button
               variant="outlined"
               startIcon={<TwitterIcon style={{ color: '#38A1F3' }} />}
-              onClick={this.onTwitterClick}>
+              onClick={() => this.onSocialClick('toTwitter')}>
               <FormattedMessage id="Tweet" />
             </Button>
             <Button
               variant="outlined"
               startIcon={<LineIcon />}
-              onClick={this.onLineClick}>
+              onClick={() => this.onSocialClick('toLine')}>
               <FormattedMessage id="LINE" />
             </Button>
             <Button
               variant="outlined"
               startIcon={<WeiboIcon />}
-              onClick={this.onWeiboClick}>
+              onClick={() => this.onSocialClick('toWeibo')}>
               <FormattedMessage id="Weibo" />
             </Button>
           </div>
@@ -439,9 +411,7 @@ class IllustContainer extends React.Component<
                 {Array.isArray(this.item.tools) && (
                   <span
                     className={classNames({
-                      [classes.divide]:
-                        Array.isArray(this.item.tools) &&
-                        this.item.tools.length > 0
+                      [classes.divide]: this.item.tools.length > 0
                     })}>
                     {this.item.tools.join(' / ')}
                   </span>

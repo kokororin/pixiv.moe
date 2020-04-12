@@ -1,5 +1,6 @@
 import React from 'react';
 import EventListener from 'react-event-listener';
+import Content from '@/components/Content';
 
 interface IInfiniteScrollProps {
   distance: number;
@@ -9,7 +10,7 @@ interface IInfiniteScrollProps {
 }
 
 const InfiniteScroll: React.SFC<IInfiniteScrollProps> = props => {
-  const scrollingElement = document.querySelector('[data-component="Content"]');
+  const scrollingElement = Content.getElement();
 
   const onScroll = (event: React.UIEvent) => {
     if (props.isLoading) {
