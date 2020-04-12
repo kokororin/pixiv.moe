@@ -1,3 +1,5 @@
+import * as api from '@/utils/api';
+
 export default class EmojiParser {
   static emojiSeries = [
     {
@@ -159,7 +161,9 @@ export default class EmojiParser {
       let replaceStr = '';
       for (const series of EmojiParser.emojiSeries) {
         if (match === `(${series.name})`) {
-          replaceStr += `<img src="https://source.pixiv.net/common/images/emoji/${series.id}.png" />`;
+          replaceStr += `<img src="${api.proxyImage(
+            `https://source.pixiv.net/common/images/emoji/${series.id}.png`
+          )}" />`;
         }
       }
       return replaceStr === '' ? match : replaceStr;

@@ -12,7 +12,6 @@ import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 import { create } from 'jss';
 
-import honoka from 'honoka';
 import moment from 'moment';
 import 'moment/locale/ja';
 
@@ -21,8 +20,6 @@ import { history } from '@/stores';
 import Baseline from '@/components/Baseline';
 import ScrollContext from '@/components/ScrollContext';
 import TrackPageView from '@/components/TrackPageView';
-
-import config from '@/config';
 
 const theme = createMuiTheme({
   palette: {
@@ -36,8 +33,6 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'p'
 });
 
-honoka.defaults.baseURL = config.apiBaseURL;
-honoka.defaults.timeout = 30e3;
 moment.locale('ja');
 
 const routes = [

@@ -5,7 +5,7 @@ import isMobile from 'is-mobile';
 import Hotkeys from 'react-hot-keys';
 import { Chip } from '@material-ui/core';
 import Loading from '@/components/Loading';
-import getProxyImage from '@/utils/getProxyImage';
+import * as api from '@/utils/api';
 
 const useStyles = makeStyles({
   root: {
@@ -132,7 +132,7 @@ const ImageBox: React.SFC<IImageBoxProps> = props => {
     <div className={classes.root}>
       <div className={classes.inner} onClick={props.onClose}>
         <div className={classes.image}>
-          <Img src={getProxyImage(props.items[index])} loader={<Loading />} />
+          <Img src={api.proxyImage(props.items[index])} loader={<Loading />} />
         </div>
       </div>
       {!isMobile() && (

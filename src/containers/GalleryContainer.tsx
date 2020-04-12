@@ -104,6 +104,7 @@ class GalleryContainer extends React.Component<
       if (this.props.gallery.items.length === 0) {
         this.fetchSource(true);
       }
+      this.fetchTags();
     }
   }
 
@@ -126,6 +127,10 @@ class GalleryContainer extends React.Component<
     this.props.dispatch(GalleryActions.fetchSourceIfNeeded());
   }
 
+  fetchTags = () => {
+    this.props.dispatch(GalleryActions.fetchTags());
+  };
+
   onSearch = (word: string) => {
     if (!word) {
       return;
@@ -144,12 +149,17 @@ class GalleryContainer extends React.Component<
   };
 
   renderKeywords() {
-    const keywords = config.keywords;
+    const keywords = [...this.props.gallery.tags];
+    keywords.unshift({ tag: 'ranking' });
+
+    if (this.props.gallery.isFetchingTags) {
+      return <Loading />;
+    }
 
     const word = String(this.props.gallery.word);
     let found = false;
     for (const item of keywords) {
-      if (item.jp === word) {
+      if (item.tag === word) {
         found = true;
         break;
       }
@@ -166,17 +176,17 @@ class GalleryContainer extends React.Component<
           </ListItem>
         )}
         {keywords.map(elem => {
-          const ranking = elem.en === 'ranking';
+          const ranking = elem.tag === 'ranking';
           const highlight =
-            elem.jp === this.props.gallery.word ||
+            elem.tag === this.props.gallery.word ||
             (this.props.gallery.word === 'ranking' && ranking);
 
           return (
             <ListItem
-              key={elem.en}
+              key={elem.tag}
               button
               onClick={() =>
-                this.onKeywordClick(ranking ? 'ranking' : elem.jp)
+                this.onKeywordClick(ranking ? 'ranking' : elem.tag)
               }>
               {highlight && (
                 <ListItemIcon>
@@ -188,7 +198,7 @@ class GalleryContainer extends React.Component<
                 primary={
                   ranking
                     ? this.props.intl.formatMessage({ id: 'Ranking' })
-                    : elem.jp
+                    : elem.tag
                 }
               />
             </ListItem>
@@ -206,6 +216,7 @@ class GalleryContainer extends React.Component<
       tagName !== 'button' &&
       tagName !== 'span' &&
       tagName !== 'svg' &&
+      tagName !== 'path' &&
       tagName !== 'input'
     ) {
       this?.contentRef?.current?.toTop();

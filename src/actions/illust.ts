@@ -1,9 +1,7 @@
 import { Action } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import namespacedTypes from 'namespaced-types';
-import honoka from 'honoka';
-
-import config from '@/config';
+import * as api from '@/utils/api';
 import getImagesFromZip from '@/utils/getImagesFromZip';
 import { ICombinedState } from '@/reducers';
 
@@ -80,8 +78,8 @@ export function fetchItem(illustId: string): TIllustThunkAction {
   return dispatch => {
     dispatch(setFetchStatus(true));
     dispatch(setFetchError(false));
-    return honoka
-      .get(`${config.illustURI}/${illustId}`)
+    return api
+      .illust(illustId)
       .then(data => {
         if (data.status === 'success') {
           if (
@@ -165,11 +163,9 @@ export function fetchComments(illustId: string): TIllustThunkAction {
   return (dispatch, getState) => {
     dispatch(setFetchCommentsStatus(true));
     dispatch(setFetchCommentsError(false));
-    return honoka
-      .get(`${config.commentsURI}/${illustId}`, {
-        data: {
-          page: getState().illust.page
-        }
+    return api
+      .illustComments(illustId, {
+        page: getState().illust.page
       })
       .then(data => {
         if (data.status === 'success' && data.response.comments) {

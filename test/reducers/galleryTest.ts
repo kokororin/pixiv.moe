@@ -11,6 +11,8 @@ describe('GalleryReducer', () => {
       errorTimes: 0,
       items: [],
       images: [],
+      isFetchingTags: false,
+      tags: [],
       word: 'ranking',
       fromIllust: false
     });

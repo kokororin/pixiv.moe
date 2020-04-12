@@ -21,7 +21,6 @@ import shortid from 'shortid';
 import Img from 'react-image';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
-// import honoka from 'honoka';
 import moment from 'moment';
 
 import config from '@/config';
@@ -41,7 +40,7 @@ import WeiboIcon from '@/icons/Weibo';
 import LineIcon from '@/icons/Line';
 // import LoginContainer from '@/containers/LoginContainer';
 // import Storage from '@/utils/Storage';
-import getProxyImage from '@/utils/getProxyImage';
+import * as api from '@/utils/api';
 import Social from '@/utils/Social';
 import { ICombinedState } from '@/reducers';
 import { IIllustState } from '@/reducers/illust';
@@ -291,8 +290,8 @@ class IllustContainer extends React.Component<
           <Img
             key={shortid.generate()}
             src={[
-              getProxyImage(elem.image_urls.large),
-              getProxyImage(elem.image_urls.medium)
+              api.proxyImage(elem.image_urls.large),
+              api.proxyImage(elem.image_urls.medium)
             ]}
             loader={<Loading />}
             onClick={() => this.onImageClick(index)}
@@ -304,8 +303,8 @@ class IllustContainer extends React.Component<
       return (
         <Img
           src={[
-            getProxyImage(this.item.image_urls.large),
-            getProxyImage(this.item.image_urls.medium)
+            api.proxyImage(this.item.image_urls.large),
+            api.proxyImage(this.item.image_urls.medium)
           ]}
           loader={<Loading />}
           onClick={() => this.onImageClick(0)}

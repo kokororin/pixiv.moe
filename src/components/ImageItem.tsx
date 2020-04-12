@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Image from 'material-ui-image';
 import StarIcon from '@material-ui/icons/Star';
-import getProxyImage from '@/utils/getProxyImage';
+import * as api from '@/utils/api';
 
 const useStyles = makeStyles({
   cell: {
@@ -122,7 +122,7 @@ const ImageItem: React.SFC<IImageItemProps> = props => {
         <div className={classes.imageWrapper}>
           <Image
             aspectRatio={props.item.width / props.item.height}
-            src={getProxyImage(props.item.image_urls.medium)}
+            src={api.proxyImage(props.item.image_urls.medium)}
           />
         </div>
         <div className={classes.title}>

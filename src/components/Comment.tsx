@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Img from 'react-image';
 import EmojiParser from '@/utils/EmojiParser';
-import getProxyImage from '@/utils/getProxyImage';
+import * as api from '@/utils/api';
 
 const useStyles = makeStyles({
   listItem: {
@@ -90,7 +90,7 @@ const Comment: React.SFC<ICommentProps> = ({ item }) => {
       <span className={classes.main}>
         <div className={classes.avatar}>
           <Img
-            src={[getProxyImage(item.user.profile_image_urls.medium)]}
+            src={[api.proxyImage(item.user.profile_image_urls.medium)]}
             loader={
               <img src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" />
             }

@@ -1,14 +1,11 @@
 import React from 'react';
 import { injectIntl, InjectedIntl } from 'react-intl';
 import EventListener from 'react-event-listener';
-import honoka from 'honoka';
 import moment from 'moment';
-
+import * as api from '@/utils/api';
 // import Alert, { OriginalAlert } from '@/components/Alert';
 import Login, { OrignalLogin } from '@/components/Login';
 import Storage from '@/utils/Storage';
-
-import config from '@/config';
 
 interface ILoginContainerProps {
   intl: InjectedIntl;
@@ -100,16 +97,10 @@ class LoginContainer extends React.Component<
       isSubmitting: true
     });
 
-    honoka
-      .post(config.authURI, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        data: {
-          username,
-          password
-        }
+    api
+      .auth({
+        username,
+        password
       })
       .then((data: any) => {
         if (data.status === 'success') {

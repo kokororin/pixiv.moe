@@ -1,9 +1,7 @@
 import { Action, AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import namespacedTypes from 'namespaced-types';
-import honoka from 'honoka';
-
-import config from '@/config';
+import * as api from '@/utils/api';
 import { ICombinedState } from '@/reducers';
 
 export interface IGalleryActionValues {
@@ -12,6 +10,8 @@ export interface IGalleryActionValues {
   SET_PAGE: string;
   SET_FETCH_ERROR: string;
   SET_FETCH_STATUS: string;
+  SET_FETCH_TAGS_STATUS: string;
+  SET_TAGS: string;
   SET_WORD: string;
   CLEAR_SOURCE: string;
   SET_ERROR_TIMES: string;
@@ -25,6 +25,8 @@ export const types = namespacedTypes('gallery', [
   'SET_PAGE',
   'SET_FETCH_ERROR',
   'SET_FETCH_STATUS',
+  'SET_FETCH_TAGS_STATUS',
+  'SET_TAGS',
   'SET_WORD',
   'CLEAR_SOURCE',
   'SET_ERROR_TIMES',
@@ -86,6 +88,24 @@ function setFetchStatus(isFetching: boolean) {
   };
 }
 
+function setFetchTagsStatus(isFetching: boolean) {
+  return {
+    type: types.SET_FETCH_TAGS_STATUS,
+    payload: {
+      isFetching
+    }
+  };
+}
+
+export function setTags(data: any[]) {
+  return {
+    type: types.SET_TAGS,
+    payload: {
+      data
+    }
+  };
+}
+
 function setErrorTimes() {
   return {
     type: types.SET_ERROR_TIMES
@@ -103,12 +123,8 @@ function fetchSource(): TGalleryThunkAction {
     dispatch(setFetchError(false));
     dispatch(setFetchStatus(true));
     if (getState().gallery.word === 'ranking') {
-      return honoka
-        .get(config.rankingURI, {
-          data: {
-            page: getState().gallery.page
-          }
-        })
+      return api
+        .ranking(getState().gallery.page)
         .then(data => {
           if (
             data.status === 'success' &&
@@ -133,14 +149,10 @@ function fetchSource(): TGalleryThunkAction {
         });
     }
 
-    return honoka
-      .get(config.searchURI, {
-        mode: 'cors',
-        timeout: 30e3,
-        data: {
-          word: getState().gallery.word,
-          page: getState().gallery.page
-        }
+    return api
+      .search({
+        word: getState().gallery.word,
+        page: getState().gallery.page
       })
       .then(data => {
         if (
@@ -172,6 +184,25 @@ export function fetchSourceIfNeeded(): TGalleryThunkAction {
     if (!getState().gallery.isFetching) {
       return dispatch(fetchSource());
     }
+  };
+}
+
+export function fetchTags(): TGalleryThunkAction {
+  return dispatch => {
+    dispatch(setFetchTagsStatus(true));
+    return api
+      .tags()
+      .then(data => {
+        if (data.status === 'success' && data.response.tags) {
+          dispatch(setTags(data.response.tags));
+        }
+      })
+      .then(() => {
+        dispatch(setFetchTagsStatus(false));
+      })
+      .catch(() => {
+        dispatch(setFetchTagsStatus(false));
+      });
   };
 }
 

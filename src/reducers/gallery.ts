@@ -10,6 +10,8 @@ export interface IGalleryState {
   errorTimes: number;
   items: any[];
   images: string[];
+  isFetchingTags: boolean;
+  tags: any[];
   word: string;
   fromIllust: boolean;
 }
@@ -22,6 +24,8 @@ export default function gallery(
     errorTimes: 0,
     items: [],
     images: [],
+    isFetchingTags: false,
+    tags: [],
     word: 'ranking',
     fromIllust: false
   },
@@ -62,6 +66,18 @@ export default function gallery(
       return {
         ...state,
         errorTimes: 0
+      };
+
+    case types.SET_FETCH_TAGS_STATUS:
+      return {
+        ...state,
+        isFetchingTags: action.payload.isFetching
+      };
+
+    case types.SET_TAGS:
+      return {
+        ...state,
+        tags: action.payload.data
       };
 
     case types.SET_WORD:
