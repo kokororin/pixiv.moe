@@ -102,7 +102,6 @@
     "nodemon": "^2.0.2",
     "null-loader": "^3.0.0",
     "open-browser-webpack-plugin": "^0.0.5",
-    "optimize-js-plugin": "^0.0.4",
     "prettier": "^2.0.4",
     "puppeteer": "^2.1.1",
     "react-hot-loader": "4.12.19",

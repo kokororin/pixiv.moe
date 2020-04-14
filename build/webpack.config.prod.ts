@@ -7,7 +7,6 @@ import SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 import ManifestPlugin = require('webpack-manifest-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
-import OptimizeJsPlugin = require('optimize-js-plugin');
 
 const config: webpack.Configuration = {
   mode: 'production',
@@ -27,9 +26,6 @@ const config: webpack.Configuration = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new OptimizeJsPlugin({
-      sourceMap: false
-    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '/../src/index.ejs'),
       inject: true,
