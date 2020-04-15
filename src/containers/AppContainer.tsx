@@ -20,6 +20,7 @@ import { history } from '@/stores';
 import Baseline from '@/components/Baseline';
 import ScrollContext from '@/components/ScrollContext';
 import TrackPageView from '@/components/TrackPageView';
+import * as api from '@/utils/api';
 
 const theme = createMuiTheme({
   palette: {
@@ -34,6 +35,7 @@ const generateClassName = createGenerateClassName({
 });
 
 moment.locale('ja');
+api.refreshToken();
 
 const routes = [
   {

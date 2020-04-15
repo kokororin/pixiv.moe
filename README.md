@@ -48,7 +48,7 @@ Table of Contents
 * Pinterest-style layout illusts.
 * Select keywords.
 * Search keywords order by popularity without pixiv Premium.
-* ~~Login in pixiv and add bookmarks easily.~~
+* Login in pixiv and add bookmarks easily.
 
 ## Dev
 ```bash

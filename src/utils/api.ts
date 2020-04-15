@@ -1,8 +1,21 @@
 import honoka from 'honoka';
 import config from '@/config';
+import Storage from '@/utils/Storage';
 
 honoka.defaults.baseURL = config.apiBaseURL;
 honoka.defaults.timeout = 30e3;
+
+export const getAuth = () => {
+  return Storage.get('auth');
+};
+
+export const setAuth = (authData: any) => {
+  return Storage.set('auth', authData);
+};
+
+export const removeAuth = () => {
+  return Storage.remove('auth');
+};
 
 export const tags = () => honoka.get('/trending/tags');
 
@@ -31,6 +44,27 @@ export const illustComments = (
     data
   });
 
+export const illustBookmarkDetail = (illustId: number | string) =>
+  honoka.get(`/illust/bookmark/${illustId}`, {
+    headers: {
+      'X-Access-Token': getAuth()?.access_token
+    }
+  });
+
+export const illustBookmarkAdd = (illustId: number | string) =>
+  honoka.post(`/illust/bookmark/${illustId}`, {
+    headers: {
+      'X-Access-Token': getAuth()?.access_token
+    }
+  });
+
+export const illustBookmarkDelete = (illustId: number | string) =>
+  honoka.delete(`/illust/bookmark/${illustId}`, {
+    headers: {
+      'X-Access-Token': getAuth()?.access_token
+    }
+  });
+
 export const proxyImage = (url: string) => {
   const regex = /^http?s:\/\/(i\.pximg\.net)|(source\.pixiv\.net)/i;
   if (regex.test(url)) {
@@ -39,5 +73,26 @@ export const proxyImage = (url: string) => {
   return url;
 };
 
-export const auth = (data: { username: string; password: string }) =>
-  honoka.post('/auth', { data });
+export const auth = (data: {
+  username?: string;
+  password?: string;
+  refreshToken?: string;
+}) =>
+  honoka.post('/auth', {
+    data: {
+      username: data.username,
+      password: data.password,
+      refresh_token: data.refreshToken
+    }
+  });
+
+export const refreshToken = () => {
+  const authData = getAuth();
+  if (authData?.refresh_token) {
+    auth({ refreshToken: authData.refresh_token }).then(data => {
+      if (data.status === 'success') {
+        setAuth(data.response);
+      }
+    });
+  }
+};

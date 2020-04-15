@@ -15,7 +15,9 @@ import {
 } from '@material-ui/core';
 import {
   ArrowBack as ArrowBackIcon,
-  Twitter as TwitterIcon
+  Twitter as TwitterIcon,
+  Favorite as FavoriteIcon,
+  FavoriteBorder as FavoriteBorderIcon
 } from '@material-ui/icons';
 import shortid from 'shortid';
 import Img from 'react-image';
@@ -28,7 +30,7 @@ import config from '@/config';
 import * as IllustActions from '@/actions/illust';
 import { IIllustAction, TIllustThunkDispatch } from '@/actions/illust';
 import * as GalleryActions from '@/actions/gallery';
-// import Alert from '@/components/Alert';
+import AlertModal from '@/components/AlertModal';
 import Comment from '@/components/Comment';
 import GifPlayer from '@/components/GifPlayer';
 import InfiniteScroll from '@/components/InfiniteScroll';
@@ -38,8 +40,9 @@ import Content from '@/components/Content';
 import ImageBox from '@/components/ImageBox';
 import WeiboIcon from '@/icons/Weibo';
 import LineIcon from '@/icons/Line';
-// import LoginContainer from '@/containers/LoginContainer';
-// import Storage from '@/utils/Storage';
+import DecoratedLoginContainer, {
+  LoginContainer
+} from '@/containers/LoginContainer';
 import * as api from '@/utils/api';
 import Social from '@/utils/Social';
 import { ICombinedState } from '@/reducers';
@@ -160,6 +163,7 @@ interface IIllustContainerState {
   isSubmitting: boolean;
   boxIndex: number;
   showBox: boolean;
+  isBookmarked: boolean;
 }
 
 class IllustContainer extends React.Component<
@@ -168,6 +172,7 @@ class IllustContainer extends React.Component<
 > {
   illustId: string;
   authTimer: number;
+  loginRef: LoginContainer;
 
   constructor(props: IIllustContainerProps) {
     super(props);
@@ -175,7 +180,8 @@ class IllustContainer extends React.Component<
     this.state = {
       isSubmitting: false,
       boxIndex: 0,
-      showBox: false
+      showBox: false,
+      isBookmarked: false
     };
 
     this.illustId = this.props.match.params.illustId;
@@ -187,21 +193,25 @@ class IllustContainer extends React.Component<
     }
 
     this.props.dispatch(IllustActions.fetchComments(this.illustId));
-    // this.authTimer = window.setInterval(() => {
-    //   const authData = Storage.get('auth');
-    //   if (authData === null) {
-    //     return;
-    //   }
-    //   if (authData.expires_at < moment().unix()) {
-    //     Storage.remove('auth');
-    //   }
-    // }, 500);
+    this.fetchBookmark();
   }
 
   componentWillUnmount() {
     this.props.dispatch(IllustActions.clearComments());
-    // clearInterval(this.authTimer);
   }
+
+  fetchBookmark = () => {
+    api
+      .illustBookmarkDetail(this.illustId)
+      .then(data => {
+        if (data.status === 'success') {
+          this.setState({
+            isBookmarked: data.response?.bookmark_detail?.is_bookmarked ?? false
+          });
+        }
+      })
+      .catch(() => {});
+  };
 
   get item() {
     if (!this.props.illust.items[this.illustId]) {
@@ -228,39 +238,33 @@ class IllustContainer extends React.Component<
     this.props.history.push('/');
   };
 
-  // @autobind
-  // onFavouriteClick() {
-  //   const authData = Storage.get('auth');
-  //   if (authData === null || authData.expires_at < moment().unix()) {
-  //     return this.loginRef.open();
-  //   }
+  onBookmarkClick = () => {
+    const authData = api.getAuth();
+    if (authData === null || authData.expires_at < moment().unix()) {
+      return this.loginRef.open();
+    }
 
-  //   this.setState({
-  //     isSubmitting: true
-  //   });
-  //   honoka
-  //     .put(`${config.favouriteURI}/${this.illustId}`, {
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json',
-  //         'Access-Token': authData.access_token
-  //       }
-  //     })
-  //     .then(data => {
-  //       this.setState({
-  //         isSubmitting: false
-  //       });
-  //       this.alertRef.setContent(data.message);
-  //     })
-  //     .catch(() => {
-  //       this.setState({
-  //         isSubmitting: false
-  //       });
-  //       this.alertRef.setContent(
-  //         this.props.intl.formatMessage({ id: 'Communication Error Occurred' })
-  //       );
-  //     });
-  // }
+    this.setState({
+      isSubmitting: true
+    });
+    api[
+      !this.state.isBookmarked ? 'illustBookmarkAdd' : 'illustBookmarkDelete'
+    ](this.illustId).then(data => {
+      if (data.status === 'success') {
+        this.setState({
+          isSubmitting: false,
+          isBookmarked: !this.state.isBookmarked
+        });
+      } else {
+        AlertModal.make(
+          'error',
+          this.props.intl.formatMessage({
+            id: 'Communication Error Occurred'
+          })
+        );
+      }
+    });
+  };
 
   onImageClick = (index: number) => {
     this.setState({ boxIndex: index, showBox: true });
@@ -364,12 +368,19 @@ class IllustContainer extends React.Component<
             })}
           </div>
           <div className={classes.actions}>
-            {/* <Button
-              variant="contained"
-              onClick={this.onFavouriteClick}
+            <Button
+              variant="outlined"
+              startIcon={
+                this.state.isBookmarked ? (
+                  <FavoriteIcon color="secondary" />
+                ) : (
+                  <FavoriteBorderIcon color="secondary" />
+                )
+              }
+              onClick={this.onBookmarkClick}
               disabled={this.state.isSubmitting}>
               <FormattedMessage id="Add to Bookmarks" />
-            </Button> */}
+            </Button>
             <Button
               variant="outlined"
               startIcon={<TwitterIcon style={{ color: '#38A1F3' }} />}
@@ -451,8 +462,7 @@ class IllustContainer extends React.Component<
               {this.props.illust.isFetchingComments && <Loading />}
             </div>
           </InfiniteScroll>
-          {/* <LoginContainer onRef={ref => (this.loginRef = ref)} /> */}
-          {/* <Alert onRef={ref => (this.alertRef = ref)} /> */}
+          <DecoratedLoginContainer onRef={ref => (this.loginRef = ref)} />
         </div>
       );
     } catch (e) {

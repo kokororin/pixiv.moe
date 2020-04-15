@@ -5,7 +5,7 @@ import { Button, TextField } from '@material-ui/core';
 import { Clear as ClearIcon } from '@material-ui/icons';
 import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
 import moment from 'moment';
-import Storage from '@/utils/Storage';
+import * as api from '@/utils/api';
 
 const styles = createStyles({
   modalOverlay: {
@@ -65,7 +65,7 @@ const styles = createStyles({
 
 interface ILoginProps extends WithStyles<typeof styles> {
   intl: InjectedIntl;
-  onRef: (ref: OrignalLogin) => any;
+  onRef: (ref: Login) => any;
   onLoginClick: () => void;
   onLogoutClick: () => void;
   isSubmitting: boolean;
@@ -80,7 +80,7 @@ interface ILoginState {
   authData?: any;
 }
 
-export class OrignalLogin extends React.Component<ILoginProps, ILoginState> {
+export class Login extends React.Component<ILoginProps, ILoginState> {
   static defaultProps = {
     onRef() {}
   };
@@ -100,7 +100,7 @@ export class OrignalLogin extends React.Component<ILoginProps, ILoginState> {
 
   componentDidMount() {
     this.props.onRef(this);
-    const authData = Storage.get('auth');
+    const authData = api.getAuth();
     this.setState({
       authData
     });
@@ -218,6 +218,6 @@ export class OrignalLogin extends React.Component<ILoginProps, ILoginState> {
   }
 }
 
-const Login = injectIntl(withStyles(styles)(OrignalLogin));
+const DecoratedLogin = injectIntl(withStyles(styles)(Login));
 
-export default Login;
+export default DecoratedLogin;

@@ -22,7 +22,10 @@ const config: webpack.Configuration = {
         test: /\.(tsx?|jsx?)$/,
         enforce: 'pre',
         include: path.join(__dirname, '/../src'),
-        loader: 'eslint-loader'
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true
+        }
       },
       {
         test: /\.tsx?$/,

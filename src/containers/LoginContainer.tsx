@@ -1,10 +1,9 @@
 import React from 'react';
 import { injectIntl, InjectedIntl } from 'react-intl';
 import EventListener from 'react-event-listener';
-import moment from 'moment';
 import * as api from '@/utils/api';
-// import Alert, { OriginalAlert } from '@/components/Alert';
-import Login, { OrignalLogin } from '@/components/Login';
+import AlertModal from '@/components/AlertModal';
+import DecoratedLogin, { Login } from '@/components/Login';
 import Storage from '@/utils/Storage';
 
 interface ILoginContainerProps {
@@ -17,7 +16,7 @@ interface ILoginContainerState {
   authData: any;
 }
 
-class LoginContainer extends React.Component<
+export class LoginContainer extends React.Component<
   ILoginContainerProps,
   ILoginContainerState
 > {
@@ -25,8 +24,7 @@ class LoginContainer extends React.Component<
     onRef() {}
   };
 
-  alertRef: any;
-  loginRef: OrignalLogin;
+  loginRef: Login;
 
   constructor(props: ILoginContainerProps) {
     super(props);
@@ -39,7 +37,7 @@ class LoginContainer extends React.Component<
 
   componentDidMount() {
     this.props.onRef(this);
-    const authData = Storage.get('auth');
+    const authData = api.getAuth();
     this.setState({
       authData
     });
@@ -69,7 +67,8 @@ class LoginContainer extends React.Component<
     }
 
     if (!Storage.isSupport()) {
-      return this.alertRef.setContent(
+      return AlertModal.make(
+        'error',
         this.props.intl.formatMessage({
           id: 'Web Browser does not support localStorage'
         })
@@ -80,7 +79,8 @@ class LoginContainer extends React.Component<
     const password = this.loginRef.getPassword();
 
     if (username === '') {
-      return this.alertRef.setContent(
+      return AlertModal.make(
+        'error',
         this.props.intl.formatMessage({
           id: 'pixiv ID or Email Address is Blank'
         })
@@ -88,7 +88,8 @@ class LoginContainer extends React.Component<
     }
 
     if (password === '') {
-      return this.alertRef.setContent(
+      return AlertModal.make(
+        'error',
         this.props.intl.formatMessage({ id: 'Password is Blank' })
       );
     }
@@ -104,10 +105,8 @@ class LoginContainer extends React.Component<
       })
       .then((data: any) => {
         if (data.status === 'success') {
-          const authData = data.data;
-          authData.auth_time = moment().unix();
-          authData.expires_at = authData.auth_time + authData.expires_in;
-          Storage.set('auth', authData);
+          const authData = data.response;
+          api.setAuth(authData);
           this.setState({
             authData
           });
@@ -117,7 +116,7 @@ class LoginContainer extends React.Component<
             this.loginRef.setPassword('');
           }, 1500);
         } else {
-          this.alertRef.setContent(data.message);
+          AlertModal.make('error', data.message);
         }
       })
       .then(() => {
@@ -129,14 +128,15 @@ class LoginContainer extends React.Component<
         this.setState({
           isSubmitting: false
         });
-        this.alertRef.setContent(
+        AlertModal.make(
+          'error',
           this.props.intl.formatMessage({ id: 'Communication Error Occurred' })
         );
       });
   };
 
   onLogoutClick = () => {
-    Storage.remove('auth');
+    api.removeAuth();
     this.setState({
       authData: null
     });
@@ -145,14 +145,13 @@ class LoginContainer extends React.Component<
   render() {
     return (
       <>
-        <Login
+        <DecoratedLogin
           onRef={ref => (this.loginRef = ref)}
           onLoginClick={this.onLoginClick}
           onLogoutClick={this.onLogoutClick}
           isSubmitting={this.state.isSubmitting}
           authData={this.state.authData}
         />
-        {/* <Alert onRef={ref => (this.alertRef = ref)} /> */}
         <EventListener
           target={document}
           // @ts-ignore
