@@ -92,8 +92,10 @@ class GalleryContainer extends React.Component<
       this.onSearch(this.props.gallery.word);
       this.props.dispatch(GalleryActions.setFromIllust(false));
     } else {
-      if (this.props.location.search === '?entry=ranking') {
+      const search = new URLSearchParams(this.props.location.search);
+      if (search.get('entry') === 'ranking') {
         this.props.dispatch(GalleryActions.setWord('ranking'));
+        Storage.set('word', 'ranking');
       } else {
         const cachedWord = Storage.get('word');
         this.props.dispatch(

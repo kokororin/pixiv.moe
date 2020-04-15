@@ -10,7 +10,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 
 const config: webpack.Configuration = {
   mode: 'production',
-  entry: ['@babel/polyfill', path.join(__dirname, '../src/index.tsx')],
+  entry: ['@babel/polyfill', 'url-search-params-polyfill', './src/index.tsx'],
   cache: false,
   devtool: '#source-map',
   module: {
@@ -56,9 +56,9 @@ const config: webpack.Configuration = {
       openAnalyzer: false,
       generateStatsFile: false
     }),
-    function() {
+    function () {
       // eslint-disable-next-line
-      this.plugin('done', function() {
+      this.plugin('done', function () {
         const htmlFileName = '/../dist/index.html';
         const htmlFilePath = path.join(__dirname, htmlFileName);
         fs.writeFileSync(

@@ -8,7 +8,6 @@ module.exports = {
   rules: {
     'no-duplicate-imports': 'off',
     'react/display-name': 'off',
-    'prettier/prettier': 'error',
-    '@typescript-eslint/explicit-member-accessibility': 'off'
+    'prettier/prettier': 'error'
   }
 };

@@ -20,7 +20,12 @@ const config: webpack.Configuration = {
     },
     quiet: true
   },
-  entry: ['@babel/polyfill', 'react-hot-loader/patch', './src/index.tsx'],
+  entry: [
+    '@babel/polyfill',
+    'url-search-params-polyfill',
+    'react-hot-loader/patch',
+    './src/index.tsx'
+  ],
   cache: true,
   devtool: '#eval-source-map',
   resolve: {
