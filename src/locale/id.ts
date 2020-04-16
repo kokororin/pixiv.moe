@@ -12,8 +12,6 @@ export default {
   'No Comments': 'Tidak ada komentar',
   'An Error Occurred': 'Terjadi kesalahan',
   'Communication Error Occurred': 'Kesalahan Komunikasi Terjadi',
-  'Web Browser does not support localStorage':
-    'Browser Web tidak mendukung localStorage',
   'pixiv ID or Email Address is Blank': 'pixiv ID atau Alamat Email Kosong',
   'Password is Blank': 'Kata Sandi Kosong',
   'Wait a Moment': 'Tunggu sebentar',

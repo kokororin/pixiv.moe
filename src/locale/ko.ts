@@ -12,8 +12,6 @@ export default {
   'No Comments': '코멘트가 없습니다',
   'An Error Occurred': '오류가 발생하였습니다',
   'Communication Error Occurred': '통신 에러 발생',
-  'Web Browser does not support localStorage':
-    '웹 브라우저는 localStorage를 지원하지 않습니다',
   'pixiv ID or Email Address is Blank':
     'pixiv ID 또는 이메일 주소가 비어 있습니다',
   'Password is Blank': '비밀번호가 비어 있습니다',

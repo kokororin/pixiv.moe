@@ -22,7 +22,7 @@ import {
 import shortid from 'shortid';
 import Img from 'react-image';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import moment from 'moment';
 
 import config from '@/config';
@@ -50,7 +50,6 @@ import * as api from '@/utils/api';
 import Social from '@/utils/Social';
 import { ICombinedState } from '@/reducers';
 import { IIllustState } from '@/reducers/illust';
-import { IAuthState } from '@/reducers/auth';
 
 const styles = {
   ...galleryStyles,
@@ -162,9 +161,8 @@ type IIllustContainerCombinedProps = WithStyles<typeof styles> &
 
 interface IIllustContainerProps extends IIllustContainerCombinedProps {
   dispatch: Dispatch<IIllustAction> & TIllustThunkDispatch;
-  intl: InjectedIntl;
+  intl: IntlShape;
   illust: IIllustState;
-  auth: IAuthState;
 }
 
 interface IIllustContainerState {
@@ -506,10 +504,7 @@ class IllustContainer extends React.Component<
             </Typography>
             <div className={classes.toolbarMiddle} />
             <LanguageSelector />
-            <UserButton
-              onClick={() => this.loginRef.open()}
-              authData={this.props.auth.authData}
-            />
+            <UserButton onClick={() => this.loginRef.open()} />
           </Toolbar>
         </AppBar>
         <Content>{this.renderContent()}</Content>
@@ -526,6 +521,5 @@ class IllustContainer extends React.Component<
 }
 
 export default connect((state: ICombinedState) => ({
-  illust: state.illust,
-  auth: state.auth
+  illust: state.illust
 }))(injectIntl(withStyles(styles)(IllustContainer)));

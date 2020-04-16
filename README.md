@@ -61,7 +61,6 @@ $ npm start
 
 ### Commands
 - Install dependencies: `yarn`
-- Run Back-end Server: `npm run backend:dev`
 - Run Front-end Server: `npm start`
 - Test: `npm test`
 - Build Front-end: `npm run dist`

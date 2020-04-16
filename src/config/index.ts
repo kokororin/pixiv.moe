@@ -2,7 +2,6 @@ interface ILanguage {
   name: string;
   value: string;
   messages: any;
-  localeData: any;
 }
 
 export default {

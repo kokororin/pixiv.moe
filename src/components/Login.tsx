@@ -1,29 +1,18 @@
 import React from 'react';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
-import Modal from 'react-modal';
-import { Button, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Modal, Backdrop, Fade, Button, TextField } from '@material-ui/core';
 import { Clear as ClearIcon } from '@material-ui/icons';
-import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
-import * as api from '@/utils/api';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-const styles = createStyles({
-  modalOverlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.65)',
-    zIndex: 1000
+const useStyles = makeStyles({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   modalBody: {
-    position: 'fixed',
     width: '24em',
-    left: '50%',
-    top: '50%',
-    zIndex: 1001,
     background: '#fff',
-    transform: 'translate(-50%, -50%)',
     boxShadow:
       'rgba(0, 0, 0, 0.24706) 0 14px 45px, rgba(0, 0, 0, 0.21961) 0 10px 18px',
     borderRadius: '2px',
@@ -35,7 +24,7 @@ const styles = createStyles({
   clear: {
     float: 'right',
     cursor: 'pointer',
-    padding: 5
+    padding: 8
   },
   avatar: {
     left: '50%',
@@ -62,98 +51,56 @@ const styles = createStyles({
   }
 });
 
-interface ILoginProps extends WithStyles<typeof styles> {
-  intl: InjectedIntl;
-  onRef: (ref: Login) => any;
+interface ILoginProps {
   onLoginClick: () => void;
   onLogoutClick: () => void;
   isSubmitting: boolean;
   authData: any;
 }
 
-interface ILoginState {
-  isHidden: boolean;
-  isClosing: boolean;
-  username: string;
-  password: string;
-  authData?: any;
+export interface ILoginHandles {
+  open: () => void;
+  close: () => void;
+  reset: () => void;
+  getUsername: () => string;
+  getPassword: () => string;
+  getIsOpen: () => boolean;
 }
 
-export class Login extends React.Component<ILoginProps, ILoginState> {
-  static defaultProps = {
-    onRef() {}
-  };
+const Login = React.forwardRef<ILoginHandles, ILoginProps>((props, ref) => {
+  const classes = useStyles();
+  const intl = useIntl();
 
-  constructor(props: ILoginProps) {
-    super(props);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
-    this.state = {
-      isHidden: true,
-      isClosing: false,
-      username: '',
-      password: ''
-    };
+  React.useImperativeHandle(ref, () => ({
+    open: () => setIsOpen(true),
+    close: () => setIsOpen(false),
+    reset: () => {
+      setUsername('');
+      setPassword('');
+    },
+    getUsername: () => username,
+    getPassword: () => password,
+    getIsOpen: () => isOpen
+  }));
 
-    Modal.setAppElement('#app');
-  }
-
-  componentDidMount() {
-    this.props.onRef(this);
-    const authData = api.getAuth();
-    this.setState({
-      authData
-    });
-  }
-
-  open = () => {
-    this.setState({
-      isHidden: false
-    });
-  };
-
-  close = () => {
-    this.setState({
-      isHidden: true
-    });
-  };
-
-  setUsername = (username: string) => {
-    this.setState({
-      username
-    });
-  };
-
-  getUsername = () => {
-    return this.state.username;
-  };
-
-  setPassword = (password: string) => {
-    this.setState({
-      password
-    });
-  };
-
-  getPassword = () => {
-    return this.state.password;
-  };
-
-  renderContent() {
-    const { classes } = this.props;
-
-    if (this.props.authData) {
+  const renderContent = () => {
+    if (props.authData) {
       return (
         <>
           <div className={classes.avatar}>
             <span className={classes.avatarName}>
-              <FormattedMessage id="Nickname" /> 「
-              {this.props.authData.user.name}」
+              <FormattedMessage id="Nickname" /> 「{props.authData.user.name}」
             </span>
           </div>
           <div className={classes.footer}>
             <Button
               variant="contained"
               color="secondary"
-              onClick={this.props.onLogoutClick}>
+              onClick={props.onLogoutClick}>
               <FormattedMessage id="Logout" />
             </Button>
           </div>
@@ -163,9 +110,9 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
     return (
       <>
         <TextField
-          onChange={event => this.setUsername(event.target.value)}
-          value={this.getUsername()}
-          label={this.props.intl.formatMessage({
+          onChange={event => setUsername(event.target.value)}
+          value={username}
+          label={intl.formatMessage({
             id: 'Email Address / pixiv ID'
           })}
           fullWidth
@@ -173,9 +120,9 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
         />
         <TextField
           type="password"
-          onChange={event => this.setPassword(event.target.value)}
-          value={this.getPassword()}
-          label={this.props.intl.formatMessage({
+          onChange={event => setPassword(event.target.value)}
+          value={password}
+          label={intl.formatMessage({
             id: 'Password'
           })}
           fullWidth
@@ -185,38 +132,39 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
           <Button
             variant="contained"
             color="secondary"
-            onClick={this.props.onLoginClick}
-            disabled={this.props.isSubmitting}>
+            onClick={props.onLoginClick}
+            disabled={props.isSubmitting}>
             <FormattedMessage
-              id={this.props.isSubmitting ? 'Wait a Moment' : 'Login'}
+              id={props.isSubmitting ? 'Wait a Moment' : 'Login'}
             />
           </Button>
         </div>
       </>
     );
-  }
+  };
 
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <Modal
-        className={classes.modalBody}
-        overlayClassName={classes.modalOverlay}
-        isOpen={!this.state.isHidden}
-        onRequestClose={this.close}
-        contentLabel="login-modal">
-        <div className={classes.clear} onClick={this.close}>
-          <ClearIcon />
+  return (
+    <Modal
+      className={classes.modal}
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500
+      }}>
+      <Fade in={isOpen}>
+        <div className={classes.modalBody}>
+          <div className={classes.clear} onClick={() => setIsOpen(false)}>
+            <ClearIcon />
+          </div>
+          <div className={classes.form}>
+            <div className={classes.fields}>{renderContent()}</div>
+          </div>
         </div>
-        <div className={classes.form}>
-          <div className={classes.fields}>{this.renderContent()}</div>
-        </div>
-      </Modal>
-    );
-  }
-}
+      </Fade>
+    </Modal>
+  );
+});
 
-const DecoratedLogin = injectIntl(withStyles(styles)(Login));
-
-export default DecoratedLogin;
+export default Login;

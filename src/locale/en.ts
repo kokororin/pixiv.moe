@@ -12,8 +12,6 @@ export default {
   'No Comments': 'No Comments',
   'An Error Occurred': 'An Error Occurred',
   'Communication Error Occurred': 'Communication Error Occurred',
-  'Web Browser does not support localStorage':
-    'Web Browser does not support localStorage',
   'pixiv ID or Email Address is Blank': 'pixiv ID or Email Address is Blank',
   'Password is Blank': 'Password is Blank',
   'Wait a Moment': 'Wait a Moment',

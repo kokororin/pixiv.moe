@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectIntl, InjectedIntl } from 'react-intl';
+import { injectIntl, IntlShape } from 'react-intl';
 import { RouteComponentProps } from 'react-router';
 import Message from '@/components/Message';
 
@@ -9,7 +9,7 @@ interface IRedirectContainerRouteInfo {
 
 interface IRedirectContainerProps
   extends RouteComponentProps<IRedirectContainerRouteInfo> {
-  intl: InjectedIntl;
+  intl: IntlShape;
 }
 
 interface IRedirectContainerState {

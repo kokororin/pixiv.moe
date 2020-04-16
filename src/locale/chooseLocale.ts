@@ -1,4 +1,3 @@
-import { addLocaleData } from 'react-intl';
 import { Dispatch } from 'redux';
 import Storage from '@/utils/Storage';
 import * as LocaleActions from '@/actions/locale';
@@ -8,26 +7,22 @@ config.languages = [
   {
     name: '日本語',
     value: 'ja',
-    messages: require('@/locale/ja').default,
-    localeData: require('react-intl/locale-data/ja')
+    messages: require('@/locale/ja').default
   },
   {
     name: 'English',
     value: 'en',
-    messages: require('@/locale/en').default,
-    localeData: require('react-intl/locale-data/en')
+    messages: require('@/locale/en').default
   },
   {
-    name: 'Bahasa indonesia',
+    name: 'Bahasa Indonesia',
     value: 'id',
-    messages: require('@/locale/id').default,
-    localeData: require('react-intl/locale-data/id')
+    messages: require('@/locale/id').default
   },
   {
     name: '한국어',
     value: 'ko',
-    messages: require('@/locale/ko').default,
-    localeData: require('react-intl/locale-data/ko')
+    messages: require('@/locale/ko').default
   }
 ];
 
@@ -50,14 +45,13 @@ const chooseLocale = (language: string, dispatch: Dispatch) => {
     }
   }
 
-  addLocaleData(found.localeData);
   const messages = found.messages;
 
-  Storage.set('lang', isFallback ? 'en' : lang);
+  Storage.set('lang', isFallback ? 'ja' : lang);
 
   dispatch(
     LocaleActions.setLocale({
-      lang: isFallback ? 'en' : lang,
+      lang: isFallback ? 'ja' : lang,
       messages
     })
   );

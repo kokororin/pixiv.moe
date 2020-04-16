@@ -17,7 +17,7 @@ import {
 import { Menu as MenuIcon, Done as DoneIcon } from '@material-ui/icons';
 import H from 'history';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
 import config from '@/config';
 
@@ -40,7 +40,6 @@ import DecoratedLoginContainer, {
 
 import { ICombinedState } from '@/reducers';
 import { IGalleryState } from '@/reducers/gallery';
-import { IAuthState } from '@/reducers/auth';
 
 export const styles = createStyles({
   toolbar: {
@@ -68,9 +67,8 @@ export const styles = createStyles({
 
 interface IGalleryContainerProps extends WithStyles<typeof styles> {
   dispatch: Dispatch<IGalleryAction> & TGalleryThunkDispatch;
-  intl: InjectedIntl;
+  intl: IntlShape;
   gallery: IGalleryState;
-  auth: IAuthState;
   location: H.Location;
 }
 
@@ -267,10 +265,7 @@ class GalleryContainer extends React.Component<
               isSearchByPopularity={this.state.isSearchByPopularity}
             />
             <LanguageSelector />
-            <UserButton
-              onClick={() => this.loginRef.open()}
-              authData={this.props.auth.authData}
-            />
+            <UserButton onClick={() => this.loginRef.open()} />
           </Toolbar>
         </AppBar>
         <Drawer open={this.state.isDrawerOpen} onClose={this.onToggleDrawer}>
@@ -313,6 +308,5 @@ class GalleryContainer extends React.Component<
 }
 
 export default connect((state: ICombinedState) => ({
-  gallery: state.gallery,
-  auth: state.auth
+  gallery: state.gallery
 }))(injectIntl(withStyles(styles)(GalleryContainer)));

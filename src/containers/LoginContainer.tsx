@@ -1,21 +1,21 @@
 import React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { injectIntl, InjectedIntl } from 'react-intl';
+import { injectIntl, IntlShape } from 'react-intl';
 import { IconButton, Avatar } from '@material-ui/core';
 import { AccountCircle as AccountCircleIcon } from '@material-ui/icons';
 import EventListener from 'react-event-listener';
 import * as api from '@/utils/api';
 import AlertModal from '@/components/AlertModal';
-import DecoratedLogin, { Login } from '@/components/Login';
-import Storage from '@/utils/Storage';
+import Login, { ILoginHandles } from '@/components/Login';
 
 import { IAuthAction } from '@/actions/auth';
+import { IAuthState } from '@/reducers/auth';
 
 import { ICombinedState } from '@/reducers';
 
 interface ILoginContainerProps {
-  intl: InjectedIntl;
+  intl: IntlShape;
   dispatch: Dispatch<IAuthAction>;
   onRef: (ref: LoginContainer) => any;
 }
@@ -27,24 +27,28 @@ interface ILoginContainerState {
 
 interface IUserButtonProps {
   onClick: () => void;
-  authData: any;
+  auth: IAuthState;
 }
 
-export const UserButton: React.SFC<IUserButtonProps> = props => {
+export const UserButton = connect((state: ICombinedState) => ({
+  auth: state.auth
+}))((props: IUserButtonProps) => {
   return (
     <IconButton color="inherit" onClick={props.onClick}>
-      {props.authData ? (
+      {props.auth.authData ? (
         <Avatar
           alt="Avatar"
           style={{ width: 28, height: 28 }}
-          src={api.proxyImage(props.authData.user.profile_image_urls.px_50x50)}
+          src={api.proxyImage(
+            props.auth.authData.user.profile_image_urls.px_50x50
+          )}
         />
       ) : (
         <AccountCircleIcon />
       )}
     </IconButton>
   );
-};
+});
 
 export class LoginContainer extends React.Component<
   ILoginContainerProps,
@@ -54,7 +58,7 @@ export class LoginContainer extends React.Component<
     onRef() {}
   };
 
-  loginRef: Login;
+  loginRef = React.createRef<ILoginHandles>();
 
   constructor(props: ILoginContainerProps) {
     super(props);
@@ -74,39 +78,27 @@ export class LoginContainer extends React.Component<
   }
 
   onKeydown = (event: KeyboardEvent) => {
-    if (event.keyCode === 27) {
-      this.loginRef.close();
-    }
-
-    if (this.loginRef.state.isHidden === false && event.keyCode === 13) {
+    if (this.loginRef.current?.getIsOpen() && event.keyCode === 13) {
       this.onLoginClick();
     }
   };
 
   open = () => {
-    this.loginRef.open();
+    this.loginRef.current?.open();
   };
 
   close = () => {
-    this.loginRef.close();
+    this.loginRef.current?.close();
   };
 
   onLoginClick = () => {
-    if (this.state.isSubmitting) {
+    console.log(this.onLoginClick, 'dwede');
+    if (this.state.isSubmitting || !this.loginRef.current?.getIsOpen()) {
       return;
     }
 
-    if (!Storage.isSupport()) {
-      return AlertModal.make(
-        'error',
-        this.props.intl.formatMessage({
-          id: 'Web Browser does not support localStorage'
-        })
-      );
-    }
-
-    const username = this.loginRef.getUsername();
-    const password = this.loginRef.getPassword();
+    const username = this.loginRef.current?.getUsername();
+    const password = this.loginRef.current?.getPassword();
 
     if (username === '') {
       return AlertModal.make(
@@ -142,8 +134,7 @@ export class LoginContainer extends React.Component<
           });
           setTimeout(() => {
             this.close();
-            this.loginRef.setUsername('');
-            this.loginRef.setPassword('');
+            this.loginRef.current?.reset();
           }, 1500);
         } else {
           AlertModal.make('error', data.message);
@@ -175,8 +166,8 @@ export class LoginContainer extends React.Component<
   render() {
     return (
       <>
-        <DecoratedLogin
-          onRef={ref => (this.loginRef = ref)}
+        <Login
+          ref={this.loginRef}
           onLoginClick={this.onLoginClick}
           onLogoutClick={this.onLogoutClick}
           isSubmitting={this.state.isSubmitting}
