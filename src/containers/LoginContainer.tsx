@@ -1,13 +1,22 @@
 import React from 'react';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { injectIntl, InjectedIntl } from 'react-intl';
+import { IconButton, Avatar } from '@material-ui/core';
+import { AccountCircle as AccountCircleIcon } from '@material-ui/icons';
 import EventListener from 'react-event-listener';
 import * as api from '@/utils/api';
 import AlertModal from '@/components/AlertModal';
 import DecoratedLogin, { Login } from '@/components/Login';
 import Storage from '@/utils/Storage';
 
+import { IAuthAction } from '@/actions/auth';
+
+import { ICombinedState } from '@/reducers';
+
 interface ILoginContainerProps {
   intl: InjectedIntl;
+  dispatch: Dispatch<IAuthAction>;
   onRef: (ref: LoginContainer) => any;
 }
 
@@ -15,6 +24,27 @@ interface ILoginContainerState {
   isSubmitting: boolean;
   authData: any;
 }
+
+interface IUserButtonProps {
+  onClick: () => void;
+  authData: any;
+}
+
+export const UserButton: React.SFC<IUserButtonProps> = props => {
+  return (
+    <IconButton color="inherit" onClick={props.onClick}>
+      {props.authData ? (
+        <Avatar
+          alt="Avatar"
+          style={{ width: 28, height: 28 }}
+          src={api.proxyImage(props.authData.user.profile_image_urls.px_50x50)}
+        />
+      ) : (
+        <AccountCircleIcon />
+      )}
+    </IconButton>
+  );
+};
 
 export class LoginContainer extends React.Component<
   ILoginContainerProps,
@@ -106,7 +136,7 @@ export class LoginContainer extends React.Component<
       .then((data: any) => {
         if (data.status === 'success') {
           const authData = data.response;
-          api.setAuth(authData);
+          api.setAuth(authData, this.props.dispatch);
           this.setState({
             authData
           });
@@ -136,7 +166,7 @@ export class LoginContainer extends React.Component<
   };
 
   onLogoutClick = () => {
-    api.removeAuth();
+    api.removeAuth(this.props.dispatch);
     this.setState({
       authData: null
     });
@@ -162,4 +192,6 @@ export class LoginContainer extends React.Component<
   }
 }
 
-export default injectIntl(LoginContainer);
+export default connect((state: ICombinedState) => ({ auth: state.auth }))(
+  injectIntl(LoginContainer)
+);

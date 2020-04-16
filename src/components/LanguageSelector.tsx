@@ -1,18 +1,31 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { IconButton, Menu, MenuItem } from '@material-ui/core';
-import { Done as DoneIcon, Language as LanguageIcon } from '@material-ui/icons';
+import { Button, Menu, MenuItem } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  Done as DoneIcon,
+  Language as LanguageIcon,
+  ExpandMore as ExpandMoreIcon
+} from '@material-ui/icons';
 import { FormattedMessage } from 'react-intl';
 import shortid from 'shortid';
 import config from '@/config';
 import Storage from '@/utils/Storage';
 import chooseLocale from '@/locale/chooseLocale';
 
+const useStyles = makeStyles({
+  language: {
+    margin: '0px 4px 0px 8px'
+  }
+});
+
 interface ILanguageSelectorProps {}
 
 const LanguageSelector: React.SFC<ILanguageSelectorProps> = () => {
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
   const dispatch = useDispatch();
+  const classes = useStyles();
+  const lang = Storage.get('lang');
 
   const onLanguageClick = (value: string) => {
     Storage.set('lang', value);
@@ -29,9 +42,11 @@ const LanguageSelector: React.SFC<ILanguageSelectorProps> = () => {
 
   return (
     <>
-      <IconButton color="inherit" onClick={onMenuOpen}>
+      <Button color="inherit" onClick={onMenuOpen}>
         <LanguageIcon />
-      </IconButton>
+        <span className={classes.language}>{lang}</span>
+        <ExpandMoreIcon fontSize="small" />
+      </Button>
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{
@@ -49,7 +64,6 @@ const LanguageSelector: React.SFC<ILanguageSelectorProps> = () => {
             <FormattedMessage id="Language" />
           </MenuItem>,
           ...config.languages.map(elem => {
-            const lang = Storage.get('lang');
             const highlight = elem.value === lang;
 
             return (

@@ -4,7 +4,6 @@ import Modal from 'react-modal';
 import { Button, TextField } from '@material-ui/core';
 import { Clear as ClearIcon } from '@material-ui/icons';
 import { FormattedMessage, injectIntl, InjectedIntl } from 'react-intl';
-import moment from 'moment';
 import * as api from '@/utils/api';
 
 const styles = createStyles({
@@ -141,10 +140,7 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
   renderContent() {
     const { classes } = this.props;
 
-    if (
-      this.props.authData !== null &&
-      this.props.authData.expires_at > moment().unix()
-    ) {
+    if (this.props.authData) {
       return (
         <>
           <div className={classes.avatar}>
@@ -154,7 +150,10 @@ export class Login extends React.Component<ILoginProps, ILoginState> {
             </span>
           </div>
           <div className={classes.footer}>
-            <Button variant="contained" onClick={this.props.onLogoutClick}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.props.onLogoutClick}>
               <FormattedMessage id="Logout" />
             </Button>
           </div>

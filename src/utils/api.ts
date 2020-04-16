@@ -1,6 +1,9 @@
 import honoka from 'honoka';
+import { Dispatch } from 'redux';
 import config from '@/config';
 import Storage from '@/utils/Storage';
+import * as AuthActions from '@/actions/auth';
+import { IAuthAction } from '@/actions/auth';
 
 honoka.defaults.baseURL = config.apiBaseURL;
 honoka.defaults.timeout = 30e3;
@@ -9,11 +12,13 @@ export const getAuth = () => {
   return Storage.get('auth');
 };
 
-export const setAuth = (authData: any) => {
+export const setAuth = (authData: any, dispatch?: Dispatch<IAuthAction>) => {
+  dispatch?.(AuthActions.setAuth(authData));
   return Storage.set('auth', authData);
 };
 
-export const removeAuth = () => {
+export const removeAuth = (dispatch: Dispatch<IAuthAction>) => {
+  dispatch(AuthActions.setAuth(null));
   return Storage.remove('auth');
 };
 

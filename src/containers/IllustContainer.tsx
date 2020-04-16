@@ -38,113 +38,120 @@ import Loading from '@/components/Loading';
 import Message from '@/components/Message';
 import Content from '@/components/Content';
 import ImageBox from '@/components/ImageBox';
+import LanguageSelector from '@/components/LanguageSelector';
 import WeiboIcon from '@/icons/Weibo';
 import LineIcon from '@/icons/Line';
 import DecoratedLoginContainer, {
-  LoginContainer
+  LoginContainer,
+  UserButton
 } from '@/containers/LoginContainer';
+import { styles as galleryStyles } from '@/containers/GalleryContainer';
 import * as api from '@/utils/api';
 import Social from '@/utils/Social';
 import { ICombinedState } from '@/reducers';
 import { IIllustState } from '@/reducers/illust';
+import { IAuthState } from '@/reducers/auth';
 
-const styles = createStyles({
-  illust: {
-    padding: 20
-  },
-  link: {
-    cursor: 'default'
-  },
-  image: {
-    overflow: 'hidden',
-    textAlign: 'center',
-    '& img': {
-      display: 'block',
-      position: 'relative',
-      marginTop: 0,
-      marginRight: 'auto',
-      marginBottom: 10,
-      marginLeft: 'auto',
-      maxWidth: '100%',
-      boxShadow:
-        '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12)',
-      border: 0,
-      zIndex: 1,
-      cursor: 'zoom-in',
-      transition: 'opacity 0.3s ease',
-      '@media screen and (max-width: 768px) and (orientation: portrait)': {
-        width: '100%'
-      },
-      '@media screen and (max-width: 1024px) and (orientation: landscape)': {
-        width: '100%'
+const styles = {
+  ...galleryStyles,
+  ...createStyles({
+    illust: {
+      padding: 20
+    },
+    link: {
+      cursor: 'default'
+    },
+    image: {
+      overflow: 'hidden',
+      textAlign: 'center',
+      '& img': {
+        display: 'block',
+        position: 'relative',
+        marginTop: 0,
+        marginRight: 'auto',
+        marginBottom: 10,
+        marginLeft: 'auto',
+        maxWidth: '100%',
+        boxShadow:
+          '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12)',
+        border: 0,
+        zIndex: 1,
+        cursor: 'zoom-in',
+        transition: 'opacity 0.3s ease',
+        '@media screen and (max-width: 768px) and (orientation: portrait)': {
+          width: '100%'
+        },
+        '@media screen and (max-width: 1024px) and (orientation: landscape)': {
+          width: '100%'
+        }
       }
-    }
-  },
-  caption: {
-    margin: 15,
-    textAlign: 'center',
-    '& p': {
-      lineHeight: '18px'
-    }
-  },
-  tags: {
-    margin: 15,
-    textAlign: 'center'
-  },
-  tagItem: {
-    margin: 5,
-    '& div': {
-      color: 'rgb(255, 255, 255) !important',
-      backgroundColor: 'rgb(0, 150, 136) !important'
-    }
-  },
-  actions: {
-    margin: 15,
-    textAlign: 'center',
-    '& button': {
-      margin: 8
-    }
-  },
-  detail: {
-    textAlign: 'center',
-    color: 'rgb(255, 64, 129)',
-    '& time': {
-      marginLeft: 10,
-      color: '#999'
     },
-    '& a': {
-      textDecoration: 'none'
-    }
-  },
-  author: {
-    display: 'inline-block',
-    '&:before': {
-      content: '"by"',
-      marginRight: 5
+    caption: {
+      margin: 15,
+      textAlign: 'center',
+      '& p': {
+        lineHeight: '18px'
+      }
     },
-    '& a': {
-      color: '#258fb8'
+    tags: {
+      margin: 15,
+      textAlign: 'center'
+    },
+    tagItem: {
+      margin: 5,
+      '& div': {
+        color: 'rgb(255, 255, 255) !important',
+        backgroundColor: 'rgb(0, 150, 136) !important'
+      }
+    },
+    actions: {
+      margin: 15,
+      textAlign: 'center',
+      '& button': {
+        margin: 8
+      }
+    },
+    detail: {
+      textAlign: 'center',
+      color: 'rgb(255, 64, 129)',
+      '& time': {
+        marginLeft: 10,
+        color: '#999'
+      },
+      '& a': {
+        textDecoration: 'none'
+      }
+    },
+    author: {
+      display: 'inline-block',
+      '&:before': {
+        content: '"by"',
+        marginRight: 5
+      },
+      '& a': {
+        color: '#258fb8'
+      }
+    },
+    metas: {
+      color: '#666'
+    },
+    divide: {
+      '&:not(:first-child)': {
+        marginLeft: 4,
+        paddingLeft: 4,
+        borderLeft: '1px solid #ccc'
+      }
+    },
+    comments: {
+      width: '100%'
+    },
+    commentList: {
+      display: 'block',
+      padding: '8px 0',
+      listStyle: 'none'
     }
-  },
-  metas: {
-    color: '#666'
-  },
-  divide: {
-    '&:not(:first-child)': {
-      marginLeft: 4,
-      paddingLeft: 4,
-      borderLeft: '1px solid #ccc'
-    }
-  },
-  comments: {
-    width: '100%'
-  },
-  commentList: {
-    display: 'block',
-    padding: '8px 0',
-    listStyle: 'none'
-  }
-});
+  })
+};
 
 interface IIllustContainerRouteInfo {
   illustId: string;
@@ -157,6 +164,7 @@ interface IIllustContainerProps extends IIllustContainerCombinedProps {
   dispatch: Dispatch<IIllustAction> & TIllustThunkDispatch;
   intl: InjectedIntl;
   illust: IIllustState;
+  auth: IAuthState;
 }
 
 interface IIllustContainerState {
@@ -240,7 +248,7 @@ class IllustContainer extends React.Component<
 
   onBookmarkClick = () => {
     const authData = api.getAuth();
-    if (authData === null || authData.expires_at < moment().unix()) {
+    if (!authData) {
       return this.loginRef.open();
     }
 
@@ -338,7 +346,7 @@ class IllustContainer extends React.Component<
     try {
       return (
         <div className={classes.illust}>
-          <div className={classes.image}>{this.renderImage()}</div>
+          {/* <div className={classes.image}>{this.renderImage()}</div> */}
           <div className={classes.caption}>
             {typeof this.item.caption === 'string' &&
               (this.item.caption as string)
@@ -476,6 +484,8 @@ class IllustContainer extends React.Component<
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <>
         <Helmet>
@@ -484,13 +494,22 @@ class IllustContainer extends React.Component<
           </title>
         </Helmet>
         <AppBar position="static">
-          <Toolbar>
+          <Toolbar className={classes.toolbar}>
             <IconButton href="#" color="inherit" onClick={this.onBackClick}>
               <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit">
+            <Typography
+              variant="h6"
+              color="inherit"
+              className={classes.toolbarTitle}>
               {this.item.title}
             </Typography>
+            <div className={classes.toolbarMiddle} />
+            <LanguageSelector />
+            <UserButton
+              onClick={() => this.loginRef.open()}
+              authData={this.props.auth.authData}
+            />
           </Toolbar>
         </AppBar>
         <Content>{this.renderContent()}</Content>
@@ -506,6 +525,7 @@ class IllustContainer extends React.Component<
   }
 }
 
-export default connect((state: ICombinedState) => ({ illust: state.illust }))(
-  injectIntl(withStyles(styles)(IllustContainer))
-);
+export default connect((state: ICombinedState) => ({
+  illust: state.illust,
+  auth: state.auth
+}))(injectIntl(withStyles(styles)(IllustContainer)));

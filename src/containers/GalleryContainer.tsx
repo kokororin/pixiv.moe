@@ -32,21 +32,28 @@ import LanguageSelector from '@/components/LanguageSelector';
 import SearchInput from '@/components/SearchInput';
 import Content, { IContentHandles } from '@/components/Content';
 import Storage from '@/utils/Storage';
-import GithubIcon from '@/icons/Github';
+
+import DecoratedLoginContainer, {
+  LoginContainer,
+  UserButton
+} from '@/containers/LoginContainer';
 
 import { ICombinedState } from '@/reducers';
 import { IGalleryState } from '@/reducers/gallery';
+import { IAuthState } from '@/reducers/auth';
 
-const styles = createStyles({
+export const styles = createStyles({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
     position: 'relative'
   },
   toolbarTitle: {
-    flex: 1,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
     '@media screen and (max-width: 649px)': {
-      display: 'none'
+      maxWidth: '50%'
     }
   },
   toolbarMiddle: {
@@ -63,6 +70,7 @@ interface IGalleryContainerProps extends WithStyles<typeof styles> {
   dispatch: Dispatch<IGalleryAction> & TGalleryThunkDispatch;
   intl: InjectedIntl;
   gallery: IGalleryState;
+  auth: IAuthState;
   location: H.Location;
 }
 
@@ -76,7 +84,7 @@ class GalleryContainer extends React.Component<
   IGalleryContainerState
 > {
   contentRef = React.createRef<IContentHandles>();
-  rootRef: HTMLDivElement;
+  loginRef: LoginContainer;
 
   constructor(props: IGalleryContainerProps) {
     super(props);
@@ -259,9 +267,10 @@ class GalleryContainer extends React.Component<
               isSearchByPopularity={this.state.isSearchByPopularity}
             />
             <LanguageSelector />
-            <IconButton color="inherit" href={config.projectLink}>
-              <GithubIcon />
-            </IconButton>
+            <UserButton
+              onClick={() => this.loginRef.open()}
+              authData={this.props.auth.authData}
+            />
           </Toolbar>
         </AppBar>
         <Drawer open={this.state.isDrawerOpen} onClose={this.onToggleDrawer}>
@@ -286,9 +295,7 @@ class GalleryContainer extends React.Component<
             onLoadMore={this.onLoadMore}
             isLoading={this.props.gallery.isFetching}
             hasMore>
-            <div
-              ref={ref => (this.rootRef = ref as HTMLDivElement)}
-              className={classes.root}>
+            <div className={classes.root}>
               <GalleryList items={this.props.gallery.items} />
               {this.props.gallery.isFetching && <Loading />}
               <Message
@@ -299,11 +306,13 @@ class GalleryContainer extends React.Component<
             </div>
           </InfiniteScroll>
         </Content>
+        <DecoratedLoginContainer onRef={ref => (this.loginRef = ref)} />
       </>
     );
   }
 }
 
-export default connect((state: ICombinedState) => ({ gallery: state.gallery }))(
-  injectIntl(withStyles(styles)(GalleryContainer))
-);
+export default connect((state: ICombinedState) => ({
+  gallery: state.gallery,
+  auth: state.auth
+}))(injectIntl(withStyles(styles)(GalleryContainer)));
