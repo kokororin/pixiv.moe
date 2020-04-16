@@ -346,7 +346,7 @@ class IllustContainer extends React.Component<
     try {
       return (
         <div className={classes.illust}>
-          {/* <div className={classes.image}>{this.renderImage()}</div> */}
+          <div className={classes.image}>{this.renderImage()}</div>
           <div className={classes.caption}>
             {typeof this.item.caption === 'string' &&
               (this.item.caption as string)

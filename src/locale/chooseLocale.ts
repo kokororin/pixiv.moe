@@ -53,7 +53,7 @@ const chooseLocale = (language: string, dispatch: Dispatch) => {
   addLocaleData(found.localeData);
   const messages = found.messages;
 
-  Storage.set('lang', lang);
+  Storage.set('lang', isFallback ? 'en' : lang);
 
   dispatch(
     LocaleActions.setLocale({
