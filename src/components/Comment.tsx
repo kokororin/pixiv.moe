@@ -60,7 +60,7 @@ interface ICommentProps {
   item: any;
 }
 
-const Comment: React.SFC<ICommentProps> = ({ item }) => {
+const Comment: React.FunctionComponent<ICommentProps> = ({ item }) => {
   const classes = useStyles();
   const badWords = [
     '墙',
@@ -74,7 +74,10 @@ const Comment: React.SFC<ICommentProps> = ({ item }) => {
     '醋意',
     'P站',
     '滚粗',
-    '垃圾'
+    '垃圾',
+    '交流群',
+    'QQ',
+    '广告'
   ];
   for (const badWord of badWords) {
     if (
