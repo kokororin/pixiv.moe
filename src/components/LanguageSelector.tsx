@@ -1,16 +1,17 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Menu, MenuItem, Box, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Language as LanguageIcon,
   ExpandMore as ExpandMoreIcon
 } from '@material-ui/icons';
-import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import shortid from 'shortid';
 import config from '@/config';
 import Storage from '@/utils/Storage';
 import chooseLocale from '@/locale/chooseLocale';
+import { ICombinedState } from '@/reducers';
 
 const useStyles = makeStyles({
   language: {
@@ -18,13 +19,14 @@ const useStyles = makeStyles({
   }
 });
 
-interface ILanguageSelectorProps {}
-
-const LanguageSelector: React.SFC<ILanguageSelectorProps> = () => {
+const LanguageSelector: React.FunctionComponent<{}> = () => {
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
   const dispatch = useDispatch();
   const classes = useStyles();
-  const lang = Storage.get('lang');
+  const locale = useSelector((state: ICombinedState) => state.locale);
+  const intl = useIntl();
+
+  const lang = locale.lang;
 
   const onLanguageClick = (value: string) => {
     Storage.set('lang', value);
@@ -60,7 +62,7 @@ const LanguageSelector: React.SFC<ILanguageSelectorProps> = () => {
         onClose={onMenuClose}>
         {[
           <MenuItem key={shortid.generate()} disabled>
-            <FormattedMessage id="Language" />
+            {intl.formatMessage({ id: 'Language' })}
           </MenuItem>,
           ...config.languages.map(elem => {
             return (
@@ -83,7 +85,7 @@ const LanguageSelector: React.SFC<ILanguageSelectorProps> = () => {
             component="a"
             href={config.translateLink}
             target="_blank">
-            <FormattedMessage id="HelpToTranslate" />
+            {intl.formatMessage({ id: 'HelpToTranslate' })}
           </MenuItem>
         ]}
       </Menu>

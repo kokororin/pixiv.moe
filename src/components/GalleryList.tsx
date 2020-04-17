@@ -7,7 +7,7 @@ interface IGalleryListProps {
   items: any[];
 }
 
-const GalleryList: React.SFC<IGalleryListProps> = props => {
+const GalleryList: React.FunctionComponent<IGalleryListProps> = props => {
   const masonryRef = React.useRef<any>(null);
   return (
     <Masonry

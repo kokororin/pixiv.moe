@@ -8,6 +8,7 @@ module.exports = {
   rules: {
     'no-duplicate-imports': 'off',
     'react/display-name': 'off',
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    '@typescript-eslint/no-empty-interface': 'off'
   }
 };

@@ -105,7 +105,7 @@ interface IImageItemProps {
   masonry: any;
 }
 
-const ImageItem: React.SFC<IImageItemProps> = props => {
+const ImageItem: React.FunctionComponent<IImageItemProps> = props => {
   const classes = useStyles();
 
   const onImageMouseMove = (event: React.MouseEvent) => {

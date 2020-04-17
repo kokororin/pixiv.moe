@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 export const useStyles = makeStyles({
   message: {
@@ -18,16 +18,22 @@ interface IMessageProps {
   text?: string;
 }
 
-const Message: React.SFC<IMessageProps> = ({ isHidden, text }) => {
+const Message: React.FunctionComponent<IMessageProps> = ({
+  isHidden,
+  text
+}) => {
   const classes = useStyles();
+  const intl = useIntl();
+
   return isHidden ? null : (
     <div className={classes.message}>
       <p>
-        {text ? (
-          text
-        ) : (
-          <FormattedMessage id="An error occurred. Check the URL or wait for a while and access again." />
-        )}
+        {text
+          ? text
+          : intl.formatMessage({
+              id:
+                'An error occurred. Check the URL or wait for a while and access again.'
+            })}
       </p>
     </div>
   );

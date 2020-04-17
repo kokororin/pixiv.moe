@@ -9,7 +9,7 @@ interface IInfiniteScrollProps {
   isLoading: boolean;
 }
 
-const InfiniteScroll: React.SFC<IInfiniteScrollProps> = props => {
+const InfiniteScroll: React.FunctionComponent<IInfiniteScrollProps> = props => {
   const scrollingElement = Content.getElement();
 
   const onScroll = (event: React.UIEvent) => {

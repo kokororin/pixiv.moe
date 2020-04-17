@@ -3,9 +3,7 @@ import { CircularProgress } from '@material-ui/core';
 
 import { useStyles } from '@/components/Message';
 
-interface ILoadingProps {}
-
-const Loading: React.SFC<ILoadingProps> = () => {
+const Loading: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
   return (
     <div className={classes.message}>

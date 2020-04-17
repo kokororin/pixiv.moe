@@ -1,7 +1,8 @@
 import React from 'react';
 import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
@@ -15,9 +16,8 @@ import {
   ListSubheader
 } from '@material-ui/core';
 import { Menu as MenuIcon, Done as DoneIcon } from '@material-ui/icons';
-import H from 'history';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import config from '@/config';
 
@@ -33,15 +33,14 @@ import SearchInput from '@/components/SearchInput';
 import Content, { IContentHandles } from '@/components/Content';
 import Storage from '@/utils/Storage';
 
-import DecoratedLoginContainer, {
-  LoginContainer,
+import LoginContainer, {
+  ILoginContainerHandles,
   UserButton
 } from '@/containers/LoginContainer';
 
 import { ICombinedState } from '@/reducers';
-import { IGalleryState } from '@/reducers/gallery';
 
-export const styles = createStyles({
+export const useStyles = makeStyles({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
@@ -65,11 +64,8 @@ export const styles = createStyles({
   }
 });
 
-interface IGalleryContainerProps extends WithStyles<typeof styles> {
+interface IGalleryContainerProps {
   dispatch: Dispatch<IGalleryAction> & TGalleryThunkDispatch;
-  intl: IntlShape;
-  gallery: IGalleryState;
-  location: H.Location;
 }
 
 interface IGalleryContainerState {
@@ -77,94 +73,86 @@ interface IGalleryContainerState {
   isSearchByPopularity: boolean;
 }
 
-class GalleryContainer extends React.Component<
-  IGalleryContainerProps,
-  IGalleryContainerState
-> {
-  contentRef = React.createRef<IContentHandles>();
-  loginRef: LoginContainer;
+const GalleryContainer: React.FunctionComponent<IGalleryContainerProps> = () => {
+  const classes = useStyles();
+  const intl = useIntl();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const gallery = useSelector((state: ICombinedState) => state.gallery);
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [isSearchByPopularity] = React.useState(false);
+  const loginRef = React.useRef<ILoginContainerHandles>(null);
+  const contentRef = React.useRef<IContentHandles>(null);
 
-  constructor(props: IGalleryContainerProps) {
-    super(props);
-
-    this.state = {
-      isDrawerOpen: false,
-      isSearchByPopularity: false
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.gallery.fromIllust) {
-      this.onSearch(this.props.gallery.word);
-      this.props.dispatch(GalleryActions.setFromIllust(false));
-    } else {
-      const search = new URLSearchParams(this.props.location.search);
-      if (search.get('entry') === 'ranking') {
-        this.props.dispatch(GalleryActions.setWord('ranking'));
-        Storage.set('word', 'ranking');
-      } else {
-        const cachedWord = Storage.get('word');
-        this.props.dispatch(
-          GalleryActions.setWord(cachedWord ? cachedWord : 'ranking')
-        );
-      }
-
-      if (this.props.gallery.items.length === 0) {
-        this.fetchSource(true);
-      }
-      this.fetchTags();
-    }
-  }
-
-  onLoadMore = () => {
-    if (this.props.gallery.errorTimes < 3) {
-      this.fetchSource(false);
-    }
-  };
-
-  reRenderContent = () => {
-    this.props.dispatch(GalleryActions.clearErrorTimes());
-    this.props.dispatch(GalleryActions.clearSource());
-    this.fetchSource(true);
-  };
-
-  fetchSource(isFirstLoad: boolean) {
+  const fetchSource = (isFirstLoad: boolean) => {
     if (isFirstLoad) {
-      this.props.dispatch(GalleryActions.setPage(1));
+      dispatch(GalleryActions.setPage(1));
     }
-    this.props.dispatch(GalleryActions.fetchSourceIfNeeded());
-  }
-
-  fetchTags = () => {
-    this.props.dispatch(GalleryActions.fetchTags());
+    dispatch(GalleryActions.fetchSourceIfNeeded());
   };
 
-  onSearch = (word: string) => {
+  const onLoadMore = () => {
+    if (gallery.errorTimes < 3) {
+      fetchSource(false);
+    }
+  };
+
+  const reRenderContent = () => {
+    dispatch(GalleryActions.clearErrorTimes());
+    dispatch(GalleryActions.clearSource());
+    fetchSource(true);
+  };
+
+  const fetchTags = () => {
+    dispatch(GalleryActions.fetchTags());
+  };
+
+  const onSearch = (word: string) => {
     if (!word) {
       return;
     }
     Storage.set('word', word);
-    this.props.dispatch(GalleryActions.clearErrorTimes());
-    this.props.dispatch(GalleryActions.clearSource());
-    this.props.dispatch(GalleryActions.setWord(word));
-    this.fetchSource(true);
+    dispatch(GalleryActions.clearErrorTimes());
+    dispatch(GalleryActions.clearSource());
+    dispatch(GalleryActions.setWord(word));
+    fetchSource(true);
   };
 
-  onKeywordClick = (word: string) => {
-    this.props.dispatch(GalleryActions.setWord(word));
-    this.reRenderContent();
+  const onKeywordClick = (word: string) => {
+    dispatch(GalleryActions.setWord(word));
+    reRenderContent();
     Storage.set('word', word);
   };
 
-  renderKeywords() {
-    const keywords = [...this.props.gallery.tags];
+  React.useEffect(() => {
+    if (gallery.fromIllust) {
+      onSearch(gallery.word);
+      dispatch(GalleryActions.setFromIllust(false));
+    } else {
+      const search = new URLSearchParams(location.search);
+      if (search.get('entry') === 'ranking') {
+        dispatch(GalleryActions.setWord('ranking'));
+        Storage.set('word', 'ranking');
+      } else {
+        const cachedWord = Storage.get('word');
+        dispatch(GalleryActions.setWord(cachedWord ? cachedWord : 'ranking'));
+      }
+      if (gallery.items.length === 0) {
+        fetchSource(true);
+      }
+      fetchTags();
+    }
+  }, []);
+
+  const renderKeywords = () => {
+    const keywords = [...gallery.tags];
     keywords.unshift({ tag: 'ranking' });
 
-    if (this.props.gallery.isFetchingTags) {
+    if (gallery.isFetchingTags) {
       return <Loading />;
     }
 
-    const word = String(this.props.gallery.word);
+    const word = String(gallery.word);
     let found = false;
     for (const item of keywords) {
       if (item.tag === word) {
@@ -176,7 +164,7 @@ class GalleryContainer extends React.Component<
     return (
       <>
         {!found && word !== 'ranking' && word.trim() !== '' && (
-          <ListItem button onClick={() => this.onKeywordClick(word)}>
+          <ListItem button onClick={() => onKeywordClick(word)}>
             <ListItemIcon>
               <DoneIcon style={{ color: '#4caf50' }} />
             </ListItemIcon>
@@ -186,16 +174,14 @@ class GalleryContainer extends React.Component<
         {keywords.map(elem => {
           const ranking = elem.tag === 'ranking';
           const highlight =
-            elem.tag === this.props.gallery.word ||
-            (this.props.gallery.word === 'ranking' && ranking);
+            elem.tag === gallery.word ||
+            (gallery.word === 'ranking' && ranking);
 
           return (
             <ListItem
               key={elem.tag}
               button
-              onClick={() =>
-                this.onKeywordClick(ranking ? 'ranking' : elem.tag)
-              }>
+              onClick={() => onKeywordClick(ranking ? 'ranking' : elem.tag)}>
               {highlight && (
                 <ListItemIcon>
                   <DoneIcon style={{ color: '#4caf50' }} />
@@ -204,9 +190,7 @@ class GalleryContainer extends React.Component<
               <ListItemText
                 style={{ fontWeight: 'bold' }}
                 primary={
-                  ranking
-                    ? this.props.intl.formatMessage({ id: 'Ranking' })
-                    : elem.tag
+                  ranking ? intl.formatMessage({ id: 'Ranking' }) : elem.tag
                 }
               />
             </ListItem>
@@ -214,9 +198,9 @@ class GalleryContainer extends React.Component<
         })}
       </>
     );
-  }
+  };
 
-  onHeaderClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const onHeaderClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLDivElement;
     const tagName = target.tagName.toLowerCase();
 
@@ -227,86 +211,78 @@ class GalleryContainer extends React.Component<
       tagName !== 'path' &&
       tagName !== 'input'
     ) {
-      this?.contentRef?.current?.toTop();
+      contentRef?.current?.toTop();
     }
   };
 
-  onToggleDrawer = () => {
-    this.setState({
-      isDrawerOpen: !this.state.isDrawerOpen
-    });
+  const onToggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
   };
 
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <>
-        <Helmet>
-          <title>{config.siteTitle}</title>
-        </Helmet>
-        <AppBar position="static" onClick={this.onHeaderClick}>
-          <Toolbar className={classes.toolbar}>
-            <IconButton
-              color="inherit"
-              onClick={this.onToggleDrawer}
-              aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              color="inherit"
-              className={classes.toolbarTitle}>
-              {config.siteTitle}
-            </Typography>
-            <div className={classes.toolbarMiddle} />
-            <SearchInput
-              onSearch={this.onSearch}
-              isSearchByPopularity={this.state.isSearchByPopularity}
+  return (
+    <>
+      <Helmet>
+        <title>{config.siteTitle}</title>
+      </Helmet>
+      <AppBar position="static" onClick={onHeaderClick}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            color="inherit"
+            onClick={onToggleDrawer}
+            aria-label="Menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            color="inherit"
+            className={classes.toolbarTitle}>
+            {config.siteTitle}
+          </Typography>
+          <div className={classes.toolbarMiddle} />
+          <SearchInput
+            onSearch={onSearch}
+            isSearchByPopularity={isSearchByPopularity}
+          />
+          <LanguageSelector />
+          <UserButton onClick={() => loginRef.current?.open()} />
+        </Toolbar>
+      </AppBar>
+      <Drawer open={isDrawerOpen} onClose={onToggleDrawer}>
+        <div
+          tabIndex={0}
+          role="button"
+          onClick={onToggleDrawer}
+          onKeyDown={onToggleDrawer}>
+          <List
+            subheader={
+              <ListSubheader disableSticky>
+                {intl.formatMessage({ id: 'Tags' })}
+              </ListSubheader>
+            }>
+            {renderKeywords()}
+          </List>
+        </div>
+      </Drawer>
+      <Content ref={contentRef}>
+        <InfiniteScroll
+          distance={200}
+          onLoadMore={onLoadMore}
+          isLoading={gallery.isFetching}
+          hasMore>
+          <div className={classes.root}>
+            <GalleryList items={gallery.items} />
+            {gallery.isFetching && <Loading />}
+            <Message
+              text={intl.formatMessage({ id: 'Failed to Load' })}
+              isHidden={!gallery.isError}
             />
-            <LanguageSelector />
-            <UserButton onClick={() => this.loginRef.open()} />
-          </Toolbar>
-        </AppBar>
-        <Drawer open={this.state.isDrawerOpen} onClose={this.onToggleDrawer}>
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.onToggleDrawer}
-            onKeyDown={this.onToggleDrawer}>
-            <List
-              subheader={
-                <ListSubheader disableSticky>
-                  <FormattedMessage id="Tags" />
-                </ListSubheader>
-              }>
-              {this.renderKeywords()}
-            </List>
+            <Refresh onClick={reRenderContent} />
           </div>
-        </Drawer>
-        <Content ref={this.contentRef}>
-          <InfiniteScroll
-            distance={200}
-            onLoadMore={this.onLoadMore}
-            isLoading={this.props.gallery.isFetching}
-            hasMore>
-            <div className={classes.root}>
-              <GalleryList items={this.props.gallery.items} />
-              {this.props.gallery.isFetching && <Loading />}
-              <Message
-                text={this.props.intl.formatMessage({ id: 'Failed to Load' })}
-                isHidden={!this.props.gallery.isError}
-              />
-              <Refresh onClick={this.reRenderContent} />
-            </div>
-          </InfiniteScroll>
-        </Content>
-        <DecoratedLoginContainer onRef={ref => (this.loginRef = ref)} />
-      </>
-    );
-  }
-}
+        </InfiniteScroll>
+      </Content>
+      <LoginContainer ref={loginRef} />
+    </>
+  );
+};
 
-export default connect((state: ICombinedState) => ({
-  gallery: state.gallery
-}))(injectIntl(withStyles(styles)(GalleryContainer)));
+export default GalleryContainer;

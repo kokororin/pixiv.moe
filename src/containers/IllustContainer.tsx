@@ -1,9 +1,8 @@
 import React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
 import classNames from 'classnames';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
@@ -22,15 +21,14 @@ import {
 import shortid from 'shortid';
 import Img from 'react-image';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { useIntl } from 'react-intl';
 import moment from 'moment';
 
 import config from '@/config';
 
 import * as IllustActions from '@/actions/illust';
-import { IIllustAction, TIllustThunkDispatch } from '@/actions/illust';
 import * as GalleryActions from '@/actions/gallery';
-import AlertModal from '@/components/AlertModal';
+import * as AlertModal from '@/components/AlertModal';
 import Comment from '@/components/Comment';
 import GifPlayer from '@/components/GifPlayer';
 import InfiniteScroll from '@/components/InfiniteScroll';
@@ -41,230 +39,183 @@ import ImageBox from '@/components/ImageBox';
 import LanguageSelector from '@/components/LanguageSelector';
 import WeiboIcon from '@/icons/Weibo';
 import LineIcon from '@/icons/Line';
-import DecoratedLoginContainer, {
-  LoginContainer,
+import LoginContainer, {
+  ILoginContainerHandles,
   UserButton
 } from '@/containers/LoginContainer';
-import { styles as galleryStyles } from '@/containers/GalleryContainer';
+import { useStyles as useGalleryStyles } from '@/containers/GalleryContainer';
 import * as api from '@/utils/api';
 import Social from '@/utils/Social';
 import { ICombinedState } from '@/reducers';
-import { IIllustState } from '@/reducers/illust';
 
-const styles = {
-  ...galleryStyles,
-  ...createStyles({
-    illust: {
-      padding: 20
-    },
-    link: {
-      cursor: 'default'
-    },
-    image: {
-      overflow: 'hidden',
-      textAlign: 'center',
-      '& img': {
-        display: 'block',
-        position: 'relative',
-        marginTop: 0,
-        marginRight: 'auto',
-        marginBottom: 10,
-        marginLeft: 'auto',
-        maxWidth: '100%',
-        boxShadow:
-          '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12)',
-        border: 0,
-        zIndex: 1,
-        cursor: 'zoom-in',
-        transition: 'opacity 0.3s ease',
-        '@media screen and (max-width: 768px) and (orientation: portrait)': {
-          width: '100%'
-        },
-        '@media screen and (max-width: 1024px) and (orientation: landscape)': {
-          width: '100%'
-        }
-      }
-    },
-    caption: {
-      margin: 15,
-      textAlign: 'center',
-      '& p': {
-        lineHeight: '18px'
-      }
-    },
-    tags: {
-      margin: 15,
-      textAlign: 'center'
-    },
-    tagItem: {
-      margin: 5,
-      '& div': {
-        color: 'rgb(255, 255, 255) !important',
-        backgroundColor: 'rgb(0, 150, 136) !important'
-      }
-    },
-    actions: {
-      margin: 15,
-      textAlign: 'center',
-      '& button': {
-        margin: 8
-      }
-    },
-    detail: {
-      textAlign: 'center',
-      color: 'rgb(255, 64, 129)',
-      '& time': {
-        marginLeft: 10,
-        color: '#999'
-      },
-      '& a': {
-        textDecoration: 'none'
-      }
-    },
-    author: {
-      display: 'inline-block',
-      '&:before': {
-        content: '"by"',
-        marginRight: 5
-      },
-      '& a': {
-        color: '#258fb8'
-      }
-    },
-    metas: {
-      color: '#666'
-    },
-    divide: {
-      '&:not(:first-child)': {
-        marginLeft: 4,
-        paddingLeft: 4,
-        borderLeft: '1px solid #ccc'
-      }
-    },
-    comments: {
-      width: '100%'
-    },
-    commentList: {
+const useStyles = makeStyles({
+  illust: {
+    padding: 20
+  },
+  link: {
+    cursor: 'default'
+  },
+  image: {
+    overflow: 'hidden',
+    textAlign: 'center',
+    '& img': {
       display: 'block',
-      padding: '8px 0',
-      listStyle: 'none'
+      position: 'relative',
+      marginTop: 0,
+      marginRight: 'auto',
+      marginBottom: 10,
+      marginLeft: 'auto',
+      maxWidth: '100%',
+      boxShadow:
+        '0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12)',
+      border: 0,
+      zIndex: 1,
+      cursor: 'zoom-in',
+      transition: 'opacity 0.3s ease',
+      '@media screen and (max-width: 768px) and (orientation: portrait)': {
+        width: '100%'
+      },
+      '@media screen and (max-width: 1024px) and (orientation: landscape)': {
+        width: '100%'
+      }
     }
-  })
-};
+  },
+  caption: {
+    margin: 15,
+    textAlign: 'center',
+    '& p': {
+      lineHeight: '18px'
+    }
+  },
+  tags: {
+    margin: 15,
+    textAlign: 'center'
+  },
+  tagItem: {
+    margin: 5,
+    '& div': {
+      color: 'rgb(255, 255, 255) !important',
+      backgroundColor: 'rgb(0, 150, 136) !important'
+    }
+  },
+  actions: {
+    margin: 15,
+    textAlign: 'center',
+    '& button': {
+      margin: 8
+    }
+  },
+  detail: {
+    textAlign: 'center',
+    color: 'rgb(255, 64, 129)',
+    '& time': {
+      marginLeft: 10,
+      color: '#999'
+    },
+    '& a': {
+      textDecoration: 'none'
+    }
+  },
+  author: {
+    display: 'inline-block',
+    '&:before': {
+      content: '"by"',
+      marginRight: 5
+    },
+    '& a': {
+      color: '#258fb8'
+    }
+  },
+  metas: {
+    color: '#666'
+  },
+  divide: {
+    '&:not(:first-child)': {
+      marginLeft: 4,
+      paddingLeft: 4,
+      borderLeft: '1px solid #ccc'
+    }
+  },
+  comments: {
+    width: '100%'
+  },
+  commentList: {
+    display: 'block',
+    padding: '8px 0',
+    listStyle: 'none'
+  }
+});
 
 interface IIllustContainerRouteInfo {
   illustId: string;
 }
 
-type IIllustContainerCombinedProps = WithStyles<typeof styles> &
-  RouteComponentProps<IIllustContainerRouteInfo>;
+interface IIllustContainerProps {}
 
-interface IIllustContainerProps extends IIllustContainerCombinedProps {
-  dispatch: Dispatch<IIllustAction> & TIllustThunkDispatch;
-  intl: IntlShape;
-  illust: IIllustState;
-}
+const IllustContainer: React.FunctionComponent<IIllustContainerProps> = () => {
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [boxIndex, setBoxIndex] = React.useState(0);
+  const [showBox, setShowBox] = React.useState(false);
+  const [isBookmarked, setIsBookmarked] = React.useState(false);
 
-interface IIllustContainerState {
-  isSubmitting: boolean;
-  boxIndex: number;
-  showBox: boolean;
-  isBookmarked: boolean;
-}
+  const classes = { ...useStyles(), ...useGalleryStyles() };
 
-class IllustContainer extends React.Component<
-  IIllustContainerProps,
-  IIllustContainerState
-> {
-  illustId: string;
-  authTimer: number;
-  loginRef: LoginContainer;
+  const dispatch = useDispatch();
+  const illust = useSelector((state: ICombinedState) => state.illust);
+  const history = useHistory();
+  const intl = useIntl();
 
-  constructor(props: IIllustContainerProps) {
-    super(props);
+  const { illustId } = useParams<IIllustContainerRouteInfo>();
+  const loginRef = React.useRef<ILoginContainerHandles>(null);
 
-    this.state = {
-      isSubmitting: false,
-      boxIndex: 0,
-      showBox: false,
-      isBookmarked: false
-    };
-
-    this.illustId = this.props.match.params.illustId;
-  }
-
-  componentDidMount() {
-    if (!this.item.id) {
-      this.props.dispatch(IllustActions.fetchItem(this.illustId));
-    }
-
-    this.props.dispatch(IllustActions.fetchComments(this.illustId));
-    this.fetchBookmark();
-  }
-
-  componentWillUnmount() {
-    this.props.dispatch(IllustActions.clearComments());
-  }
-
-  fetchBookmark = () => {
+  const fetchBookmark = () => {
     api
-      .illustBookmarkDetail(this.illustId)
+      .illustBookmarkDetail(illustId)
       .then(data => {
         if (data.status === 'success') {
-          this.setState({
-            isBookmarked: data.response?.bookmark_detail?.is_bookmarked ?? false
-          });
+          setIsBookmarked(
+            data.response?.bookmark_detail?.is_bookmarked ?? false
+          );
         }
       })
       .catch(() => {});
   };
 
-  get item() {
-    if (!this.props.illust.items[this.illustId]) {
-      return {
-        title: ''
-      };
-    }
-    return this.props.illust.items[this.illustId];
-  }
+  const item = illust.items[illustId] ? illust.items[illustId] : { title: '' };
 
-  get urls(): string[] {
-    if (this.item?.meta_single_page?.original_image_url) {
-      return [this.item.meta_single_page?.original_image_url];
+  const urls = (): string[] => {
+    if (item?.meta_single_page?.original_image_url) {
+      return [item.meta_single_page?.original_image_url];
     }
-    if (this.item?.meta_pages?.length > 0) {
-      return this.item.meta_pages.map((page: any) => page.image_urls.original);
+    if (item?.meta_pages?.length > 0) {
+      return item.meta_pages.map((page: any) => page.image_urls.original);
     }
     return [];
-  }
-
-  onBackClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    this.props.history.push('/');
   };
 
-  onBookmarkClick = () => {
+  const onBackClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    history.push('/');
+  };
+
+  const onBookmarkClick = () => {
     const authData = api.getAuth();
     if (!authData) {
-      return this.loginRef.open();
+      return loginRef.current?.open();
     }
 
-    this.setState({
-      isSubmitting: true
-    });
-    api[
-      !this.state.isBookmarked ? 'illustBookmarkAdd' : 'illustBookmarkDelete'
-    ](this.illustId).then(data => {
+    setIsSubmitting(true);
+    api[!isBookmarked ? 'illustBookmarkAdd' : 'illustBookmarkDelete'](
+      illustId
+    ).then(data => {
       if (data.status === 'success') {
-        this.setState({
-          isSubmitting: false,
-          isBookmarked: !this.state.isBookmarked
-        });
+        setIsSubmitting(false);
+        setIsBookmarked(!isBookmarked);
       } else {
         AlertModal.make(
           'error',
-          this.props.intl.formatMessage({
+          intl.formatMessage({
             id: 'Communication Error Occurred'
           })
         );
@@ -272,30 +223,45 @@ class IllustContainer extends React.Component<
     });
   };
 
-  onImageClick = (index: number) => {
-    this.setState({ boxIndex: index, showBox: true });
+  const onImageClick = (index: number) => {
+    setBoxIndex(index);
+    setShowBox(true);
   };
 
-  onImageClose = () => {
-    this.setState({ boxIndex: 0, showBox: false });
+  const onImageClose = () => {
+    setBoxIndex(0);
+    setShowBox(false);
   };
 
-  onSocialClick = (type: 'toTwitter' | 'toLine' | 'toWeibo') => {
+  const onSocialClick = (type: 'toTwitter' | 'toLine' | 'toWeibo') => {
     new Social({
-      text: `${this.item.title} | ${this.item.user.name} #pixiv`,
+      text: `${item.title} | ${item.user.name} #pixiv`,
       url: window.location.href
     })[type]();
   };
 
-  onTagClick = (tag: string) => {
-    this.props.dispatch(GalleryActions.setWord(tag));
-    this.props.dispatch(GalleryActions.setFromIllust(true));
-    this.props.history.push('/');
+  const onTagClick = (tag: string) => {
+    dispatch(GalleryActions.setWord(tag));
+    dispatch(GalleryActions.setFromIllust(true));
+    history.push('/');
   };
 
-  renderImage() {
-    if (this.item.meta_pages?.length > 0) {
-      return this.item.meta_pages.map((elem: any, index: number) => {
+  React.useEffect(() => {
+    if (!item.id) {
+      dispatch(IllustActions.fetchItem(illustId));
+    }
+
+    dispatch(IllustActions.fetchComments(illustId));
+    fetchBookmark();
+
+    return () => {
+      dispatch(IllustActions.clearComments());
+    };
+  }, []);
+
+  const renderImage = () => {
+    if (item.meta_pages?.length > 0) {
+      return item.meta_pages.map((elem: any, index: number) => {
         return (
           <Img
             key={shortid.generate()}
@@ -304,50 +270,48 @@ class IllustContainer extends React.Component<
               api.proxyImage(elem.image_urls.medium)
             ]}
             loader={<Loading />}
-            onClick={() => this.onImageClick(index)}
+            onClick={() => onImageClick(index)}
           />
         );
       });
     }
-    if (this.item.meta_pages?.length === 0) {
+    if (item.meta_pages?.length === 0) {
       return (
         <Img
           src={[
-            api.proxyImage(this.item.image_urls.large),
-            api.proxyImage(this.item.image_urls.medium)
+            api.proxyImage(item.image_urls.large),
+            api.proxyImage(item.image_urls.medium)
           ]}
           loader={<Loading />}
-          onClick={() => this.onImageClick(0)}
+          onClick={() => onImageClick(0)}
         />
       );
     }
 
-    if (this.item.metadata?.zip_images?.length > 0) {
-      return <GifPlayer images={this.item.metadata.zip_images} />;
+    if (item.metadata?.zip_images?.length > 0) {
+      return <GifPlayer images={item.metadata.zip_images} />;
     }
-  }
+  };
 
-  renderContent() {
-    const { classes } = this.props;
-
-    if (this.props.illust.isFetching) {
+  const renderContent = () => {
+    if (illust.isFetching) {
       return <Loading />;
     }
-    if (this.props.illust.isError) {
+    if (illust.isError) {
       return (
         <Message
           isHidden={false}
-          text={this.props.intl.formatMessage({ id: 'An Error Occurred' })}
+          text={intl.formatMessage({ id: 'An Error Occurred' })}
         />
       );
     }
     try {
       return (
         <div className={classes.illust}>
-          <div className={classes.image}>{this.renderImage()}</div>
+          <div className={classes.image}>{renderImage()}</div>
           <div className={classes.caption}>
-            {typeof this.item.caption === 'string' &&
-              (this.item.caption as string)
+            {typeof item.caption === 'string' &&
+              (item.caption as string)
                 .replace(/(\r\n|\n\r|\r|\n)/g, '\n')
                 .split('\n')
                 .map(elem => (
@@ -360,14 +324,14 @@ class IllustContainer extends React.Component<
                 ))}
           </div>
           <div className={classes.tags}>
-            {this.item.tags.map((elem: any) => {
+            {item.tags.map((elem: any) => {
               return (
                 <Chip
                   key={shortid.generate()}
                   className={classes.tagItem}
                   avatar={<Avatar>#</Avatar>}
                   label={elem.name}
-                  onClick={() => this.onTagClick(elem.name)}
+                  onClick={() => onTagClick(elem.name)}
                   clickable
                 />
               );
@@ -377,33 +341,33 @@ class IllustContainer extends React.Component<
             <Button
               variant="outlined"
               startIcon={
-                this.state.isBookmarked ? (
+                isBookmarked ? (
                   <FavoriteIcon color="secondary" />
                 ) : (
                   <FavoriteBorderIcon color="secondary" />
                 )
               }
-              onClick={this.onBookmarkClick}
-              disabled={this.state.isSubmitting}>
-              <FormattedMessage id="Add to Bookmarks" />
+              onClick={onBookmarkClick}
+              disabled={isSubmitting}>
+              {intl.formatMessage({ id: 'Add to Bookmarks' })}
             </Button>
             <Button
               variant="outlined"
               startIcon={<TwitterIcon style={{ color: '#38A1F3' }} />}
-              onClick={() => this.onSocialClick('toTwitter')}>
-              <FormattedMessage id="Tweet" />
+              onClick={() => onSocialClick('toTwitter')}>
+              {intl.formatMessage({ id: 'Tweet' })}
             </Button>
             <Button
               variant="outlined"
               startIcon={<LineIcon />}
-              onClick={() => this.onSocialClick('toLine')}>
-              <FormattedMessage id="LINE" />
+              onClick={() => onSocialClick('toLine')}>
+              {intl.formatMessage({ id: 'LINE' })}
             </Button>
             <Button
               variant="outlined"
               startIcon={<WeiboIcon />}
-              onClick={() => this.onSocialClick('toWeibo')}>
-              <FormattedMessage id="Weibo" />
+              onClick={() => onSocialClick('toWeibo')}>
+              {intl.formatMessage({ id: 'Weibo' })}
             </Button>
           </div>
           <div className={classes.detail}>
@@ -412,114 +376,91 @@ class IllustContainer extends React.Component<
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  href={`http://pixiv.me/${this.item.user.account}`}>
-                  {this.item.user.name}
+                  href={`http://pixiv.me/${item.user.account}`}>
+                  {item.user.name}
                 </a>
               </div>
-              <time>
-                {`${moment(this.item.created_time).format('LLL')}(JST)`}
-              </time>
+              <time>{`${moment(item.created_time).format('LLL')}(JST)`}</time>
               <div className={classes.metas}>
                 <span
                   className={
                     classes.divide
-                  }>{`${this.item.width}x${this.item.height}`}</span>
-                {Array.isArray(this.item.tools) && (
+                  }>{`${item.width}x${item.height}`}</span>
+                {Array.isArray(item.tools) && (
                   <span
                     className={classNames({
-                      [classes.divide]: this.item.tools.length > 0
+                      [classes.divide]: item.tools.length > 0
                     })}>
-                    {this.item.tools.join(' / ')}
+                    {item.tools.join(' / ')}
                   </span>
                 )}
               </div>
             </div>
             <p>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`/${this.item.id}`}>
-                <FormattedMessage id="Redirect to pixiv" />
+              <a target="_blank" rel="noopener noreferrer" href={`/${item.id}`}>
+                {intl.formatMessage({ id: 'Redirect to pixiv' })}
               </a>
             </p>
           </div>
           <InfiniteScroll
             distance={200}
-            onLoadMore={() =>
-              this.props.dispatch(IllustActions.fetchComments(this.illustId))
-            }
-            isLoading={this.props.illust.isFetchingComments}
-            hasMore={!this.props.illust.isCommentsEnd}>
+            onLoadMore={() => dispatch(IllustActions.fetchComments(illustId))}
+            isLoading={illust.isFetchingComments}
+            hasMore={!illust.isCommentsEnd}>
             <div className={classes.comments}>
               <h4>
-                <FormattedMessage
-                  id={
-                    this.props.illust.comments.length === 0
-                      ? 'No Comments'
-                      : 'Comments'
-                  }
-                />
+                {intl.formatMessage({
+                  id: illust.comments.length === 0 ? 'No Comments' : 'Comments'
+                })}
               </h4>
               <ul className={classes.commentList}>
-                {this.props.illust.comments.map(elem => {
+                {illust.comments.map(elem => {
                   return <Comment key={shortid.generate()} item={elem} />;
                 })}
               </ul>
-              {this.props.illust.isFetchingComments && <Loading />}
+              {illust.isFetchingComments && <Loading />}
             </div>
           </InfiniteScroll>
-          <DecoratedLoginContainer onRef={ref => (this.loginRef = ref)} />
+          <LoginContainer ref={loginRef} />
         </div>
       );
     } catch (e) {
       return (
         <Message
           isHidden={false}
-          text={this.props.intl.formatMessage({ id: 'An Error Occurred' })}
+          text={intl.formatMessage({ id: 'An Error Occurred' })}
         />
       );
     }
-  }
+  };
 
-  render() {
-    const { classes } = this.props;
+  return (
+    <>
+      <Helmet>
+        <title>{item.title === '' ? config.siteTitle : item.title}</title>
+      </Helmet>
+      <AppBar position="static">
+        <Toolbar className={classes.toolbar}>
+          <IconButton href="#" color="inherit" onClick={onBackClick}>
+            <ArrowBackIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            color="inherit"
+            className={classes.toolbarTitle}>
+            {item.title}
+          </Typography>
+          <div className={classes.toolbarMiddle} />
+          <LanguageSelector />
+          <UserButton onClick={() => loginRef.current?.open()} />
+        </Toolbar>
+      </AppBar>
+      <Content>{renderContent()}</Content>
+      {showBox && (
+        <ImageBox items={urls()} index={boxIndex} onClose={onImageClose} />
+      )}
+    </>
+  );
+};
 
-    return (
-      <>
-        <Helmet>
-          <title>
-            {this.item.title === '' ? config.siteTitle : this.item.title}
-          </title>
-        </Helmet>
-        <AppBar position="static">
-          <Toolbar className={classes.toolbar}>
-            <IconButton href="#" color="inherit" onClick={this.onBackClick}>
-              <ArrowBackIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              color="inherit"
-              className={classes.toolbarTitle}>
-              {this.item.title}
-            </Typography>
-            <div className={classes.toolbarMiddle} />
-            <LanguageSelector />
-            <UserButton onClick={() => this.loginRef.open()} />
-          </Toolbar>
-        </AppBar>
-        <Content>{this.renderContent()}</Content>
-        {this.state.showBox && (
-          <ImageBox
-            items={this.urls}
-            index={this.state.boxIndex}
-            onClose={this.onImageClose}
-          />
-        )}
-      </>
-    );
-  }
-}
-
-export default connect((state: ICombinedState) => ({
-  illust: state.illust
-}))(injectIntl(withStyles(styles)(IllustContainer)));
+export default IllustContainer;

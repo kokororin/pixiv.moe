@@ -36,17 +36,13 @@ Table of Contents
 * material-ui
 * whatwg-fetch
 
-### Back-end
-* express
-* pixiv-app-api
-
 ## Online Site
 [https://pixiv.moe](https://pixiv.moe)
 
 ## Features
 
 * Pinterest-style layout illusts.
-* Select keywords.
+* Select tags.
 * Search keywords order by popularity without pixiv Premium.
 * Login in pixiv and add bookmarks easily.
 

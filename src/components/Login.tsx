@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Modal, Backdrop, Fade, Button, TextField } from '@material-ui/core';
 import { Clear as ClearIcon } from '@material-ui/icons';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
 const useStyles = makeStyles({
   modal: {
@@ -93,7 +93,8 @@ const Login = React.forwardRef<ILoginHandles, ILoginProps>((props, ref) => {
         <>
           <div className={classes.avatar}>
             <span className={classes.avatarName}>
-              <FormattedMessage id="Nickname" /> 「{props.authData.user.name}」
+              {intl.formatMessage({ id: 'Nickname' })}「
+              {props.authData.user.name}」
             </span>
           </div>
           <div className={classes.footer}>
@@ -101,7 +102,7 @@ const Login = React.forwardRef<ILoginHandles, ILoginProps>((props, ref) => {
               variant="contained"
               color="secondary"
               onClick={props.onLogoutClick}>
-              <FormattedMessage id="Logout" />
+              {intl.formatMessage({ id: 'Logout' })}
             </Button>
           </div>
         </>
@@ -134,9 +135,9 @@ const Login = React.forwardRef<ILoginHandles, ILoginProps>((props, ref) => {
             color="secondary"
             onClick={props.onLoginClick}
             disabled={props.isSubmitting}>
-            <FormattedMessage
-              id={props.isSubmitting ? 'Wait a Moment' : 'Login'}
-            />
+            {intl.formatMessage({
+              id: props.isSubmitting ? 'Wait a Moment' : 'Login'
+            })}
           </Button>
         </div>
       </>

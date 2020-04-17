@@ -3,15 +3,9 @@ import ReactGA from 'react-ga';
 import { Route } from 'react-router-dom';
 import config from '@/config';
 
-interface ITrackPageView {}
-
-export default class TrackPageView extends React.Component<ITrackPageView> {
-  constructor(props: ITrackPageView) {
-    super(props);
-    ReactGA.initialize(config.trackingID);
-  }
-
+export default class TrackPageView extends React.Component<{}> {
   UNSAFE_componentWillMount() {
+    ReactGA.initialize(config.trackingID);
     this.track();
   }
 

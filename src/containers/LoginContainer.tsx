@@ -1,109 +1,79 @@
 import React from 'react';
-import { Dispatch } from 'redux';
-import { connect } from 'react-redux';
-import { injectIntl, IntlShape } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { useIntl } from 'react-intl';
 import { IconButton, Avatar } from '@material-ui/core';
 import { AccountCircle as AccountCircleIcon } from '@material-ui/icons';
 import EventListener from 'react-event-listener';
 import * as api from '@/utils/api';
-import AlertModal from '@/components/AlertModal';
+import * as AlertModal from '@/components/AlertModal';
 import Login, { ILoginHandles } from '@/components/Login';
-
-import { IAuthAction } from '@/actions/auth';
-import { IAuthState } from '@/reducers/auth';
 
 import { ICombinedState } from '@/reducers';
 
-interface ILoginContainerProps {
-  intl: IntlShape;
-  dispatch: Dispatch<IAuthAction>;
-  onRef: (ref: LoginContainer) => any;
-}
+interface ILoginContainerProps {}
 
-interface ILoginContainerState {
-  isSubmitting: boolean;
-  authData: any;
+export interface ILoginContainerHandles {
+  open: () => void;
+  close: () => void;
 }
 
 interface IUserButtonProps {
   onClick: () => void;
-  auth: IAuthState;
 }
 
-export const UserButton = connect((state: ICombinedState) => ({
-  auth: state.auth
-}))((props: IUserButtonProps) => {
+export const UserButton = (props: IUserButtonProps) => {
+  const auth = useSelector((state: ICombinedState) => state.auth);
+
   return (
     <IconButton color="inherit" onClick={props.onClick}>
-      {props.auth.authData ? (
+      {auth.authData ? (
         <Avatar
           alt="Avatar"
           style={{ width: 28, height: 28 }}
-          src={api.proxyImage(
-            props.auth.authData.user.profile_image_urls.px_50x50
-          )}
+          src={api.proxyImage(auth.authData.user.profile_image_urls.px_50x50)}
         />
       ) : (
         <AccountCircleIcon />
       )}
     </IconButton>
   );
-});
+};
 
-export class LoginContainer extends React.Component<
-  ILoginContainerProps,
-  ILoginContainerState
-> {
-  static defaultProps = {
-    onRef() {}
-  };
+const LoginContainer = React.forwardRef<
+  ILoginContainerHandles,
+  ILoginContainerProps
+>((props, ref) => {
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [authData, setAuthData] = React.useState<any>(null);
+  const intl = useIntl();
+  const dispatch = useDispatch();
+  const loginRef = React.useRef<ILoginHandles>(null);
 
-  loginRef = React.createRef<ILoginHandles>();
-
-  constructor(props: ILoginContainerProps) {
-    super(props);
-
-    this.state = {
-      isSubmitting: false,
-      authData: null
-    };
-  }
-
-  componentDidMount() {
-    this.props.onRef(this);
+  React.useEffect(() => {
     const authData = api.getAuth();
-    this.setState({
-      authData
-    });
-  }
+    setAuthData(authData);
+  }, []);
 
-  onKeydown = (event: KeyboardEvent) => {
-    if (this.loginRef.current?.getIsOpen() && event.keyCode === 13) {
-      this.onLoginClick();
-    }
+  const open = () => {
+    loginRef.current?.open();
   };
 
-  open = () => {
-    this.loginRef.current?.open();
+  const close = () => {
+    loginRef.current?.close();
   };
 
-  close = () => {
-    this.loginRef.current?.close();
-  };
-
-  onLoginClick = () => {
-    console.log(this.onLoginClick, 'dwede');
-    if (this.state.isSubmitting || !this.loginRef.current?.getIsOpen()) {
+  const onLoginClick = () => {
+    if (isSubmitting || !loginRef.current?.getIsOpen()) {
       return;
     }
 
-    const username = this.loginRef.current?.getUsername();
-    const password = this.loginRef.current?.getPassword();
+    const username = loginRef.current?.getUsername();
+    const password = loginRef.current?.getPassword();
 
     if (username === '') {
       return AlertModal.make(
         'error',
-        this.props.intl.formatMessage({
+        intl.formatMessage({
           id: 'pixiv ID or Email Address is Blank'
         })
       );
@@ -112,13 +82,11 @@ export class LoginContainer extends React.Component<
     if (password === '') {
       return AlertModal.make(
         'error',
-        this.props.intl.formatMessage({ id: 'Password is Blank' })
+        intl.formatMessage({ id: 'Password is Blank' })
       );
     }
 
-    this.setState({
-      isSubmitting: true
-    });
+    setIsSubmitting(true);
 
     api
       .auth({
@@ -128,61 +96,62 @@ export class LoginContainer extends React.Component<
       .then((data: any) => {
         if (data.status === 'success') {
           const authData = data.response;
-          api.setAuth(authData, this.props.dispatch);
-          this.setState({
-            authData
-          });
+          api.setAuth(authData, dispatch);
+          setAuthData(authData);
           setTimeout(() => {
-            this.close();
-            this.loginRef.current?.reset();
+            close();
+            loginRef.current?.reset();
           }, 1500);
         } else {
           AlertModal.make('error', data.message);
         }
       })
       .then(() => {
-        this.setState({
-          isSubmitting: false
-        });
+        setIsSubmitting(false);
       })
       .catch(() => {
-        this.setState({
-          isSubmitting: false
-        });
+        setIsSubmitting(false);
         AlertModal.make(
           'error',
-          this.props.intl.formatMessage({ id: 'Communication Error Occurred' })
+          intl.formatMessage({
+            id: 'Communication Error Occurred'
+          })
         );
       });
   };
 
-  onLogoutClick = () => {
-    api.removeAuth(this.props.dispatch);
-    this.setState({
-      authData: null
-    });
+  const onLogoutClick = () => {
+    api.removeAuth(dispatch);
+    setAuthData(null);
   };
 
-  render() {
-    return (
-      <>
-        <Login
-          ref={this.loginRef}
-          onLoginClick={this.onLoginClick}
-          onLogoutClick={this.onLogoutClick}
-          isSubmitting={this.state.isSubmitting}
-          authData={this.state.authData}
-        />
-        <EventListener
-          target={document}
-          // @ts-ignore
-          onKeydown={this.onKeydown}
-        />
-      </>
-    );
-  }
-}
+  const onKeydown = (event: KeyboardEvent) => {
+    if (loginRef.current?.getIsOpen() && event.keyCode === 13) {
+      onLoginClick();
+    }
+  };
 
-export default connect((state: ICombinedState) => ({ auth: state.auth }))(
-  injectIntl(LoginContainer)
-);
+  React.useImperativeHandle(ref, () => ({
+    open: () => open(),
+    close: () => close()
+  }));
+
+  return (
+    <>
+      <Login
+        ref={loginRef}
+        onLoginClick={onLoginClick}
+        onLogoutClick={onLogoutClick}
+        isSubmitting={isSubmitting}
+        authData={authData}
+      />
+      <EventListener
+        target={document}
+        // @ts-ignore
+        onKeydown={onKeydown}
+      />
+    </>
+  );
+});
+
+export default LoginContainer;

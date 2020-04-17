@@ -88,9 +88,7 @@ const useStyles = makeStyles({
   }
 });
 
-interface IBaselineProps {}
-
-const Baseline: React.SFC<IBaselineProps> = props => {
+const Baseline: React.FunctionComponent<{}> = props => {
   useStyles();
   return <>{props.children}</>;
 };

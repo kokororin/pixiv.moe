@@ -8,61 +8,43 @@ interface IAlertModalProps {
   onDestroy: () => void;
 }
 
-interface IAlertModalState {
-  open: boolean;
-}
+const AlertModal: React.FunctionComponent<IAlertModalProps> = props => {
+  const [open, setOpen] = React.useState(true);
 
-export default class AlertModal extends React.Component<
-  IAlertModalProps,
-  IAlertModalState
-> {
-  node: HTMLDivElement;
-
-  static make(severity: Color, message: string) {
-    const wrapper = document.body.appendChild(document.createElement('div'));
-    const onDestroy = () => {
-      ReactDOM.unmountComponentAtNode(wrapper);
-      return setTimeout(() => {
-        wrapper.remove();
-      });
+  React.useEffect(() => {
+    return () => {
+      props.onDestroy();
     };
-    ReactDOM.render(
-      <AlertModal severity={severity} onDestroy={onDestroy}>
-        {message}
-      </AlertModal>,
-      wrapper
-    );
-  }
+  });
 
-  constructor(props: IAlertModalProps) {
-    super(props);
-
-    this.state = {
-      open: true
-    };
-  }
-
-  componentWillUnmount() {
-    this.props.onDestroy();
-  }
-
-  onClose = () => {
-    this.setState({
-      open: false
-    });
-    setTimeout(this.props.onDestroy, 500);
+  const onClose = () => {
+    setOpen(false);
+    setTimeout(props.onDestroy, 500);
   };
 
-  render() {
-    return (
-      <Snackbar
-        open={this.state.open}
-        autoHideDuration={3500}
-        onClose={this.onClose}>
-        <Alert onClose={this.onClose} severity={this.props.severity}>
-          {this.props.children}
-        </Alert>
-      </Snackbar>
-    );
-  }
-}
+  return (
+    <Snackbar open={open} autoHideDuration={3500} onClose={onClose}>
+      <Alert onClose={onClose} severity={props.severity}>
+        {props.children}
+      </Alert>
+    </Snackbar>
+  );
+};
+
+export const make = (severity: Color, message: string) => {
+  const wrapper = document.body.appendChild(document.createElement('div'));
+  const onDestroy = () => {
+    ReactDOM.unmountComponentAtNode(wrapper);
+    return setTimeout(() => {
+      wrapper.remove();
+    });
+  };
+  ReactDOM.render(
+    <AlertModal severity={severity} onDestroy={onDestroy}>
+      {message}
+    </AlertModal>,
+    wrapper
+  );
+};
+
+export default AlertModal;
