@@ -10,8 +10,6 @@ import Login, { ILoginHandles } from '@/components/Login';
 
 import { ICombinedState } from '@/reducers';
 
-interface ILoginContainerProps {}
-
 export interface ILoginContainerHandles {
   open: () => void;
   close: () => void;
@@ -39,119 +37,118 @@ export const UserButton = (props: IUserButtonProps) => {
   );
 };
 
-const LoginContainer = React.forwardRef<
-  ILoginContainerHandles,
-  ILoginContainerProps
->((props, ref) => {
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [authData, setAuthData] = React.useState<any>(null);
-  const intl = useIntl();
-  const dispatch = useDispatch();
-  const loginRef = React.useRef<ILoginHandles>(null);
+const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
+  (props, ref) => {
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const [authData, setAuthData] = React.useState<any>(null);
+    const intl = useIntl();
+    const dispatch = useDispatch();
+    const loginRef = React.useRef<ILoginHandles>(null);
 
-  React.useEffect(() => {
-    const authData = api.getAuth();
-    setAuthData(authData);
-  }, []);
+    React.useEffect(() => {
+      const authData = api.getAuth();
+      setAuthData(authData);
+    }, []);
 
-  const open = () => {
-    loginRef.current?.open();
-  };
+    const open = () => {
+      loginRef.current?.open();
+    };
 
-  const close = () => {
-    loginRef.current?.close();
-  };
+    const close = () => {
+      loginRef.current?.close();
+    };
 
-  const onLoginClick = () => {
-    if (isSubmitting || !loginRef.current?.getIsOpen()) {
-      return;
-    }
+    const onLoginClick = () => {
+      if (isSubmitting || !loginRef.current?.getIsOpen()) {
+        return;
+      }
 
-    const username = loginRef.current?.getUsername();
-    const password = loginRef.current?.getPassword();
+      const username = loginRef.current?.getUsername();
+      const password = loginRef.current?.getPassword();
 
-    if (username === '') {
-      return AlertModal.make(
-        'error',
-        intl.formatMessage({
-          id: 'pixiv ID or Email Address is Blank'
-        })
-      );
-    }
-
-    if (password === '') {
-      return AlertModal.make(
-        'error',
-        intl.formatMessage({ id: 'Password is Blank' })
-      );
-    }
-
-    setIsSubmitting(true);
-
-    api
-      .auth({
-        username,
-        password
-      })
-      .then((data: any) => {
-        if (data.status === 'success') {
-          const authData = data.response;
-          api.setAuth(authData, dispatch);
-          setAuthData(authData);
-          setTimeout(() => {
-            close();
-            loginRef.current?.reset();
-          }, 1500);
-        } else {
-          AlertModal.make('error', data.message);
-        }
-      })
-      .then(() => {
-        setIsSubmitting(false);
-      })
-      .catch(() => {
-        setIsSubmitting(false);
-        AlertModal.make(
+      if (username === '') {
+        return AlertModal.make(
           'error',
           intl.formatMessage({
-            id: 'Communication Error Occurred'
+            id: 'pixiv ID or Email Address is Blank'
           })
         );
-      });
-  };
+      }
 
-  const onLogoutClick = () => {
-    api.removeAuth(dispatch);
-    setAuthData(null);
-  };
+      if (password === '') {
+        return AlertModal.make(
+          'error',
+          intl.formatMessage({ id: 'Password is Blank' })
+        );
+      }
 
-  const onKeydown = (event: KeyboardEvent) => {
-    if (loginRef.current?.getIsOpen() && event.keyCode === 13) {
-      onLoginClick();
-    }
-  };
+      setIsSubmitting(true);
 
-  React.useImperativeHandle(ref, () => ({
-    open: () => open(),
-    close: () => close()
-  }));
+      api
+        .auth({
+          username,
+          password
+        })
+        .then((data: any) => {
+          if (data.status === 'success') {
+            const authData = data.response;
+            api.setAuth(authData, dispatch);
+            setAuthData(authData);
+            setTimeout(() => {
+              close();
+              loginRef.current?.reset();
+            }, 1500);
+          } else {
+            AlertModal.make('error', data.message);
+          }
+        })
+        .then(() => {
+          setIsSubmitting(false);
+        })
+        .catch(() => {
+          setIsSubmitting(false);
+          AlertModal.make(
+            'error',
+            intl.formatMessage({
+              id: 'Communication Error Occurred'
+            })
+          );
+        });
+    };
 
-  return (
-    <>
-      <Login
-        ref={loginRef}
-        onLoginClick={onLoginClick}
-        onLogoutClick={onLogoutClick}
-        isSubmitting={isSubmitting}
-        authData={authData}
-      />
-      <EventListener
-        target={document}
-        // @ts-ignore
-        onKeydown={onKeydown}
-      />
-    </>
-  );
-});
+    const onLogoutClick = () => {
+      api.removeAuth(dispatch);
+      setAuthData(null);
+    };
+
+    const onKeydown = (event: KeyboardEvent) => {
+      if (loginRef.current?.getIsOpen() && event.keyCode === 13) {
+        onLoginClick();
+      }
+    };
+
+    React.useImperativeHandle(ref, () => ({
+      open: () => open(),
+      close: () => close()
+    }));
+
+    return (
+      <>
+        <Login
+          ref={loginRef}
+          onLoginClick={onLoginClick}
+          onLogoutClick={onLogoutClick}
+          isSubmitting={isSubmitting}
+          authData={authData}
+        />
+        <EventListener
+          target={document}
+          // @ts-ignore
+          onKeydown={onKeydown}
+        />
+      </>
+    );
+  }
+);
 
 export default LoginContainer;

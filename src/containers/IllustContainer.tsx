@@ -150,9 +150,7 @@ interface IIllustContainerRouteInfo {
   illustId: string;
 }
 
-interface IIllustContainerProps {}
-
-const IllustContainer: React.FunctionComponent<IIllustContainerProps> = () => {
+const IllustContainer: React.FunctionComponent<{}> = () => {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [boxIndex, setBoxIndex] = React.useState(0);
   const [showBox, setShowBox] = React.useState(false);

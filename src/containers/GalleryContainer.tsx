@@ -68,11 +68,6 @@ interface IGalleryContainerProps {
   dispatch: Dispatch<IGalleryAction> & TGalleryThunkDispatch;
 }
 
-interface IGalleryContainerState {
-  isDrawerOpen: boolean;
-  isSearchByPopularity: boolean;
-}
-
 const GalleryContainer: React.FunctionComponent<IGalleryContainerProps> = () => {
   const classes = useStyles();
   const intl = useIntl();

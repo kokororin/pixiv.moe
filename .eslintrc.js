@@ -9,6 +9,6 @@ module.exports = {
     'no-duplicate-imports': 'off',
     'react/display-name': 'off',
     'prettier/prettier': 'error',
-    '@typescript-eslint/no-empty-interface': 'off'
+    '@typescript-eslint/no-empty-interface': 'error'
   }
 };
