@@ -67,8 +67,7 @@ $ npm start
 
 ### API
 
-The API is based on HTTPS requests and JSON responses.The stable HTTPS endpoint for the latest version is:
-`http://localhost:3000`.
+The API is based on HTTPS requests and JSON responses.
 
 Our online site's API Server uses `https://api.kotori.love/pixiv`
 
@@ -79,10 +78,10 @@ See more in [API Docs](https://api.kotori.love/docs/#/pixiv).
 ## Localization
 
 App will auto detect your browser language and use the localization. You can set language manually in drawer.  
-Now the app supports Japanese and English.  
 Help us if you can translate this app. Please follow the guide in `src/locale`.
 
 ## Contribute
+
 Feel free to contribute (PR-s and issues welcomed).  
 
 ## Contributors

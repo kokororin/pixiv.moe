@@ -1,10 +1,7 @@
 export default {
-  Debut: 'Debut',
-  'Yesterday x rank': 'Yesterday #{rank}',
   'x rank': '#{rank}',
   'Redirect to pixiv': 'Redirect to pixiv',
   'Add to Bookmarks': 'Add to Bookmarks',
-  Download: 'Download',
   Tweet: 'Tweet',
   LINE: 'LINE',
   Weibo: 'Weibo',
@@ -26,5 +23,6 @@ export default {
   Tags: 'Tags',
   'Redirecting to pixiv.net': 'Redirecting to pixiv.net',
   Language: 'Language',
-  Ranking: 'Ranking'
+  Ranking: 'Ranking',
+  HelpToTranslate: 'Help to Translate'
 };

@@ -1,10 +1,7 @@
 export default {
-  Debut: '데뷔',
-  'Yesterday x rank': '어제 #{rank}',
   'x rank': '#{rank}',
   'Redirect to pixiv': 'pixiv로 리디렉션',
   'Add to Bookmarks': '북마크에 추가',
-  Download: '다운로드',
   Tweet: '트위터',
   LINE: 'LINE',
   Weibo: '웨이보',
@@ -27,5 +24,6 @@ export default {
   Tags: '태그',
   'Redirecting to pixiv.net': 'pixiv.net으로 리디렉션',
   Language: '언어',
-  Ranking: '순위'
+  Ranking: '순위',
+  HelpToTranslate: '번역하는 데 도움이'
 };

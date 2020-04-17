@@ -1,10 +1,7 @@
 export default {
-  Debut: 'Debut',
-  'Yesterday x rank': 'Kemarin #{rank}',
   'x rank': '#{rank}',
   'Redirect to pixiv': 'Dialihkan ke pixiv',
   'Add to Bookmarks': 'Tambahkan ke Bookmarks',
-  Download: 'Unduh',
   Tweet: 'Tweet',
   LINE: 'LINE',
   Weibo: 'Weibo',
@@ -26,5 +23,6 @@ export default {
   Tags: 'Tags',
   'Redirecting to pixiv.net': 'Mengarahkan ke pixiv.net',
   Language: 'Bahasa',
-  Ranking: 'Rangking'
+  Ranking: 'Rangking',
+  HelpToTranslate: 'Membantu menerjemahkan'
 };

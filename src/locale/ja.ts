@@ -1,10 +1,7 @@
 export default {
-  Debut: '初登场',
-  'Yesterday x rank': '前日 {rank}位',
   'x rank': '{rank}位',
   'Redirect to pixiv': 'pixivにリダイレクトする',
   'Add to Bookmarks': 'ブックマークに追加',
-  Download: 'ダウンロード',
   Tweet: 'ツイート',
   LINE: 'LINE',
   Weibo: 'ウェイボー',
@@ -27,5 +24,6 @@ export default {
   Tags: 'タグ',
   'Redirecting to pixiv.net': 'あなたはpixiv.netへリダイレクトしています',
   Language: '言語',
-  Ranking: 'ランキング'
+  Ranking: 'ランキング',
+  HelpToTranslate: '翻訳を手伝う'
 };

@@ -1,9 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Menu, MenuItem } from '@material-ui/core';
+import { Button, Menu, MenuItem, Box, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Done as DoneIcon,
   Language as LanguageIcon,
   ExpandMore as ExpandMoreIcon
 } from '@material-ui/icons';
@@ -64,20 +63,28 @@ const LanguageSelector: React.SFC<ILanguageSelectorProps> = () => {
             <FormattedMessage id="Language" />
           </MenuItem>,
           ...config.languages.map(elem => {
-            const highlight = elem.value === lang;
-
             return (
               <MenuItem
                 key={elem.value}
+                selected={elem.value === lang}
                 onClick={() => {
                   onLanguageClick(elem.value);
                   onMenuClose();
                 }}>
-                {highlight && <DoneIcon style={{ color: '#4caf50' }} />}
                 {elem.name}
               </MenuItem>
             );
-          })
+          }),
+          <Box key={shortid.generate()} my={1}>
+            <Divider />
+          </Box>,
+          <MenuItem
+            key={shortid.generate()}
+            component="a"
+            href={config.translateLink}
+            target="_blank">
+            <FormattedMessage id="HelpToTranslate" />
+          </MenuItem>
         ]}
       </Menu>
     </>
