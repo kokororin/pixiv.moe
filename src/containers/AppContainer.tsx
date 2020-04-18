@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import {
   StylesProvider,
@@ -61,13 +61,9 @@ const AppContainer = () => (
     <MuiThemeProvider theme={theme}>
       <Baseline>
         <Router history={history}>
-          <Route
-            render={({ location }) => (
-              <ScrollContext location={location}>
-                <TrackPageView>{renderRoutes(routes)}</TrackPageView>
-              </ScrollContext>
-            )}
-          />
+          <TrackPageView>
+            <ScrollContext>{renderRoutes(routes)}</ScrollContext>
+          </TrackPageView>
         </Router>
       </Baseline>
     </MuiThemeProvider>

@@ -197,14 +197,10 @@ const GalleryContainer: React.FunctionComponent<IGalleryContainerProps> = () => 
 
   const onHeaderClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLDivElement;
-    const tagName = target.tagName.toLowerCase();
 
     if (
-      tagName !== 'button' &&
-      tagName !== 'span' &&
-      tagName !== 'svg' &&
-      tagName !== 'path' &&
-      tagName !== 'input'
+      typeof target.className === 'string' &&
+      target.className.indexOf(classes.toolbar) > -1
     ) {
       contentRef?.current?.toTop();
     }

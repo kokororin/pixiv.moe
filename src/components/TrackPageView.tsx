@@ -1,19 +1,14 @@
 import React from 'react';
 import ReactGA from 'react-ga';
-import { Route } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import config from '@/config';
 
-export default class TrackPageView extends React.Component<{}> {
-  UNSAFE_componentWillMount() {
-    ReactGA.initialize(config.trackingID);
-    this.track();
-  }
+ReactGA.initialize(config.trackingID);
 
-  UNSAFE_componentWillUpdate() {
-    this.track();
-  }
+const TrackPageView: React.FunctionComponent<{}> = props => {
+  const location = useLocation();
 
-  track() {
+  const track = () => {
     const pageLink = window.location.pathname;
     if (process.env.NODE_ENV === 'production') {
       ReactGA.set({
@@ -23,9 +18,13 @@ export default class TrackPageView extends React.Component<{}> {
     } else {
       console.log(pageLink); // eslint-disable-line
     }
-  }
+  };
 
-  render() {
-    return <Route>{this.props.children}</Route>;
-  }
-}
+  React.useEffect(() => {
+    track();
+  }, [location.pathname]);
+
+  return <>{props.children}</>;
+};
+
+export default TrackPageView;

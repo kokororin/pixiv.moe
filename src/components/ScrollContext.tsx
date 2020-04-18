@@ -1,10 +1,10 @@
 import React from 'react';
-import H from 'history';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { useLocation } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import EventListener, { withOptions } from 'react-event-listener';
 import Content from '@/components/Content';
 
-const styles = createStyles({
+const useStyles = makeStyles({
   context: {
     position: 'absolute',
     width: '100%',
@@ -24,59 +24,41 @@ const styles = createStyles({
   }
 });
 
-interface IScrollContentProps extends WithStyles<typeof styles> {
-  location: H.Location;
-}
+const ScrollContext: React.FunctionComponent<{}> = props => {
+  const classes = useStyles();
+  const location = useLocation();
 
-const ScrollContext = withStyles(styles)(
-  class ScrollContext extends React.Component<IScrollContentProps> {
-    static prefix = '@@SCROLL/';
+  const cacheKey = `'@@SCROLL/'${location.pathname}`;
 
-    componentDidUpdate(prevProps: IScrollContentProps) {
-      if (this.props.location === prevProps.location) {
-        return;
-      }
-      const scrollTop = sessionStorage.getItem(this.cacheKey);
-      if (scrollTop && this.scrollingElement) {
-        this.scrollingElement.scrollTop = Number(scrollTop);
-      }
+  const onScroll = (event: React.UIEvent) => {
+    const scrollingElement = Content?.getElement();
+    const target = event.target as HTMLElement;
+    if (target.className === scrollingElement?.className) {
+      const scrollTop = String(target.scrollTop);
+      sessionStorage.setItem(cacheKey, scrollTop);
     }
+  };
 
-    onScroll = (event: React.UIEvent) => {
-      const target = event.target as HTMLElement;
-      if (target.className === this.scrollingElement?.className) {
-        const scrollTop = String(target.scrollTop);
-        sessionStorage.setItem(this.cacheKey, scrollTop);
-      }
-    };
-
-    get cacheKey() {
-      return `${ScrollContext.prefix}${this.props.location.pathname}`;
+  React.useEffect(() => {
+    const scrollingElement = Content?.getElement();
+    const scrollTop = sessionStorage.getItem(cacheKey);
+    if (scrollTop && scrollingElement) {
+      scrollingElement.scrollTop = Number(scrollTop);
     }
+  }, [location.pathname]);
 
-    get scrollingElement() {
-      return Content.getElement();
-    }
-
-    render() {
-      const { classes } = this.props;
-
-      return (
-        <div className={classes.context}>
-          <div className={classes.contextInnerContainer}>
-            {this.props.children}
-          </div>
-          <EventListener
-            target={document}
-            // @ts-ignore
-            onScroll={withOptions(this.onScroll, {
-              capture: true
-            })}
-          />
-        </div>
-      );
-    }
-  }
-);
+  return (
+    <div className={classes.context}>
+      <div className={classes.contextInnerContainer}>{props.children}</div>
+      <EventListener
+        target={document}
+        // @ts-ignore
+        onScroll={withOptions(onScroll, {
+          capture: true
+        })}
+      />
+    </div>
+  );
+};
 
 export default ScrollContext;

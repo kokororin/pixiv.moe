@@ -52,21 +52,21 @@ export const illustComments = (
 export const illustBookmarkDetail = (illustId: number | string) =>
   honoka.get(`/illust/bookmark/${illustId}`, {
     headers: {
-      'X-Access-Token': getAuth()?.access_token
+      'X-Access-Token': getAuth()?.access_token || 'no-token'
     }
   });
 
 export const illustBookmarkAdd = (illustId: number | string) =>
   honoka.post(`/illust/bookmark/${illustId}`, {
     headers: {
-      'X-Access-Token': getAuth()?.access_token
+      'X-Access-Token': getAuth()?.access_token || 'no-token'
     }
   });
 
 export const illustBookmarkDelete = (illustId: number | string) =>
   honoka.delete(`/illust/bookmark/${illustId}`, {
     headers: {
-      'X-Access-Token': getAuth()?.access_token
+      'X-Access-Token': getAuth()?.access_token || 'no-token'
     }
   });
 

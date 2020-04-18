@@ -1,6 +1,6 @@
 {
   "name": "pixiv.moe",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) order by popularity. Written with React.",
   "scripts": {
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
