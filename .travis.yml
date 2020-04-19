@@ -5,13 +5,13 @@ node_js:
 
 cache:
   directories:
-  - node_modules
-  - $HOME/.yarn-cache
+    - node_modules
+    - $HOME/.yarn-cache
 
 branches:
   only:
-  - master
-  - release
+    - master
+    - release
 
 env:
 global:
@@ -21,7 +21,7 @@ install:
   - yarn install
 
 script:
-  - if [ "$TRAVIS_BRANCH" = "develop" ]; then npm run dist; fi
+  - if [ "$TRAVIS_BRANCH" = "release" ]; then npm run dist; fi
   - npm test
 
 after_script:
