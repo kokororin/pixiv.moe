@@ -118,7 +118,7 @@ interface IImageBoxProps {
 
 const ImageBox: React.FunctionComponent<IImageBoxProps> = props => {
   const classes = useStyles();
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(props.index);
 
   const onPrev = () =>
     setIndex((index + props.items.length - 1) % props.items.length);
