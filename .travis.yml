@@ -1,5 +1,3 @@
-sudo: false
-dist: trusty
 language: node_js
 
 node_js:
@@ -10,11 +8,30 @@ cache:
   - node_modules
   - $HOME/.yarn-cache
 
+branches:
+  only:
+  - master
+  - release
+
+env:
+global:
+  - secure: IIYEKhHZQK/0oqXf2p4wBEYhSh0VQGYrqyarHFmJka33DQrTHD07BXulxZdU2n3alGTLTWYBn+IwirAIPgUz8kgBNygSItq1UHj8w6s8cGaF3D1L9M2hslAtlfMp2+b7JRnCC5bKTVRIraHQrift2X3D7EJGiHCLU5978SK46YS/1zzAN6/il3BOiDHQYSsuXxutO8APPgDHKvuPCEqt7NTppBGkfRHFmp2aK5wQMloG70rnRQBbHbfP1hMbMpEY6qKIWTIxHbdKUeiaxdnvJ3s+Mi7JpxU28O3RILUVxHdQUXkH9GKc0Twyi14tIryQPjLXZjVl/eWb/tLe7Znn5CvR73d1J25+RJtxWZQWQr13GmruG5vvzD/JLkqNXK0worXI4w1iRPj/QY0HL7FhLvXIw0Cu3HSpI7k3mAxKDZevoDzi21j7dvRYnVb8aphr6ADrchhKs1ioSA5MmhtdLMyXIj74ICqzqXqZiYS2EWriJQ94c0lpp5b4PHTv0dLLZYokkMoQ/wQqEkKvpoDJ8Y5IrNP5s0wHaw0pZBZKNEiUnxBF+ACbzOuFVGpN/e3F2Os2mtkDBOxaGdXVToQLEXAWilpcc5FPHxvdg+6pDRIiUf/5/dJ6ATvYR7LLOwjzyM3jf0w5rlsmtWdeN+b/BO24TY+wmSCh8fa7GHI7nzI=
+
 install:
   - yarn install
 
 script:
+  - if [ "$TRAVIS_BRANCH" = "develop" ]; then npm run dist; fi
   - npm test
 
 after_script:
   - npm run coverage
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_ACCESS_TOKEN
+  target-branch: gh-pages
+  local-dir: dist
+  on:
+    branch: release
