@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useIntl } from 'react-intl';
 
 export const useStyles = makeStyles({
   message: {
@@ -10,31 +9,44 @@ export const useStyles = makeStyles({
     '& p': {
       fontSize: 15
     }
+  },
+  errorContainer: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignContent: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    flexDirection: 'column'
+  },
+  statusCode: {
+    fontSize: 60,
+    color: '#bcc6cc'
+  },
+  errorMessage: {
+    fontSize: 20,
+    color: '#464a4d',
+    marginTop: 30,
+    lineHeight: 1.5
   }
 });
 
 interface IMessageProps {
-  isHidden?: boolean;
-  text?: string;
+  code?: number;
+  text: string;
 }
 
-const Message: React.FunctionComponent<IMessageProps> = ({
-  isHidden,
-  text
-}) => {
+const Message: React.FunctionComponent<IMessageProps> = props => {
   const classes = useStyles();
-  const intl = useIntl();
 
-  return isHidden ? null : (
+  return props.code ? (
+    <div className={classes.errorContainer}>
+      <div className={classes.statusCode}>{props.code}</div>
+      <div className={classes.errorMessage}>{props.text}</div>
+    </div>
+  ) : (
     <div className={classes.message}>
-      <p>
-        {text
-          ? text
-          : intl.formatMessage({
-              id:
-                'An error occurred. Check the URL or wait for a while and access again.'
-            })}
-      </p>
+      <p>{props.text}</p>
     </div>
   );
 };

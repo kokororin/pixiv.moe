@@ -263,10 +263,9 @@ const GalleryContainer: React.FunctionComponent<IGalleryContainerProps> = () => 
           <div className={classes.root}>
             <GalleryList items={gallery.items} />
             {gallery.isFetching && <Loading />}
-            <Message
-              text={intl.formatMessage({ id: 'Failed to Load' })}
-              isHidden={!gallery.isError}
-            />
+            {gallery.isError && (
+              <Message text={intl.formatMessage({ id: 'Failed to Load' })} />
+            )}
             <Refresh onClick={reRenderContent} />
           </div>
         </InfiniteScroll>

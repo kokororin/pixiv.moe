@@ -31,19 +31,23 @@ const ScrollContext: React.FunctionComponent<{}> = props => {
   const cacheKey = `'@@SCROLL/'${location.pathname}`;
 
   const onScroll = (event: React.UIEvent) => {
-    const scrollingElement = Content?.getElement();
-    const target = event.target as HTMLElement;
-    if (target.className === scrollingElement?.className) {
-      const scrollTop = String(target.scrollTop);
-      sessionStorage.setItem(cacheKey, scrollTop);
+    if (typeof Content.getElement === 'function') {
+      const scrollingElement = Content.getElement();
+      const target = event.target as HTMLElement;
+      if (target.className === scrollingElement?.className) {
+        const scrollTop = String(target.scrollTop);
+        sessionStorage.setItem(cacheKey, scrollTop);
+      }
     }
   };
 
   React.useEffect(() => {
-    const scrollingElement = Content?.getElement();
-    const scrollTop = sessionStorage.getItem(cacheKey);
-    if (scrollTop && scrollingElement) {
-      scrollingElement.scrollTop = Number(scrollTop);
+    if (typeof Content.getElement === 'function') {
+      const scrollingElement = Content.getElement();
+      const scrollTop = sessionStorage.getItem(cacheKey);
+      if (scrollTop && scrollingElement) {
+        scrollingElement.scrollTop = Number(scrollTop);
+      }
     }
   }, [location.pathname]);
 

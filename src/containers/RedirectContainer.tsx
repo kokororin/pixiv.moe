@@ -24,7 +24,13 @@ const RedirectContainer: React.FunctionComponent<{}> = () => {
   }, []);
 
   return isError ? (
-    <Message />
+    <Message
+      code={404}
+      text={intl.formatMessage({
+        id:
+          'An error occurred. Check the URL or wait for a while and access again.'
+      })}
+    />
   ) : (
     <Message
       text={intl.formatMessage({

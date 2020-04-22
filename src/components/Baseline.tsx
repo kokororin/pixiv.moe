@@ -19,6 +19,10 @@ const useStyles = makeStyles({
       padding: 0,
       overflow: 'hidden'
     },
+    'html, body, #app': {
+      width: '100%',
+      height: '100%'
+    },
     h1: {
       fontWeight: 400
     },

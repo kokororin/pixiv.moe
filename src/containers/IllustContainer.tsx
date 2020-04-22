@@ -296,12 +296,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
       return <Loading />;
     }
     if (illust.isError) {
-      return (
-        <Message
-          isHidden={false}
-          text={intl.formatMessage({ id: 'An Error Occurred' })}
-        />
-      );
+      return <Message text={intl.formatMessage({ id: 'An Error Occurred' })} />;
     }
     try {
       return (
@@ -423,12 +418,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
         </div>
       );
     } catch (e) {
-      return (
-        <Message
-          isHidden={false}
-          text={intl.formatMessage({ id: 'An Error Occurred' })}
-        />
-      );
+      return <Message text={intl.formatMessage({ id: 'An Error Occurred' })} />;
     }
   };
 

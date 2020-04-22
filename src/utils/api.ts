@@ -22,6 +22,20 @@ export const removeAuth = (dispatch: Dispatch<IAuthAction>) => {
   return Storage.remove('auth');
 };
 
+honoka.interceptors.register({
+  request: options => {
+    if (getAuth()?.access_token) {
+      options.headers['X-Access-Token'] = getAuth()?.access_token;
+    }
+    if (Storage.get('token')) {
+      options.headers['X-Kotori-Token'] = Storage.get('token');
+    }
+    return options;
+  }
+});
+
+export const session = () => honoka.get('/session');
+
 export const tags = () => honoka.get('/trending/tags');
 
 export const ranking = (page: number) =>
@@ -50,25 +64,13 @@ export const illustComments = (
   });
 
 export const illustBookmarkDetail = (illustId: number | string) =>
-  honoka.get(`/illust/bookmark/${illustId}`, {
-    headers: {
-      'X-Access-Token': getAuth()?.access_token || 'no-token'
-    }
-  });
+  honoka.get(`/illust/bookmark/${illustId}`);
 
 export const illustBookmarkAdd = (illustId: number | string) =>
-  honoka.post(`/illust/bookmark/${illustId}`, {
-    headers: {
-      'X-Access-Token': getAuth()?.access_token || 'no-token'
-    }
-  });
+  honoka.post(`/illust/bookmark/${illustId}`);
 
 export const illustBookmarkDelete = (illustId: number | string) =>
-  honoka.delete(`/illust/bookmark/${illustId}`, {
-    headers: {
-      'X-Access-Token': getAuth()?.access_token || 'no-token'
-    }
-  });
+  honoka.delete(`/illust/bookmark/${illustId}`);
 
 export const proxyImage = (url: string) => {
   const regex = /^http?s:\/\/(i\.pximg\.net)|(source\.pixiv\.net)/i;

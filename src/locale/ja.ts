@@ -25,5 +25,7 @@ export default {
   'Redirecting to pixiv.net': 'あなたはpixiv.netへリダイレクトしています',
   Language: '言語',
   Ranking: 'ランキング',
-  HelpToTranslate: '翻訳を手伝う'
+  HelpToTranslate: '翻訳を手伝う',
+  'This page is not available in your area':
+    'このページはお住まいの地域からご利用になれません。'
 };

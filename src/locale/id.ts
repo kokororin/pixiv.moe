@@ -24,5 +24,7 @@ export default {
   'Redirecting to pixiv.net': 'Mengarahkan ke pixiv.net',
   Language: 'Bahasa',
   Ranking: 'Rangking',
-  HelpToTranslate: 'Membantu menerjemahkan'
+  HelpToTranslate: 'Membantu menerjemahkan',
+  'This page is not available in your area':
+    'Halaman ini tidak tersedia di daerah Anda.'
 };

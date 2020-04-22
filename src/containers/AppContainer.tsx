@@ -19,8 +19,8 @@ import { history } from '@/stores';
 
 import Baseline from '@/components/Baseline';
 import ScrollContext from '@/components/ScrollContext';
+import SessionContext from '@/components/SessionContext';
 import TrackPageView from '@/components/TrackPageView';
-import * as api from '@/utils/api';
 
 const theme = createMuiTheme({
   palette: {
@@ -35,7 +35,6 @@ const generateClassName = createGenerateClassName({
 });
 
 moment.locale('ja');
-api.refreshToken();
 
 const routes = [
   {
@@ -61,9 +60,11 @@ const AppContainer = () => (
     <MuiThemeProvider theme={theme}>
       <Baseline>
         <Router history={history}>
-          <TrackPageView>
-            <ScrollContext>{renderRoutes(routes)}</ScrollContext>
-          </TrackPageView>
+          <SessionContext>
+            <TrackPageView>
+              <ScrollContext>{renderRoutes(routes)}</ScrollContext>
+            </TrackPageView>
+          </SessionContext>
         </Router>
       </Baseline>
     </MuiThemeProvider>
