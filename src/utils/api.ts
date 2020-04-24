@@ -10,8 +10,7 @@ interface IPixivResponse {
 }
 
 honoka.defaults.baseURL = config.apiBaseURL;
-honoka.defaults.timeout = 30e3;
-honoka.defaults.expectedStatus = () => true;
+honoka.defaults.timeout = 20e3;
 
 export const getAuth = () => {
   return Storage.get('auth');

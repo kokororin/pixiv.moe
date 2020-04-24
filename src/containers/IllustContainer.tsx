@@ -28,7 +28,7 @@ import config from '@/config';
 
 import * as IllustActions from '@/actions/illust';
 import * as GalleryActions from '@/actions/gallery';
-import * as AlertModal from '@/components/AlertModal';
+import { useAlert } from '@/components/Alert';
 import Comment from '@/components/Comment';
 import GifPlayer from '@/components/GifPlayer';
 import InfiniteScroll from '@/components/InfiniteScroll';
@@ -165,6 +165,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
 
   const { illustId } = useParams<IIllustContainerRouteInfo>();
   const loginRef = React.useRef<ILoginContainerHandles>(null);
+  const makeAlert = useAlert();
 
   const fetchBookmark = () => {
     api
@@ -206,7 +207,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
         setIsBookmarked(!isBookmarked);
       })
       .catch(() => {
-        AlertModal.make(
+        makeAlert(
           'error',
           intl.formatMessage({
             id: 'Communication Error Occurred'

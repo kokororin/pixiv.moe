@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Snackbar } from '@material-ui/core';
-import Alert, { Color } from '@material-ui/lab/Alert';
+import MaterialAlert, { Color } from '@material-ui/lab/Alert';
 
-interface IAlertModalProps {
+interface IAlertProps {
   severity: Color;
   onDestroy: () => void;
 }
 
-const AlertModal: React.FunctionComponent<IAlertModalProps> = props => {
+const Alert: React.FunctionComponent<IAlertProps> = props => {
   const [open, setOpen] = React.useState(true);
 
   React.useEffect(() => {
@@ -24,14 +24,14 @@ const AlertModal: React.FunctionComponent<IAlertModalProps> = props => {
 
   return (
     <Snackbar open={open} autoHideDuration={3500} onClose={onClose}>
-      <Alert onClose={onClose} severity={props.severity}>
+      <MaterialAlert onClose={onClose} severity={props.severity}>
         {props.children}
-      </Alert>
+      </MaterialAlert>
     </Snackbar>
   );
 };
 
-export const make = (severity: Color, message: string) => {
+export const useAlert = () => (severity: Color, message: string) => {
   const wrapper = document.body.appendChild(document.createElement('div'));
   const onDestroy = () => {
     ReactDOM.unmountComponentAtNode(wrapper);
@@ -40,11 +40,11 @@ export const make = (severity: Color, message: string) => {
     });
   };
   ReactDOM.render(
-    <AlertModal severity={severity} onDestroy={onDestroy}>
+    <Alert severity={severity} onDestroy={onDestroy}>
       {message}
-    </AlertModal>,
+    </Alert>,
     wrapper
   );
 };
 
-export default AlertModal;
+export default Alert;
