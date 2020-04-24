@@ -26,7 +26,6 @@ const SessionContext: React.FunctionComponent<{}> = props => {
     api
       .session()
       .then(data => {
-        console.log(data);
         setToken(data.response.access_token);
         Storage.set('token', data.response.access_token);
         api.refreshToken();

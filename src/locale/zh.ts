@@ -4,6 +4,7 @@ export default {
   'Add to Bookmarks': '添加到书签栏',
   Tweet: 'Tweet',
   LINE: 'LINE',
+  Weibo: '微博',
   Comments: '评论',
   'No Comments': '没有评论',
   'An Error Occurred': '发生了一个错误',
@@ -24,6 +25,5 @@ export default {
   Language: '语言',
   Ranking: '排名',
   HelpToTranslate: '帮助我们翻译',
-  'This page is not available in your area':
-    '这个页面不适用于您的国家或地区'
+  'This page is not available in your area': '这个页面不适用于您的国家或地区'
 };

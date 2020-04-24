@@ -10,6 +10,11 @@ config.languages = [
     messages: require('@/locale/ja').default
   },
   {
+    name: '简体中文',
+    value: 'zh',
+    messages: require('@/locale/zh').default
+  },
+  {
     name: 'English',
     value: 'en',
     messages: require('@/locale/en').default
