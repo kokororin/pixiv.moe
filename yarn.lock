@@ -4861,14 +4861,14 @@ homedir-polyfill@^1.0.1:
   dependencies:
     parse-passwd "^1.0.0"
 
-honoka@^0.4.19:
-  version "0.4.19"
-  resolved "https://registry.yarnpkg.com/honoka/-/honoka-0.4.19.tgz#f89d9fc3944104dee218445f3eb26a4c5c547065"
-  integrity sha512-lxXDpsV6dRgxIOBn23bFNc6+LzCKH95cUTcH0sI7qqyqcdBT6njdBFVbB6DP9sjyIxLrUkctCBKCRk0g8QWQuA==
+honoka@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/honoka/-/honoka-0.5.1.tgz#0bea5bee7c52678d5d5d029b3801e77c679eef04"
+  integrity sha512-5ueMwgfQmp2FhF1P9Iwff+6BN32cG9u+I6JWxyP9g/IMd31BuXkT8ou9NzQm2cq/E2jVkTsUID2xEO/+QKgtnA==
   dependencies:
     array-reduce "^0.0.0"
     foreach "^2.0.5"
-    merge-options "^1.0.0"
+    merge-options "^2.0.0"
     node-fetch "^2.6.0"
     querystring "^0.2.0"
     whatwg-fetch "^3.0.0"
@@ -5483,10 +5483,15 @@ is-path-inside@^2.1.0:
   dependencies:
     path-is-inside "^1.0.2"
 
-is-plain-obj@^1.0.0, is-plain-obj@^1.1:
+is-plain-obj@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-1.1.0.tgz#71a50c8429dfca773c92a390a4a03b39fcd51d3e"
   integrity sha1-caUMhCnfync8kqOQpKA7OfzVHT4=
+
+is-plain-obj@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-2.1.0.tgz#45e42e37fccf1f40da8e5f76ee21515840c09287"
+  integrity sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==
 
 is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   version "2.0.4"
@@ -6400,12 +6405,12 @@ merge-descriptors@1.0.1:
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
 
-merge-options@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/merge-options/-/merge-options-1.0.1.tgz#2a64b24457becd4e4dc608283247e94ce589aa32"
-  integrity sha512-iuPV41VWKWBIOpBsjoxjDZw8/GbSfZ2mk7N1453bwMrfzdrIk7EzBd+8UVR6rkw67th7xnk9Dytl3J+lHPdxvg==
+merge-options@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/merge-options/-/merge-options-2.0.0.tgz#36ca5038badfc3974dbde5e58ba89d3df80882c3"
+  integrity sha512-S7xYIeWHl2ZUKF7SDeBhGg6rfv5bKxVBdk95s/I7wVF8d+hjLSztJ/B271cnUiF6CAFduEQ5Zn3HYwAjT16DlQ==
   dependencies:
-    is-plain-obj "^1.1"
+    is-plain-obj "^2.0.0"
 
 methods@~1.1.2:
   version "1.1.2"

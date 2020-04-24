@@ -119,7 +119,7 @@
     "@material-ui/lab": "^4.0.0-alpha.49",
     "animation-frame": "^0.3.0",
     "classnames": "^2.2.6",
-    "honoka": "^0.4.19",
+    "honoka": "^0.5.1",
     "inobounce": "^0.2.0",
     "is-mobile": "^2.2.1",
     "jszip": "^3.1.4",

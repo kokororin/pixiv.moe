@@ -5,8 +5,13 @@ import Storage from '@/utils/Storage';
 import * as AuthActions from '@/actions/auth';
 import { IAuthAction } from '@/actions/auth';
 
+interface IPixivResponse {
+  [key: string]: any;
+}
+
 honoka.defaults.baseURL = config.apiBaseURL;
 honoka.defaults.timeout = 30e3;
+honoka.defaults.expectedStatus = () => true;
 
 export const getAuth = () => {
   return Storage.get('auth');
@@ -31,27 +36,34 @@ honoka.interceptors.register({
       options.headers['X-Kotori-Token'] = Storage.get('token');
     }
     return options;
+  },
+  response: response => {
+    if (response.data?.status !== 'success') {
+      return new Error(response.data?.message);
+    }
+    return response.data;
   }
 });
 
-export const session = () => honoka.get('/session');
+export const session = () => honoka.get('/session') as Promise<IPixivResponse>;
 
-export const tags = () => honoka.get('/trending/tags');
+export const tags = () =>
+  honoka.get('/trending/tags') as Promise<IPixivResponse>;
 
 export const ranking = (page: number) =>
   honoka.get('/ranking', {
     data: {
       page
     }
-  });
+  }) as Promise<IPixivResponse>;
 
 export const search = (data: { word: string; page: number }) =>
   honoka.get('/search', {
     data
-  });
+  }) as Promise<IPixivResponse>;
 
 export const illust = (illustId: number | string) =>
-  honoka.get(`/illust/${illustId}`);
+  honoka.get(`/illust/${illustId}`) as Promise<IPixivResponse>;
 
 export const illustComments = (
   illustId: number | string,
@@ -61,16 +73,16 @@ export const illustComments = (
 ) =>
   honoka.get(`/illust/comments/${illustId}`, {
     data
-  });
+  }) as Promise<IPixivResponse>;
 
 export const illustBookmarkDetail = (illustId: number | string) =>
-  honoka.get(`/illust/bookmark/${illustId}`);
+  honoka.get(`/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
 
 export const illustBookmarkAdd = (illustId: number | string) =>
-  honoka.post(`/illust/bookmark/${illustId}`);
+  honoka.post(`/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
 
 export const illustBookmarkDelete = (illustId: number | string) =>
-  honoka.delete(`/illust/bookmark/${illustId}`);
+  honoka.delete(`/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
 
 export const proxyImage = (url: string) => {
   const regex = /^http?s:\/\/(i\.pximg\.net)|(source\.pixiv\.net)/i;
@@ -91,15 +103,13 @@ export const auth = (data: {
       password: data.password,
       refresh_token: data.refreshToken
     }
-  });
+  }) as Promise<IPixivResponse>;
 
 export const refreshToken = () => {
   const authData = getAuth();
   if (authData?.refresh_token) {
     auth({ refreshToken: authData.refresh_token }).then(data => {
-      if (data.status === 'success') {
-        setAuth(data.response);
-      }
+      setAuth(data.response);
     });
   }
 };

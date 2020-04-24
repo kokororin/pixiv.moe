@@ -126,11 +126,7 @@ function fetchSource(): TGalleryThunkAction {
       return api
         .ranking(getState().gallery.page)
         .then(data => {
-          if (
-            data.status === 'success' &&
-            data.response.illusts &&
-            data.response.illusts.length > 0
-          ) {
+          if (data.response.illusts && data.response.illusts.length > 0) {
             data.response.illusts.forEach((elem: any) => {
               dispatch(setItems(elem));
             });
@@ -155,11 +151,7 @@ function fetchSource(): TGalleryThunkAction {
         page: getState().gallery.page
       })
       .then(data => {
-        if (
-          data.status === 'success' &&
-          data.response.illusts &&
-          data.response.illusts.length > 0
-        ) {
+        if (data.response.illusts && data.response.illusts.length > 0) {
           data.response.illusts.forEach((elem: any) => {
             dispatch(setItems(elem));
           });
@@ -193,7 +185,7 @@ export function fetchTags(): TGalleryThunkAction {
     return api
       .tags()
       .then(data => {
-        if (data.status === 'success' && data.response.tags) {
+        if (data.response.tags) {
           dispatch(setTags(data.response.tags));
         }
       })

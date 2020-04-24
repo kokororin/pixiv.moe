@@ -81,30 +81,26 @@ export function fetchItem(illustId: string): TIllustThunkAction {
     return api
       .illust(illustId)
       .then(data => {
-        if (data.status === 'success') {
-          if (
-            data.response.metadata &&
-            typeof data.response.metadata.zip_urls === 'object' &&
-            data.response.metadata.zip_urls
-          ) {
-            const zipURL =
-              data.response.metadata.zip_urls[
-                Object.keys(data.response.metadata.zip_urls)[0]
-              ];
-            getImagesFromZip(zipURL)
-              .then(images => {
-                data.response.metadata.zip_images = images;
-                dispatch(setItem(data.response));
-              })
-              .then(() => {
-                dispatch(setFetchStatus(false));
-              });
-          } else {
-            dispatch(setItem(data.response.illust));
-            dispatch(setFetchStatus(false));
-          }
+        if (
+          data.response.metadata &&
+          typeof data.response.metadata.zip_urls === 'object' &&
+          data.response.metadata.zip_urls
+        ) {
+          const zipURL =
+            data.response.metadata.zip_urls[
+              Object.keys(data.response.metadata.zip_urls)[0]
+            ];
+          getImagesFromZip(zipURL)
+            .then(images => {
+              data.response.metadata.zip_images = images;
+              dispatch(setItem(data.response));
+            })
+            .then(() => {
+              dispatch(setFetchStatus(false));
+            });
         } else {
-          dispatch(setFetchError(true));
+          dispatch(setItem(data.response.illust));
+          dispatch(setFetchStatus(false));
         }
       })
       .catch(() => {
@@ -168,7 +164,7 @@ export function fetchComments(illustId: string): TIllustThunkAction {
         page: getState().illust.page
       })
       .then(data => {
-        if (data.status === 'success' && data.response.comments) {
+        if (data.response.comments) {
           if (data.response.next) {
             dispatch(setCommentsPage(getState().illust.page + 1));
           } else {

@@ -23,14 +23,17 @@ const SessionContext: React.FunctionComponent<{}> = props => {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    api.session().then(data => {
-      if (data.status === 'success') {
+    api
+      .session()
+      .then(data => {
+        console.log(data);
         setToken(data.response.access_token);
         Storage.set('token', data.response.access_token);
         api.refreshToken();
-      }
-      setLoading(false);
-    });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   if (loading) {

@@ -1,12 +1,9 @@
 import JSZip from 'jszip';
-import honoka from 'honoka';
 
 export default function getImagesFromZip(zipURL: string) {
   return new Promise(resolve => {
-    honoka
-      .get(zipURL, {
-        dataType: 'blob'
-      })
+    fetch(zipURL)
+      .then(response => response.blob())
       .then(JSZip.loadAsync)
       .then(zip => {
         const re = /(.jpg|.png|.gif|.ps|.jpeg)$/;

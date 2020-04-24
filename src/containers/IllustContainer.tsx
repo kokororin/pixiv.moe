@@ -170,11 +170,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
     api
       .illustBookmarkDetail(illustId)
       .then(data => {
-        if (data.status === 'success') {
-          setIsBookmarked(
-            data.response?.bookmark_detail?.is_bookmarked ?? false
-          );
-        }
+        setIsBookmarked(data.response?.bookmark_detail?.is_bookmarked ?? false);
       })
       .catch(() => {});
   };
@@ -204,21 +200,19 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
     }
 
     setIsSubmitting(true);
-    api[!isBookmarked ? 'illustBookmarkAdd' : 'illustBookmarkDelete'](
-      illustId
-    ).then(data => {
-      if (data.status === 'success') {
+    api[!isBookmarked ? 'illustBookmarkAdd' : 'illustBookmarkDelete'](illustId)
+      .then(() => {
         setIsSubmitting(false);
         setIsBookmarked(!isBookmarked);
-      } else {
+      })
+      .catch(() => {
         AlertModal.make(
           'error',
           intl.formatMessage({
             id: 'Communication Error Occurred'
           })
         );
-      }
-    });
+      });
   };
 
   const onImageClick = (index: number) => {

@@ -90,28 +90,25 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
           password
         })
         .then((data: any) => {
-          if (data.status === 'success') {
-            const authData = data.response;
-            api.setAuth(authData, dispatch);
-            setAuthData(authData);
-            setTimeout(() => {
-              close();
-              loginRef.current?.reset();
-            }, 1500);
-          } else {
-            AlertModal.make('error', data.message);
-          }
+          const authData = data.response;
+          api.setAuth(authData, dispatch);
+          setAuthData(authData);
+          setTimeout(() => {
+            close();
+            loginRef.current?.reset();
+          }, 1500);
         })
         .then(() => {
           setIsSubmitting(false);
         })
-        .catch(() => {
+        .catch(err => {
           setIsSubmitting(false);
           AlertModal.make(
             'error',
-            intl.formatMessage({
-              id: 'Communication Error Occurred'
-            })
+            err.message ||
+              intl.formatMessage({
+                id: 'Communication Error Occurred'
+              })
           );
         });
     };
