@@ -85,9 +85,20 @@ Feel free to contribute (PR-s and issues welcomed).
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
-| [<img src="https://avatars0.githubusercontent.com/u/10093992?v=4" width="100px;"/><br /><sub><b>そら</b></sub>](http://kokororin.github.io)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Code") [📖](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Documentation") [🎨](#design-kokororin "Design") [⚠️](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin "Tests") | [<img src="https://avatars0.githubusercontent.com/u/12712012?v=4" width="100px;"/><br /><sub><b>吟夢ちゃん</b></sub>](https://kirainmoe.com/)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kirainmoe "Code") [🤔](#ideas-kirainmoe "Ideas, Planning, & Feedback") | [<img src="https://avatars1.githubusercontent.com/u/12656264?v=4" width="100px;"/><br /><sub><b>simon3000</b></sub>](https://github.com/simon300000)<br />[💻](https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=simon300000 "Code") [🤔](#ideas-simon300000 "Ideas, Planning, & Feedback") [🌍](#translation-simon300000 "Translation") | [<img src="https://avatars0.githubusercontent.com/u/29944979?v=4" width="100px;"/><br /><sub><b>Muhammad Iqbal Rifai</b></sub>](https://blog.0wo.me)<br />[🌍](#translation-py7hon "Translation") |
-| :---: | :---: | :---: | :---: |
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://kokororin.github.io"><img src="https://avatars0.githubusercontent.com/u/10093992?v=4" width="100px;" alt=""/><br /><sub><b>そら</b></sub></a><br /><a href="https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin" title="Code">💻</a> <a href="https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin" title="Documentation">📖</a> <a href="#design-kokororin" title="Design">🎨</a> <a href="https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://kirainmoe.com/"><img src="https://avatars0.githubusercontent.com/u/12712012?v=4" width="100px;" alt=""/><br /><sub><b>吟夢ちゃん</b></sub></a><br /><a href="https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kirainmoe" title="Code">💻</a> <a href="#ideas-kirainmoe" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/simon300000"><img src="https://avatars1.githubusercontent.com/u/12656264?v=4" width="100px;" alt=""/><br /><sub><b>simon3000</b></sub></a><br /><a href="https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=simon300000" title="Code">💻</a> <a href="#ideas-simon300000" title="Ideas, Planning, & Feedback">🤔</a> <a href="#translation-simon300000" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://blog.0wo.me"><img src="https://avatars0.githubusercontent.com/u/29944979?v=4" width="100px;" alt=""/><br /><sub><b>Muhammad Iqbal Rifai</b></sub></a><br /><a href="#translation-py7hon" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/Meodinger"><img src="https://avatars1.githubusercontent.com/u/54493746?v=4" width="100px;" alt=""/><br /><sub><b>Meodinger Wang</b></sub></a><br /><a href="#translation-Meodinger" title="Translation">🌍</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
