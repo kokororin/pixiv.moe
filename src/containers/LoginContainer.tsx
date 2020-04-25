@@ -1,6 +1,6 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from 'react-intl';
+import { useObserver } from 'mobx-react-lite';
 import { IconButton, Avatar } from '@material-ui/core';
 import { AccountCircle as AccountCircleIcon } from '@material-ui/icons';
 import EventListener from 'react-event-listener';
@@ -8,7 +8,7 @@ import * as api from '@/utils/api';
 import { useAlert } from '@/components/Alert';
 import Login, { ILoginHandles } from '@/components/Login';
 
-import { ICombinedState } from '@/reducers';
+import { AuthContext } from '@/stores/AuthStore';
 
 export interface ILoginContainerHandles {
   open: () => void;
@@ -20,9 +20,13 @@ interface IUserButtonProps {
 }
 
 export const UserButton = (props: IUserButtonProps) => {
-  const auth = useSelector((state: ICombinedState) => state.auth);
+  const auth = React.useContext(AuthContext);
 
-  return (
+  if (!auth) {
+    return null;
+  }
+
+  return useObserver(() => (
     <IconButton color="inherit" onClick={props.onClick}>
       {auth.authData ? (
         <Avatar
@@ -34,7 +38,7 @@ export const UserButton = (props: IUserButtonProps) => {
         <AccountCircleIcon />
       )}
     </IconButton>
-  );
+  ));
 };
 
 const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
@@ -42,9 +46,13 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [authData, setAuthData] = React.useState<any>(null);
     const intl = useIntl();
-    const dispatch = useDispatch();
+    const auth = React.useContext(AuthContext);
     const loginRef = React.useRef<ILoginHandles>(null);
     const makeAlert = useAlert();
+
+    if (!auth) {
+      return null;
+    }
 
     React.useEffect(() => {
       const authData = api.getAuth();
@@ -92,7 +100,7 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
         })
         .then((data: any) => {
           const authData = data.response;
-          api.setAuth(authData, dispatch);
+          api.setAuth(authData, auth.setAuth);
           setAuthData(authData);
           setTimeout(() => {
             close();
@@ -115,7 +123,7 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
     };
 
     const onLogoutClick = () => {
-      api.removeAuth(dispatch);
+      api.removeAuth(auth.setAuth);
       setAuthData(null);
     };
 
@@ -130,7 +138,7 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
       close: () => close()
     }));
 
-    return (
+    return useObserver(() => (
       <>
         <Login
           ref={loginRef}
@@ -145,7 +153,7 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
           onKeydown={onKeydown}
         />
       </>
-    );
+    ));
   }
 );
 

@@ -1,9 +1,6 @@
 import honoka from 'honoka';
-import { Dispatch } from 'redux';
 import config from '@/config';
 import Storage from '@/utils/Storage';
-import * as AuthActions from '@/actions/auth';
-import { IAuthAction } from '@/actions/auth';
 
 interface IPixivResponse {
   [key: string]: any;
@@ -16,13 +13,15 @@ export const getAuth = () => {
   return Storage.get('auth');
 };
 
-export const setAuth = (authData: any, dispatch?: Dispatch<IAuthAction>) => {
-  dispatch?.(AuthActions.setAuth(authData));
+export const setAuth = (authData: any, setAuthFunc?: (data: any) => void) => {
+  if (setAuthFunc) {
+    setAuthFunc(authData);
+  }
   return Storage.set('auth', authData);
 };
 
-export const removeAuth = (dispatch: Dispatch<IAuthAction>) => {
-  dispatch(AuthActions.setAuth(null));
+export const removeAuth = (setAuthFunc: (data: any) => void) => {
+  setAuthFunc(null);
   return Storage.remove('auth');
 };
 

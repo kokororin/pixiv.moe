@@ -1,6 +1,4 @@
 import React from 'react';
-import { Dispatch } from 'redux';
-import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -18,11 +16,10 @@ import {
 import { Menu as MenuIcon, Done as DoneIcon } from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
+import { useObserver } from 'mobx-react-lite';
 
 import config from '@/config';
 
-import * as GalleryActions from '@/actions/gallery';
-import { IGalleryAction, TGalleryThunkDispatch } from '@/actions/gallery';
 import InfiniteScroll from '@/components/InfiniteScroll';
 import GalleryList from '@/components/GalleryList';
 import Loading from '@/components/Loading';
@@ -38,7 +35,7 @@ import LoginContainer, {
   UserButton
 } from '@/containers/LoginContainer';
 
-import { ICombinedState } from '@/reducers';
+import { GalleryContext } from '@/stores/GalleryStore';
 
 export const useStyles = makeStyles({
   toolbar: {
@@ -64,26 +61,25 @@ export const useStyles = makeStyles({
   }
 });
 
-interface IGalleryContainerProps {
-  dispatch: Dispatch<IGalleryAction> & TGalleryThunkDispatch;
-}
-
-const GalleryContainer: React.FunctionComponent<IGalleryContainerProps> = () => {
+const GalleryContainer: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
   const intl = useIntl();
-  const dispatch = useDispatch();
   const location = useLocation();
-  const gallery = useSelector((state: ICombinedState) => state.gallery);
+  const gallery = React.useContext(GalleryContext);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [isSearchByPopularity] = React.useState(false);
   const loginRef = React.useRef<ILoginContainerHandles>(null);
   const contentRef = React.useRef<IContentHandles>(null);
 
+  if (!gallery) {
+    return null;
+  }
+
   const fetchSource = (isFirstLoad: boolean) => {
     if (isFirstLoad) {
-      dispatch(GalleryActions.setPage(1));
+      gallery.page = 1;
     }
-    dispatch(GalleryActions.fetchSourceIfNeeded());
+    gallery.fetchSource();
   };
 
   const onLoadMore = () => {
@@ -93,13 +89,15 @@ const GalleryContainer: React.FunctionComponent<IGalleryContainerProps> = () => 
   };
 
   const reRenderContent = () => {
-    dispatch(GalleryActions.clearErrorTimes());
-    dispatch(GalleryActions.clearSource());
+    gallery.errorTimes = 0;
+    gallery.clearSource();
     fetchSource(true);
   };
 
   const fetchTags = () => {
-    dispatch(GalleryActions.fetchTags());
+    if (gallery.tags.length === 0) {
+      gallery.fetchTags();
+    }
   };
 
   const onSearch = (word: string) => {
@@ -107,14 +105,14 @@ const GalleryContainer: React.FunctionComponent<IGalleryContainerProps> = () => 
       return;
     }
     Storage.set('word', word);
-    dispatch(GalleryActions.clearErrorTimes());
-    dispatch(GalleryActions.clearSource());
-    dispatch(GalleryActions.setWord(word));
+    gallery.clearErrorTimes();
+    gallery.clearSource();
+    gallery.setWord(word);
     fetchSource(true);
   };
 
   const onKeywordClick = (word: string) => {
-    dispatch(GalleryActions.setWord(word));
+    gallery.setWord(word);
     reRenderContent();
     Storage.set('word', word);
   };
@@ -122,15 +120,15 @@ const GalleryContainer: React.FunctionComponent<IGalleryContainerProps> = () => 
   React.useEffect(() => {
     if (gallery.fromIllust) {
       onSearch(gallery.word);
-      dispatch(GalleryActions.setFromIllust(false));
+      gallery.setFromIllust(false);
     } else {
       const search = new URLSearchParams(location.search);
       if (search.get('entry') === 'ranking') {
-        dispatch(GalleryActions.setWord('ranking'));
+        gallery.setWord('ranking');
         Storage.set('word', 'ranking');
       } else {
         const cachedWord = Storage.get('word');
-        dispatch(GalleryActions.setWord(cachedWord ? cachedWord : 'ranking'));
+        gallery.setWord(cachedWord ? cachedWord : 'ranking');
       }
       if (gallery.items.length === 0) {
         fetchSource(true);
@@ -210,7 +208,7 @@ const GalleryContainer: React.FunctionComponent<IGalleryContainerProps> = () => 
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  return (
+  return useObserver(() => (
     <>
       <Helmet>
         <title>{config.siteTitle}</title>
@@ -272,7 +270,7 @@ const GalleryContainer: React.FunctionComponent<IGalleryContainerProps> = () => 
       </Content>
       <LoginContainer ref={loginRef} />
     </>
-  );
+  ));
 };
 
 export default GalleryContainer;

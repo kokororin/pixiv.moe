@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Button, Menu, MenuItem, Box, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -7,11 +6,12 @@ import {
   ExpandMore as ExpandMoreIcon
 } from '@material-ui/icons';
 import { useIntl } from 'react-intl';
+import { useObserver } from 'mobx-react-lite';
 import shortid from 'shortid';
 import config from '@/config';
 import Storage from '@/utils/Storage';
 import chooseLocale from '@/locale/chooseLocale';
-import { ICombinedState } from '@/reducers';
+import { LocaleContext } from '@/stores/LocaleStore';
 
 const useStyles = makeStyles({
   language: {
@@ -21,16 +21,20 @@ const useStyles = makeStyles({
 
 const LanguageSelector: React.FunctionComponent<{}> = () => {
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
-  const dispatch = useDispatch();
   const classes = useStyles();
-  const locale = useSelector((state: ICombinedState) => state.locale);
+  const locale = React.useContext(LocaleContext);
+
+  if (!locale) {
+    return null;
+  }
+
   const intl = useIntl();
 
   const lang = locale.lang;
 
   const onLanguageClick = (value: string) => {
     Storage.set('lang', value);
-    chooseLocale(value, dispatch);
+    chooseLocale(value, locale.setLocale);
   };
 
   const onMenuOpen = (event: React.MouseEvent) => {
@@ -41,7 +45,7 @@ const LanguageSelector: React.FunctionComponent<{}> = () => {
     setAnchorEl(null);
   };
 
-  return (
+  return useObserver(() => (
     <>
       <Button color="inherit" onClick={onMenuOpen}>
         <LanguageIcon />
@@ -90,7 +94,7 @@ const LanguageSelector: React.FunctionComponent<{}> = () => {
         ]}
       </Menu>
     </>
-  );
+  ));
 };
 
 export default LanguageSelector;

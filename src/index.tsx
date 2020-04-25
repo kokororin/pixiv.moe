@@ -1,18 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer as Root } from 'react-hot-loader';
-import { Provider } from 'react-redux';
 import iNoBounce from 'inobounce';
+import 'mobx-react-lite/batchingForReactDom';
 
-import { configureStore } from '@/stores';
 import AppContainer from '@/containers/AppContainer';
 
-import ConnectedIntlProvider from '@/components/ConnectedIntlProvider';
-import chooseLocale from '@/locale/chooseLocale';
-
-const store = configureStore();
-
-chooseLocale(navigator.language, store.dispatch);
+import { StoreProvider } from '@/stores';
+import { ConnectedIntlProvider } from '@/stores/LocaleStore';
 
 if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
   iNoBounce.enable();
@@ -21,15 +16,15 @@ if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
 // Render the main component into the dom
 const render = (Component: () => JSX.Element) => {
   ReactDOM.render(
-    <Provider store={store}>
+    <StoreProvider>
       {/*
-      // @ts-ignore */}
+        // @ts-ignore */}
       <ConnectedIntlProvider textComponent={React.Fragment}>
         <Root>
           <Component />
         </Root>
       </ConnectedIntlProvider>
-    </Provider>,
+    </StoreProvider>,
     document.getElementById('app')
   );
 };

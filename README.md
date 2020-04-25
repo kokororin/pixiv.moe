@@ -29,9 +29,8 @@ Table of Contents
 * react
 * react-dom
 * react-router
-* redux
-* redux-thunk
-* react-redux
+* mobx
+* mobx-react-lite
 * react-intl
 * material-ui
 * whatwg-fetch

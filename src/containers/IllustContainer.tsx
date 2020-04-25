@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,12 +21,11 @@ import shortid from 'shortid';
 import Img from 'react-image';
 import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
+import { useObserver } from 'mobx-react-lite';
 import moment from 'moment';
 
 import config from '@/config';
 
-import * as IllustActions from '@/actions/illust';
-import * as GalleryActions from '@/actions/gallery';
 import { useAlert } from '@/components/Alert';
 import Comment from '@/components/Comment';
 import GifPlayer from '@/components/GifPlayer';
@@ -46,7 +44,9 @@ import LoginContainer, {
 import { useStyles as useGalleryStyles } from '@/containers/GalleryContainer';
 import * as api from '@/utils/api';
 import Social from '@/utils/Social';
-import { ICombinedState } from '@/reducers';
+
+import { GalleryContext } from '@/stores/GalleryStore';
+import { IllustContext } from '@/stores/IllustStore';
 
 const useStyles = makeStyles({
   illust: {
@@ -158,14 +158,19 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
 
   const classes = { ...useStyles(), ...useGalleryStyles() };
 
-  const dispatch = useDispatch();
-  const illust = useSelector((state: ICombinedState) => state.illust);
+  const gallery = React.useContext(GalleryContext);
+  const illust = React.useContext(IllustContext);
+
   const history = useHistory();
   const intl = useIntl();
 
   const { illustId } = useParams<IIllustContainerRouteInfo>();
   const loginRef = React.useRef<ILoginContainerHandles>(null);
   const makeAlert = useAlert();
+
+  if (!gallery || !illust) {
+    return null;
+  }
 
   const fetchBookmark = () => {
     api
@@ -234,21 +239,21 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
   };
 
   const onTagClick = (tag: string) => {
-    dispatch(GalleryActions.setWord(tag));
-    dispatch(GalleryActions.setFromIllust(true));
+    gallery.setWord(tag);
+    gallery.setFromIllust(true);
     history.push('/');
   };
 
   React.useEffect(() => {
     if (!item.id) {
-      dispatch(IllustActions.fetchItem(illustId));
+      illust.fetchItem(illustId);
     }
 
-    dispatch(IllustActions.fetchComments(illustId));
+    illust.fetchComments(illustId);
     fetchBookmark();
 
     return () => {
-      dispatch(IllustActions.clearComments());
+      illust.clearComments();
     };
   }, []);
 
@@ -392,7 +397,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
           </div>
           <InfiniteScroll
             distance={200}
-            onLoadMore={() => dispatch(IllustActions.fetchComments(illustId))}
+            onLoadMore={() => illust.fetchComments(illustId)}
             isLoading={illust.isFetchingComments}
             hasMore={!illust.isCommentsEnd}>
             <div className={classes.comments}>
@@ -417,7 +422,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
     }
   };
 
-  return (
+  return useObserver(() => (
     <>
       <Helmet>
         <title>{item.title === '' ? config.siteTitle : item.title}</title>
@@ -443,7 +448,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
         <ImageBox items={urls()} index={boxIndex} onClose={onImageClose} />
       )}
     </>
-  );
+  ));
 };
 
 export default IllustContainer;
