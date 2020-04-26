@@ -126,7 +126,6 @@
     "mobx": "^5.15.4",
     "mobx-react-lite": "^2.0.6",
     "moment": "^2.24.0",
-    "namespaced-types": "^0.1.2",
     "prop-types": "^15.7.2",
     "react": "~16.13.0",
     "react-dom": "~16.13.0",

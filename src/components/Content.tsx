@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import scrollTo from '@/utils/scrollTo';
+import { SiteContext } from '@/stores/SiteStore';
 
 const useStyles = makeStyles({
   container: {
@@ -19,13 +20,6 @@ interface IContentProps {
   children: JSX.Element;
 }
 
-interface IContent
-  extends React.ForwardRefExoticComponent<
-    IContentProps & React.RefAttributes<IContentHandles>
-  > {
-  getElement: () => Element | null;
-}
-
 export interface IContentHandles {
   toTop: () => void;
 }
@@ -34,8 +28,13 @@ const Content = React.forwardRef<IContentHandles, IContentProps>(
   (props, ref) => {
     const classes = useStyles();
     const containerRef = React.createRef<HTMLDivElement>();
+    const site = React.useContext(SiteContext);
 
-    Content.getElement = () => document.querySelector(`.${classes.container}`);
+    if (!site) {
+      return null;
+    }
+
+    site.setContentClassName(classes.container);
 
     React.useImperativeHandle(ref, () => ({
       toTop: () => {
@@ -50,6 +49,6 @@ const Content = React.forwardRef<IContentHandles, IContentProps>(
       </div>
     );
   }
-) as IContent;
+);
 
 export default Content;

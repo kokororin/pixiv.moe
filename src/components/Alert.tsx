@@ -1,50 +1,40 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Snackbar } from '@material-ui/core';
 import MaterialAlert, { Color } from '@material-ui/lab/Alert';
 
-interface IAlertProps {
-  severity: Color;
-  onDestroy: () => void;
-}
+type TCreateAlert = (severity: Color, message: string) => void;
 
-const Alert: React.FunctionComponent<IAlertProps> = props => {
-  const [open, setOpen] = React.useState(true);
+const AlertContext = React.createContext({} as TCreateAlert);
 
-  React.useEffect(() => {
-    return () => {
-      props.onDestroy();
-    };
-  });
+export const AlertProvider: React.FunctionComponent<{}> = props => {
+  const [open, setOpen] = React.useState(false);
+  const [severity, setSeverity] = React.useState<Color>('info');
+  const [message, setMessage] = React.useState('');
 
-  const onClose = () => {
-    setOpen(false);
-    setTimeout(props.onDestroy, 500);
-  };
+  const createAlert = React.useCallback((severity: Color, message: string) => {
+    setOpen(true);
+    setSeverity(severity);
+    setMessage(message);
+  }, []);
 
   return (
-    <Snackbar open={open} autoHideDuration={3500} onClose={onClose}>
-      <MaterialAlert onClose={onClose} severity={props.severity}>
+    <>
+      <AlertContext.Provider value={createAlert}>
         {props.children}
-      </MaterialAlert>
-    </Snackbar>
+      </AlertContext.Provider>
+      <Snackbar
+        open={open}
+        autoHideDuration={3500}
+        onClose={() => setOpen(false)}>
+        <MaterialAlert onClose={() => setOpen(false)} severity={severity}>
+          {message}
+        </MaterialAlert>
+      </Snackbar>
+    </>
   );
 };
 
-export const useAlert = () => (severity: Color, message: string) => {
-  const wrapper = document.body.appendChild(document.createElement('div'));
-  const onDestroy = () => {
-    ReactDOM.unmountComponentAtNode(wrapper);
-    return setTimeout(() => {
-      wrapper.remove();
-    });
-  };
-  ReactDOM.render(
-    <Alert severity={severity} onDestroy={onDestroy}>
-      {message}
-    </Alert>,
-    wrapper
-  );
+export const useAlert = () => {
+  const createAlert = React.useContext(AlertContext);
+  return createAlert;
 };
-
-export default Alert;

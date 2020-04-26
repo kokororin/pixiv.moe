@@ -21,6 +21,7 @@ import Baseline from '@/components/Baseline';
 import ScrollContext from '@/components/ScrollContext';
 import SessionContext from '@/components/SessionContext';
 import TrackPageView from '@/components/TrackPageView';
+import { AlertProvider } from '@/components/Alert';
 
 const theme = createMuiTheme({
   palette: {
@@ -58,15 +59,17 @@ const routes = [
 const AppContainer = () => (
   <StylesProvider jss={jss} generateClassName={generateClassName}>
     <MuiThemeProvider theme={theme}>
-      <Baseline>
-        <Router history={history}>
-          <SessionContext>
-            <TrackPageView>
-              <ScrollContext>{renderRoutes(routes)}</ScrollContext>
-            </TrackPageView>
-          </SessionContext>
-        </Router>
-      </Baseline>
+      <AlertProvider>
+        <Baseline>
+          <Router history={history}>
+            <SessionContext>
+              <TrackPageView>
+                <ScrollContext>{renderRoutes(routes)}</ScrollContext>
+              </TrackPageView>
+            </SessionContext>
+          </Router>
+        </Baseline>
+      </AlertProvider>
     </MuiThemeProvider>
   </StylesProvider>
 );

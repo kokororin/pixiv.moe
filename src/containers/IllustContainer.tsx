@@ -32,7 +32,7 @@ import GifPlayer from '@/components/GifPlayer';
 import InfiniteScroll from '@/components/InfiniteScroll';
 import Loading from '@/components/Loading';
 import Message from '@/components/Message';
-import Content from '@/components/Content';
+import Content, { IContentHandles } from '@/components/Content';
 import ImageBox from '@/components/ImageBox';
 import LanguageSelector from '@/components/LanguageSelector';
 import WeiboIcon from '@/icons/Weibo';
@@ -166,6 +166,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
 
   const { illustId } = useParams<IIllustContainerRouteInfo>();
   const loginRef = React.useRef<ILoginContainerHandles>(null);
+  const contentRef = React.useRef<IContentHandles>(null);
   const makeAlert = useAlert();
 
   if (!gallery || !illust) {
@@ -191,6 +192,17 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
       return item.meta_pages.map((page: any) => page.image_urls.original);
     }
     return [];
+  };
+
+  const onHeaderClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLDivElement;
+
+    if (
+      typeof target.className === 'string' &&
+      target.className.indexOf(classes.toolbar) > -1
+    ) {
+      contentRef?.current?.toTop();
+    }
   };
 
   const onBackClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -427,7 +439,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
       <Helmet>
         <title>{item.title === '' ? config.siteTitle : item.title}</title>
       </Helmet>
-      <AppBar position="static">
+      <AppBar position="static" onClick={onHeaderClick}>
         <Toolbar className={classes.toolbar}>
           <IconButton href="#" color="inherit" onClick={onBackClick}>
             <ArrowBackIcon />
@@ -443,7 +455,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
           <UserButton onClick={() => loginRef.current?.open()} />
         </Toolbar>
       </AppBar>
-      <Content>{renderContent()}</Content>
+      <Content ref={contentRef}>{renderContent()}</Content>
       {showBox && (
         <ImageBox items={urls()} index={boxIndex} onClose={onImageClose} />
       )}

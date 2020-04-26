@@ -1,6 +1,6 @@
 import React from 'react';
 import EventListener from 'react-event-listener';
-import Content from '@/components/Content';
+import { SiteContext } from '@/stores/SiteStore';
 
 interface IInfiniteScrollProps {
   distance: number;
@@ -10,7 +10,13 @@ interface IInfiniteScrollProps {
 }
 
 const InfiniteScroll: React.FunctionComponent<IInfiniteScrollProps> = props => {
-  const scrollingElement = Content.getElement();
+  const site = React.useContext(SiteContext);
+
+  if (!site) {
+    return null;
+  }
+
+  const scrollingElement = site.contentElement;
 
   const onScroll = (event: React.UIEvent) => {
     if (props.isLoading) {
