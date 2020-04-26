@@ -128,6 +128,7 @@
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "~16.13.0",
+    "react-combine-provider": "^0.1.3",
     "react-dom": "~16.13.0",
     "react-event-listener": "^0.6.1",
     "react-ga": "^2.7.0",
