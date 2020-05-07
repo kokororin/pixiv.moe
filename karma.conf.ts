@@ -7,11 +7,15 @@ process.env.CHROME_BIN = require('puppeteer').executablePath();
 export default (config: Karma.Config) => {
   const configuration: Karma.ConfigOptions = {
     basePath: '',
-    browsers: ['KarmaChromeHeadless'],
+    browsers: process.env.CI ? ['KarmaChromeHeadless'] : ['KarmaChrome'],
     customLaunchers: {
       KarmaChromeHeadless: {
         base: 'ChromeHeadless',
-        flags: ['--no-sandbox']
+        flags: ['--no-sandbox', '--disable-web-security']
+      },
+      KarmaChrome: {
+        base: 'Chrome',
+        flags: ['--no-sandbox', '--disable-web-security']
       }
     },
     files: ['test/loadtests.ts'],

@@ -3,7 +3,7 @@ import { observable } from 'mobx';
 import { useLocalStore } from 'mobx-react-lite';
 import * as api from '@/utils/api';
 
-const createStore = () => {
+export const createStore = () => {
   const store = observable({
     page: 1,
     isFetching: false,
