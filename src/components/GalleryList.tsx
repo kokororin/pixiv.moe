@@ -1,5 +1,6 @@
 import React from 'react';
-import Masonry from 'react-masonry-component';
+import { MasonryScroller, usePositioner, useContainerPosition } from 'masonic';
+import { useWindowSize } from '@react-hook/window-size';
 
 import ImageItem from '@/components/ImageItem';
 
@@ -8,27 +9,26 @@ interface IGalleryListProps {
 }
 
 const GalleryList: React.FunctionComponent<IGalleryListProps> = props => {
-  const masonryRef = React.useRef<any>(null);
+  const containerRef = React.useRef(null);
+  const [windowWidth, windowHeight] = useWindowSize();
+  const { offset, width } = useContainerPosition(containerRef, [
+    windowWidth,
+    windowHeight
+  ]);
+  const positioner = usePositioner({ width, columnWidth: 175 });
+
   return (
-    <Masonry
-      ref={masonryRef}
-      className="masonry"
-      style={{ margin: '0 auto' }}
-      elementType="div"
-      options={{ transitionDuration: 0, fitWidth: true }}
-      disableImagesLoaded={false}
-      updateOnEachImageLoad={false}>
-      {props.items.map((elem, index) => {
-        return (
-          <ImageItem
-            key={index}
-            index={index}
-            item={elem}
-            masonry={masonryRef?.current}
-          />
-        );
-      })}
-    </Masonry>
+    <MasonryScroller
+      positioner={positioner}
+      offset={offset}
+      height={windowHeight}
+      containerRef={containerRef}
+      items={props.items}
+      overscanBy={6}
+      render={({ index, data }) => (
+        <ImageItem key={index} index={index} item={data} />
+      )}
+    />
   );
 };
 
