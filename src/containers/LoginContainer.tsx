@@ -11,7 +11,7 @@ import Login, { ILoginHandles } from '@/components/Login';
 import { AuthContext } from '@/stores/AuthStore';
 
 export interface ILoginContainerHandles {
-  open: () => void;
+  open: (onLogin?: () => any) => void;
   close: () => void;
 }
 
@@ -45,6 +45,7 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
   (props, ref) => {
     const [isSubmitting, setIsSubmitting] = React.useState(false);
     const [authData, setAuthData] = React.useState<any>(null);
+    const [[onLogin], setOnLogin] = React.useState<[() => any]>([() => {}]);
     const intl = useIntl();
     const auth = React.useContext(AuthContext);
     const loginRef = React.useRef<ILoginHandles>(null);
@@ -59,8 +60,11 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
       setAuthData(authData);
     }, []);
 
-    const open = () => {
+    const open = (onLogin?: () => any) => {
       loginRef.current?.open();
+      if (onLogin) {
+        setOnLogin([onLogin]);
+      }
     };
 
     const close = () => {
@@ -105,6 +109,7 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
           setTimeout(() => {
             close();
             loginRef.current?.reset();
+            onLogin();
           }, 1500);
         })
         .then(() => {
@@ -134,8 +139,8 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
     };
 
     React.useImperativeHandle(ref, () => ({
-      open: () => open(),
-      close: () => close()
+      open,
+      close
     }));
 
     return useObserver(() => (

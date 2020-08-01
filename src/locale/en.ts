@@ -26,5 +26,6 @@ export default {
   Ranking: 'Ranking',
   HelpToTranslate: 'Help to Translate',
   'This page is not available in your area':
-    'This page is not available in your area.'
+    'This page is not available in your area.',
+  'Please sign in to continue': 'Please sign in to continue'
 };

@@ -27,5 +27,6 @@ export default {
   Ranking: 'ランキング',
   HelpToTranslate: '翻訳を手伝う',
   'This page is not available in your area':
-    'このページはお住まいの地域からご利用になれません。'
+    'このページはお住まいの地域からご利用になれません。',
+  'Please sign in to continue': '続行するにはログインしてください'
 };

@@ -151,6 +151,7 @@ interface IIllustContainerRouteInfo {
 }
 
 const IllustContainer: React.FunctionComponent<{}> = () => {
+  const [shouldLogin, setShouldLogin] = React.useState(true);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [boxIndex, setBoxIndex] = React.useState(0);
   const [showBox, setShowBox] = React.useState(false);
@@ -257,6 +258,16 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
   };
 
   React.useEffect(() => {
+    if (!api.getAuth()) {
+      setShouldLogin(true);
+      console.log(loginRef);
+      loginRef.current?.open(() => {
+        window.location.reload();
+      });
+      return;
+    }
+    setShouldLogin(false);
+
     if (!item.id) {
       illust.fetchItem(illustId);
     }
@@ -426,7 +437,6 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
               {illust.isFetchingComments && <Loading />}
             </div>
           </InfiniteScroll>
-          <LoginContainer ref={loginRef} />
         </div>
       );
     } catch (e) {
@@ -455,10 +465,22 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
           <UserButton onClick={() => loginRef.current?.open()} />
         </Toolbar>
       </AppBar>
-      <Content ref={contentRef}>{renderContent()}</Content>
+      <Content ref={contentRef}>
+        {shouldLogin ? (
+          <Message
+            code={403}
+            text={intl.formatMessage({
+              id: 'Please sign in to continue'
+            })}
+          />
+        ) : (
+          renderContent()
+        )}
+      </Content>
       {showBox && (
         <ImageBox items={urls()} index={boxIndex} onClose={onImageClose} />
       )}
+      <LoginContainer ref={loginRef} />
     </>
   ));
 };

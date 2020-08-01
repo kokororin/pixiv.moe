@@ -26,5 +26,6 @@ export default {
   Ranking: 'Rangking',
   HelpToTranslate: 'Membantu menerjemahkan',
   'This page is not available in your area':
-    'Halaman ini tidak tersedia di daerah Anda.'
+    'Halaman ini tidak tersedia di daerah Anda.',
+  'Please sign in to continue': 'Tolong masuk untuk melanjutkan'
 };

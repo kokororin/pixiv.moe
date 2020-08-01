@@ -29,6 +29,7 @@ import LanguageSelector from '@/components/LanguageSelector';
 import SearchInput from '@/components/SearchInput';
 import Content, { IContentHandles } from '@/components/Content';
 import Storage from '@/utils/Storage';
+import * as api from '@/utils/api';
 
 import LoginContainer, {
   ILoginContainerHandles,
@@ -66,6 +67,7 @@ const GalleryContainer: React.FunctionComponent<{}> = () => {
   const intl = useIntl();
   const location = useLocation();
   const gallery = React.useContext(GalleryContext);
+  const [shouldLogin, setShouldLogin] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [isSearchByPopularity] = React.useState(false);
   const loginRef = React.useRef<ILoginContainerHandles>(null);
@@ -118,6 +120,15 @@ const GalleryContainer: React.FunctionComponent<{}> = () => {
   };
 
   React.useEffect(() => {
+    if (!api.getAuth()) {
+      setShouldLogin(true);
+      loginRef.current?.open(() => {
+        window.location.reload();
+      });
+      return;
+    }
+    setShouldLogin(false);
+
     if (gallery.fromIllust) {
       onSearch(gallery.word);
       gallery.setFromIllust(false);
@@ -253,20 +264,29 @@ const GalleryContainer: React.FunctionComponent<{}> = () => {
         </div>
       </Drawer>
       <Content ref={contentRef}>
-        <InfiniteScroll
-          distance={200}
-          onLoadMore={onLoadMore}
-          isLoading={gallery.isFetching}
-          hasMore>
-          <div className={classes.root}>
-            <GalleryList items={gallery.items} />
-            {gallery.isFetching && <Loading />}
-            {gallery.isError && (
-              <Message text={intl.formatMessage({ id: 'Failed to Load' })} />
-            )}
-            <Refresh onClick={reRenderContent} />
-          </div>
-        </InfiniteScroll>
+        {shouldLogin ? (
+          <Message
+            code={403}
+            text={intl.formatMessage({
+              id: 'Please sign in to continue'
+            })}
+          />
+        ) : (
+          <InfiniteScroll
+            distance={200}
+            onLoadMore={onLoadMore}
+            isLoading={gallery.isFetching}
+            hasMore>
+            <div className={classes.root}>
+              <GalleryList items={gallery.items} />
+              {gallery.isFetching && <Loading />}
+              {gallery.isError && (
+                <Message text={intl.formatMessage({ id: 'Failed to Load' })} />
+              )}
+              <Refresh onClick={reRenderContent} />
+            </div>
+          </InfiniteScroll>
+        )}
       </Content>
       <LoginContainer ref={loginRef} />
     </>
