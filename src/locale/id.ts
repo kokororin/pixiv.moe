@@ -27,5 +27,6 @@ export default {
   HelpToTranslate: 'Membantu menerjemahkan',
   'This page is not available in your area':
     'Halaman ini tidak tersedia di daerah Anda.',
-  'Please sign in to continue': 'Tolong masuk untuk melanjutkan'
+  'Please sign in to continue': 'Tolong masuk untuk melanjutkan',
+  'Refresh page': 'Segarkan halaman'
 };

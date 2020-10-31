@@ -28,5 +28,6 @@ export default {
   HelpToTranslate: '번역하는 데 도움이',
   'This page is not available in your area':
     '귀하의 지역에서는이 페이지를 이용할 수 없습니다.',
-  'Please sign in to continue': '계속하려면 로그인하십시오'
+  'Please sign in to continue': '계속하려면 로그인하십시오',
+  'Refresh page': '페이지 새로 고침'
 };

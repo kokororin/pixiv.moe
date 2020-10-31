@@ -26,5 +26,6 @@ export default {
   Ranking: '排名',
   HelpToTranslate: '帮助我们翻译',
   'This page is not available in your area': '这个页面不适用于您的国家或地区',
-  'Please sign in to continue': '请登录以继续'
+  'Please sign in to continue': '请登录以继续',
+  'Refresh page': '刷新页面'
 };

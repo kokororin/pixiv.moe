@@ -11,9 +11,14 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListSubheader
+  ListSubheader,
+  Button
 } from '@material-ui/core';
-import { Menu as MenuIcon, Done as DoneIcon } from '@material-ui/icons';
+import {
+  Menu as MenuIcon,
+  Done as DoneIcon,
+  Cached as CachedIcon
+} from '@material-ui/icons';
 import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
@@ -59,6 +64,9 @@ export const useStyles = makeStyles({
     margin: '0 auto'
     // paddingLeft: 3,
     // paddingRight: 20
+  },
+  refreshBtn: {
+    textAlign: 'center'
   }
 });
 
@@ -281,7 +289,20 @@ const GalleryContainer: React.FunctionComponent<{}> = () => {
               <GalleryList items={gallery.items} />
               {gallery.isFetching && <Loading />}
               {gallery.isError && (
-                <Message text={intl.formatMessage({ id: 'Failed to Load' })} />
+                <>
+                  <Message
+                    text={intl.formatMessage({ id: 'Failed to Load' })}
+                  />
+                  <div className={classes.refreshBtn}>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      startIcon={<CachedIcon />}
+                      onClick={() => window.location.reload()}>
+                      {intl.formatMessage({ id: 'Refresh page' })}
+                    </Button>
+                  </div>
+                </>
               )}
               <Refresh onClick={reRenderContent} />
             </div>
