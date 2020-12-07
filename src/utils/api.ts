@@ -20,8 +20,11 @@ export const setAuth = (authData: any, setAuthFunc?: (data: any) => void) => {
   return Storage.set('auth', authData);
 };
 
-export const removeAuth = (setAuthFunc: (data: any) => void) => {
-  setAuthFunc(null);
+export const removeAuth = (setAuthFunc?: (data: any) => void) => {
+  if (setAuthFunc) {
+    setAuthFunc(null);
+  }
+
   return Storage.remove('auth');
 };
 
@@ -106,8 +109,15 @@ export const auth = (data: {
 export const refreshToken = () => {
   const authData = getAuth();
   if (authData?.refresh_token) {
-    auth({ refreshToken: authData.refresh_token }).then(data => {
-      setAuth(data.response);
-    });
+    auth({ refreshToken: authData.refresh_token })
+      .then(data => {
+        setAuth(data.response);
+      })
+      .catch(err => {
+        if (err.message === 'Invalid refresh token') {
+          removeAuth();
+          location.reload();
+        }
+      });
   }
 };

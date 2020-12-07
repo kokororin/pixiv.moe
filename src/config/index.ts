@@ -5,7 +5,7 @@ interface ILanguage {
 }
 
 export default {
-  apiBaseURL: 'https://api.kotori.love/pixiv',
+  apiBaseURL: 'https://api.pixiv.moe',
   trackingID: 'UA-70944432-2',
   projectLink: 'https://github.com/LoveLiveSunshine/pixiv.moe',
   translateLink: 'https://github.com/LoveLiveSunshine/pixiv.moe#localization',

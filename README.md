@@ -64,9 +64,9 @@ $ npm start
 
 The API is based on HTTPS requests and JSON responses.
 
-Our online site's API Server uses `https://api.kotori.love/pixiv`
+Our online site's API Server uses `https://api.pixiv.moe/pixiv`
 
-To check whether our API server **could** connected to pixiv, you can visit [https://api.kotori.love/pixiv/ping](https://api.kotori.love/pixiv/ping).
+To check whether our API server **could** connected to pixiv, you can visit [https://api.pixiv.moe/ping](https://api.pixiv.moe/ping).
 
 See more in [API Docs](https://api.kotori.love/docs/#/pixiv).
 
