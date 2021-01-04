@@ -15,7 +15,8 @@ import {
   ArrowBack as ArrowBackIcon,
   Twitter as TwitterIcon,
   Favorite as FavoriteIcon,
-  FavoriteBorder as FavoriteBorderIcon
+  FavoriteBorder as FavoriteBorderIcon,
+  Cached as CachedIcon
 } from '@material-ui/icons';
 import shortid from 'shortid';
 import Img from 'react-image';
@@ -319,7 +320,20 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
       return <Loading />;
     }
     if (illust.isError) {
-      return <Message text={intl.formatMessage({ id: 'An Error Occurred' })} />;
+      return (
+        <>
+          <Message text={intl.formatMessage({ id: 'An Error Occurred' })} />
+          <div className={classes.refreshBtn}>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<CachedIcon />}
+              onClick={() => window.location.reload()}>
+              {intl.formatMessage({ id: 'Refresh page' })}
+            </Button>
+          </div>
+        </>
+      );
     }
     try {
       return (

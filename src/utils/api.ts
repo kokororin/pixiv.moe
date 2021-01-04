@@ -39,7 +39,7 @@ honoka.interceptors.register({
     return options;
   },
   response: response => {
-    if (response.data?.status !== 'success') {
+    if (response.data?.code !== 200) {
       return new Error(response.data?.message);
     }
     return response.data;

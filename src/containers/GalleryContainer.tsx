@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
@@ -74,6 +74,7 @@ const GalleryContainer: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
   const intl = useIntl();
   const location = useLocation();
+  const history = useHistory();
   const gallery = React.useContext(GalleryContext);
   const [shouldLogin, setShouldLogin] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -114,11 +115,15 @@ const GalleryContainer: React.FunctionComponent<{}> = () => {
     if (!word) {
       return;
     }
-    Storage.set('word', word);
-    gallery.clearErrorTimes();
-    gallery.clearSource();
-    gallery.setWord(word);
-    fetchSource(true);
+    if (!isNaN(parseFloat(word)) && isFinite(Number(word))) {
+      history.push(`/illust/${word}`);
+    } else {
+      Storage.set('word', word);
+      gallery.clearErrorTimes();
+      gallery.clearSource();
+      gallery.setWord(word);
+      fetchSource(true);
+    }
   };
 
   const onKeywordClick = (word: string) => {
