@@ -54,7 +54,7 @@ export const useStyles = makeStyles({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     '@media screen and (max-width: 649px)': {
-      maxWidth: '50%'
+      display: 'none'
     }
   },
   toolbarMiddle: {

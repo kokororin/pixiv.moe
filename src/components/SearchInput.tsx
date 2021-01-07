@@ -30,7 +30,7 @@ const useStyles = makeStyles({
     position: 'absolute',
     alignItems: 'center',
     pointerEvents: 'none',
-    justifyContent: 'center'
+    marginLeft: 10
   },
   searchInput: {
     font: 'inherit',
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     },
     border: 0,
     margin: 0,
-    padding: '8px 8px 8px 72px',
+    padding: '8px 8px 8px 45px',
     outline: 0,
     display: 'block',
     background: 'none',

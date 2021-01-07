@@ -50,6 +50,14 @@ import { GalleryContext } from '@/stores/GalleryStore';
 import { IllustContext } from '@/stores/IllustStore';
 
 const useStyles = makeStyles({
+  toolbarTitle: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    '@media screen and (max-width: 649px)': {
+      maxWidth: '50%'
+    }
+  },
   illust: {
     padding: 20
   },
@@ -158,7 +166,7 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
   const [showBox, setShowBox] = React.useState(false);
   const [isBookmarked, setIsBookmarked] = React.useState(false);
 
-  const classes = { ...useStyles(), ...useGalleryStyles() };
+  const classes = { ...useGalleryStyles(), ...useStyles() };
 
   const gallery = React.useContext(GalleryContext);
   const illust = React.useContext(IllustContext);
