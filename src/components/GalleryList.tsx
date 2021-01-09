@@ -1,5 +1,5 @@
 import React from 'react';
-import Masonry from 'react-masonry-component';
+import StackGrid from 'react-stack-grid';
 
 import ImageItem from '@/components/ImageItem';
 
@@ -8,27 +8,20 @@ interface IGalleryListProps {
 }
 
 const GalleryList: React.FunctionComponent<IGalleryListProps> = props => {
-  const masonryRef = React.useRef<any>(null);
   return (
-    <Masonry
-      ref={masonryRef}
-      className="masonry"
-      style={{ margin: '0 auto' }}
-      elementType="div"
-      options={{ transitionDuration: 0, fitWidth: true }}
-      disableImagesLoaded={false}
-      updateOnEachImageLoad={false}>
+    <StackGrid
+      className="stack-grid"
+      style={{ margin: '0 auto', width: '95%' }}
+      columnWidth={180}
+      gutterWidth={10}
+      component="div"
+      itemComponent="div"
+      vendorPrefix
+      monitorImagesLoaded>
       {props.items.map((elem, index) => {
-        return (
-          <ImageItem
-            key={index}
-            index={index}
-            item={elem}
-            masonry={masonryRef?.current}
-          />
-        );
+        return <ImageItem key={index} index={index} item={elem} />;
       })}
-    </Masonry>
+    </StackGrid>
   );
 };
 

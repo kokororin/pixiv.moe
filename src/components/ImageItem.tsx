@@ -58,7 +58,7 @@ const useStyles = makeStyles({
   },
   meta: {
     lineHeight: 1,
-    padding: '0 0 1px',
+    padding: '0 0 7px',
     margin: '8px 0',
     fontSize: 10,
     '& span': {
@@ -102,7 +102,6 @@ const useStyles = makeStyles({
 interface IImageItemProps {
   item: any;
   index: number;
-  masonry: any;
 }
 
 const ImageItem: React.FunctionComponent<IImageItemProps> = props => {
