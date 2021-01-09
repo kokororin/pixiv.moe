@@ -1,7 +1,7 @@
-<h1 align=center><img src="https://raw.githubusercontent.com/LoveLiveSunshine/pixiv.moe/master/src/images/favicon.png" width=50/> pixiv.moe</h1>
+<h1 align=center><img src="https://raw.githubusercontent.com/kokororin/pixiv.moe/master/src/images/favicon.png" width=50/> pixiv.moe</h1>
 
-[![Build Status](http://img.shields.io/travis/LoveLiveSunshine/pixiv.moe.svg)](https://travis-ci.org/LoveLiveSunshine/pixiv.moe)
-[![Coverage Status](https://coveralls.io/repos/github/LoveLiveSunshine/pixiv.moe/badge.svg?branch=master)](https://coveralls.io/github/LoveLiveSunshine/pixiv.moe?branch=master)
+[![Build Status](http://img.shields.io/travis/kokororin/pixiv.moe.svg)](https://travis-ci.org/kokororin/pixiv.moe)
+[![Coverage Status](https://coveralls.io/repos/github/kokororin/pixiv.moe/badge.svg?branch=master)](https://coveralls.io/github/kokororin/pixiv.moe?branch=master)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) order by popularity. Written with React.
@@ -48,7 +48,7 @@ Table of Contents
 ## Dev
 ```bash
 # Start for development
-$ git clone https://github.com/LoveLiveSunshine/pixiv.moe
+$ git clone https://github.com/kokororin/pixiv.moe
 $ cd pixiv.moe
 $ yarn
 $ npm start
@@ -88,9 +88,9 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="http://kokororin.github.io"><img src="https://avatars0.githubusercontent.com/u/10093992?v=4" width="100px;" alt=""/><br /><sub><b>そら</b></sub></a><br /><a href="https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin" title="Code">💻</a> <a href="https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin" title="Documentation">📖</a> <a href="#design-kokororin" title="Design">🎨</a> <a href="https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kokororin" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://kirainmoe.com/"><img src="https://avatars0.githubusercontent.com/u/12712012?v=4" width="100px;" alt=""/><br /><sub><b>吟夢ちゃん</b></sub></a><br /><a href="https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=kirainmoe" title="Code">💻</a> <a href="#ideas-kirainmoe" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/simon300000"><img src="https://avatars1.githubusercontent.com/u/12656264?v=4" width="100px;" alt=""/><br /><sub><b>simon3000</b></sub></a><br /><a href="https://github.com/LoveLiveSunshine/pixiv.moe/commits?author=simon300000" title="Code">💻</a> <a href="#ideas-simon300000" title="Ideas, Planning, & Feedback">🤔</a> <a href="#translation-simon300000" title="Translation">🌍</a></td>
+    <td align="center"><a href="http://kokororin.github.io"><img src="https://avatars0.githubusercontent.com/u/10093992?v=4" width="100px;" alt=""/><br /><sub><b>そら</b></sub></a><br /><a href="https://github.com/kokororin/pixiv.moe/commits?author=kokororin" title="Code">💻</a> <a href="https://github.com/kokororin/pixiv.moe/commits?author=kokororin" title="Documentation">📖</a> <a href="#design-kokororin" title="Design">🎨</a> <a href="https://github.com/kokororin/pixiv.moe/commits?author=kokororin" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://kirainmoe.com/"><img src="https://avatars0.githubusercontent.com/u/12712012?v=4" width="100px;" alt=""/><br /><sub><b>吟夢ちゃん</b></sub></a><br /><a href="https://github.com/kokororin/pixiv.moe/commits?author=kirainmoe" title="Code">💻</a> <a href="#ideas-kirainmoe" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/simon300000"><img src="https://avatars1.githubusercontent.com/u/12656264?v=4" width="100px;" alt=""/><br /><sub><b>simon3000</b></sub></a><br /><a href="https://github.com/kokororin/pixiv.moe/commits?author=simon300000" title="Code">💻</a> <a href="#ideas-simon300000" title="Ideas, Planning, & Feedback">🤔</a> <a href="#translation-simon300000" title="Translation">🌍</a></td>
     <td align="center"><a href="https://blog.0wo.me"><img src="https://avatars0.githubusercontent.com/u/29944979?v=4" width="100px;" alt=""/><br /><sub><b>Muhammad Iqbal Rifai</b></sub></a><br /><a href="#translation-py7hon" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/Meodinger"><img src="https://avatars1.githubusercontent.com/u/54493746?v=4" width="100px;" alt=""/><br /><sub><b>Meodinger Wang</b></sub></a><br /><a href="#translation-Meodinger" title="Translation">🌍</a></td>
   </tr>
