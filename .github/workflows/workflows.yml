@@ -24,6 +24,8 @@ jobs:
         run: npm run lint
       - name: Test
         run: npm test
+      - name: Test Coverage
+        run: npm run coverage
       - name: Build
         if: github.ref == 'refs/heads/release'
         run: npm run dist
