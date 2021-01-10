@@ -1,6 +1,5 @@
 <h1 align=center><img src="https://raw.githubusercontent.com/kokororin/pixiv.moe/master/src/images/favicon.png" width=50/> pixiv.moe</h1>
 
-[![Build Status](http://img.shields.io/travis/kokororin/pixiv.moe.svg)](https://travis-ci.org/kokororin/pixiv.moe)
 [![Coverage Status](https://coveralls.io/repos/github/kokororin/pixiv.moe/badge.svg?branch=master)](https://coveralls.io/github/kokororin/pixiv.moe?branch=master)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
