@@ -1,6 +1,5 @@
 <h1 align=center><img src="https://raw.githubusercontent.com/kokororin/pixiv.moe/master/src/images/favicon.png" width=50/> pixiv.moe</h1>
 
-[![Coverage Status](https://coveralls.io/repos/github/kokororin/pixiv.moe/badge.svg?branch=master)](https://coveralls.io/github/kokororin/pixiv.moe?branch=master)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) order by popularity. Written with React.
@@ -57,7 +56,7 @@ $ npm start
 - Install dependencies: `yarn`
 - Run Front-end Server: `npm start`
 - Test: `npm test`
-- Build Front-end: `npm run dist`
+- Build Front-end: `npm run build`
 
 ### API
 
