@@ -12,7 +12,7 @@
     "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx --fix src test",
     "start": "cross-env NODE_ENV=development TS_NODE_PROJECT=\"tsconfig-server.json\" webpack-dev-server --config build/webpack.config.ts",
     "type:check": "tsc --noEmit",
-    "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=\".json\" karma start",
+    "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=\"tsconfig-server.json\" karma start",
     "test:watch": "cross-env NODE_ENV=test TS_NODE_PROJECT=\"tsconfig-server.json\" karma start --autoWatch=true --singleRun=false",
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "contributors:add": "all-contributors add",
