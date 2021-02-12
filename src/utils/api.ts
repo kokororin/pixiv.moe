@@ -49,22 +49,22 @@ honoka.interceptors.register({
 export const session = () => honoka.get('/session') as Promise<IPixivResponse>;
 
 export const tags = () =>
-  honoka.get('/trending/tags') as Promise<IPixivResponse>;
+  honoka.get('/v2/trending/tags') as Promise<IPixivResponse>;
 
 export const ranking = (page: number) =>
-  honoka.get('/ranking', {
+  honoka.get('/v2/ranking', {
     data: {
       page
     }
   }) as Promise<IPixivResponse>;
 
 export const search = (data: { word: string; page: number }) =>
-  honoka.get('/search', {
+  honoka.get('/v2/search', {
     data
   }) as Promise<IPixivResponse>;
 
 export const illust = (illustId: number | string) =>
-  honoka.get(`/illust/${illustId}`) as Promise<IPixivResponse>;
+  honoka.get(`/v2/illust/${illustId}`) as Promise<IPixivResponse>;
 
 export const illustComments = (
   illustId: number | string,
@@ -72,7 +72,7 @@ export const illustComments = (
     page: number;
   }
 ) =>
-  honoka.get(`/illust/comments/${illustId}`, {
+  honoka.get(`/v2/illust/comments/${illustId}`, {
     data
   }) as Promise<IPixivResponse>;
 

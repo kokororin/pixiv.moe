@@ -160,7 +160,7 @@ interface IIllustContainerRouteInfo {
 }
 
 const IllustContainer: React.FunctionComponent<{}> = () => {
-  const [shouldLogin, setShouldLogin] = React.useState(true);
+  const [shouldLogin] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [boxIndex, setBoxIndex] = React.useState(0);
   const [showBox, setShowBox] = React.useState(false);
@@ -183,14 +183,14 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
     return null;
   }
 
-  const fetchBookmark = () => {
-    api
-      .illustBookmarkDetail(illustId)
-      .then(data => {
-        setIsBookmarked(data.response?.bookmark_detail?.is_bookmarked ?? false);
-      })
-      .catch(() => {});
-  };
+  // const fetchBookmark = () => {
+  //   api
+  //     .illustBookmarkDetail(illustId)
+  //     .then(data => {
+  //       setIsBookmarked(data.response?.bookmark_detail?.is_bookmarked ?? false);
+  //     })
+  //     .catch(() => {});
+  // };
 
   const item = illust.items[illustId] ? illust.items[illustId] : { title: '' };
 
@@ -222,6 +222,16 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
   };
 
   const onBookmarkClick = () => {
+    if (moment().year() >= 2021) {
+      makeAlert(
+        'error',
+        intl.formatMessage({
+          id: 'API Server is upgrading'
+        })
+      );
+      return;
+    }
+
     const authData = api.getAuth();
     if (!authData) {
       return loginRef.current?.open();
@@ -267,22 +277,22 @@ const IllustContainer: React.FunctionComponent<{}> = () => {
   };
 
   React.useEffect(() => {
-    if (!api.getAuth()) {
-      setShouldLogin(true);
-      console.log(loginRef);
-      loginRef.current?.open(() => {
-        window.location.reload();
-      });
-      return;
-    }
-    setShouldLogin(false);
+    // if (!api.getAuth()) {
+    //   setShouldLogin(true);
+    //   console.log(loginRef);
+    //   loginRef.current?.open(() => {
+    //     window.location.reload();
+    //   });
+    //   return;
+    // }
+    // setShouldLogin(false);
 
     if (!item.id) {
       illust.fetchItem(illustId);
     }
 
     illust.fetchComments(illustId);
-    fetchBookmark();
+    // fetchBookmark();
 
     return () => {
       illust.clearComments();

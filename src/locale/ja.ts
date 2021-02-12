@@ -29,5 +29,6 @@ export default {
   'This page is not available in your area':
     'このページはお住まいの地域からご利用になれません。',
   'Please sign in to continue': '続行するにはログインしてください',
-  'Refresh page': 'ページの更新'
+  'Refresh page': 'ページの更新',
+  'API Server is upgrading': 'APIサーバーがアップグレード中'
 };

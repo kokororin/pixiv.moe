@@ -4,6 +4,7 @@ import { useObserver } from 'mobx-react-lite';
 import { IconButton, Avatar } from '@material-ui/core';
 import { AccountCircle as AccountCircleIcon } from '@material-ui/icons';
 import EventListener from 'react-event-listener';
+import moment from 'moment';
 import * as api from '@/utils/api';
 import { useAlert } from '@/components/Alert';
 import Login, { ILoginHandles } from '@/components/Login';
@@ -93,6 +94,16 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
           'error',
           intl.formatMessage({ id: 'Password is Blank' })
         );
+      }
+
+      if (moment().year() >= 2021) {
+        makeAlert(
+          'error',
+          intl.formatMessage({
+            id: 'API Server is upgrading'
+          })
+        );
+        return;
       }
 
       setIsSubmitting(true);

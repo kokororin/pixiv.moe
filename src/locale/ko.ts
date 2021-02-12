@@ -29,5 +29,6 @@ export default {
   'This page is not available in your area':
     '귀하의 지역에서는이 페이지를 이용할 수 없습니다.',
   'Please sign in to continue': '계속하려면 로그인하십시오',
-  'Refresh page': '페이지 새로 고침'
+  'Refresh page': '페이지 새로 고침',
+  'API Server is upgrading': 'API 서버가 업그레이드 중입니다'
 };

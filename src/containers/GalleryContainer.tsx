@@ -34,7 +34,7 @@ import LanguageSelector from '@/components/LanguageSelector';
 import SearchInput from '@/components/SearchInput';
 import Content, { IContentHandles } from '@/components/Content';
 import Storage from '@/utils/Storage';
-import * as api from '@/utils/api';
+// import * as api from '@/utils/api';
 
 import LoginContainer, {
   ILoginContainerHandles,
@@ -76,7 +76,7 @@ const GalleryContainer: React.FunctionComponent<{}> = () => {
   const location = useLocation();
   const history = useHistory();
   const gallery = React.useContext(GalleryContext);
-  const [shouldLogin, setShouldLogin] = React.useState(true);
+  const [shouldLogin] = React.useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [isSearchByPopularity] = React.useState(false);
   const loginRef = React.useRef<ILoginContainerHandles>(null);
@@ -133,14 +133,14 @@ const GalleryContainer: React.FunctionComponent<{}> = () => {
   };
 
   React.useEffect(() => {
-    if (!api.getAuth()) {
-      setShouldLogin(true);
-      loginRef.current?.open(() => {
-        window.location.reload();
-      });
-      return;
-    }
-    setShouldLogin(false);
+    // if (!api.getAuth()) {
+    //   setShouldLogin(true);
+    //   loginRef.current?.open(() => {
+    //     window.location.reload();
+    //   });
+    //   return;
+    // }
+    // setShouldLogin(false);
 
     if (gallery.fromIllust) {
       onSearch(gallery.word);
@@ -291,8 +291,9 @@ const GalleryContainer: React.FunctionComponent<{}> = () => {
             isLoading={gallery.isFetching}
             hasMore>
             <div className={classes.root}>
+              {gallery.items.length === 0 && gallery.isFetching && <Loading />}
               <GalleryList items={gallery.items} />
-              {gallery.isFetching && <Loading />}
+              {gallery.items.length > 0 && gallery.isFetching && <Loading />}
               {gallery.isError && (
                 <>
                   <Message

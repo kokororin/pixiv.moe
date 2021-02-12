@@ -93,18 +93,18 @@ const Comment: React.FunctionComponent<ICommentProps> = ({ item }) => {
       <span className={classes.main}>
         <div className={classes.avatar}>
           <Img
-            src={[api.proxyImage(item.user.profile_image_urls.medium)]}
+            src={[api.proxyImage(item.img)]}
             loader={
               <img src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" />
             }
           />
         </div>
         <span>
-          {item.user.name}
+          {item.user_name}
           <span
             className={classes.content}
             dangerouslySetInnerHTML={{
-              __html: EmojiParser.parse(item.comment)
+              __html: EmojiParser.parse(item.one_comment_comment)
             }}
           />
         </span>

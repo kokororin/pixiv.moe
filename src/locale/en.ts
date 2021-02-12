@@ -28,5 +28,6 @@ export default {
   'This page is not available in your area':
     'This page is not available in your area.',
   'Please sign in to continue': 'Please sign in to continue',
-  'Refresh page': 'Refresh page'
+  'Refresh page': 'Refresh page',
+  'API Server is upgrading': 'API Server is upgrading'
 };
