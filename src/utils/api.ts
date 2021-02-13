@@ -77,13 +77,13 @@ export const illustComments = (
   }) as Promise<IPixivResponse>;
 
 export const illustBookmarkDetail = (illustId: number | string) =>
-  honoka.get(`/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
+  honoka.get(`/v1/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
 
 export const illustBookmarkAdd = (illustId: number | string) =>
-  honoka.post(`/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
+  honoka.post(`/v1/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
 
 export const illustBookmarkDelete = (illustId: number | string) =>
-  honoka.delete(`/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
+  honoka.delete(`/v1/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
 
 export const proxyImage = (url: string) => {
   const regex = /^http?s:\/\/(i\.pximg\.net)|(source\.pixiv\.net)/i;
@@ -98,7 +98,7 @@ export const auth = (data: {
   password?: string;
   refreshToken?: string;
 }) =>
-  honoka.post('/auth', {
+  honoka.post('/v1/auth', {
     data: {
       username: data.username,
       password: data.password,
