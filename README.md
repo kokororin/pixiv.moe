@@ -91,6 +91,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://github.com/simon300000"><img src="https://avatars1.githubusercontent.com/u/12656264?v=4" width="100px;" alt=""/><br /><sub><b>simon3000</b></sub></a><br /><a href="https://github.com/kokororin/pixiv.moe/commits?author=simon300000" title="Code">💻</a> <a href="#ideas-simon300000" title="Ideas, Planning, & Feedback">🤔</a> <a href="#translation-simon300000" title="Translation">🌍</a></td>
     <td align="center"><a href="https://blog.0wo.me"><img src="https://avatars0.githubusercontent.com/u/29944979?v=4" width="100px;" alt=""/><br /><sub><b>Muhammad Iqbal Rifai</b></sub></a><br /><a href="#translation-py7hon" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/Meodinger"><img src="https://avatars1.githubusercontent.com/u/54493746?v=4" width="100px;" alt=""/><br /><sub><b>Meodinger Wang</b></sub></a><br /><a href="#translation-Meodinger" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/kaozaza2"><img src="https://avatars1.githubusercontent.com/u/11665930?v=4" width="100px;" alt=""/><br /><sub><b>Kao</b></sub></a><br /><a href="#translation-kaozaza2" title="Translation">🌍</a></td>
   </tr>
 </table>
 
