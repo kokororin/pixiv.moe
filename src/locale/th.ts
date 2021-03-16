@@ -12,7 +12,7 @@ export default {
   'pixiv ID or Email Address is Blank': 'pixiv ID หรือที่อยู่ Email ว่างเปล่า',
   'Password is Blank': 'Password ว่างเปล่า',
   'Wait a Moment': 'รอซักครู่',
-  Login: 'เข้าสูระบบ',
+  Login: 'เข้าสู่ระบบ',
   Logout: 'ออกจากระบบ',
   'Email Address / pixiv ID': 'Email Address / pixiv ID',
   Password: 'รหัสผ่าน',
