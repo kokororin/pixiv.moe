@@ -26,6 +26,11 @@ config.languages = [
     name: '한국어',
     value: 'ko',
     messages: require('@/locale/ko').default
+  },
+  {
+    name: 'ภาษาไทย',
+    value: 'th',
+    messages: require('@/locale/th').default
   }
 ];
 
