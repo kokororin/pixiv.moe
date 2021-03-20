@@ -58,6 +58,16 @@ $ npm start
 - Test: `npm test`
 - Build Front-end: `npm run build`
 
+
+### Deploy
+
+#### With Docker
+
+```bash
+docker build -t <customized-name> .
+docker run -p <port>:80 -d <customized-name>
+```
+
 ### API
 
 The API is based on HTTPS requests and JSON responses.
