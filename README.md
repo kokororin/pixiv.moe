@@ -15,6 +15,8 @@ Table of Contents
   * [Dev](#dev)
      * [Commands](#commands)
      * [API](#api)
+  * [Deploy](#deploy)
+     * [With Docker](#with-docker)
   * [Localization](#localization)
   * [Contribute](#contribute)
   * [Contributors](#contributors)
@@ -58,16 +60,6 @@ $ npm start
 - Test: `npm test`
 - Build Front-end: `npm run build`
 
-
-### Deploy
-
-#### With Docker
-
-```bash
-docker build -t <customized-name> .
-docker run -p <port>:80 -d <customized-name>
-```
-
 ### API
 
 The API is based on HTTPS requests and JSON responses.
@@ -77,6 +69,16 @@ Our online site's API Server uses `https://api.pixiv.moe/`
 To check whether our API server **could** connected to pixiv, you can visit [https://api.pixiv.moe/ping](https://api.pixiv.moe/ping).
 
 See more in [API Docs](https://api.kotori.love/docs/#/pixiv).
+
+
+## Deploy
+
+### With Docker
+
+```bash
+docker build -t <customized-name> .
+docker run -p <port>:80 -d <customized-name>
+```
 
 ## Localization
 
