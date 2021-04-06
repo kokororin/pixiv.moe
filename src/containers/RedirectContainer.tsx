@@ -16,7 +16,7 @@ const RedirectContainer: React.FunctionComponent<{}> = () => {
     if (!isNaN(parseFloat(illustId)) && isFinite(Number(illustId))) {
       setIsError(false);
       new Promise(resolve => setTimeout(resolve, 1500)).then(() => {
-        window.location.href = `http://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illustId}`;
+        window.location.href = `https://www.pixiv.net/artworks/${illustId}`;
       });
     } else {
       setIsError(true);
