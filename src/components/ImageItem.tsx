@@ -104,7 +104,7 @@ interface IImageItemProps {
   index: number;
 }
 
-const ImageItem: React.FunctionComponent<IImageItemProps> = props => {
+const ImageItem: React.FC<IImageItemProps> = props => {
   const classes = useStyles();
 
   const onImageMouseMove = (event: React.MouseEvent) => {

@@ -7,7 +7,7 @@ interface IRedirectContainerRouteInfo {
   illustId: string;
 }
 
-const RedirectContainer: React.FunctionComponent<{}> = () => {
+const RedirectContainer: React.FC<{}> = () => {
   const [isError, setIsError] = React.useState(false);
   const { illustId } = useParams<IRedirectContainerRouteInfo>();
   const intl = useIntl();

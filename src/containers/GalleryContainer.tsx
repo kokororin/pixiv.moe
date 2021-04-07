@@ -70,7 +70,7 @@ export const useStyles = makeStyles({
   }
 });
 
-const GalleryContainer: React.FunctionComponent<{}> = () => {
+const GalleryContainer: React.FC<{}> = () => {
   const classes = useStyles();
   const intl = useIntl();
   const location = useLocation();

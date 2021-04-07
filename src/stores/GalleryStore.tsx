@@ -108,7 +108,7 @@ type TGalleryStore = ReturnType<typeof createStore>;
 
 export const GalleryContext = React.createContext<TGalleryStore | null>(null);
 
-export const GalleryProvider: React.FunctionComponent<{}> = props => {
+export const GalleryProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);
 
   return (

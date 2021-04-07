@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   }
 });
 
-const ScrollContext: React.FunctionComponent<{}> = props => {
+const ScrollContext: React.FC<{}> = props => {
   const classes = useStyles();
   const location = useLocation();
 

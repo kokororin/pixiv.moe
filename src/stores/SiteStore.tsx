@@ -21,7 +21,7 @@ type TSiteStore = ReturnType<typeof createStore>;
 
 export const SiteContext = React.createContext<TSiteStore | null>(null);
 
-export const SiteProvider: React.FunctionComponent<{}> = props => {
+export const SiteProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);
 
   return (

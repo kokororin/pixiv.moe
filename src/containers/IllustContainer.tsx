@@ -159,7 +159,7 @@ interface IIllustContainerRouteInfo {
   illustId: string;
 }
 
-const IllustContainer: React.FunctionComponent<{}> = () => {
+const IllustContainer: React.FC<{}> = () => {
   const [shouldLogin] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [boxIndex, setBoxIndex] = React.useState(0);

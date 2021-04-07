@@ -9,7 +9,7 @@ interface IInfiniteScrollProps {
   isLoading: boolean;
 }
 
-const InfiniteScroll: React.FunctionComponent<IInfiniteScrollProps> = props => {
+const InfiniteScroll: React.FC<IInfiniteScrollProps> = props => {
   const site = React.useContext(SiteContext);
 
   if (!site) {

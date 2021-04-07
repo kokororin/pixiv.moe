@@ -116,7 +116,7 @@ interface IImageBoxProps {
   onClose: () => void;
 }
 
-const ImageBox: React.FunctionComponent<IImageBoxProps> = props => {
+const ImageBox: React.FC<IImageBoxProps> = props => {
   const classes = useStyles();
   const [index, setIndex] = React.useState(props.index);
 

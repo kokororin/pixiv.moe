@@ -6,7 +6,7 @@ type TCreateAlert = (severity: Color, message: string) => void;
 
 const AlertContext = React.createContext({} as TCreateAlert);
 
-export const AlertProvider: React.FunctionComponent<{}> = props => {
+export const AlertProvider: React.FC<{}> = props => {
   const [open, setOpen] = React.useState(false);
   const [severity, setSeverity] = React.useState<Color>('info');
   const [message, setMessage] = React.useState('');

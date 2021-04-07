@@ -88,7 +88,7 @@ type TIllustStore = ReturnType<typeof createStore>;
 
 export const IllustContext = React.createContext<TIllustStore | null>(null);
 
-export const IllustProvider: React.FunctionComponent<{}> = props => {
+export const IllustProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);
 
   return (

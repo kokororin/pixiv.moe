@@ -23,7 +23,7 @@ type TLocaleStore = ReturnType<typeof createStore>;
 
 export const LocaleContext = React.createContext<TLocaleStore | null>(null);
 
-export const LocaleProvider: React.FunctionComponent<{}> = props => {
+export const LocaleProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);
 
   return (
@@ -33,7 +33,7 @@ export const LocaleProvider: React.FunctionComponent<{}> = props => {
   );
 };
 
-export const ConnectedIntlProvider: React.FunctionComponent<IntlConfig> = props => {
+export const ConnectedIntlProvider: React.FC<IntlConfig> = props => {
   const locale = React.useContext(LocaleContext);
 
   if (!locale) {

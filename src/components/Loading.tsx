@@ -3,7 +3,7 @@ import { CircularProgress } from '@material-ui/core';
 
 import { useStyles } from '@/components/Message';
 
-const Loading: React.FunctionComponent<{}> = () => {
+const Loading: React.FC<{}> = () => {
   const classes = useStyles();
   return (
     <div className={classes.message}>

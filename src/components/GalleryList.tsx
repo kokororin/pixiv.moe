@@ -7,7 +7,7 @@ interface IGalleryListProps {
   items: any[];
 }
 
-const GalleryList: React.FunctionComponent<IGalleryListProps> = props => {
+const GalleryList: React.FC<IGalleryListProps> = props => {
   return (
     <StackGrid
       className="stack-grid"

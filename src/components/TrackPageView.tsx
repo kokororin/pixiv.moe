@@ -5,7 +5,7 @@ import config from '@/config';
 
 ReactGA.initialize(config.trackingID);
 
-const TrackPageView: React.FunctionComponent<{}> = props => {
+const TrackPageView: React.FC<{}> = props => {
   const location = useLocation();
 
   const track = () => {

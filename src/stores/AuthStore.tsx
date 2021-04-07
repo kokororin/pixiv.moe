@@ -18,7 +18,7 @@ type TAuthStore = ReturnType<typeof createStore>;
 
 export const AuthContext = React.createContext<TAuthStore | null>(null);
 
-export const AuthProvider: React.FunctionComponent<{}> = props => {
+export const AuthProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);
 
   return (

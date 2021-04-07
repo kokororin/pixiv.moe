@@ -60,7 +60,7 @@ interface ICommentProps {
   item: any;
 }
 
-const Comment: React.FunctionComponent<ICommentProps> = ({ item }) => {
+const Comment: React.FC<ICommentProps> = ({ item }) => {
   const classes = useStyles();
   const badWords = [
     '墙',

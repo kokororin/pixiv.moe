@@ -66,7 +66,7 @@ interface ISearchInputProps {
   isSearchByPopularity: boolean;
 }
 
-const SearchInput: React.FunctionComponent<ISearchInputProps> = props => {
+const SearchInput: React.FC<ISearchInputProps> = props => {
   const classes = useStyles();
   const inputRef = React.useRef<HTMLInputElement>(null);
 

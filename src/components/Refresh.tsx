@@ -16,9 +16,7 @@ interface IRefreshProps extends FabProps {
   onClick: () => void;
 }
 
-const Refresh: React.FunctionComponent<IRefreshProps> = (
-  props: IRefreshProps
-) => {
+const Refresh: React.FC<IRefreshProps> = (props: IRefreshProps) => {
   const classes = useStyles();
   return (
     <div className={classes.floatBtn}>

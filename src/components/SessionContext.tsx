@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   }
 });
 
-const SessionContext: React.FunctionComponent<{}> = props => {
+const SessionContext: React.FC<{}> = props => {
   const classes = useStyles();
   const intl = useIntl();
   const [token, setToken] = React.useState('');

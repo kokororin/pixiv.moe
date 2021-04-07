@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   }
 });
 
-const LanguageSelector: React.FunctionComponent<{}> = () => {
+const LanguageSelector: React.FC<{}> = () => {
   const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
   const classes = useStyles();
   const locale = React.useContext(LocaleContext);

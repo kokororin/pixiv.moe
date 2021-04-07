@@ -92,7 +92,7 @@ const useStyles = makeStyles({
   }
 });
 
-const Baseline: React.FunctionComponent<{}> = props => {
+const Baseline: React.FC<{}> = props => {
   useStyles();
   return <>{props.children}</>;
 };

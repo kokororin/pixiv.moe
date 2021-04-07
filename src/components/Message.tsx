@@ -36,7 +36,7 @@ interface IMessageProps {
   text: string;
 }
 
-const Message: React.FunctionComponent<IMessageProps> = props => {
+const Message: React.FC<IMessageProps> = props => {
   const classes = useStyles();
 
   return props.code ? (
