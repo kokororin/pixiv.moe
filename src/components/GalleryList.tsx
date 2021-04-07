@@ -1,17 +1,27 @@
 import React from 'react';
 import StackGrid from 'react-stack-grid';
+import { makeStyles } from '@material-ui/core/styles';
 
 import ImageItem from '@/components/ImageItem';
+
+const useStyles = makeStyles({
+  stackGrid: {
+    margin: '0 auto',
+    '@media screen and (min-width: 380px)': {
+      width: '95%'
+    }
+  }
+});
 
 interface IGalleryListProps {
   items: any[];
 }
 
 const GalleryList: React.FC<IGalleryListProps> = props => {
+  const classes = useStyles();
   return (
     <StackGrid
-      className="stack-grid"
-      style={{ margin: '0 auto', width: '95%' }}
+      className={classes.stackGrid}
       columnWidth={180}
       gutterWidth={10}
       component="div"
