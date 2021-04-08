@@ -56,7 +56,8 @@ const config: webpack.Configuration = {
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.PIXIV_API_ENTRY': JSON.stringify(process.env.PIXIV_API_ENTRY)
     }),
     new ForkTsCheckerWebpackPlugin(),
     // @ts-ignore
