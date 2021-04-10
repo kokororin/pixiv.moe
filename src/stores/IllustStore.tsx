@@ -21,23 +21,19 @@ const createStore = () => {
       return api
         .illust(illustId)
         .then(data => {
-          if (
-            data.response.metadata &&
-            typeof data.response.metadata.zip_urls === 'object' &&
-            data.response.metadata.zip_urls
-          ) {
-            const zipURL =
-              data.response.metadata.zip_urls[
-                Object.keys(data.response.metadata.zip_urls)[0]
-              ];
-            getImagesFromZip(zipURL)
-              .then(images => {
-                data.response.metadata.zip_images = images;
-                store.items[illustId] = data.response;
-              })
-              .then(() => {
-                store.isFetching = false;
-              });
+          if (data?.response?.illust?.type === 'manga') {
+            api.illustUgoira(illustId).then(ugoiraData => {
+              let zipURL = ugoiraData.response.src;
+              zipURL = api.proxyImage(zipURL);
+              getImagesFromZip(zipURL)
+                .then(images => {
+                  data.response.illust.zip_images = images;
+                  store.items[illustId] = data.response.illust;
+                })
+                .then(() => {
+                  store.isFetching = false;
+                });
+            });
           } else {
             store.items[illustId] = data.response.illust;
             store.isFetching = false;

@@ -300,6 +300,9 @@ const IllustContainer: React.FC<{}> = () => {
   }, []);
 
   const renderImage = () => {
+    if (item?.zip_images?.length > 0) {
+      return <GifPlayer images={item.zip_images} />;
+    }
     if (item.meta_pages?.length > 0) {
       return item.meta_pages.map((elem: any, index: number) => {
         return (
@@ -326,10 +329,6 @@ const IllustContainer: React.FC<{}> = () => {
           onClick={() => onImageClick(0)}
         />
       );
-    }
-
-    if (item.metadata?.zip_images?.length > 0) {
-      return <GifPlayer images={item.metadata.zip_images} />;
     }
   };
 

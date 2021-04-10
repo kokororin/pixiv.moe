@@ -66,6 +66,9 @@ export const search = (data: { word: string; page: number }) =>
 export const illust = (illustId: number | string) =>
   honoka.get(`/v2/illust/${illustId}`) as Promise<IPixivResponse>;
 
+export const illustUgoira = (illustId: number | string) =>
+  honoka.get(`/v2/illust/ugoira/${illustId}`) as Promise<IPixivResponse>;
+
 export const illustComments = (
   illustId: number | string,
   data: {
