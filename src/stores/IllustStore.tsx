@@ -15,60 +15,58 @@ const createStore = () => {
     isFetchingComments: true,
     isCommentsError: false,
 
-    fetchItem(illustId: string) {
+    async fetchItem(illustId: string) {
       store.isFetching = true;
       store.isError = false;
-      return api
-        .illust(illustId)
-        .then(data => {
-          if (data?.response?.illust?.type === 'manga') {
-            api.illustUgoira(illustId).then(ugoiraData => {
-              let zipURL = ugoiraData.response.src;
-              zipURL = api.proxyImage(zipURL);
-              getImagesFromZip(zipURL)
-                .then(images => {
-                  data.response.illust.zip_images = images;
-                  store.items[illustId] = data.response.illust;
-                })
-                .then(() => {
-                  store.isFetching = false;
-                });
-            });
-          } else {
+
+      try {
+        const data = await api.illust(illustId);
+        if (data?.response?.illust?.type === 'manga') {
+          try {
+            const ugoiraData = await api.illustUgoira(illustId);
+            let zipURL = ugoiraData.response.src;
+            zipURL = api.proxyImage(zipURL);
+            const images = await getImagesFromZip(zipURL);
+            data.response.illust.zip_images = images;
+            store.items[illustId] = data.response.illust;
+            store.isFetching = false;
+          } catch (err) {
             store.items[illustId] = data.response.illust;
             store.isFetching = false;
           }
-        })
-        .catch(() => {
+        } else {
+          store.items[illustId] = data.response.illust;
           store.isFetching = false;
-          store.isError = true;
-        });
+        }
+      } catch (err) {
+        store.isFetching = false;
+        store.isError = true;
+      } finally {
+      }
     },
 
-    fetchComments(illustId: string) {
+    async fetchComments(illustId: string) {
       store.isFetchingComments = true;
-      store.isCommentsError = false;
-      return api
-        .illustComments(illustId, {
+      // store.isCommentsError = false;
+      try {
+        const data = await api.illustComments(illustId, {
           page: store.page
-        })
-        .then(data => {
-          if (data.response.comments) {
-            if (data.response.next) {
-              store.page = store.page + 1;
-            } else {
-              store.isCommentsEnd = true;
-            }
-            store.comments = [...store.comments, ...data.response.comments];
-          }
-        })
-        .then(() => {
-          store.isFetchingComments = false;
-        })
-        .catch(() => {
-          store.isFetchingComments = false;
-          store.isCommentsError = true;
         });
+        if (data.response.comments) {
+          if (data.response.next) {
+            store.page = store.page + 1;
+          } else {
+            store.isCommentsEnd = true;
+          }
+          store.comments = [...store.comments, ...data.response.comments];
+        }
+        store.isFetchingComments = false;
+      } catch (err) {
+        store.isFetchingComments = false;
+        // store.isCommentsError = true;
+        store.comments = [];
+        store.isCommentsEnd = true;
+      }
     },
 
     clearComments() {

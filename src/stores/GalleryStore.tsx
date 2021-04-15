@@ -16,72 +16,46 @@ export const createStore = () => {
     word: 'ranking',
     fromIllust: false,
 
-    fetchSource() {
+    async fetchSource() {
       if (store.isFetching) {
         return;
       }
       store.isError = false;
       store.isFetching = true;
-      if (store.word === 'ranking') {
-        return api
-          .ranking(store.page)
-          .then(data => {
-            if (data.response.illusts && data.response.illusts.length > 0) {
-              data.response.illusts.forEach((elem: any) => {
-                store.items = [...store.items, ...[elem]];
+      try {
+        const data =
+          store.word === 'ranking'
+            ? await api.ranking(store.page)
+            : await api.search({
+                word: store.word,
+                page: store.page
               });
-            } else {
-              store.isError = true;
-              store.errorTimes = store.errorTimes + 1;
-            }
-          })
-          .then(() => {
-            store.isFetching = false;
-            store.page = store.page + 1;
-          })
-          .catch(() => {
-            store.isFetching = false;
-            store.isError = true;
+        if (data.response.illusts && data.response.illusts.length > 0) {
+          data.response.illusts.forEach((elem: any) => {
+            store.items = [...store.items, ...[elem]];
           });
-      }
-
-      return api
-        .search({
-          word: store.word,
-          page: store.page
-        })
-        .then(data => {
-          if (data.response.illusts && data.response.illusts.length > 0) {
-            data.response.illusts.forEach((elem: any) => {
-              store.items = [...store.items, ...[elem]];
-            });
-          } else {
-            store.isError = true;
-            store.errorTimes = store.errorTimes + 1;
-          }
-        })
-        .then(() => {
-          store.isFetching = false;
-          store.page = store.page + 1;
-        })
-        .catch(() => {
-          store.isFetching = false;
+        } else {
           store.isError = true;
-        });
+          store.errorTimes = store.errorTimes + 1;
+        }
+        store.page = store.page + 1;
+      } catch (err) {
+        store.isError = true;
+      } finally {
+        store.isFetching = false;
+      }
     },
 
-    fetchTags() {
+    async fetchTags() {
       store.isFetchingTags = true;
-      return api
-        .tags()
-        .then(data => {
-          if (data.response.tags) {
-            store.tags = data.response.tags;
-          }
-        })
-        .finally(() => {
-          store.isFetchingTags = false;
-        });
+      try {
+        const data = await api.tags();
+        if (data.response.tags) {
+          store.tags = data.response.tags;
+        }
+      } finally {
+        store.isFetchingTags = false;
+      }
     },
 
     clearErrorTimes() {

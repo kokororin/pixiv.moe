@@ -72,7 +72,7 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
       loginRef.current?.close();
     };
 
-    const onLoginClick = () => {
+    const onLoginClick = async () => {
       if (isSubmitting || !loginRef.current?.getIsOpen()) {
         return;
       }
@@ -108,34 +108,30 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
 
       setIsSubmitting(true);
 
-      api
-        .auth({
+      try {
+        const data = await api.auth({
           username,
           password
-        })
-        .then((data: any) => {
-          const authData = data.response;
-          api.setAuth(authData, auth.setAuth);
-          setAuthData(authData);
-          setTimeout(() => {
-            close();
-            loginRef.current?.reset();
-            onLogin();
-          }, 1500);
-        })
-        .then(() => {
-          setIsSubmitting(false);
-        })
-        .catch(err => {
-          setIsSubmitting(false);
-          makeAlert(
-            'error',
-            err.message ||
-              intl.formatMessage({
-                id: 'Communication Error Occurred'
-              })
-          );
         });
+        const authData = data.response;
+        api.setAuth(authData, auth.setAuth);
+        setAuthData(authData);
+        setTimeout(() => {
+          close();
+          loginRef.current?.reset();
+          onLogin();
+        }, 1500);
+        setIsSubmitting(false);
+      } catch (err) {
+        setIsSubmitting(false);
+        makeAlert(
+          'error',
+          err.message ||
+            intl.formatMessage({
+              id: 'Communication Error Occurred'
+            })
+        );
+      }
     };
 
     const onLogoutClick = () => {

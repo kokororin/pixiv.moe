@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
+import useAsyncEffect from 'use-async-effect';
 import Loading from '@/components/Loading';
 import Message from '@/components/Message';
 import * as api from '@/utils/api';
@@ -22,17 +23,15 @@ const SessionContext: React.FC<{}> = props => {
   const [token, setToken] = React.useState('');
   const [loading, setLoading] = React.useState(true);
 
-  React.useEffect(() => {
-    api
-      .session()
-      .then(data => {
-        setToken(data.response.access_token);
-        Storage.set('token', data.response.access_token);
-        api.refreshToken();
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+  useAsyncEffect(async () => {
+    try {
+      const data = await api.session();
+      setToken(data.response.access_token);
+      Storage.set('token', data.response.access_token);
+      api.refreshToken();
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   if (loading) {

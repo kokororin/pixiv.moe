@@ -139,7 +139,8 @@
     "react-stack-grid": "^0.7.1",
     "shortid": "^2.2.15",
     "store": "^2.0.12",
-    "url-search-params-polyfill": "^8.0.0"
+    "url-search-params-polyfill": "^8.0.0",
+    "use-async-effect": "^2.2.3"
   },
   "engines": {
     "node": ">=10.0.0"

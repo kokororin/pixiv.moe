@@ -183,13 +183,11 @@ const IllustContainer: React.FC<{}> = () => {
     return null;
   }
 
-  // const fetchBookmark = () => {
-  //   api
-  //     .illustBookmarkDetail(illustId)
-  //     .then(data => {
-  //       setIsBookmarked(data.response?.bookmark_detail?.is_bookmarked ?? false);
-  //     })
-  //     .catch(() => {});
+  // const fetchBookmark = async () => {
+  //   try {
+  //     const data = await api.illustBookmarkDetail(illustId);
+  //     setIsBookmarked(data.response?.bookmark_detail?.is_bookmarked ?? false);
+  //   } catch (err) {}
   // };
 
   const item = illust.items[illustId] ? illust.items[illustId] : { title: '' };
@@ -221,7 +219,7 @@ const IllustContainer: React.FC<{}> = () => {
     history.push('/');
   };
 
-  const onBookmarkClick = () => {
+  const onBookmarkClick = async () => {
     if (moment().year() >= 2021) {
       makeAlert(
         'error',
@@ -238,19 +236,21 @@ const IllustContainer: React.FC<{}> = () => {
     }
 
     setIsSubmitting(true);
-    api[!isBookmarked ? 'illustBookmarkAdd' : 'illustBookmarkDelete'](illustId)
-      .then(() => {
-        setIsSubmitting(false);
-        setIsBookmarked(!isBookmarked);
-      })
-      .catch(() => {
-        makeAlert(
-          'error',
-          intl.formatMessage({
-            id: 'Communication Error Occurred'
-          })
-        );
-      });
+
+    try {
+      await api[!isBookmarked ? 'illustBookmarkAdd' : 'illustBookmarkDelete'](
+        illustId
+      );
+      setIsSubmitting(false);
+      setIsBookmarked(!isBookmarked);
+    } catch (err) {
+      makeAlert(
+        'error',
+        intl.formatMessage({
+          id: 'Communication Error Occurred'
+        })
+      );
+    }
   };
 
   const onImageClick = (index: number) => {

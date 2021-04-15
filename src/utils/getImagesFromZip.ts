@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import honoka from 'honoka';
 
-export default function getImagesFromZip(zipURL: string) {
+export default function getImagesFromZip(zipURL: string): Promise<string[]> {
   return new Promise(resolve => {
     honoka(zipURL, {
       dataType: 'blob',
