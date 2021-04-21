@@ -22,6 +22,11 @@ const SessionContext: React.FC<{}> = props => {
   const intl = useIntl();
   const [token, setToken] = React.useState('');
   const [loading, setLoading] = React.useState(true);
+  const [message, setMessage] = React.useState(
+    intl.formatMessage({
+      id: 'This page is not available in your area'
+    })
+  );
 
   useAsyncEffect(async () => {
     try {
@@ -29,6 +34,10 @@ const SessionContext: React.FC<{}> = props => {
       setToken(data.response.access_token);
       Storage.set('token', data.response.access_token);
       api.refreshToken();
+    } catch (err) {
+      if (err instanceof api.APIError) {
+        setMessage(err.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -44,14 +53,7 @@ const SessionContext: React.FC<{}> = props => {
   if (token) {
     return <>{props.children}</>;
   }
-  return (
-    <Message
-      code={403}
-      text={intl.formatMessage({
-        id: 'This page is not available in your area'
-      })}
-    />
-  );
+  return <Message code={403} text={message} />;
 };
 
 export default SessionContext;

@@ -6,6 +6,14 @@ interface IPixivResponse {
   [key: string]: any;
 }
 
+export class APIError extends Error {
+  constructor(message: string) {
+    super(message);
+
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
+}
+
 honoka.defaults.baseURL = config.apiBaseURL;
 honoka.defaults.timeout = 60e3;
 
@@ -40,7 +48,7 @@ honoka.interceptors.register({
   },
   response: response => {
     if (response.data?.code !== 200) {
-      return new Error(response.data?.message);
+      return new APIError(response.data?.message);
     }
     return response.data;
   }

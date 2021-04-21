@@ -102,6 +102,7 @@ const GalleryContainer: React.FC<{}> = () => {
   const reRenderContent = () => {
     gallery.errorTimes = 0;
     gallery.clearSource();
+    contentRef?.current?.toTop();
     fetchSource(true);
   };
 
@@ -122,6 +123,7 @@ const GalleryContainer: React.FC<{}> = () => {
       gallery.clearErrorTimes();
       gallery.clearSource();
       gallery.setWord(word);
+      contentRef?.current?.toTop();
       fetchSource(true);
     }
   };
