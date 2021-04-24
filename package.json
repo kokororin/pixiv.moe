@@ -138,6 +138,7 @@
     "react-router-dom": "^5.0.0",
     "react-stack-grid": "^0.7.1",
     "shortid": "^2.2.15",
+    "socket.io-client": "^4.0.1",
     "store": "^2.0.12",
     "url-search-params-polyfill": "^8.0.0",
     "use-async-effect": "^2.2.3"

@@ -4,6 +4,7 @@ import { useIntl } from 'react-intl';
 import useAsyncEffect from 'use-async-effect';
 import Loading from '@/components/Loading';
 import Message from '@/components/Message';
+import { SocketContext } from '@/components/SocketContext';
 import * as api from '@/utils/api';
 import Storage from '@/utils/Storage';
 
@@ -20,6 +21,7 @@ const useStyles = makeStyles({
 const SessionContext: React.FC<{}> = props => {
   const classes = useStyles();
   const intl = useIntl();
+  const socket = React.useContext(SocketContext);
   const [token, setToken] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [message, setMessage] = React.useState(
@@ -34,6 +36,10 @@ const SessionContext: React.FC<{}> = props => {
       setToken(data.response.access_token);
       Storage.set('token', data.response.access_token);
       api.refreshToken();
+      socket.emit('pixiv.online', data.response.access_token);
+      socket.on('pixiv.online.count', onlineCount => {
+        console.log('debug: online clients', onlineCount);
+      });
     } catch (err) {
       if (err instanceof api.APIError) {
         setMessage(err.message);

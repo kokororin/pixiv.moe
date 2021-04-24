@@ -22,6 +22,7 @@ import ScrollContext from '@/components/ScrollContext';
 import SessionContext from '@/components/SessionContext';
 import TrackPageView from '@/components/TrackPageView';
 import { AlertProvider } from '@/components/Alert';
+import { SocketContext, socket } from '@/components/SocketContext';
 
 const theme = createMuiTheme({
   palette: {
@@ -62,11 +63,13 @@ const AppContainer = () => (
       <AlertProvider>
         <Baseline>
           <Router history={history}>
-            <SessionContext>
-              <TrackPageView>
-                <ScrollContext>{renderRoutes(routes)}</ScrollContext>
-              </TrackPageView>
-            </SessionContext>
+            <SocketContext.Provider value={socket}>
+              <SessionContext>
+                <TrackPageView>
+                  <ScrollContext>{renderRoutes(routes)}</ScrollContext>
+                </TrackPageView>
+              </SessionContext>
+            </SocketContext.Provider>
           </Router>
         </Baseline>
       </AlertProvider>
