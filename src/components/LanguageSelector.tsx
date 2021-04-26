@@ -8,10 +8,10 @@ import {
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 import shortid from 'shortid';
-import config from '@/config';
-import Storage from '@/utils/Storage';
-import chooseLocale from '@/locale/chooseLocale';
-import { LocaleContext } from '@/stores/LocaleStore';
+import config from '../config';
+import Storage from '../utils/Storage';
+import chooseLocale from '../locale/chooseLocale';
+import { LocaleContext } from '../stores/LocaleStore';
 
 const useStyles = makeStyles({
   language: {

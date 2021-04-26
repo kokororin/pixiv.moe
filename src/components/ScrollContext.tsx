@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import EventListener, { withOptions } from 'react-event-listener';
-import { SiteContext } from '@/stores/SiteStore';
+import { SiteContext } from '../stores/SiteStore';
 
 const useStyles = makeStyles({
   context: {

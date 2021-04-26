@@ -1,7 +1,7 @@
 import React from 'react';
 import { CircularProgress } from '@material-ui/core';
 
-import { useStyles } from '@/components/Message';
+import { useStyles } from './Message';
 
 const Loading: React.FC<{}> = () => {
   const classes = useStyles();

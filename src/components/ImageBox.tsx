@@ -4,8 +4,8 @@ import Img from 'react-image';
 import isMobile from 'is-mobile';
 import Hotkeys from 'react-hot-keys';
 import { Chip } from '@material-ui/core';
-import Loading from '@/components/Loading';
-import * as api from '@/utils/api';
+import Loading from './Loading';
+import * as api from '../utils/api';
 
 const useStyles = makeStyles({
   root: {
@@ -60,8 +60,8 @@ const useStyles = makeStyles({
     backfaceVisibility: 'hidden',
     top: 0,
     height: '20vh',
-    cursor: `url(${require('@/images/prev.cur').default}) 9 0, url(${
-      require('@/images/prev.cur').default
+    cursor: `url(${require('@images/prev.cur').default}) 9 0, url(${
+      require('@images/prev.cur').default
     }), pointer`,
     margin: 0,
     padding: 0,
@@ -83,8 +83,8 @@ const useStyles = makeStyles({
     opacity: 0,
     pointerEvents: 'auto',
     height: '40vh',
-    cursor: `url(${require('@/images/next.cur').default}) 9 15, url(${
-      require('@/images/next.cur').default
+    cursor: `url(${require('@images/next.cur').default}) 9 15, url(${
+      require('@images/next.cur').default
     }), pointer`,
     top: 'calc(100% - 40vh)',
     margin: 0,

@@ -1,8 +1,8 @@
 import React from 'react';
 import { observable } from 'mobx';
 import { useLocalStore } from 'mobx-react-lite';
-import * as api from '@/utils/api';
-import getImagesFromZip from '@/utils/getImagesFromZip';
+import * as api from '../utils/api';
+import getImagesFromZip from '../utils/getImagesFromZip';
 
 const createStore = () => {
   const store = observable({

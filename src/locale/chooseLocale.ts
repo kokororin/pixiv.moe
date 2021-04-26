@@ -1,36 +1,36 @@
-import Storage from '@/utils/Storage';
-import config from '@/config';
+import Storage from '../utils/Storage';
+import config from '../config';
 
 config.languages = [
   {
     name: '日本語',
     value: 'ja',
-    messages: require('@/locale/ja').default
+    messages: require('./ja').default
   },
   {
     name: '简体中文',
     value: 'zh',
-    messages: require('@/locale/zh').default
+    messages: require('./zh').default
   },
   {
     name: 'English',
     value: 'en',
-    messages: require('@/locale/en').default
+    messages: require('./en').default
   },
   {
     name: 'Bahasa Indonesia',
     value: 'id',
-    messages: require('@/locale/id').default
+    messages: require('./id').default
   },
   {
     name: '한국어',
     value: 'ko',
-    messages: require('@/locale/ko').default
+    messages: require('./ko').default
   },
   {
     name: 'ภาษาไทย',
     value: 'th',
-    messages: require('@/locale/th').default
+    messages: require('./th').default
   }
 ];
 

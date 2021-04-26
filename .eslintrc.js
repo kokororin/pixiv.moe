@@ -3,7 +3,10 @@ module.exports = {
     project: ['./tsconfig.json', './tsconfig-server.json'],
     tsconfigRootDir: __dirname
   },
-  plugins: ['prettier'],
+  env: {
+    'jest/globals': true
+  },
+  plugins: ['prettier', 'jest'],
   extends: ['kotori/auto', 'prettier', 'prettier/@typescript-eslint'],
   rules: {
     'no-duplicate-imports': 'off',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import Message from '@/components/Message';
+import Message from '../components/Message';
 
 const NotFoundContainer: React.FC<{}> = () => {
   const intl = useIntl();

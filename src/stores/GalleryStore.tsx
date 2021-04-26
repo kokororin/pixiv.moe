@@ -1,7 +1,7 @@
 import React from 'react';
 import { observable } from 'mobx';
 import { useLocalStore } from 'mobx-react-lite';
-import * as api from '@/utils/api';
+import * as api from '../utils/api';
 
 export const createStore = () => {
   const store = observable({

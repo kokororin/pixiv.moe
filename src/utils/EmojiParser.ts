@@ -1,4 +1,4 @@
-import * as api from '@/utils/api';
+import * as api from './api';
 
 export default class EmojiParser {
   static emojiSeries = [

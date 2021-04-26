@@ -1,5 +1,6 @@
 <h1 align=center><img src="https://raw.githubusercontent.com/kokororin/pixiv.moe/master/src/images/favicon.png" width=50/> pixiv.moe</h1>
 
+![Build Status](https://github.com/kokororin/pixiv.moe/actions/workflows/ci.yml/badge.svg)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) order by popularity. Written with React.

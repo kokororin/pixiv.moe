@@ -23,25 +23,25 @@ import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 
-import config from '@/config';
+import config from '../config';
 
-import InfiniteScroll from '@/components/InfiniteScroll';
-import GalleryList from '@/components/GalleryList';
-import Loading from '@/components/Loading';
-import Refresh from '@/components/Refresh';
-import Message from '@/components/Message';
-import LanguageSelector from '@/components/LanguageSelector';
-import SearchInput from '@/components/SearchInput';
-import Content, { IContentHandles } from '@/components/Content';
-import Storage from '@/utils/Storage';
-// import * as api from '@/utils/api';
+import InfiniteScroll from '../components/InfiniteScroll';
+import GalleryList from '../components/GalleryList';
+import Loading from '../components/Loading';
+import Refresh from '../components/Refresh';
+import Message from '../components/Message';
+import LanguageSelector from '../components/LanguageSelector';
+import SearchInput from '../components/SearchInput';
+import Content, { IContentHandles } from '../components/Content';
+import Storage from '../utils/Storage';
+// import * as api from '../utils/api';
 
 import LoginContainer, {
   ILoginContainerHandles,
   UserButton
-} from '@/containers/LoginContainer';
+} from './LoginContainer';
 
-import { GalleryContext } from '@/stores/GalleryStore';
+import { GalleryContext } from '../stores/GalleryStore';
 
 export const useStyles = makeStyles({
   toolbar: {

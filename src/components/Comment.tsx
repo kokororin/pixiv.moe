@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Img from 'react-image';
-import EmojiParser from '@/utils/EmojiParser';
-import * as api from '@/utils/api';
+import EmojiParser from '../utils/EmojiParser';
+import * as api from '../utils/api';
 
 const useStyles = makeStyles({
   listItem: {

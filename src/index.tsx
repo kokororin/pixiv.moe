@@ -4,10 +4,10 @@ import { AppContainer as Root } from 'react-hot-loader';
 import iNoBounce from 'inobounce';
 import 'mobx-react-lite/batchingForReactDom';
 
-import AppContainer from '@/containers/AppContainer';
+import AppContainer from './containers/AppContainer';
 
-import { StoreProvider } from '@/stores';
-import { ConnectedIntlProvider } from '@/stores/LocaleStore';
+import { StoreProvider } from './stores';
+import { ConnectedIntlProvider } from './stores/LocaleStore';
 
 if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
   iNoBounce.enable();
@@ -32,8 +32,8 @@ const render = (Component: () => JSX.Element) => {
 render(AppContainer);
 
 if (module.hot) {
-  module.hot.accept('@/containers/AppContainer', () => {
-    const NextAppContainer = require('@/containers/AppContainer').default;
+  module.hot.accept('./containers/AppContainer', () => {
+    const NextAppContainer = require('./containers/AppContainer').default;
     render(NextAppContainer);
   });
 }

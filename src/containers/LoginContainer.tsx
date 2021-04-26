@@ -5,11 +5,11 @@ import { IconButton, Avatar } from '@material-ui/core';
 import { AccountCircle as AccountCircleIcon } from '@material-ui/icons';
 import EventListener from 'react-event-listener';
 import moment from 'moment';
-import * as api from '@/utils/api';
-import { useAlert } from '@/components/Alert';
-import Login, { ILoginHandles } from '@/components/Login';
+import * as api from '../utils/api';
+import { useAlert } from '../components/Alert';
+import Login, { ILoginHandles } from '../components/Login';
 
-import { AuthContext } from '@/stores/AuthStore';
+import { AuthContext } from '../stores/AuthStore';
 
 export interface ILoginContainerHandles {
   open: (onLogin?: () => any) => void;

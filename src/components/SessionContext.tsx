@@ -2,11 +2,11 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
 import useAsyncEffect from 'use-async-effect';
-import Loading from '@/components/Loading';
-import Message from '@/components/Message';
-import { SocketContext } from '@/components/SocketContext';
-import * as api from '@/utils/api';
-import Storage from '@/utils/Storage';
+import Loading from './Loading';
+import Message from './Message';
+import { SocketContext } from './SocketContext';
+import * as api from '../utils/api';
+import Storage from '../utils/Storage';
 
 const useStyles = makeStyles({
   loading: {

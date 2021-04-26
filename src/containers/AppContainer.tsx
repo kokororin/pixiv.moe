@@ -15,14 +15,14 @@ import { create } from 'jss';
 import moment from 'moment';
 import 'moment/locale/ja';
 
-import { history } from '@/stores';
+import { history } from '../stores';
 
-import Baseline from '@/components/Baseline';
-import ScrollContext from '@/components/ScrollContext';
-import SessionContext from '@/components/SessionContext';
-import TrackPageView from '@/components/TrackPageView';
-import { AlertProvider } from '@/components/Alert';
-import { SocketContext, socket } from '@/components/SocketContext';
+import Baseline from '../components/Baseline';
+import ScrollContext from '../components/ScrollContext';
+import SessionContext from '../components/SessionContext';
+import TrackPageView from '../components/TrackPageView';
+import { AlertProvider } from '../components/Alert';
+import { SocketContext, socket } from '../components/SocketContext';
 
 const theme = createMuiTheme({
   palette: {
@@ -42,18 +42,18 @@ const routes = [
   {
     exact: true,
     path: '/',
-    component: require('@/containers/GalleryContainer').default
+    component: require('./GalleryContainer').default
   },
   {
     path: '/illust/:illustId',
-    component: require('@/containers/IllustContainer').default
+    component: require('./IllustContainer').default
   },
   {
     path: '/:illustId',
-    component: require('@/containers/RedirectContainer').default
+    component: require('./RedirectContainer').default
   },
   {
-    component: require('@/containers/NotFoundContainer').default
+    component: require('./NotFoundContainer').default
   }
 ];
 

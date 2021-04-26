@@ -1,6 +1,6 @@
 import honoka from 'honoka';
-import config from '@/config';
-import Storage from '@/utils/Storage';
+import config from '../config';
+import Storage from './Storage';
 
 interface IPixivResponse {
   [key: string]: any;

@@ -25,29 +25,29 @@ import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 import moment from 'moment';
 
-import config from '@/config';
+import config from '../config';
 
-import { useAlert } from '@/components/Alert';
-import Comment from '@/components/Comment';
-import GifPlayer from '@/components/GifPlayer';
-import InfiniteScroll from '@/components/InfiniteScroll';
-import Loading from '@/components/Loading';
-import Message from '@/components/Message';
-import Content, { IContentHandles } from '@/components/Content';
-import ImageBox from '@/components/ImageBox';
-import LanguageSelector from '@/components/LanguageSelector';
-import WeiboIcon from '@/icons/Weibo';
-import LineIcon from '@/icons/Line';
+import { useAlert } from '../components/Alert';
+import Comment from '../components/Comment';
+import GifPlayer from '../components/GifPlayer';
+import InfiniteScroll from '../components/InfiniteScroll';
+import Loading from '../components/Loading';
+import Message from '../components/Message';
+import Content, { IContentHandles } from '../components/Content';
+import ImageBox from '../components/ImageBox';
+import LanguageSelector from '../components/LanguageSelector';
+import WeiboIcon from '../icons/Weibo';
+import LineIcon from '../icons/Line';
 import LoginContainer, {
   ILoginContainerHandles,
   UserButton
-} from '@/containers/LoginContainer';
-import { useStyles as useGalleryStyles } from '@/containers/GalleryContainer';
-import * as api from '@/utils/api';
-import Social from '@/utils/Social';
+} from './LoginContainer';
+import { useStyles as useGalleryStyles } from './GalleryContainer';
+import * as api from '../utils/api';
+import Social from '../utils/Social';
 
-import { GalleryContext } from '@/stores/GalleryStore';
-import { IllustContext } from '@/stores/IllustStore';
+import { GalleryContext } from '../stores/GalleryStore';
+import { IllustContext } from '../stores/IllustStore';
 
 const useStyles = makeStyles({
   toolbarTitle: {

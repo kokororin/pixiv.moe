@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import scrollTo from '@/utils/scrollTo';
-import { SiteContext } from '@/stores/SiteStore';
+import scrollTo from '../utils/scrollTo';
+import { SiteContext } from '../stores/SiteStore';
 
 const useStyles = makeStyles({
   container: {

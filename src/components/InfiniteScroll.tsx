@@ -1,6 +1,6 @@
 import React from 'react';
 import EventListener from 'react-event-listener';
-import { SiteContext } from '@/stores/SiteStore';
+import { SiteContext } from '../stores/SiteStore';
 
 interface IInfiniteScrollProps {
   distance: number;

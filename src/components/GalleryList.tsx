@@ -2,7 +2,7 @@ import React from 'react';
 import StackGrid from 'react-stack-grid';
 import { makeStyles } from '@material-ui/core/styles';
 
-import ImageItem from '@/components/ImageItem';
+import ImageItem from '../components/ImageItem';
 
 const useStyles = makeStyles({
   stackGrid: {

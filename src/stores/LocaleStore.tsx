@@ -2,7 +2,7 @@ import React from 'react';
 import { observable } from 'mobx';
 import { useLocalStore, useObserver } from 'mobx-react-lite';
 import { IntlProvider, IntlConfig } from 'react-intl';
-import chooseLocale from '@/locale/chooseLocale';
+import chooseLocale from '../locale/chooseLocale';
 
 const createStore = () => {
   const settedLocale = chooseLocale(navigator.language);

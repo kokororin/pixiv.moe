@@ -22,6 +22,8 @@ jobs:
         run: yarn
       - name: Lint Code
         run: npm run lint
+      - name: Test
+        run: npm test
       - name: Build
         if: github.ref == 'refs/heads/release'
         run: npm run build

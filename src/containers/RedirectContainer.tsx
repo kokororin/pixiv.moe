@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
-import Message from '@/components/Message';
+import Message from '../components/Message';
 
 interface IRedirectContainerRouteInfo {
   illustId: string;

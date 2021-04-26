@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Image from 'material-ui-image';
 import StarIcon from '@material-ui/icons/Star';
-import * as api from '@/utils/api';
+import * as api from '../utils/api';
 
 const useStyles = makeStyles({
   cell: {
