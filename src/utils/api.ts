@@ -71,6 +71,15 @@ export const search = (data: { word: string; page: number }) =>
     data
   }) as Promise<IPixivResponse>;
 
+export const searchBeta = (data: {
+  word: string;
+  page: number;
+  x_restrict: number;
+}) =>
+  honoka.get('/v2/search/beta', {
+    data
+  }) as Promise<IPixivResponse>;
+
 export const illust = (illustId: number | string) =>
   honoka.get(`/v2/illust/${illustId}`) as Promise<IPixivResponse>;
 

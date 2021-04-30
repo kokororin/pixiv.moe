@@ -6,8 +6,10 @@ import * as api from '../utils/api';
 export const createStore = () => {
   const store = observable({
     page: 1,
+    xRestrict: false,
     isFetching: false,
     isError: false,
+    errorMsg: '',
     errorTimes: 0,
     items: [] as any[],
     images: [] as string[],
@@ -26,9 +28,10 @@ export const createStore = () => {
         const data =
           store.word === 'ranking'
             ? await api.ranking(store.page)
-            : await api.search({
+            : await api.searchBeta({
                 word: store.word,
-                page: store.page
+                page: store.page,
+                x_restrict: store.xRestrict ? 1 : 0
               });
         if (data.response.illusts && data.response.illusts.length > 0) {
           data.response.illusts.forEach((elem: any) => {
@@ -40,6 +43,9 @@ export const createStore = () => {
         }
         store.page = store.page + 1;
       } catch (err) {
+        if (err instanceof api.APIError) {
+          store.errorMsg = err.message;
+        }
         store.isError = true;
       } finally {
         store.isFetching = false;
