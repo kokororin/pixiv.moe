@@ -76,6 +76,13 @@ type TSearchOptionsKeys = keyof ISearchOptions;
 const SearchInput: React.FC<ISearchInputProps> = props => {
   const classes = useStyles();
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const switchRef = React.useRef<HTMLButtonElement>(null);
+
+  React.useEffect(() => {
+    if (props.searchOptions.xRestrict) {
+      switchRef.current?.click();
+    }
+  }, []);
 
   const onSearch = () => {
     if (inputRef.current) {
@@ -87,7 +94,7 @@ const SearchInput: React.FC<ISearchInputProps> = props => {
     key: TSearchOptionsKeys,
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const { searchOptions } = props;
+    const { searchOptions } = { ...props };
     searchOptions[key] = event.target.checked;
     props.onOptionsChange(searchOptions);
   };
@@ -110,7 +117,7 @@ const SearchInput: React.FC<ISearchInputProps> = props => {
           style={{ marginLeft: 0 }}
           control={
             <Switch
-              checked={props.searchOptions.xRestrict}
+              ref={switchRef}
               onChange={event => onSwitchChange('xRestrict', event)}
               name="xRestrict"
               color="primary"

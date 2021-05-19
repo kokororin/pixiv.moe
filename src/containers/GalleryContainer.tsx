@@ -133,7 +133,6 @@ const GalleryContainer: React.FC<{}> = () => {
 
   const onSearchOptionsChange = (options: ISearchOptions) => {
     Storage.set('x_restrict', options.xRestrict);
-    console.log(options);
     setSearchOptions(options);
   };
 
