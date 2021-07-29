@@ -28,10 +28,10 @@ export const createStore = () => {
         const data =
           store.word === 'ranking'
             ? await api.ranking(store.page)
-            : await api.searchBeta({
+            : await api.search({
                 word: store.word,
-                page: store.page,
-                x_restrict: store.xRestrict ? 1 : 0
+                page: store.page
+                // x_restrict: store.xRestrict ? 1 : 0
               });
         if (data.response.illusts && data.response.illusts.length > 0) {
           data.response.illusts.forEach((elem: any) => {

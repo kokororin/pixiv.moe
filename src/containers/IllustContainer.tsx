@@ -276,6 +276,21 @@ const IllustContainer: React.FC<{}> = () => {
     history.push('/');
   };
 
+  const filterCaption = (caption: string) => {
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = caption;
+    const links = Array.from(wrapper.querySelectorAll('a'));
+    links.forEach(link => {
+      let href = link.href;
+      const index = href.indexOf('/jump.php?');
+      if (index > -1) {
+        href = href.substring(index + 10);
+        link.href = decodeURIComponent(href);
+      }
+    });
+    return wrapper.innerHTML;
+  };
+
   React.useEffect(() => {
     // if (!api.getAuth()) {
     //   setShouldLogin(true);
@@ -358,7 +373,7 @@ const IllustContainer: React.FC<{}> = () => {
           <div className={classes.image}>{renderImage()}</div>
           <div className={classes.caption}>
             {typeof item.caption === 'string' &&
-              (item.caption as string)
+              (filterCaption(item.caption) as string)
                 .replace(/(\r\n|\n\r|\r|\n)/g, '\n')
                 .split('\n')
                 .map(elem => (

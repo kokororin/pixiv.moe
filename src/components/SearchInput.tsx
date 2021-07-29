@@ -112,20 +112,22 @@ const SearchInput: React.FC<ISearchInputProps> = props => {
         <SearchIcon />
       </div>
       <input ref={inputRef} className={classes.searchInput} />
-      <div className={classes.searchOptionCheckbox}>
-        <FormControlLabel
-          style={{ marginLeft: 0 }}
-          control={
-            <Switch
-              ref={switchRef}
-              onChange={event => onSwitchChange('xRestrict', event)}
-              name="xRestrict"
-              color="primary"
-            />
-          }
-          label="R-18"
-        />
-      </div>
+      {process.env.NODE_ENV === 'development' && (
+        <div className={classes.searchOptionCheckbox}>
+          <FormControlLabel
+            style={{ marginLeft: 0 }}
+            control={
+              <Switch
+                ref={switchRef}
+                onChange={event => onSwitchChange('xRestrict', event)}
+                name="xRestrict"
+                color="primary"
+              />
+            }
+            label="R-18"
+          />
+        </div>
+      )}
       <EventListener target="window" onKeyDown={onKeyDown} />
     </div>
   );
