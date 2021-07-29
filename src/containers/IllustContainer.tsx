@@ -373,7 +373,7 @@ const IllustContainer: React.FC<{}> = () => {
           <div className={classes.image}>{renderImage()}</div>
           <div className={classes.caption}>
             {typeof item.caption === 'string' &&
-              (filterCaption(item.caption) as string)
+              filterCaption(item.caption)
                 .replace(/(\r\n|\n\r|\r|\n)/g, '\n')
                 .split('\n')
                 .map(elem => (
