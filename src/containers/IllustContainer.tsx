@@ -23,7 +23,7 @@ import Img from 'react-image';
 import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import config from '../config';
 
@@ -220,7 +220,7 @@ const IllustContainer: React.FC<{}> = () => {
   };
 
   const onBookmarkClick = async () => {
-    if (moment().year() >= 2021) {
+    if (dayjs().year() >= 2021) {
       makeAlert(
         'error',
         intl.formatMessage({
@@ -427,7 +427,7 @@ const IllustContainer: React.FC<{}> = () => {
                   {item.user.name}
                 </a>
               </div>
-              <time>{`${moment(item.created_time).format('LLL')}(JST)`}</time>
+              <time>{`${dayjs(item.created_time).format('LLL')}(JST)`}</time>
               <div className={classes.metas}>
                 <span
                   className={

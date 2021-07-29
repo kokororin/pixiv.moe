@@ -4,7 +4,7 @@ import { useObserver } from 'mobx-react-lite';
 import { IconButton, Avatar } from '@material-ui/core';
 import { AccountCircle as AccountCircleIcon } from '@material-ui/icons';
 import EventListener from 'react-event-listener';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import * as api from '../utils/api';
 import { useAlert } from '../components/Alert';
 import Login, { ILoginHandles } from '../components/Login';
@@ -96,7 +96,7 @@ const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
         );
       }
 
-      if (moment().year() >= 2021) {
+      if (dayjs().year() >= 2021) {
         makeAlert(
           'error',
           intl.formatMessage({

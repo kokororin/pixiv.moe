@@ -12,8 +12,8 @@ import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 import { create } from 'jss';
 
-import moment from 'moment';
-import 'moment/locale/ja';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ja';
 
 import { history } from '../stores';
 
@@ -36,7 +36,7 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'p'
 });
 
-moment.locale('ja');
+dayjs.locale('ja');
 
 const routes = [
   {
