@@ -42,6 +42,7 @@ export const ConnectedIntlProvider: React.FC<IntlConfig> = props => {
 
   if (locale.messages && locale.lang) {
     return useObserver(() => (
+      // @ts-ignore
       <IntlProvider messages={locale.messages} locale={locale.lang} {...props}>
         {props.children}
       </IntlProvider>
