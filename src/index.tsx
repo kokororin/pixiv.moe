@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer as Root } from 'react-hot-loader';
 import iNoBounce from 'inobounce';
-import 'mobx-react-lite/batchingForReactDom';
 
 import AppContainer from './containers/AppContainer';
 

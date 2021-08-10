@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Fab, FabProps } from '@material-ui/core';
+import { Fab } from '@material-ui/core';
 import { Refresh as RefreshIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles({
@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   }
 });
 
-interface IRefreshProps extends FabProps {
+interface IRefreshProps {
   onClick: () => void;
 }
 
