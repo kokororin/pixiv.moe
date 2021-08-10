@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import Message from '../components/Message';
 
-interface IRedirectContainerRouteInfo {
+interface IRedirectRouteInfo {
   illustId: string;
 }
 
-const RedirectContainer: React.FC<{}> = () => {
-  const [isError, setIsError] = React.useState(false);
-  const { illustId } = useParams<IRedirectContainerRouteInfo>();
+const Redirect: React.FC<{}> = () => {
+  const [isError, setIsError] = useState(false);
+  const { illustId } = useParams<IRedirectRouteInfo>();
   const intl = useIntl();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isNaN(parseFloat(illustId)) && isFinite(Number(illustId))) {
       setIsError(false);
       new Promise(resolve => setTimeout(resolve, 1500)).then(() => {
@@ -40,4 +40,4 @@ const RedirectContainer: React.FC<{}> = () => {
   );
 };
 
-export default RedirectContainer;
+export default Redirect;

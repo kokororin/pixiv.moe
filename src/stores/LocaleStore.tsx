@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, createContext } from 'react';
 import { observable } from 'mobx';
 import { useLocalStore, useObserver } from 'mobx-react-lite';
 import { IntlProvider, IntlConfig } from 'react-intl';
@@ -21,7 +21,7 @@ const createStore = () => {
 
 type TLocaleStore = ReturnType<typeof createStore>;
 
-export const LocaleContext = React.createContext<TLocaleStore | null>(null);
+export const LocaleContext = createContext<TLocaleStore | null>(null);
 
 export const LocaleProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);
@@ -34,7 +34,7 @@ export const LocaleProvider: React.FC<{}> = props => {
 };
 
 export const ConnectedIntlProvider: React.FC<IntlConfig> = props => {
-  const locale = React.useContext(LocaleContext);
+  const locale = useContext(LocaleContext);
 
   if (!locale) {
     return null;
@@ -42,6 +42,7 @@ export const ConnectedIntlProvider: React.FC<IntlConfig> = props => {
 
   if (locale.messages && locale.lang) {
     return useObserver(() => (
+      // @ts-ignore
       <IntlProvider messages={locale.messages} locale={locale.lang} {...props}>
         {props.children}
       </IntlProvider>

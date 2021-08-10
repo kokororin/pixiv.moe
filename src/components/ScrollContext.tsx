@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import EventListener, { withOptions } from 'react-event-listener';
@@ -30,7 +30,7 @@ const ScrollContext: React.FC<{}> = props => {
 
   const cacheKey = `'@@SCROLL/'${location.pathname}`;
 
-  const site = React.useContext(SiteContext);
+  const site = useContext(SiteContext);
 
   if (!site) {
     return null;
@@ -45,7 +45,7 @@ const ScrollContext: React.FC<{}> = props => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const scrollingElement = site.contentElement;
     const scrollTop = sessionStorage.getItem(cacheKey);
     if (scrollTop && scrollingElement) {

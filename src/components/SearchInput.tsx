@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import EventListener from 'react-event-listener';
 import { Search as SearchIcon } from '@material-ui/icons';
@@ -75,10 +75,10 @@ type TSearchOptionsKeys = keyof ISearchOptions;
 
 const SearchInput: React.FC<ISearchInputProps> = props => {
   const classes = useStyles();
-  const inputRef = React.useRef<HTMLInputElement>(null);
-  const switchRef = React.useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const switchRef = useRef<HTMLButtonElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (props.searchOptions.xRestrict) {
       switchRef.current?.click();
     }

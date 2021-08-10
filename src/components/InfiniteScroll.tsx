@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import EventListener from 'react-event-listener';
 import { SiteContext } from '../stores/SiteStore';
 
@@ -10,7 +10,7 @@ interface IInfiniteScrollProps {
 }
 
 const InfiniteScroll: React.FC<IInfiniteScrollProps> = props => {
-  const site = React.useContext(SiteContext);
+  const site = useContext(SiteContext);
 
   if (!site) {
     return null;

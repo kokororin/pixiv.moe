@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useIntl } from 'react-intl';
 import useAsyncEffect from 'use-async-effect';
@@ -21,10 +21,10 @@ const useStyles = makeStyles({
 const SessionContext: React.FC<{}> = props => {
   const classes = useStyles();
   const intl = useIntl();
-  const socket = React.useContext(SocketContext);
-  const [token, setToken] = React.useState('');
-  const [loading, setLoading] = React.useState(true);
-  const [message, setMessage] = React.useState(
+  const socket = useContext(SocketContext);
+  const [token, setToken] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState(
     intl.formatMessage({
       id: 'This page is not available in your area'
     })

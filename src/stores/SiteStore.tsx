@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import { observable } from 'mobx';
 import { useLocalStore } from 'mobx-react-lite';
 
@@ -19,7 +19,7 @@ const createStore = () => {
 
 type TSiteStore = ReturnType<typeof createStore>;
 
-export const SiteContext = React.createContext<TSiteStore | null>(null);
+export const SiteContext = createContext<TSiteStore | null>(null);
 
 export const SiteProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);

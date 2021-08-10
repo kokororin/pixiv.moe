@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -39,7 +39,7 @@ import Storage from '../utils/Storage';
 import LoginContainer, {
   ILoginContainerHandles,
   UserButton
-} from './LoginContainer';
+} from '../containers/LoginContainer';
 
 import { GalleryContext } from '../stores/GalleryStore';
 
@@ -70,19 +70,19 @@ export const useStyles = makeStyles({
   }
 });
 
-const GalleryContainer: React.FC<{}> = () => {
+const Gallery: React.FC<{}> = () => {
   const classes = useStyles();
   const intl = useIntl();
   const location = useLocation();
   const history = useHistory();
-  const gallery = React.useContext(GalleryContext);
-  const [shouldLogin] = React.useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const [searchOptions, setSearchOptions] = React.useState<ISearchOptions>({
+  const gallery = useContext(GalleryContext);
+  const [shouldLogin] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [searchOptions, setSearchOptions] = useState<ISearchOptions>({
     xRestrict: Storage.get('x_restrict') || false
   });
-  const loginRef = React.useRef<ILoginContainerHandles>(null);
-  const contentRef = React.useRef<IContentHandles>(null);
+  const loginRef = useRef<ILoginContainerHandles>(null);
+  const contentRef = useRef<IContentHandles>(null);
 
   if (!gallery) {
     return null;
@@ -142,7 +142,7 @@ const GalleryContainer: React.FC<{}> = () => {
     Storage.set('word', word);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     // if (!api.getAuth()) {
     //   setShouldLogin(true);
     //   loginRef.current?.open(() => {
@@ -335,4 +335,4 @@ const GalleryContainer: React.FC<{}> = () => {
   ));
 };
 
-export default GalleryContainer;
+export default Gallery;

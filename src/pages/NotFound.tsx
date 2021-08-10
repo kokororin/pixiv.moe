@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import Message from '../components/Message';
 
-const NotFoundContainer: React.FC<{}> = () => {
+const NotFound: React.FC<{}> = () => {
   const intl = useIntl();
 
   return (
@@ -16,4 +16,4 @@ const NotFoundContainer: React.FC<{}> = () => {
   );
 };
 
-export default NotFoundContainer;
+export default NotFound;

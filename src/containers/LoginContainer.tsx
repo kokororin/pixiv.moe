@@ -1,4 +1,11 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useImperativeHandle,
+  forwardRef
+} from 'react';
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 import { IconButton, Avatar } from '@material-ui/core';
@@ -21,7 +28,7 @@ interface IUserButtonProps {
 }
 
 export const UserButton = (props: IUserButtonProps) => {
-  const auth = React.useContext(AuthContext);
+  const auth = useContext(AuthContext);
 
   if (!auth) {
     return null;
@@ -42,131 +49,129 @@ export const UserButton = (props: IUserButtonProps) => {
   ));
 };
 
-const LoginContainer = React.forwardRef<ILoginContainerHandles, {}>(
-  (props, ref) => {
-    const [isSubmitting, setIsSubmitting] = React.useState(false);
-    const [authData, setAuthData] = React.useState<any>(null);
-    const [[onLogin], setOnLogin] = React.useState<[() => any]>([() => {}]);
-    const intl = useIntl();
-    const auth = React.useContext(AuthContext);
-    const loginRef = React.useRef<ILoginHandles>(null);
-    const makeAlert = useAlert();
+const LoginContainer = forwardRef<ILoginContainerHandles, {}>((props, ref) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [authData, setAuthData] = useState<any>(null);
+  const [[onLogin], setOnLogin] = useState<[() => any]>([() => {}]);
+  const intl = useIntl();
+  const auth = useContext(AuthContext);
+  const loginRef = useRef<ILoginHandles>(null);
+  const makeAlert = useAlert();
 
-    if (!auth) {
-      return null;
+  if (!auth) {
+    return null;
+  }
+
+  useEffect(() => {
+    const authData = api.getAuth();
+    setAuthData(authData);
+  }, []);
+
+  const open = (onLogin?: () => any) => {
+    loginRef.current?.open();
+    if (onLogin) {
+      setOnLogin([onLogin]);
+    }
+  };
+
+  const close = () => {
+    loginRef.current?.close();
+  };
+
+  const onLoginClick = async () => {
+    if (isSubmitting || !loginRef.current?.getIsOpen()) {
+      return;
     }
 
-    React.useEffect(() => {
-      const authData = api.getAuth();
+    const username = loginRef.current?.getUsername();
+    const password = loginRef.current?.getPassword();
+
+    if (username === '') {
+      return makeAlert(
+        'error',
+        intl.formatMessage({
+          id: 'pixiv ID or Email Address is Blank'
+        })
+      );
+    }
+
+    if (password === '') {
+      return makeAlert(
+        'error',
+        intl.formatMessage({ id: 'Password is Blank' })
+      );
+    }
+
+    if (dayjs().year() >= 2021) {
+      makeAlert(
+        'error',
+        intl.formatMessage({
+          id: 'API Server is upgrading'
+        })
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const data = await api.auth({
+        username,
+        password
+      });
+      const authData = data.response;
+      api.setAuth(authData, auth.setAuth);
       setAuthData(authData);
-    }, []);
-
-    const open = (onLogin?: () => any) => {
-      loginRef.current?.open();
-      if (onLogin) {
-        setOnLogin([onLogin]);
-      }
-    };
-
-    const close = () => {
-      loginRef.current?.close();
-    };
-
-    const onLoginClick = async () => {
-      if (isSubmitting || !loginRef.current?.getIsOpen()) {
-        return;
-      }
-
-      const username = loginRef.current?.getUsername();
-      const password = loginRef.current?.getPassword();
-
-      if (username === '') {
-        return makeAlert(
-          'error',
+      setTimeout(() => {
+        close();
+        loginRef.current?.reset();
+        onLogin();
+      }, 1500);
+      setIsSubmitting(false);
+    } catch (err) {
+      setIsSubmitting(false);
+      makeAlert(
+        'error',
+        err.message ||
           intl.formatMessage({
-            id: 'pixiv ID or Email Address is Blank'
+            id: 'Communication Error Occurred'
           })
-        );
-      }
+      );
+    }
+  };
 
-      if (password === '') {
-        return makeAlert(
-          'error',
-          intl.formatMessage({ id: 'Password is Blank' })
-        );
-      }
+  const onLogoutClick = () => {
+    api.removeAuth(auth.setAuth);
+    setAuthData(null);
+  };
 
-      if (dayjs().year() >= 2021) {
-        makeAlert(
-          'error',
-          intl.formatMessage({
-            id: 'API Server is upgrading'
-          })
-        );
-        return;
-      }
+  const onKeydown = (event: KeyboardEvent) => {
+    if (loginRef.current?.getIsOpen() && event.keyCode === 13) {
+      onLoginClick();
+    }
+  };
 
-      setIsSubmitting(true);
+  useImperativeHandle(ref, () => ({
+    open,
+    close
+  }));
 
-      try {
-        const data = await api.auth({
-          username,
-          password
-        });
-        const authData = data.response;
-        api.setAuth(authData, auth.setAuth);
-        setAuthData(authData);
-        setTimeout(() => {
-          close();
-          loginRef.current?.reset();
-          onLogin();
-        }, 1500);
-        setIsSubmitting(false);
-      } catch (err) {
-        setIsSubmitting(false);
-        makeAlert(
-          'error',
-          err.message ||
-            intl.formatMessage({
-              id: 'Communication Error Occurred'
-            })
-        );
-      }
-    };
-
-    const onLogoutClick = () => {
-      api.removeAuth(auth.setAuth);
-      setAuthData(null);
-    };
-
-    const onKeydown = (event: KeyboardEvent) => {
-      if (loginRef.current?.getIsOpen() && event.keyCode === 13) {
-        onLoginClick();
-      }
-    };
-
-    React.useImperativeHandle(ref, () => ({
-      open,
-      close
-    }));
-
-    return useObserver(() => (
-      <>
-        <Login
-          ref={loginRef}
-          onLoginClick={onLoginClick}
-          onLogoutClick={onLogoutClick}
-          isSubmitting={isSubmitting}
-          authData={authData}
-        />
-        <EventListener
-          target={document}
-          // @ts-ignore
-          onKeydown={onKeydown}
-        />
-      </>
-    ));
-  }
-);
+  return useObserver(() => (
+    <>
+      <Login
+        ref={loginRef}
+        onLoginClick={onLoginClick}
+        onLogoutClick={onLogoutClick}
+        isSubmitting={isSubmitting}
+        authData={authData}
+      />
+      <EventListener
+        target={document}
+        // @ts-ignore
+        onKeydown={onKeydown}
+      />
+    </>
+  ));
+});
 
 export default LoginContainer;

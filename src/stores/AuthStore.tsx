@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import { observable } from 'mobx';
 import { useLocalStore } from 'mobx-react-lite';
 import * as api from '../utils/api';
@@ -16,7 +16,7 @@ const createStore = () => {
 
 type TAuthStore = ReturnType<typeof createStore>;
 
-export const AuthContext = React.createContext<TAuthStore | null>(null);
+export const AuthContext = createContext<TAuthStore | null>(null);
 
 export const AuthProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);

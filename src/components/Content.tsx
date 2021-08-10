@@ -1,4 +1,9 @@
-import React from 'react';
+import React, {
+  useContext,
+  useImperativeHandle,
+  forwardRef,
+  createRef
+} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import scrollTo from '../utils/scrollTo';
 import { SiteContext } from '../stores/SiteStore';
@@ -24,31 +29,29 @@ export interface IContentHandles {
   toTop: () => void;
 }
 
-const Content = React.forwardRef<IContentHandles, IContentProps>(
-  (props, ref) => {
-    const classes = useStyles();
-    const containerRef = React.createRef<HTMLDivElement>();
-    const site = React.useContext(SiteContext);
+const Content = forwardRef<IContentHandles, IContentProps>((props, ref) => {
+  const classes = useStyles();
+  const containerRef = createRef<HTMLDivElement>();
+  const site = useContext(SiteContext);
 
-    if (!site) {
-      return null;
-    }
-
-    site.setContentClassName(classes.container);
-
-    React.useImperativeHandle(ref, () => ({
-      toTop: () => {
-        if (containerRef.current) {
-          scrollTo(containerRef.current, 0, 900, 'easeInOutQuint');
-        }
-      }
-    }));
-    return (
-      <div ref={containerRef} className={classes.container}>
-        {props.children}
-      </div>
-    );
+  if (!site) {
+    return null;
   }
-);
+
+  site.setContentClassName(classes.container);
+
+  useImperativeHandle(ref, () => ({
+    toTop: () => {
+      if (containerRef.current) {
+        scrollTo(containerRef.current, 0, 900, 'easeInOutQuint');
+      }
+    }
+  }));
+  return (
+    <div ref={containerRef} className={classes.container}>
+      {props.children}
+    </div>
+  );
+});
 
 export default Content;

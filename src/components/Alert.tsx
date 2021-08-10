@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useState, useCallback, useContext, createContext } from 'react';
 import { Snackbar } from '@material-ui/core';
 import MaterialAlert, { Color } from '@material-ui/lab/Alert';
 
 type TCreateAlert = (severity: Color, message: string) => void;
 
-const AlertContext = React.createContext({} as TCreateAlert);
+const AlertContext = createContext({} as TCreateAlert);
 
 export const AlertProvider: React.FC<{}> = props => {
-  const [open, setOpen] = React.useState(false);
-  const [severity, setSeverity] = React.useState<Color>('info');
-  const [message, setMessage] = React.useState('');
+  const [open, setOpen] = useState(false);
+  const [severity, setSeverity] = useState<Color>('info');
+  const [message, setMessage] = useState('');
 
-  const createAlert = React.useCallback((severity: Color, message: string) => {
+  const createAlert = useCallback((severity: Color, message: string) => {
     setOpen(true);
     setSeverity(severity);
     setMessage(message);
@@ -35,6 +35,6 @@ export const AlertProvider: React.FC<{}> = props => {
 };
 
 export const useAlert = () => {
-  const createAlert = React.useContext(AlertContext);
+  const createAlert = useContext(AlertContext);
   return createAlert;
 };

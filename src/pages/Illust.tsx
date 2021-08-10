@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
@@ -41,8 +41,8 @@ import LineIcon from '../icons/Line';
 import LoginContainer, {
   ILoginContainerHandles,
   UserButton
-} from './LoginContainer';
-import { useStyles as useGalleryStyles } from './GalleryContainer';
+} from '../containers/LoginContainer';
+import { useStyles as useGalleryStyles } from './Gallery';
 import * as api from '../utils/api';
 import Social from '../utils/Social';
 
@@ -155,39 +155,39 @@ const useStyles = makeStyles({
   }
 });
 
-interface IIllustContainerRouteInfo {
+interface IIllustRouteInfo {
   illustId: string;
 }
 
-const IllustContainer: React.FC<{}> = () => {
-  const [shouldLogin] = React.useState(false);
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [boxIndex, setBoxIndex] = React.useState(0);
-  const [showBox, setShowBox] = React.useState(false);
-  const [isBookmarked, setIsBookmarked] = React.useState(false);
+const Illust: React.FC<{}> = () => {
+  const [shouldLogin] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [boxIndex, setBoxIndex] = useState(0);
+  const [showBox, setShowBox] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const classes = { ...useGalleryStyles(), ...useStyles() };
 
-  const gallery = React.useContext(GalleryContext);
-  const illust = React.useContext(IllustContext);
+  const gallery = useContext(GalleryContext);
+  const illust = useContext(IllustContext);
 
   const history = useHistory();
   const intl = useIntl();
 
-  const { illustId } = useParams<IIllustContainerRouteInfo>();
-  const loginRef = React.useRef<ILoginContainerHandles>(null);
-  const contentRef = React.useRef<IContentHandles>(null);
+  const { illustId } = useParams<IIllustRouteInfo>();
+  const loginRef = useRef<ILoginContainerHandles>(null);
+  const contentRef = useRef<IContentHandles>(null);
   const makeAlert = useAlert();
 
   if (!gallery || !illust) {
     return null;
   }
 
-  // const fetchBookmark = async () => {
-  //   try {
-  //     const data = await api.illustBookmarkDetail(illustId);
-  //     setIsBookmarked(data.response?.bookmark_detail?.is_bookmarked ?? false);
-  //   } catch (err) {}
+  // const fetchBookmark = async ()  => {
+  //   t ry {
+  //     const data = await api.illustBookmarkDetail(illust Id);
+  //     setIsBookmarked(data.response?.bookmark_detail?.is_bookmarked ?? fal se);
+  //   } catch (err ) {}
   // };
 
   const item = illust.items[illustId] ? illust.items[illustId] : { title: '' };
@@ -291,13 +291,13 @@ const IllustContainer: React.FC<{}> = () => {
     return wrapper.innerHTML;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     // if (!api.getAuth()) {
-    //   setShouldLogin(true);
-    //   console.log(loginRef);
+    //   setShouldLogin(true );
+    //   console.log(loginRef );
     //   loginRef.current?.open(() => {
-    //     window.location.reload();
-    //   });
+    //     window.location.reload( );
+    //   } );
     //   return;
     // }
     // setShouldLogin(false);
@@ -531,4 +531,4 @@ const IllustContainer: React.FC<{}> = () => {
   ));
 };
 
-export default IllustContainer;
+export default Illust;

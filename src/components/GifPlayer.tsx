@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 interface IGifPlayerProps {
   images: any[];
 }
 
-export default class GifPlayer extends React.Component<IGifPlayerProps> {
+export default class GifPlayer extends Component<IGifPlayerProps> {
   timer: number;
   canvasRef: HTMLCanvasElement;
   isPlaying = false;
