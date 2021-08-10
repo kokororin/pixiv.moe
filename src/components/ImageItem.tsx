@@ -99,12 +99,12 @@ const useStyles = makeStyles({
   }
 });
 
-interface IImageItemProps {
+interface ImageItemProps {
   item: any;
   index: number;
 }
 
-const ImageItem: React.FC<IImageItemProps> = props => {
+const ImageItem: React.FC<ImageItemProps> = props => {
   const classes = useStyles();
 
   const onImageMouseMove = (event: React.MouseEvent) => {

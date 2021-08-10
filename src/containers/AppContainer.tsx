@@ -42,18 +42,18 @@ const routes = [
   {
     exact: true,
     path: '/',
-    component: require('./pages/Gallery').default
+    component: require('../pages/Gallery').default
   },
   {
     path: '/illust/:illustId',
-    component: require('./pages/Illust').default
+    component: require('../pages/Illust').default
   },
   {
     path: '/:illustId',
-    component: require('./pages/Redirect').default
+    component: require('../pages/Redirect').default
   },
   {
-    component: require('./pages/NotFound').default
+    component: require('../pages/NotFound').default
   }
 ];
 

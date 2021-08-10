@@ -1,5 +1,5 @@
 import * as api from './api';
-import config from '../config';
+import * as config from '../config';
 
 test('proxy pixiv image', () => {
   expect(

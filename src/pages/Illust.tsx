@@ -25,7 +25,7 @@ import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 import dayjs from 'dayjs';
 
-import config from '../config';
+import * as config from '../config';
 
 import { useAlert } from '../components/Alert';
 import Comment from '../components/Comment';
@@ -33,13 +33,13 @@ import GifPlayer from '../components/GifPlayer';
 import InfiniteScroll from '../components/InfiniteScroll';
 import Loading from '../components/Loading';
 import Message from '../components/Message';
-import Content, { IContentHandles } from '../components/Content';
+import Content, { ContentHandles } from '../components/Content';
 import ImageBox from '../components/ImageBox';
 import LanguageSelector from '../components/LanguageSelector';
 import WeiboIcon from '../icons/Weibo';
 import LineIcon from '../icons/Line';
 import LoginContainer, {
-  ILoginContainerHandles,
+  LoginContainerHandles,
   UserButton
 } from '../containers/LoginContainer';
 import { useStyles as useGalleryStyles } from './Gallery';
@@ -155,7 +155,7 @@ const useStyles = makeStyles({
   }
 });
 
-interface IIllustRouteInfo {
+interface IllustRouteInfo {
   illustId: string;
 }
 
@@ -174,9 +174,9 @@ const Illust: React.FC<{}> = () => {
   const history = useHistory();
   const intl = useIntl();
 
-  const { illustId } = useParams<IIllustRouteInfo>();
-  const loginRef = useRef<ILoginContainerHandles>(null);
-  const contentRef = useRef<IContentHandles>(null);
+  const { illustId } = useParams<IllustRouteInfo>();
+  const loginRef = useRef<LoginContainerHandles>(null);
+  const contentRef = useRef<ContentHandles>(null);
   const makeAlert = useAlert();
 
   if (!gallery || !illust) {

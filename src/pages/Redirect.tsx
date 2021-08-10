@@ -3,13 +3,13 @@ import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
 import Message from '../components/Message';
 
-interface IRedirectRouteInfo {
+interface RedirectRouteInfo {
   illustId: string;
 }
 
 const Redirect: React.FC<{}> = () => {
   const [isError, setIsError] = useState(false);
-  const { illustId } = useParams<IRedirectRouteInfo>();
+  const { illustId } = useParams<RedirectRouteInfo>();
   const intl = useIntl();
 
   useEffect(() => {

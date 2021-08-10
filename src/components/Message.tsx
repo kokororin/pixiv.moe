@@ -31,12 +31,12 @@ export const useStyles = makeStyles({
   }
 });
 
-interface IMessageProps {
+interface MessageProps {
   code?: number;
   text: string;
 }
 
-const Message: React.FC<IMessageProps> = props => {
+const Message: React.FC<MessageProps> = props => {
   const classes = useStyles();
 
   return props.code ? (

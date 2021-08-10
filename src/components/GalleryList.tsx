@@ -13,11 +13,11 @@ const useStyles = makeStyles({
   }
 });
 
-interface IGalleryListProps {
+interface GalleryListProps {
   items: any[];
 }
 
-const GalleryList: React.FC<IGalleryListProps> = props => {
+const GalleryList: React.FC<GalleryListProps> = props => {
   const classes = useStyles();
   return (
     <StackGrid

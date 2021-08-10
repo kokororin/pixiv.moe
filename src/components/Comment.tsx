@@ -56,11 +56,11 @@ const useStyles = makeStyles({
   }
 });
 
-interface ICommentProps {
+interface CommentProps {
   item: any;
 }
 
-const Comment: React.FC<ICommentProps> = ({ item }) => {
+const Comment: React.FC<CommentProps> = ({ item }) => {
   const classes = useStyles();
   const badWords = [
     '墙',

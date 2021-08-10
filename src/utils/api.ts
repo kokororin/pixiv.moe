@@ -1,8 +1,8 @@
 import honoka from 'honoka';
-import config from '../config';
+import * as config from '../config';
 import Storage from './Storage';
 
-interface IPixivResponse {
+interface PixivResponse {
   [key: string]: any;
 }
 
@@ -54,22 +54,22 @@ honoka.interceptors.register({
   }
 });
 
-export const session = () => honoka.get('/session') as Promise<IPixivResponse>;
+export const session = () => honoka.get('/session') as Promise<PixivResponse>;
 
 export const tags = () =>
-  honoka.get('/v2/trending/tags') as Promise<IPixivResponse>;
+  honoka.get('/v2/trending/tags') as Promise<PixivResponse>;
 
 export const ranking = (page: number) =>
   honoka.get('/v2/ranking', {
     data: {
       page
     }
-  }) as Promise<IPixivResponse>;
+  }) as Promise<PixivResponse>;
 
 export const search = (data: { word: string; page: number }) =>
   honoka.get('/v2/search', {
     data
-  }) as Promise<IPixivResponse>;
+  }) as Promise<PixivResponse>;
 
 export const searchBeta = (data: {
   word: string;
@@ -78,13 +78,13 @@ export const searchBeta = (data: {
 }) =>
   honoka.get('/v2/search/beta', {
     data
-  }) as Promise<IPixivResponse>;
+  }) as Promise<PixivResponse>;
 
 export const illust = (illustId: number | string) =>
-  honoka.get(`/v2/illust/${illustId}`) as Promise<IPixivResponse>;
+  honoka.get(`/v2/illust/${illustId}`) as Promise<PixivResponse>;
 
 export const illustUgoira = (illustId: number | string) =>
-  honoka.get(`/v2/illust/ugoira/${illustId}`) as Promise<IPixivResponse>;
+  honoka.get(`/v2/illust/ugoira/${illustId}`) as Promise<PixivResponse>;
 
 export const illustComments = (
   illustId: number | string,
@@ -94,16 +94,16 @@ export const illustComments = (
 ) =>
   honoka.get(`/v2/illust/comments/${illustId}`, {
     data
-  }) as Promise<IPixivResponse>;
+  }) as Promise<PixivResponse>;
 
 export const illustBookmarkDetail = (illustId: number | string) =>
-  honoka.get(`/v1/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
+  honoka.get(`/v1/illust/bookmark/${illustId}`) as Promise<PixivResponse>;
 
 export const illustBookmarkAdd = (illustId: number | string) =>
-  honoka.post(`/v1/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
+  honoka.post(`/v1/illust/bookmark/${illustId}`) as Promise<PixivResponse>;
 
 export const illustBookmarkDelete = (illustId: number | string) =>
-  honoka.delete(`/v1/illust/bookmark/${illustId}`) as Promise<IPixivResponse>;
+  honoka.delete(`/v1/illust/bookmark/${illustId}`) as Promise<PixivResponse>;
 
 export const proxyImage = (url: string) => {
   const regex = /^http?s:\/\/(i\.pximg\.net)|(source\.pixiv\.net)/i;
@@ -124,7 +124,7 @@ export const auth = (data: {
       password: data.password,
       refresh_token: data.refreshToken
     }
-  }) as Promise<IPixivResponse>;
+  }) as Promise<PixivResponse>;
 
 export const refreshToken = () => {
   const authData = getAuth();

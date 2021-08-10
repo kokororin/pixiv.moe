@@ -110,13 +110,13 @@ const useStyles = makeStyles({
   }
 });
 
-interface IImageBoxProps {
+interface ImageBoxProps {
   items: string[];
   index: number;
   onClose: () => void;
 }
 
-const ImageBox: React.FC<IImageBoxProps> = props => {
+const ImageBox: React.FC<ImageBoxProps> = props => {
   const classes = useStyles();
   const [index, setIndex] = useState(props.index);
 

@@ -21,15 +21,15 @@ const useStyles = makeStyles({
   }
 });
 
-interface IContentProps {
+interface ContentProps {
   children: JSX.Element;
 }
 
-export interface IContentHandles {
+export interface ContentHandles {
   toTop: () => void;
 }
 
-const Content = forwardRef<IContentHandles, IContentProps>((props, ref) => {
+const Content = forwardRef<ContentHandles, ContentProps>((props, ref) => {
   const classes = useStyles();
   const containerRef = createRef<HTMLDivElement>();
   const site = useContext(SiteContext);

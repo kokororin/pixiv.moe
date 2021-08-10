@@ -2,9 +2,9 @@ import React, { useState, useCallback, useContext, createContext } from 'react';
 import { Snackbar } from '@material-ui/core';
 import MaterialAlert, { Color } from '@material-ui/lab/Alert';
 
-type TCreateAlert = (severity: Color, message: string) => void;
+type CreateAlert = (severity: Color, message: string) => void;
 
-const AlertContext = createContext({} as TCreateAlert);
+const AlertContext = createContext({} as CreateAlert);
 
 export const AlertProvider: React.FC<{}> = props => {
   const [open, setOpen] = useState(false);

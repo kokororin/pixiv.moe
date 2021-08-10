@@ -51,14 +51,14 @@ const useStyles = makeStyles({
   }
 });
 
-interface ILoginProps {
+interface LoginProps {
   onLoginClick: () => void;
   onLogoutClick: () => void;
   isSubmitting: boolean;
   authData: any;
 }
 
-export interface ILoginHandles {
+export interface LoginHandles {
   open: () => void;
   close: () => void;
   reset: () => void;
@@ -67,7 +67,7 @@ export interface ILoginHandles {
   getIsOpen: () => boolean;
 }
 
-const Login = forwardRef<ILoginHandles, ILoginProps>((props, ref) => {
+const Login = forwardRef<LoginHandles, LoginProps>((props, ref) => {
   const classes = useStyles();
   const intl = useIntl();
 

@@ -12,11 +12,11 @@ const useStyles = makeStyles({
   }
 });
 
-interface IRefreshProps {
+interface RefreshProps {
   onClick: () => void;
 }
 
-const Refresh: React.FC<IRefreshProps> = (props: IRefreshProps) => {
+const Refresh: React.FC<RefreshProps> = props => {
   const classes = useStyles();
   return (
     <div className={classes.floatBtn}>

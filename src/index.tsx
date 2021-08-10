@@ -13,6 +13,7 @@ if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
 }
 
 // Render the main component into the dom
+// eslint-disable-next-line no-undef
 const render = (Component: () => JSX.Element) => {
   ReactDOM.render(
     <StoreProvider>

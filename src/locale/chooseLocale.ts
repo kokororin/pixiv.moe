@@ -1,38 +1,5 @@
 import Storage from '../utils/Storage';
-import config from '../config';
-
-config.languages = [
-  {
-    name: '日本語',
-    value: 'ja',
-    messages: require('./ja').default
-  },
-  {
-    name: '简体中文',
-    value: 'zh',
-    messages: require('./zh').default
-  },
-  {
-    name: 'English',
-    value: 'en',
-    messages: require('./en').default
-  },
-  {
-    name: 'Bahasa Indonesia',
-    value: 'id',
-    messages: require('./id').default
-  },
-  {
-    name: '한국어',
-    value: 'ko',
-    messages: require('./ko').default
-  },
-  {
-    name: 'ภาษาไทย',
-    value: 'th',
-    messages: require('./th').default
-  }
-];
+import * as config from '../config';
 
 const chooseLocale = (
   language: string,

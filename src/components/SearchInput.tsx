@@ -61,19 +61,19 @@ const useStyles = makeStyles({
   }
 });
 
-interface ISearchInputProps {
+interface SearchInputProps {
   onSearch: (value: string) => void;
-  onOptionsChange: (options: ISearchOptions) => void;
-  searchOptions: ISearchOptions;
+  onOptionsChange: (options: SearchOptions) => void;
+  searchOptions: SearchOptions;
 }
 
-export interface ISearchOptions {
+export interface SearchOptions {
   xRestrict: boolean;
 }
 
-type TSearchOptionsKeys = keyof ISearchOptions;
+type SearchOptionsKeys = keyof SearchOptions;
 
-const SearchInput: React.FC<ISearchInputProps> = props => {
+const SearchInput: React.FC<SearchInputProps> = props => {
   const classes = useStyles();
   const inputRef = useRef<HTMLInputElement>(null);
   const switchRef = useRef<HTMLButtonElement>(null);
@@ -91,7 +91,7 @@ const SearchInput: React.FC<ISearchInputProps> = props => {
   };
 
   const onSwitchChange = (
-    key: TSearchOptionsKeys,
+    key: SearchOptionsKeys,
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { searchOptions } = { ...props };

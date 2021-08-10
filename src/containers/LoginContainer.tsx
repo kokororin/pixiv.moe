@@ -14,20 +14,20 @@ import EventListener from 'react-event-listener';
 import dayjs from 'dayjs';
 import * as api from '../utils/api';
 import { useAlert } from '../components/Alert';
-import Login, { ILoginHandles } from '../components/Login';
+import Login, { LoginHandles } from '../components/Login';
 
 import { AuthContext } from '../stores/AuthStore';
 
-export interface ILoginContainerHandles {
+export interface LoginContainerHandles {
   open: (onLogin?: () => any) => void;
   close: () => void;
 }
 
-interface IUserButtonProps {
+interface UserButtonProps {
   onClick: () => void;
 }
 
-export const UserButton = (props: IUserButtonProps) => {
+export const UserButton: React.FC<UserButtonProps> = props => {
   const auth = useContext(AuthContext);
 
   if (!auth) {
@@ -49,13 +49,13 @@ export const UserButton = (props: IUserButtonProps) => {
   ));
 };
 
-const LoginContainer = forwardRef<ILoginContainerHandles, {}>((props, ref) => {
+const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [authData, setAuthData] = useState<any>(null);
   const [[onLogin], setOnLogin] = useState<[() => any]>([() => {}]);
   const intl = useIntl();
   const auth = useContext(AuthContext);
-  const loginRef = useRef<ILoginHandles>(null);
+  const loginRef = useRef<LoginHandles>(null);
   const makeAlert = useAlert();
 
   if (!auth) {

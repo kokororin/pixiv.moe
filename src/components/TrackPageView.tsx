@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactGA from 'react-ga';
 import { useLocation } from 'react-router-dom';
-import config from '../config';
+import * as config from '../config';
 
 ReactGA.initialize(config.trackingID);
 

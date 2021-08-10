@@ -23,7 +23,7 @@ import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 
-import config from '../config';
+import * as config from '../config';
 
 import InfiniteScroll from '../components/InfiniteScroll';
 import GalleryList from '../components/GalleryList';
@@ -31,13 +31,13 @@ import Loading from '../components/Loading';
 import Refresh from '../components/Refresh';
 import Message from '../components/Message';
 import LanguageSelector from '../components/LanguageSelector';
-import SearchInput, { ISearchOptions } from '../components/SearchInput';
-import Content, { IContentHandles } from '../components/Content';
+import SearchInput, { SearchOptions } from '../components/SearchInput';
+import Content, { ContentHandles } from '../components/Content';
 import Storage from '../utils/Storage';
 // import * as api from '../utils/api';
 
 import LoginContainer, {
-  ILoginContainerHandles,
+  LoginContainerHandles,
   UserButton
 } from '../containers/LoginContainer';
 
@@ -78,11 +78,11 @@ const Gallery: React.FC<{}> = () => {
   const gallery = useContext(GalleryContext);
   const [shouldLogin] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [searchOptions, setSearchOptions] = useState<ISearchOptions>({
+  const [searchOptions, setSearchOptions] = useState<SearchOptions>({
     xRestrict: Storage.get('x_restrict') || false
   });
-  const loginRef = useRef<ILoginContainerHandles>(null);
-  const contentRef = useRef<IContentHandles>(null);
+  const loginRef = useRef<LoginContainerHandles>(null);
+  const contentRef = useRef<ContentHandles>(null);
 
   if (!gallery) {
     return null;
@@ -131,7 +131,7 @@ const Gallery: React.FC<{}> = () => {
     }
   };
 
-  const onSearchOptionsChange = (options: ISearchOptions) => {
+  const onSearchOptionsChange = (options: SearchOptions) => {
     Storage.set('x_restrict', options.xRestrict);
     setSearchOptions(options);
   };

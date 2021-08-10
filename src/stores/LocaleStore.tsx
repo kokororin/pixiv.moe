@@ -19,9 +19,9 @@ const createStore = () => {
   return store;
 };
 
-type TLocaleStore = ReturnType<typeof createStore>;
+type LocaleStore = ReturnType<typeof createStore>;
 
-export const LocaleContext = createContext<TLocaleStore | null>(null);
+export const LocaleContext = createContext<LocaleStore | null>(null);
 
 export const LocaleProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);
