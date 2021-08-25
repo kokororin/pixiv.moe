@@ -43,6 +43,11 @@ const SessionContext: React.FC<{}> = props => {
     } catch (err) {
       if (err instanceof api.APIError) {
         setMessage(err.message);
+      } else if (
+        err instanceof TypeError &&
+        err.message === 'Failed to fetch'
+      ) {
+        setMessage('Failed to fetch');
       }
     } finally {
       setLoading(false);
@@ -59,7 +64,13 @@ const SessionContext: React.FC<{}> = props => {
   if (token) {
     return <>{props.children}</>;
   }
-  return <Message code={403} text={message} />;
+
+  let code = 403;
+  const messageStart = String(message).substr(0, 3);
+  if (/^\d+$/.test(messageStart)) {
+    code = Number(messageStart);
+  }
+  return <Message code={code} text={message} />;
 };
 
 export default SessionContext;
