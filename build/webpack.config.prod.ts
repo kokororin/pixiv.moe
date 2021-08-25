@@ -12,7 +12,6 @@ const config: webpack.Configuration = {
   mode: 'production',
   entry: ['@babel/polyfill', 'url-search-params-polyfill', './src/index.tsx'],
   cache: false,
-  devtool: '#source-map',
   module: {
     rules: [
       {
