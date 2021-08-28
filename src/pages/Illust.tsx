@@ -198,16 +198,6 @@ const Illust: React.FC<{}> = () => {
   };
 
   const onBookmarkClick = async () => {
-    if (dayjs().year() >= 2021) {
-      makeAlert(
-        'error',
-        intl.formatMessage({
-          id: 'API Server is upgrading'
-        })
-      );
-      return;
-    }
-
     const authData = api.getAuth();
     if (!authData) {
       return layoutRef.current?.openLogin();

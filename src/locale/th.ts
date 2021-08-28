@@ -16,6 +16,8 @@ export default {
   Logout: 'ออกจากระบบ',
   'Email Address / pixiv ID': 'Email Address / pixiv ID',
   Password: 'รหัสผ่าน',
+  'Auth Token': 'โทเค็นการตรวจสอบสิทธิ์',
+  'Auth Token is Blank': 'Auth Token ว่างเปล่า',
   Nickname: 'ชื่อเล่น',
   'An error occurred. Check the URL or wait for a while and access again.':
     'เกิดข้อผิดพลาด. ตรวจสอบ URL หรือ รอซักครู่แล้วลองใหม่อีกครั้ง',

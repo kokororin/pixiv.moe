@@ -36,7 +36,7 @@ export const UserButton: React.FC<UserButtonProps> = props => {
 
   return useObserver(() => (
     <IconButton color="inherit" onClick={props.onClick}>
-      {auth.authData ? (
+      {auth.authData?.user?.profile_image_urls?.px_50x50 ? (
         <Avatar
           alt="Avatar"
           style={{ width: 28, height: 28 }}
@@ -64,6 +64,9 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
 
   useEffect(() => {
     const authData = api.getAuth();
+    if (authData?.access_token) {
+      loginRef.current?.setAuthToken(authData.access_token);
+    }
     setAuthData(authData);
   }, []);
 
@@ -85,58 +88,87 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
 
     const username = loginRef.current?.getUsername();
     const password = loginRef.current?.getPassword();
+    const authToken = loginRef.current?.getAuthToken();
+    const authType = loginRef.current?.getAuthType();
 
-    if (username === '') {
-      return makeAlert(
-        'error',
-        intl.formatMessage({
-          id: 'pixiv ID or Email Address is Blank'
-        })
-      );
+    if (authType === 'password') {
+      if (username === '') {
+        return makeAlert(
+          'error',
+          intl.formatMessage({
+            id: 'pixiv ID or Email Address is Blank'
+          })
+        );
+      }
+
+      if (password === '') {
+        return makeAlert(
+          'error',
+          intl.formatMessage({ id: 'Password is Blank' })
+        );
+      }
+
+      if (dayjs().year() >= 2021) {
+        makeAlert(
+          'error',
+          intl.formatMessage({
+            id: 'API Server is upgrading'
+          })
+        );
+        return;
+      }
     }
 
-    if (password === '') {
-      return makeAlert(
-        'error',
-        intl.formatMessage({ id: 'Password is Blank' })
-      );
-    }
-
-    if (dayjs().year() >= 2021) {
-      makeAlert(
-        'error',
-        intl.formatMessage({
-          id: 'API Server is upgrading'
-        })
-      );
-      return;
+    if (authType === 'token') {
+      if (authToken === '') {
+        return makeAlert(
+          'error',
+          intl.formatMessage({ id: 'Auth Token is Blank' })
+        );
+      }
     }
 
     setIsSubmitting(true);
 
-    try {
-      const data = await api.auth({
-        username,
-        password
-      });
-      const authData = data.response;
+    if (authType === 'password') {
+      try {
+        const data = await api.auth({
+          username,
+          password
+        });
+        const authData = data.response;
+        api.setAuth(authData, auth.setAuth);
+        setAuthData(authData);
+        setTimeout(() => {
+          close();
+          loginRef.current?.reset();
+          onLogin();
+        }, 1500);
+        setIsSubmitting(false);
+      } catch (err) {
+        setIsSubmitting(false);
+        makeAlert(
+          'error',
+          err.message ||
+            intl.formatMessage({
+              id: 'Communication Error Occurred'
+            })
+        );
+      }
+    }
+
+    if (authType === 'token') {
+      const authData = {
+        access_token: authToken
+      };
       api.setAuth(authData, auth.setAuth);
       setAuthData(authData);
       setTimeout(() => {
         close();
         loginRef.current?.reset();
         onLogin();
-      }, 1500);
+      }, 15);
       setIsSubmitting(false);
-    } catch (err) {
-      setIsSubmitting(false);
-      makeAlert(
-        'error',
-        err.message ||
-          intl.formatMessage({
-            id: 'Communication Error Occurred'
-          })
-      );
     }
   };
 

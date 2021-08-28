@@ -17,6 +17,8 @@ export default {
   Logout: '로그 아웃',
   'Email Address / pixiv ID': '이메일 주소 / pixiv ID',
   Password: '암호',
+  'Auth Token': '인증 토큰',
+  'Auth Token is Blank': '인증 토큰이 비어 있습니다',
   Nickname: '별명',
   'An error occurred. Check the URL or wait for a while and access again.':
     '오류가 발생하였습니다. URL을 확인하거나 잠시 기다렸다가 다시 액세스하십시오.',

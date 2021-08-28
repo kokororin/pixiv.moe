@@ -80,11 +80,11 @@ const Gallery: React.FC<{}> = () => {
   };
 
   const refreshContent = () => {
-    // gallery.clearErrorTimes();
-    // gallery.clearSource();
-    // layoutRef?.current?.toTop();
-    // fetchSource(true);
-    window.location.reload();
+    gallery.clearErrorTimes();
+    gallery.clearSource();
+    layoutRef?.current?.toTop();
+    fetchSource(true);
+    // window.location.reload();
   };
 
   const fetchTags = () => {

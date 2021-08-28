@@ -16,6 +16,8 @@ export default {
   Logout: '登出',
   'Email Address / pixiv ID': '邮箱地址/pixiv ID',
   Password: '密码',
+  'Auth Token': '身份验证令牌',
+  'Auth Token is Blank': '身份验证令牌为空',
   Nickname: '昵称',
   'An error occurred. Check the URL or wait for a while and access again.':
     '发生了一个错误，请检查链接或稍等一会儿再访问',

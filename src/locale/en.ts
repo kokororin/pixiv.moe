@@ -16,6 +16,8 @@ export default {
   Logout: 'Logout',
   'Email Address / pixiv ID': 'Email Address / pixiv ID',
   Password: 'Password',
+  'Auth Token': 'Auth Token',
+  'Auth Token is Blank': 'Auth Token is Blank',
   Nickname: 'Nickname',
   'An error occurred. Check the URL or wait for a while and access again.':
     'An error occurred. Check the URL or wait for a while and access again.',

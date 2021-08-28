@@ -64,6 +64,9 @@ export interface LoginHandles {
   reset: () => void;
   getUsername: () => string;
   getPassword: () => string;
+  getAuthToken: () => string;
+  setAuthToken: (authToken: string) => void;
+  getAuthType: () => 'token' | 'password';
   getIsOpen: () => boolean;
 }
 
@@ -74,6 +77,8 @@ const Login = forwardRef<LoginHandles, LoginProps>((props, ref) => {
   const [isOpen, setIsOpen] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [authToken, setAuthToken] = useState('');
+  const [authType] = useState<'token' | 'password'>('token');
 
   useImperativeHandle(ref, () => ({
     open: () => setIsOpen(true),
@@ -81,14 +86,20 @@ const Login = forwardRef<LoginHandles, LoginProps>((props, ref) => {
     reset: () => {
       setUsername('');
       setPassword('');
+      // setAuthToken('');
     },
     getUsername: () => username,
     getPassword: () => password,
+    getAuthToken: () => authToken,
+    setAuthToken: (authToken: string) => {
+      setAuthToken(authToken);
+    },
+    getAuthType: () => authType,
     getIsOpen: () => isOpen
   }));
 
   const renderContent = () => {
-    if (props.authData) {
+    if (props.authData && authType === 'password') {
       return (
         <>
           <div className={classes.avatar}>
@@ -110,25 +121,41 @@ const Login = forwardRef<LoginHandles, LoginProps>((props, ref) => {
     }
     return (
       <>
-        <TextField
-          onChange={event => setUsername(event.target.value)}
-          value={username}
-          label={intl.formatMessage({
-            id: 'Email Address / pixiv ID'
-          })}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          type="password"
-          onChange={event => setPassword(event.target.value)}
-          value={password}
-          label={intl.formatMessage({
-            id: 'Password'
-          })}
-          fullWidth
-          margin="normal"
-        />
+        {authType === 'password' && (
+          <>
+            <TextField
+              onChange={event => setUsername(event.target.value)}
+              value={username}
+              label={intl.formatMessage({
+                id: 'Email Address / pixiv ID'
+              })}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              type="password"
+              onChange={event => setPassword(event.target.value)}
+              value={password}
+              label={intl.formatMessage({
+                id: 'Password'
+              })}
+              fullWidth
+              margin="normal"
+            />
+          </>
+        )}
+        {authType === 'token' && (
+          <TextField
+            type="password"
+            onChange={event => setAuthToken(event.target.value)}
+            value={authToken}
+            label={intl.formatMessage({
+              id: 'Auth Token'
+            })}
+            fullWidth
+            margin="normal"
+          />
+        )}
         <div className={classes.footer}>
           <Button
             variant="contained"

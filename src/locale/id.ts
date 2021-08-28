@@ -16,6 +16,8 @@ export default {
   Logout: 'Keluar',
   'Email Address / pixiv ID': 'Alamat Email / Pixiv ID',
   Password: 'Kata Sandi',
+  'Auth Token': 'Token Otentikasi',
+  'Auth Token is Blank': 'Token Otentikasi kosong',
   Nickname: 'Nama panggilan',
   'An error occurred. Check the URL or wait for a while and access again.':
     'Terjadi kesalahan. Periksa URL atau tunggu beberapa saat dan akses lagi.',
