@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 });
 
 interface ContentProps {
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 export interface ContentHandles {

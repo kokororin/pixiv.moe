@@ -2,15 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Avatar,
-  Chip,
-  Button
-} from '@material-ui/core';
+import { IconButton, Avatar, Chip, Button } from '@material-ui/core';
 import {
   ArrowBack as ArrowBackIcon,
   Twitter as TwitterIcon,
@@ -20,12 +12,9 @@ import {
 } from '@material-ui/icons';
 import shortid from 'shortid';
 import Img from 'react-image';
-import { Helmet } from 'react-helmet';
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 import dayjs from 'dayjs';
-
-import * as config from '../config';
 
 import { useAlert } from '../components/Alert';
 import Comment from '../components/Comment';
@@ -33,16 +22,14 @@ import GifPlayer from '../components/GifPlayer';
 import InfiniteScroll from '../components/InfiniteScroll';
 import Loading from '../components/Loading';
 import Message from '../components/Message';
-import Content, { ContentHandles } from '../components/Content';
 import ImageBox from '../components/ImageBox';
-import LanguageSelector from '../components/LanguageSelector';
 import WeiboIcon from '../icons/Weibo';
 import LineIcon from '../icons/Line';
-import LoginContainer, {
-  LoginContainerHandles,
-  UserButton
-} from '../containers/LoginContainer';
-import { useStyles as useGalleryStyles } from './Gallery';
+
+import LayoutContainer, {
+  LayoutContainerHandles
+} from '../containers/LayoutContainer';
+
 import * as api from '../utils/api';
 import Social from '../utils/Social';
 
@@ -152,6 +139,9 @@ const useStyles = makeStyles({
     display: 'block',
     padding: '8px 0',
     listStyle: 'none'
+  },
+  refreshBtn: {
+    textAlign: 'center'
   }
 });
 
@@ -166,7 +156,7 @@ const Illust: React.FC<{}> = () => {
   const [showBox, setShowBox] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  const classes = { ...useGalleryStyles(), ...useStyles() };
+  const classes = useStyles();
 
   const gallery = useContext(GalleryContext);
   const illust = useContext(IllustContext);
@@ -175,8 +165,7 @@ const Illust: React.FC<{}> = () => {
   const intl = useIntl();
 
   const { illustId } = useParams<IllustRouteInfo>();
-  const loginRef = useRef<LoginContainerHandles>(null);
-  const contentRef = useRef<ContentHandles>(null);
+  const layoutRef = useRef<LayoutContainerHandles>(null);
   const makeAlert = useAlert();
 
   if (!gallery || !illust) {
@@ -202,17 +191,6 @@ const Illust: React.FC<{}> = () => {
     return [];
   };
 
-  const onHeaderClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLDivElement;
-
-    if (
-      typeof target.className === 'string' &&
-      target.className.indexOf(classes.toolbar) > -1
-    ) {
-      contentRef?.current?.toTop();
-    }
-  };
-
   const onBackClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -232,7 +210,7 @@ const Illust: React.FC<{}> = () => {
 
     const authData = api.getAuth();
     if (!authData) {
-      return loginRef.current?.open();
+      return layoutRef.current?.openLogin();
     }
 
     setIsSubmitting(true);
@@ -492,26 +470,14 @@ const Illust: React.FC<{}> = () => {
 
   return useObserver(() => (
     <>
-      <Helmet>
-        <title>{item.title === '' ? config.siteTitle : item.title}</title>
-      </Helmet>
-      <AppBar position="static" onClick={onHeaderClick}>
-        <Toolbar className={classes.toolbar}>
+      <LayoutContainer
+        ref={layoutRef}
+        title={item.title}
+        menuRender={() => (
           <IconButton href="#" color="inherit" onClick={onBackClick}>
             <ArrowBackIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            color="inherit"
-            className={classes.toolbarTitle}>
-            {item.title}
-          </Typography>
-          <div className={classes.toolbarMiddle} />
-          <LanguageSelector />
-          <UserButton onClick={() => loginRef.current?.open()} />
-        </Toolbar>
-      </AppBar>
-      <Content ref={contentRef}>
+        )}>
         {shouldLogin ? (
           <Message
             code={403}
@@ -522,11 +488,10 @@ const Illust: React.FC<{}> = () => {
         ) : (
           renderContent()
         )}
-      </Content>
+      </LayoutContainer>
       {showBox && (
         <ImageBox items={urls()} index={boxIndex} onClose={onImageClose} />
       )}
-      <LoginContainer ref={loginRef} />
     </>
   ));
 };
