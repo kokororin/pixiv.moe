@@ -56,6 +56,9 @@ honoka.interceptors.register({
 
 export const session = () => honoka.get('/session') as Promise<PixivResponse>;
 
+export const channels = () =>
+  honoka.get('/v2/channels') as Promise<PixivResponse>;
+
 export const tags = () =>
   honoka.get('/v2/trending/tags') as Promise<PixivResponse>;
 

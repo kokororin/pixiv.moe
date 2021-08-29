@@ -36,8 +36,14 @@ const SessionContext: React.FC<{}> = props => {
       setToken(data.response.access_token);
       Storage.set('token', data.response.access_token);
       api.refreshToken();
-      socket.emit('pixiv.online', data.response.access_token);
-      socket.on('pixiv.online.count', onlineCount => {
+      const channelsData = await api.channels();
+      const channels: { [key: string]: string } =
+        channelsData.response.channels;
+      socket.emit(channels.PIXIV_ONLINE, data.response.access_token);
+      socket.on(channels.PIXIV_ONLINE_DONE, () => {
+        setLoading(false);
+      });
+      socket.on(channels.PIXIV_ONLINE_COUNT, onlineCount => {
         console.log('debug: online clients', onlineCount);
       });
     } catch (err) {
@@ -49,8 +55,6 @@ const SessionContext: React.FC<{}> = props => {
       ) {
         setMessage('Failed to fetch');
       }
-    } finally {
-      setLoading(false);
     }
   }, []);
 
