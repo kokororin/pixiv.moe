@@ -4,6 +4,7 @@
   "description": "A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) order by popularity. Written with React.",
   "scripts": {
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
+    "prepare": "husky install",
     "clean": "rimraf dist/*",
     "predist": "npm run clean",
     "build": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"tsconfig-server.json\" webpack --config build/webpack.config.ts",
@@ -40,6 +41,8 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.14.8",
     "@babel/preset-react": "^7.14.5",
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@types/classnames": "^2.3.1",
     "@types/jest": "^26.0.24",
@@ -74,8 +77,10 @@
     "fork-ts-checker-webpack-plugin": "^4.0.4",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^4.2.0",
+    "husky": "^7.0.2",
     "imports-loader": "^0.8.0",
     "jest": "^27.0.6",
+    "lint-staged": "^11.1.2",
     "mocha": "^7.0.1",
     "null-loader": "^4.0.1",
     "open-browser-webpack-plugin": "^0.0.5",
@@ -133,6 +138,15 @@
   "resolutions": {
     "**/@typescript-eslint/eslint-plugin": "^4.25.0",
     "**/@typescript-eslint/parser": "^4.25.0"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
   },
   "engines": {
     "node": ">=10.0.0"
