@@ -8,13 +8,13 @@ export const apiBaseURL = process.env.PIXIV_API_ENTRY
   ? process.env.PIXIV_API_ENTRY
   : 'https://api.pixiv.moe';
 export const socketURL = process.env.PIXIV_API_ENTRY
-  ? process.env.PIXIV_API_ENTRY
+  ? new URL(process.env.PIXIV_API_ENTRY).origin
   : 'https://api.pixiv.moe';
 export const trackingID = 'UA-70944432-2';
 export const projectLink = 'https://github.com/kokororin/pixiv.moe';
 export const translateLink =
   'https://github.com/kokororin/pixiv.moe#localization';
-export const siteTitle = 'pixivギャラリー';
+export const siteTitle = 'pixiv萌え';
 export const languages: Language[] = [
   {
     name: '日本語',

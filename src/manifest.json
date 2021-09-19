@@ -1,7 +1,7 @@
 {
-  "short_name": "pixivギャラリー",
-  "name": "pixivギャラリー",
-  "description": "pixiv.moe - pixivギャラリー - pixiv写真の壁",
+  "short_name": "pixiv萌え",
+  "name": "pixiv萌え",
+  "description": "pixiv.moe - pixiv萌え",
   "icons": [
     {
       "src": "/assets/apple-touch-icon-180x180.png",
