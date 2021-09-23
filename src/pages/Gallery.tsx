@@ -195,7 +195,9 @@ const Gallery: React.FC<{}> = () => {
               <ListItemText
                 style={{ fontWeight: 'bold' }}
                 primary={
-                  ranking ? intl.formatMessage({ id: 'Ranking' }) : elem.tag
+                  ranking
+                    ? intl.formatMessage({ id: 'Ranking' })
+                    : elem.translated_name
                 }
               />
             </ListItem>

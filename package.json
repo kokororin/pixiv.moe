@@ -11,7 +11,7 @@
     "postbuild": "copyfiles -f ./src/icons/*.ico ./src/icons/*.png ./dist/assets && copyfiles -f ./src/manifest.json ./CNAME ./dist",
     "lint": "eslint --ext .ts,.tsx,.js,.jsx src",
     "lint:fix": "eslint --ext .ts,.tsx,.js,.jsx --fix src",
-    "dev": "cross-env NODE_ENV=development PIXIV_API_ENTRY=https://localhost:3000/pixiv TS_NODE_PROJECT=\"tsconfig-server.json\" webpack-dev-server --config build/webpack.config.ts",
+    "dev": "cross-env NODE_ENV=development PIXIV_API_ENTRY=http://localhost:3000/pixiv TS_NODE_PROJECT=\"tsconfig-server.json\" webpack-dev-server --config build/webpack.config.ts",
     "start": "cross-env NODE_ENV=development TS_NODE_PROJECT=\"tsconfig-server.json\" webpack-dev-server --config build/webpack.config.ts",
     "type:check": "tsc --noEmit",
     "test": "cross-env NODE_ENV=test jest",

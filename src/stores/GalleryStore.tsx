@@ -2,6 +2,7 @@ import React, { createContext } from 'react';
 import { observable } from 'mobx';
 import { useLocalStore } from 'mobx-react-lite';
 import * as api from '../utils/api';
+import Storage from '../utils/Storage';
 
 export const createStore = () => {
   const store = observable({
@@ -55,7 +56,9 @@ export const createStore = () => {
     async fetchTags() {
       store.isFetchingTags = true;
       try {
-        const data = await api.tags();
+        const data = await api.tags({
+          lang: Storage.get('lang')
+        });
         if (data.response.tags) {
           store.tags = data.response.tags;
         }
