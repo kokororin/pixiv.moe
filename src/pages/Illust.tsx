@@ -410,7 +410,7 @@ const Illust: React.FC<{}> = () => {
                   {item.user.name}
                 </a>
               </div>
-              <time>{`${dayjs(item.created_time).format('LLL')}(JST)`}</time>
+              <time>{`${dayjs(item.created_time).format('LLL')} (JST)`}</time>
               <div className={classes.metas}>
                 <span
                   className={

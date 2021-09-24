@@ -14,6 +14,7 @@ import { create } from 'jss';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 import { history } from '../stores';
 
@@ -37,6 +38,7 @@ const generateClassName = createGenerateClassName({
 });
 
 dayjs.locale('ja');
+dayjs.extend(LocalizedFormat);
 
 const routes = [
   {
