@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import EventListener from 'react-event-listener';
+import { useEventListener } from 'ahooks';
 import { SiteContext } from '../stores/SiteStore';
 
 interface InfiniteScrollProps {
@@ -37,18 +37,11 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = props => {
     }
   };
 
-  return (
-    <>
-      {props.children}
-      {scrollingElement && (
-        <EventListener
-          target={scrollingElement}
-          // @ts-ignore
-          onScroll={onScroll}
-        />
-      )}
-    </>
-  );
+  useEventListener('scroll', onScroll, {
+    target: scrollingElement
+  });
+
+  return <>{props.children}</>;
 };
 
 export default InfiniteScroll;

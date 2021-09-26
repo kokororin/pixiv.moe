@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Img from 'react-image';
 import isMobile from 'is-mobile';
-import Hotkeys from 'react-hot-keys';
+import { useKeyPress } from 'ahooks';
 import { Chip } from '@material-ui/core';
 import Loading from './Loading';
 import * as api from '../utils/api';
@@ -124,6 +124,11 @@ const ImageBox: React.FC<ImageBoxProps> = props => {
     setIndex((index + props.items.length - 1) % props.items.length);
   const onNext = () => setIndex((index + 1) % props.items.length);
 
+  if (!isMobile()) {
+    useKeyPress(['up', 'left'], onPrev);
+    useKeyPress(['down', 'right'], onNext);
+  }
+
   if (!props.items[index]) {
     return null;
   }
@@ -141,8 +146,6 @@ const ImageBox: React.FC<ImageBoxProps> = props => {
             <button className={classes.prev} onClick={onPrev} />
             <button className={classes.next} onClick={onNext} />
           </div>
-          <Hotkeys keyName="left,up" onKeyDown={onPrev} />
-          <Hotkeys keyName="right,down" onKeyDown={onNext} />
         </>
       )}
       <div className={classes.toolbar}>

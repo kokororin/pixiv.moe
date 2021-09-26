@@ -1,16 +1,15 @@
 import React, {
   useState,
-  useEffect,
   useContext,
   useRef,
   useImperativeHandle,
   forwardRef
 } from 'react';
 import { useIntl } from 'react-intl';
+import { useMount, useKeyPress } from 'ahooks';
 import { useObserver } from 'mobx-react-lite';
 import { IconButton, Avatar } from '@material-ui/core';
 import { AccountCircle as AccountCircleIcon } from '@material-ui/icons';
-import EventListener from 'react-event-listener';
 import dayjs from 'dayjs';
 import * as api from '../utils/api';
 import { useAlert } from '../components/Alert';
@@ -62,13 +61,13 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
     return null;
   }
 
-  useEffect(() => {
+  useMount(() => {
     const authData = api.getAuth();
     if (authData?.access_token) {
       loginRef.current?.setAuthToken(authData.access_token);
     }
     setAuthData(authData);
-  }, []);
+  });
 
   const open = (onLogin?: () => any) => {
     loginRef.current?.open();
@@ -177,11 +176,11 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
     setAuthData(null);
   };
 
-  const onKeydown = (event: KeyboardEvent) => {
-    if (loginRef.current?.getIsOpen() && event.keyCode === 13) {
+  useKeyPress('enter', () => {
+    if (loginRef.current?.getIsOpen()) {
       onLoginClick();
     }
-  };
+  });
 
   useImperativeHandle(ref, () => ({
     open,
@@ -196,11 +195,6 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
         onLogoutClick={onLogoutClick}
         isSubmitting={isSubmitting}
         authData={authData}
-      />
-      <EventListener
-        target={document}
-        // @ts-ignore
-        onKeydown={onKeydown}
       />
     </>
   ));

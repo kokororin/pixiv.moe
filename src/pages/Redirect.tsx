@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useParams } from 'react-router-dom';
+import { useMount } from 'ahooks';
 import Message from '../components/Message';
 
 interface RedirectRouteInfo {
@@ -12,7 +13,7 @@ const Redirect: React.FC<{}> = () => {
   const { illustId } = useParams<RedirectRouteInfo>();
   const intl = useIntl();
 
-  useEffect(() => {
+  useMount(() => {
     if (!isNaN(parseFloat(illustId)) && isFinite(Number(illustId))) {
       setIsError(false);
       new Promise(resolve => setTimeout(resolve, 1500)).then(() => {
@@ -21,7 +22,7 @@ const Redirect: React.FC<{}> = () => {
     } else {
       setIsError(true);
     }
-  }, []);
+  });
 
   return isError ? (
     <Message

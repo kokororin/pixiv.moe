@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useEventListener } from 'ahooks';
 import { makeStyles } from '@material-ui/core/styles';
-import EventListener, { withOptions } from 'react-event-listener';
 import { SiteContext } from '../stores/SiteStore';
 
 const useStyles = makeStyles({
@@ -45,24 +45,24 @@ const ScrollContext: React.FC<{}> = props => {
     }
   };
 
+  useEventListener('scroll', onScroll, {
+    target: document,
+    capture: true
+  });
+
   useEffect(() => {
     const scrollingElement = site.contentElement;
     const scrollTop = sessionStorage.getItem(cacheKey);
     if (scrollTop && scrollingElement) {
-      scrollingElement.scrollTop = Number(scrollTop);
+      setTimeout(() => {
+        scrollingElement.scrollTop = Number(scrollTop);
+      });
     }
   }, [location.pathname]);
 
   return (
     <div className={classes.context}>
       <div className={classes.contextInnerContainer}>{props.children}</div>
-      <EventListener
-        target={document}
-        // @ts-ignore
-        onScroll={withOptions(onScroll, {
-          capture: true
-        })}
-      />
     </div>
   );
 };

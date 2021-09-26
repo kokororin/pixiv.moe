@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { useMount, useUnmount } from 'ahooks';
 import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
 import { IconButton, Avatar, Chip, Button } from '@material-ui/core';
@@ -259,7 +260,7 @@ const Illust: React.FC<{}> = () => {
     return wrapper.innerHTML;
   };
 
-  useEffect(() => {
+  useMount(() => {
     // if (!api.getAuth()) {
     //   setShouldLogin(true );
     //   console.log(loginRef );
@@ -276,11 +277,11 @@ const Illust: React.FC<{}> = () => {
 
     illust.fetchComments(illustId);
     // fetchBookmark();
+  });
 
-    return () => {
-      illust.clearComments();
-    };
-  }, []);
+  useUnmount(() => {
+    illust.clearComments();
+  });
 
   const renderImage = () => {
     if (item?.zip_images?.length > 0) {

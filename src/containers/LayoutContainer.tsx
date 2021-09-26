@@ -1,5 +1,5 @@
 import React, { useRef, forwardRef, useImperativeHandle } from 'react';
-import { Helmet } from 'react-helmet';
+import { useTitle } from 'ahooks';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import Content, { ContentHandles } from '../components/Content';
@@ -68,11 +68,10 @@ const LayoutContainer = forwardRef<
     }
   }));
 
+  useTitle(props.title);
+
   return (
     <>
-      <Helmet>
-        <title>{props.title}</title>
-      </Helmet>
       <AppBar position="static" onClick={onHeaderClick}>
         <Toolbar className={classes.toolbar}>
           {props.menuRender()}

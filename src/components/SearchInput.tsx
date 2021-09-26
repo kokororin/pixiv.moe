@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
+import { useMount } from 'ahooks';
 import { makeStyles } from '@material-ui/core/styles';
-import EventListener from 'react-event-listener';
+import { useKeyPress } from 'ahooks';
 import { Search as SearchIcon } from '@material-ui/icons';
 import { FormControlLabel, Switch } from '@material-ui/core';
 
@@ -78,11 +79,11 @@ const SearchInput: React.FC<SearchInputProps> = props => {
   const inputRef = useRef<HTMLInputElement>(null);
   const switchRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
+  useMount(() => {
     if (props.searchOptions.xRestrict) {
       switchRef.current?.click();
     }
-  }, []);
+  });
 
   const onSearch = () => {
     if (inputRef.current) {
@@ -99,12 +100,16 @@ const SearchInput: React.FC<SearchInputProps> = props => {
     props.onOptionsChange(searchOptions);
   };
 
-  const onKeyDown = (event: KeyboardEvent) => {
-    if (event.keyCode === 13 && document.activeElement === inputRef.current) {
+  useKeyPress(
+    'enter',
+    () => {
       inputRef?.current?.blur();
       onSearch();
+    },
+    {
+      target: inputRef.current
     }
-  };
+  );
 
   return (
     <div className={classes.searchRoot}>
@@ -128,7 +133,6 @@ const SearchInput: React.FC<SearchInputProps> = props => {
           />
         </div>
       )}
-      <EventListener target="window" onKeyDown={onKeyDown} />
     </div>
   );
 };
