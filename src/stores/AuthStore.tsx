@@ -16,7 +16,7 @@ const createStore = () => {
 
 type AuthStore = ReturnType<typeof createStore>;
 
-export const AuthContext = createContext<AuthStore | null>(null);
+export const AuthContext = createContext<AuthStore>({} as AuthStore);
 
 export const AuthProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);

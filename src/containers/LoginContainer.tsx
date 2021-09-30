@@ -29,10 +29,6 @@ interface UserButtonProps {
 export const UserButton: React.FC<UserButtonProps> = props => {
   const auth = useContext(AuthContext);
 
-  if (!auth) {
-    return null;
-  }
-
   return useObserver(() => (
     <IconButton color="inherit" onClick={props.onClick}>
       {auth.authData?.user?.profile_image_urls?.px_50x50 ? (
@@ -56,10 +52,6 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
   const auth = useContext(AuthContext);
   const loginRef = useRef<LoginHandles>(null);
   const makeAlert = useAlert();
-
-  if (!auth) {
-    return null;
-  }
 
   useMount(() => {
     const authData = api.getAuth();

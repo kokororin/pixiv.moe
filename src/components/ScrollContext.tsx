@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useEventListener } from 'ahooks';
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,13 +28,11 @@ const ScrollContext: React.FC<{}> = props => {
   const classes = useStyles();
   const location = useLocation();
 
-  const cacheKey = `'@@SCROLL/'${location.pathname}`;
+  const cacheKey = useMemo(() => {
+    return `'@@SCROLL/'${location.pathname}`;
+  }, [location.pathname]);
 
   const site = useContext(SiteContext);
-
-  if (!site) {
-    return null;
-  }
 
   const onScroll = (event: React.UIEvent) => {
     const scrollingElement = site.contentElement;
@@ -58,7 +56,7 @@ const ScrollContext: React.FC<{}> = props => {
         scrollingElement.scrollTop = Number(scrollTop);
       });
     }
-  }, [location.pathname]);
+  }, [location.pathname, site.contentElement, cacheKey]);
 
   return (
     <div className={classes.context}>

@@ -1,65 +1,62 @@
-import React, { Component } from 'react';
+import React, { useRef, useState } from 'react';
+import { useMount, useInterval } from 'ahooks';
 
 interface GifPlayerProps {
   images: any[];
 }
 
-export default class GifPlayer extends Component<GifPlayerProps> {
-  timer: number;
-  canvasRef: HTMLCanvasElement;
-  isPlaying = false;
-  index = -1;
+const GifPlayer: React.FC<GifPlayerProps> = props => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [index, setIndex] = useState(-1);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  componentDidMount() {
-    this.play();
-  }
-
-  componentWillUnmount() {
-    this.pause();
-  }
-
-  play() {
-    if (!this.isPlaying) {
-      this.timer = window.setInterval(() => {
-        if (this.index < 0 || this.index + 1 >= this.props.images.length) {
-          this.index = 0;
-        } else {
-          this.index++;
+  useInterval(
+    () => {
+      if (index < 0 || index + 1 >= props.images.length) {
+        setIndex(0);
+      } else {
+        setIndex(index + 1);
+      }
+      const ctx = canvasRef.current?.getContext('2d');
+      const img = document.createElement('img');
+      img.onload = () => {
+        if (canvasRef.current) {
+          canvasRef.current.width = img.width;
+          canvasRef.current.height = img.height;
         }
-        const ctx = this.canvasRef.getContext('2d');
-        const img = document.createElement('img');
-        img.onload = () => {
-          this.canvasRef.width = img.width;
-          this.canvasRef.height = img.height;
-          ctx?.drawImage(img, 0, 0);
-        };
-        img.src = this.props.images[this.index];
-      }, 80);
-      this.isPlaying = true;
-    }
-  }
 
-  pause() {
-    if (this.isPlaying) {
-      clearInterval(this.timer);
-      this.isPlaying = false;
-    }
-  }
+        ctx?.drawImage(img, 0, 0);
+      };
+      img.src = props.images[index];
+    },
+    isPlaying ? 80 : null
+  );
 
-  onImageClick = () => {
-    if (this.isPlaying) {
-      this.pause();
-    } else {
-      this.play();
+  const play = () => {
+    if (!isPlaying) {
+      setIsPlaying(true);
     }
   };
 
-  render() {
-    return (
-      <canvas
-        ref={ref => (this.canvasRef = ref as HTMLCanvasElement)}
-        onClick={this.onImageClick}
-      />
-    );
-  }
-}
+  const pause = () => {
+    if (isPlaying) {
+      setIsPlaying(false);
+    }
+  };
+
+  const onImageClick = () => {
+    if (isPlaying) {
+      pause();
+    } else {
+      play();
+    }
+  };
+
+  useMount(() => {
+    play();
+  });
+
+  return <canvas ref={canvasRef} onClick={onImageClick} />;
+};
+
+export default GifPlayer;

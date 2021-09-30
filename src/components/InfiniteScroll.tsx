@@ -12,10 +12,6 @@ interface InfiniteScrollProps {
 const InfiniteScroll: React.FC<InfiniteScrollProps> = props => {
   const site = useContext(SiteContext);
 
-  if (!site) {
-    return null;
-  }
-
   const scrollingElement = site.contentElement;
 
   const onScroll = (event: React.UIEvent) => {

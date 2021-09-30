@@ -124,10 +124,8 @@ const ImageBox: React.FC<ImageBoxProps> = props => {
     setIndex((index + props.items.length - 1) % props.items.length);
   const onNext = () => setIndex((index + 1) % props.items.length);
 
-  if (!isMobile()) {
-    useKeyPress(['up', 'left'], onPrev);
-    useKeyPress(['down', 'right'], onNext);
-  }
+  useKeyPress(['up', 'left'], onPrev);
+  useKeyPress(['down', 'right'], onNext);
 
   if (!props.items[index]) {
     return null;

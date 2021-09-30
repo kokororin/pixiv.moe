@@ -24,10 +24,6 @@ const LanguageSelector: React.FC<{}> = () => {
   const classes = useStyles();
   const locale = useContext(LocaleContext);
 
-  if (!locale) {
-    return null;
-  }
-
   const intl = useIntl();
 
   const lang = locale.lang;

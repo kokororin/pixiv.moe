@@ -21,7 +21,7 @@ const createStore = () => {
 
 type LocaleStore = ReturnType<typeof createStore>;
 
-export const LocaleContext = createContext<LocaleStore | null>(null);
+export const LocaleContext = createContext<LocaleStore>({} as LocaleStore);
 
 export const LocaleProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);
@@ -36,17 +36,14 @@ export const LocaleProvider: React.FC<{}> = props => {
 export const ConnectedIntlProvider: React.FC<IntlConfig> = props => {
   const locale = useContext(LocaleContext);
 
-  if (!locale) {
-    return null;
-  }
-
-  if (locale.messages && locale.lang) {
-    return useObserver(() => (
+  return useObserver(() =>
+    locale.messages && locale.lang ? (
       // @ts-ignore
       <IntlProvider messages={locale.messages} locale={locale.lang} {...props}>
         {props.children}
       </IntlProvider>
-    ));
-  }
-  return <>{props.children}</>;
+    ) : (
+      <>{props.children}</>
+    )
+  );
 };

@@ -169,10 +169,6 @@ const Illust: React.FC<{}> = () => {
   const layoutRef = useRef<LayoutContainerHandles>(null);
   const makeAlert = useAlert();
 
-  if (!gallery || !illust) {
-    return null;
-  }
-
   // const fetchBookmark = async ()  => {
   //   t ry {
   //     const data = await api.illustBookmarkDetail(illust Id);

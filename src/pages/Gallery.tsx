@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
+import { useMount } from 'ahooks';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   IconButton,
@@ -61,10 +62,6 @@ const Gallery: React.FC<{}> = () => {
   });
   const layoutRef = useRef<LayoutContainerHandles>(null);
 
-  if (!gallery) {
-    return null;
-  }
-
   const fetchSource = (isFirstLoad: boolean) => {
     if (isFirstLoad) {
       gallery.page = 1;
@@ -120,7 +117,7 @@ const Gallery: React.FC<{}> = () => {
     Storage.set('word', word);
   };
 
-  useEffect(() => {
+  useMount(() => {
     // if (!api.getAuth()) {
     //   setShouldLogin(true);
     //   loginRef.current?.open(() => {
@@ -147,7 +144,7 @@ const Gallery: React.FC<{}> = () => {
       }
       fetchTags();
     }
-  }, []);
+  });
 
   const renderKeywords = () => {
     const keywords = [...gallery.tags];

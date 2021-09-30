@@ -80,7 +80,7 @@ const createStore = () => {
 
 type IllustStore = ReturnType<typeof createStore>;
 
-export const IllustContext = createContext<IllustStore | null>(null);
+export const IllustContext = createContext<IllustStore>({} as IllustStore);
 
 export const IllustProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);

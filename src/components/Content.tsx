@@ -34,10 +34,6 @@ const Content = forwardRef<ContentHandles, ContentProps>((props, ref) => {
   const containerRef = createRef<HTMLDivElement>();
   const site = useContext(SiteContext);
 
-  if (!site) {
-    return null;
-  }
-
   site.setContentClassName(classes.container);
 
   useImperativeHandle(ref, () => ({

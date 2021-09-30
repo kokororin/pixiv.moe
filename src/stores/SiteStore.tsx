@@ -19,7 +19,7 @@ const createStore = () => {
 
 type SiteStore = ReturnType<typeof createStore>;
 
-export const SiteContext = createContext<SiteStore | null>(null);
+export const SiteContext = createContext<SiteStore>({} as SiteStore);
 
 export const SiteProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);

@@ -89,7 +89,7 @@ export const createStore = () => {
 
 type GalleryStore = ReturnType<typeof createStore>;
 
-export const GalleryContext = createContext<GalleryStore | null>(null);
+export const GalleryContext = createContext<GalleryStore>({} as GalleryStore);
 
 export const GalleryProvider: React.FC<{}> = props => {
   const store = useLocalStore(createStore);

@@ -7,7 +7,7 @@ module.exports = {
     'jest/globals': true
   },
   plugins: ['prettier', 'jest'],
-  extends: ['kotori/auto', 'prettier', 'prettier'],
+  extends: ['kotori/auto', 'prettier', 'plugin:react-hooks/recommended'],
   rules: {
     'no-duplicate-imports': 'off',
     'react/display-name': 'off',
