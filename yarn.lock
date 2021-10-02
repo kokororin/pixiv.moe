@@ -9916,6 +9916,11 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-metatags-hook@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/react-metatags-hook/-/react-metatags-hook-1.3.1.tgz#d17b254b933ea66542afa768b2f9d884ffae3b56"
+  integrity sha512-e6jbjwThOkHIDiVT9CuzWiGPkj2oLsoFTHkG9o96bgXqUN3V7PSTtkXGYniZsnk4738xYgdxL6umDmklXALC6A==
+
 react-router-config@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/react-router-config/-/react-router-config-5.1.1.tgz#0f4263d1a80c6b2dc7b9c1902c9526478194a988"

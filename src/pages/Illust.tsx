@@ -16,6 +16,7 @@ import Img from 'react-image';
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 import dayjs from 'dayjs';
+import useMetaTags from 'react-metatags-hook';
 
 import { useAlert } from '../components/Alert';
 import Comment from '../components/Comment';
@@ -277,6 +278,24 @@ const Illust: React.FC<{}> = () => {
 
   useUnmount(() => {
     illust.clearComments();
+  });
+
+  useMetaTags({
+    twitter: {
+      card: 'summary',
+      creator: `@${item?.user?.account}`,
+      title: item?.title
+    },
+    openGraph: {
+      url: location.href,
+      title: item?.title,
+      description: (() => {
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = item?.caption;
+        return wrapper.textContent || wrapper.innerText || '';
+      })(),
+      image: api.proxyImage(item?.image_urls?.large)
+    }
   });
 
   const renderImage = () => {
