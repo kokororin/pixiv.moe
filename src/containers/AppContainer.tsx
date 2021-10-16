@@ -3,13 +3,11 @@ import { Router } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import {
   StylesProvider,
-  MuiThemeProvider,
-  createTheme,
   createGenerateClassName,
   jssPreset
-} from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import red from '@material-ui/core/colors/red';
+} from '@mui/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { blue, red } from '@mui/material/colors';
 import { create } from 'jss';
 
 import dayjs from 'dayjs';
@@ -61,7 +59,7 @@ const routes = [
 
 const AppContainer = () => (
   <StylesProvider jss={jss} generateClassName={generateClassName}>
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <AlertProvider>
         <Baseline>
           <Router history={history}>
@@ -75,7 +73,7 @@ const AppContainer = () => (
           </Router>
         </Baseline>
       </AlertProvider>
-    </MuiThemeProvider>
+    </ThemeProvider>
   </StylesProvider>
 );
 

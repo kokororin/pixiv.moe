@@ -8,8 +8,8 @@ import React, {
 import { useIntl } from 'react-intl';
 import { useMount, useKeyPress } from 'ahooks';
 import { useObserver } from 'mobx-react-lite';
-import { IconButton, Avatar } from '@material-ui/core';
-import { AccountCircle as AccountCircleIcon } from '@material-ui/icons';
+import { IconButton, Avatar } from '@mui/material';
+import { AccountCircle as AccountCircleIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import * as api from '../utils/api';
 import { useAlert } from '../components/Alert';
@@ -30,7 +30,7 @@ export const UserButton: React.FC<UserButtonProps> = props => {
   const auth = useContext(AuthContext);
 
   return useObserver(() => (
-    <IconButton color="inherit" onClick={props.onClick}>
+    <IconButton color="inherit" onClick={props.onClick} size="large">
       {auth.authData?.user?.profile_image_urls?.px_50x50 ? (
         <Avatar
           alt="Avatar"

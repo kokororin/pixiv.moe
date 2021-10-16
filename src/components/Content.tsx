@@ -1,12 +1,6 @@
-import React, {
-  useContext,
-  useImperativeHandle,
-  forwardRef,
-  createRef
-} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useImperativeHandle, forwardRef, createRef } from 'react';
+import makeStyles from '@mui/styles/makeStyles';
 import scrollTo from '../utils/scrollTo';
-import { SiteContext } from '../stores/SiteStore';
 
 const useStyles = makeStyles({
   container: {
@@ -27,20 +21,21 @@ interface ContentProps {
 
 export interface ContentHandles {
   toTop: () => void;
+  getContainer: () => Element | null;
 }
 
 const Content = forwardRef<ContentHandles, ContentProps>((props, ref) => {
   const classes = useStyles();
   const containerRef = createRef<HTMLDivElement>();
-  const site = useContext(SiteContext);
-
-  site.setContentClassName(classes.container);
 
   useImperativeHandle(ref, () => ({
     toTop: () => {
       if (containerRef.current) {
         scrollTo(containerRef.current, 0, 900, 'easeInOutQuint');
       }
+    },
+    getContainer: () => {
+      return containerRef?.current;
     }
   }));
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Modal, Backdrop, Fade, Button, TextField } from '@material-ui/core';
-import { Clear as ClearIcon } from '@material-ui/icons';
+import makeStyles from '@mui/styles/makeStyles';
+import { Modal, Backdrop, Fade, Button, TextField } from '@mui/material';
+import { Clear as ClearIcon } from '@mui/icons-material';
 import { useIntl } from 'react-intl';
 
 const useStyles = makeStyles({
@@ -17,6 +17,7 @@ const useStyles = makeStyles({
       'rgba(0, 0, 0, 0.24706) 0 14px 45px, rgba(0, 0, 0, 0.21961) 0 10px 18px',
     borderRadius: '2px',
     outline: '0 none',
+    zIndex: 9,
     '@media screen and (max-width: 600px)': {
       width: '18em'
     }

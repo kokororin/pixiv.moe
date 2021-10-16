@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcon } from '@material-ui/core';
+import { SvgIcon } from '@mui/material';
 
 const Line = () => (
   <SvgIcon viewBox="0 0 48 48">

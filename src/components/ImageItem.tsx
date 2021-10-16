@@ -1,8 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
-import Image from 'material-ui-image';
-import StarIcon from '@material-ui/icons/Star';
+import StarIcon from '@mui/icons-material/Star';
+import Image from './Image';
 import * as api from '../utils/api';
 
 const useStyles = makeStyles({

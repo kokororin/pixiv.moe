@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useContext, createContext } from 'react';
-import { Snackbar } from '@material-ui/core';
-import MaterialAlert, { Color } from '@material-ui/lab/Alert';
+import { Snackbar } from '@mui/material';
+import MaterialAlert, { AlertColor as Color } from '@mui/material/Alert';
 
 type CreateAlert = (severity: Color, message: string) => void;
 

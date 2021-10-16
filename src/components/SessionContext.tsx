@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useIntl } from 'react-intl';
 import useAsyncEffect from 'use-async-effect';
 import Loading from './Loading';
@@ -44,7 +44,9 @@ const SessionContext: React.FC<{}> = props => {
         setLoading(false);
       });
       socket.on(channels.PIXIV_ONLINE_COUNT, onlineCount => {
-        console.log('debug: online clients', onlineCount);
+        if (process.env.NODE_ENV === 'development') {
+          console.log('debug: online clients', onlineCount);
+        }
       });
     } catch (err) {
       if (err instanceof api.APIError) {

@@ -1,7 +1,14 @@
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
-import { useTitle } from 'ahooks';
-import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import React, {
+  useRef,
+  useMemo,
+  useState,
+  forwardRef,
+  useImperativeHandle
+} from 'react';
+import { useLocation } from 'react-router-dom';
+import { useTitle, useMount, useUnmount } from 'ahooks';
+import makeStyles from '@mui/styles/makeStyles';
+import { AppBar, Toolbar, Typography } from '@mui/material';
 import Content, { ContentHandles } from '../components/Content';
 import LanguageSelector from '../components/LanguageSelector';
 import LoginContainer, {
@@ -32,12 +39,20 @@ interface LayoutContainerProps {
   title: string;
   menuRender: () => React.ReactNode;
   extraRender?: () => React.ReactNode;
+  scroll?: {
+    infinite: boolean;
+    distance: number;
+    onLoadMore: () => void;
+    hasMore: boolean;
+    isLoading: boolean;
+  };
   children: React.ReactNode;
 }
 
 export interface LayoutContainerHandles {
   toTop: () => void;
   openLogin: () => void;
+  getContentContainer: () => Element | null | undefined;
 }
 
 const LayoutContainer = forwardRef<
@@ -45,8 +60,10 @@ const LayoutContainer = forwardRef<
   LayoutContainerProps
 >((props, ref) => {
   const classes = useStyles();
+  const location = useLocation();
   const contentRef = useRef<ContentHandles>(null);
   const loginRef = useRef<LoginContainerHandles>(null);
+  const [ignoreScrollEvents, setIgnoreScrollEvents] = useState(false);
 
   const onHeaderClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLDivElement;
@@ -59,12 +76,77 @@ const LayoutContainer = forwardRef<
     }
   };
 
+  const cacheKey = useMemo(() => {
+    return `'@@SCROLL/'${location.pathname}`;
+  }, [location.pathname]);
+
+  const onScroll = (event: Event) => {
+    const target = event.target as HTMLElement;
+    const scrollTop = target.scrollTop;
+
+    if (!ignoreScrollEvents) {
+      sessionStorage.setItem(cacheKey, String(scrollTop));
+    }
+    setIgnoreScrollEvents(false);
+
+    if (!props.scroll?.infinite) {
+      return;
+    }
+
+    if (props.scroll?.isLoading) {
+      return;
+    }
+
+    if (!props.scroll?.hasMore) {
+      return;
+    }
+
+    const targetHeight = target.clientHeight;
+    // const scrollTop = target.scrollTop;
+    const scrollHeight = target.scrollHeight;
+
+    if (scrollTop + targetHeight - scrollHeight > -1 * props.scroll?.distance) {
+      props.scroll?.onLoadMore();
+    }
+  };
+
+  useMount(() => {
+    const scrollTop = sessionStorage.getItem(cacheKey);
+
+    const scrollingElement = contentRef?.current?.getContainer();
+    if (scrollTop && scrollingElement) {
+      const oldScrollTop = scrollingElement.scrollTop;
+
+      setTimeout(() => {
+        scrollingElement.scrollTop = Number(scrollTop);
+      }, 145);
+
+      if (Number(scrollingElement.scrollTop) !== Number(oldScrollTop)) {
+        setIgnoreScrollEvents(true);
+      }
+    }
+
+    if (scrollingElement) {
+      scrollingElement.addEventListener('scroll', onScroll);
+    }
+  });
+
+  useUnmount(() => {
+    const scrollingElement = contentRef?.current?.getContainer();
+    if (scrollingElement) {
+      scrollingElement.removeEventListener('scroll', onScroll);
+    }
+  });
+
   useImperativeHandle(ref, () => ({
     toTop: () => {
       contentRef?.current?.toTop();
     },
     openLogin: () => {
       loginRef?.current?.open();
+    },
+    getContentContainer: () => {
+      return contentRef?.current?.getContainer();
     }
   }));
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Fab } from '@material-ui/core';
-import { Refresh as RefreshIcon } from '@material-ui/icons';
+import makeStyles from '@mui/styles/makeStyles';
+import { Fab } from '@mui/material';
+import { Refresh as RefreshIcon } from '@mui/icons-material';
 
 const useStyles = makeStyles({
   floatBtn: {

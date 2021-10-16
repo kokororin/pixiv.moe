@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { Button, Menu, MenuItem, Box, Divider } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button, Menu, MenuItem, Box, Divider } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import {
   Language as LanguageIcon,
   ExpandMore as ExpandMoreIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 import shortid from 'shortid';

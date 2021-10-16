@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { useMount } from 'ahooks';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { useKeyPress } from 'ahooks';
-import { Search as SearchIcon } from '@material-ui/icons';
-import { FormControlLabel, Switch } from '@material-ui/core';
+import { Search as SearchIcon } from '@mui/icons-material';
+import { FormControlLabel, Switch } from '@mui/material';
 
 const useStyles = makeStyles({
   searchRoot: {
@@ -58,7 +58,8 @@ const useStyles = makeStyles({
     fontSize: 14,
     display: 'none',
     boxShadow:
-      '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)'
+      '0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+    zIndex: 99
   }
 });
 

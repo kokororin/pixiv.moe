@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import Img from 'react-image';
 import isMobile from 'is-mobile';
 import { useKeyPress } from 'ahooks';
-import { Chip } from '@material-ui/core';
+import { Chip } from '@mui/material';
 import Loading from './Loading';
 import * as api from '../utils/api';
 

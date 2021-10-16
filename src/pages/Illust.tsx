@@ -2,15 +2,15 @@ import React, { useState, useContext, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useMount, useUnmount } from 'ahooks';
 import classNames from 'classnames';
-import { makeStyles } from '@material-ui/core/styles';
-import { IconButton, Avatar, Chip, Button } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
+import { IconButton, Avatar, Chip, Button } from '@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
   Twitter as TwitterIcon,
   Favorite as FavoriteIcon,
   FavoriteBorder as FavoriteBorderIcon,
   Cached as CachedIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import shortid from 'shortid';
 import Img from 'react-image';
 import { useIntl } from 'react-intl';
@@ -21,7 +21,6 @@ import useMetaTags from 'react-metatags-hook';
 import { useAlert } from '../components/Alert';
 import Comment from '../components/Comment';
 import GifPlayer from '../components/GifPlayer';
-import InfiniteScroll from '../components/InfiniteScroll';
 import Loading from '../components/Loading';
 import Message from '../components/Message';
 import ImageBox from '../components/ImageBox';
@@ -90,7 +89,7 @@ const useStyles = makeStyles({
     textAlign: 'center'
   },
   tagItem: {
-    margin: 5,
+    margin: '5px !important',
     '& div': {
       color: 'rgb(255, 255, 255) !important',
       backgroundColor: 'rgb(0, 150, 136) !important'
@@ -216,6 +215,7 @@ const Illust: React.FC<{}> = () => {
           id: 'Communication Error Occurred'
         })
       );
+      setIsSubmitting(false);
     }
   };
 
@@ -448,25 +448,20 @@ const Illust: React.FC<{}> = () => {
               </a>
             </p>
           </div>
-          <InfiniteScroll
-            distance={200}
-            onLoadMore={() => illust.fetchComments(illustId)}
-            isLoading={illust.isFetchingComments}
-            hasMore={!illust.isCommentsEnd}>
-            <div className={classes.comments}>
-              <h4>
-                {intl.formatMessage({
-                  id: illust.comments.length === 0 ? 'No Comments' : 'Comments'
-                })}
-              </h4>
-              <ul className={classes.commentList}>
-                {illust.comments.map(elem => {
-                  return <Comment key={shortid.generate()} item={elem} />;
-                })}
-              </ul>
-              {illust.isFetchingComments && <Loading />}
-            </div>
-          </InfiniteScroll>
+
+          <div className={classes.comments}>
+            <h4>
+              {intl.formatMessage({
+                id: illust.comments.length === 0 ? 'No Comments' : 'Comments'
+              })}
+            </h4>
+            <ul className={classes.commentList}>
+              {illust.comments.map(elem => {
+                return <Comment key={shortid.generate()} item={elem} />;
+              })}
+            </ul>
+            {illust.isFetchingComments && <Loading />}
+          </div>
         </div>
       );
     } catch (e) {
@@ -480,10 +475,21 @@ const Illust: React.FC<{}> = () => {
         ref={layoutRef}
         title={item.title}
         menuRender={() => (
-          <IconButton href="#" color="inherit" onClick={onBackClick}>
+          <IconButton
+            href="#"
+            color="inherit"
+            onClick={onBackClick}
+            size="large">
             <ArrowBackIcon />
           </IconButton>
-        )}>
+        )}
+        scroll={{
+          infinite: true,
+          distance: 200,
+          onLoadMore: () => illust.fetchComments(illustId),
+          isLoading: illust.isFetchingComments,
+          hasMore: !illust.isCommentsEnd
+        }}>
         {shouldLogin ? (
           <Message
             code={403}

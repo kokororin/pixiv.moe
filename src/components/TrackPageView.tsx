@@ -16,7 +16,7 @@ const TrackPageView: React.FC<{}> = props => {
       });
       ReactGA.pageview(pageLink);
     } else {
-      console.log(pageLink); // eslint-disable-line
+      console.log(`track page: ${pageLink}`);
     }
   };
 

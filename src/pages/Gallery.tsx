@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useMount } from 'ahooks';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import {
   IconButton,
   Drawer,
@@ -11,18 +11,17 @@ import {
   ListItemText,
   ListSubheader,
   Button
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   Menu as MenuIcon,
   Done as DoneIcon,
   Cached as CachedIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 
 import * as config from '../config';
 
-import InfiniteScroll from '../components/InfiniteScroll';
 import GalleryList from '../components/GalleryList';
 import Loading from '../components/Loading';
 // import Refresh from '../components/Refresh';
@@ -213,7 +212,11 @@ const Gallery: React.FC<{}> = () => {
       ref={layoutRef}
       title={config.siteTitle}
       menuRender={() => (
-        <IconButton color="inherit" onClick={onToggleDrawer} aria-label="Menu">
+        <IconButton
+          color="inherit"
+          onClick={onToggleDrawer}
+          aria-label="Menu"
+          size="large">
           <MenuIcon />
         </IconButton>
       )}
@@ -223,7 +226,14 @@ const Gallery: React.FC<{}> = () => {
           onOptionsChange={onSearchOptionsChange}
           searchOptions={searchOptions}
         />
-      )}>
+      )}
+      scroll={{
+        infinite: true,
+        distance: 200,
+        onLoadMore,
+        isLoading: gallery.isFetching,
+        hasMore: true
+      }}>
       {shouldLogin ? (
         <Message
           code={403}
@@ -232,38 +242,32 @@ const Gallery: React.FC<{}> = () => {
           })}
         />
       ) : (
-        <InfiniteScroll
-          distance={200}
-          onLoadMore={onLoadMore}
-          isLoading={gallery.isFetching}
-          hasMore>
-          <div className={classes.root}>
-            {gallery.items.length === 0 && gallery.isFetching && <Loading />}
-            <GalleryList items={gallery.items} />
-            {gallery.items.length > 0 && gallery.isFetching && <Loading />}
-            {gallery.isError && (
-              <>
-                <Message
-                  text={
-                    gallery.errorMsg
-                      ? gallery.errorMsg
-                      : intl.formatMessage({ id: 'Failed to Load' })
-                  }
-                />
-                <div className={classes.refreshBtn}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    startIcon={<CachedIcon />}
-                    onClick={() => window.location.reload()}>
-                    {intl.formatMessage({ id: 'Refresh page' })}
-                  </Button>
-                </div>
-              </>
-            )}
-            {/* <Refresh onClick={refreshContent} /> */}
-          </div>
-        </InfiniteScroll>
+        <div className={classes.root}>
+          {gallery.items.length === 0 && gallery.isFetching && <Loading />}
+          <GalleryList items={gallery.items} />
+          {gallery.items.length > 0 && gallery.isFetching && <Loading />}
+          {gallery.isError && (
+            <>
+              <Message
+                text={
+                  gallery.errorMsg
+                    ? gallery.errorMsg
+                    : intl.formatMessage({ id: 'Failed to Load' })
+                }
+              />
+              <div className={classes.refreshBtn}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<CachedIcon />}
+                  onClick={() => window.location.reload()}>
+                  {intl.formatMessage({ id: 'Refresh page' })}
+                </Button>
+              </div>
+            </>
+          )}
+          {/* <Refresh onClick={refreshContent} /> */}
+        </div>
       )}
       <Drawer open={isDrawerOpen} onClose={onToggleDrawer}>
         <div

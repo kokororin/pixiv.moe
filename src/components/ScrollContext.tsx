@@ -1,8 +1,5 @@
-import React, { useEffect, useContext, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useEventListener } from 'ahooks';
-import { makeStyles } from '@material-ui/core/styles';
-import { SiteContext } from '../stores/SiteStore';
+import React from 'react';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles({
   context: {
@@ -26,37 +23,6 @@ const useStyles = makeStyles({
 
 const ScrollContext: React.FC<{}> = props => {
   const classes = useStyles();
-  const location = useLocation();
-
-  const cacheKey = useMemo(() => {
-    return `'@@SCROLL/'${location.pathname}`;
-  }, [location.pathname]);
-
-  const site = useContext(SiteContext);
-
-  const onScroll = (event: React.UIEvent) => {
-    const scrollingElement = site.contentElement;
-    const target = event.target as HTMLElement;
-    if (target.className === scrollingElement?.className) {
-      const scrollTop = String(target.scrollTop);
-      sessionStorage.setItem(cacheKey, scrollTop);
-    }
-  };
-
-  useEventListener('scroll', onScroll, {
-    target: document,
-    capture: true
-  });
-
-  useEffect(() => {
-    const scrollingElement = site.contentElement;
-    const scrollTop = sessionStorage.getItem(cacheKey);
-    if (scrollTop && scrollingElement) {
-      setTimeout(() => {
-        scrollingElement.scrollTop = Number(scrollTop);
-      });
-    }
-  }, [location.pathname, site.contentElement, cacheKey]);
 
   return (
     <div className={classes.context}>
