@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useIntl } from 'react-intl';
 import useAsyncEffect from 'use-async-effect';
+import supportsWebP from 'supports-webp';
 import Loading from './Loading';
 import Message from './Message';
 import { SocketContext } from './SocketContext';
@@ -48,6 +49,11 @@ const SessionContext: React.FC<{}> = props => {
           console.log('debug: online clients', onlineCount);
         }
       });
+      if (await supportsWebP) {
+        document.body.classList.add('supports-webp');
+      } else {
+        document.body.classList.add('not-supports-webp');
+      }
     } catch (err) {
       if (err instanceof api.APIError) {
         setMessage(err.message);

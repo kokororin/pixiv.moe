@@ -11574,6 +11574,11 @@ supports-hyperlinks@^2.0.0:
     has-flag "^4.0.0"
     supports-color "^7.0.0"
 
+supports-webp@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/supports-webp/-/supports-webp-2.0.1.tgz#c0b22d9cfe6ea9b9ac7f56363a0aaf9ed9d9e18e"
+  integrity sha512-dSnAw44W4hqeIBb6GwbETzEZoYOjNNmcROUsZWqMjdJd1mpSKxiVMKh59Py/DI2fH/RlojjS1wCYjFBT68Q9zA==
+
 sw-precache-webpack-plugin@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/sw-precache-webpack-plugin/-/sw-precache-webpack-plugin-1.0.0.tgz#57438e9a2a730fd9f9ff76b346196164c5dcd301"

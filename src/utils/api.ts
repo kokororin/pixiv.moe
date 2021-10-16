@@ -111,9 +111,20 @@ export const illustBookmarkDelete = (illustId: number | string) =>
   honoka.delete(`/v1/illust/bookmark/${illustId}`) as Promise<PixivResponse>;
 
 export const proxyImage = (url: string) => {
+  if (!url) {
+    return url;
+  }
   const regex = /^https?:\/\/(i\.pximg\.net)|(source\.pixiv\.net)/i;
   if (regex.test(url)) {
-    return `${config.apiBaseURL}/image/${url.replace(/^https?:\/\//, '')}`;
+    url = `${config.apiBaseURL}/image/${url.replace(/^https?:\/\//, '')}`;
+  }
+  if (
+    document.body.classList.contains('supports-webp') &&
+    (url.indexOf('.png') > -1 ||
+      url.indexOf('.jpg') > -1 ||
+      url.indexOf('.jpeg') > -1)
+  ) {
+    url = `${url}@progressive.webp`;
   }
   return url;
 };
