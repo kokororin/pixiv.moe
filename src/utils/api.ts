@@ -119,6 +119,7 @@ export const proxyImage = (url: string) => {
     url = `${config.apiBaseURL}/image/${url.replace(/^https?:\/\//, '')}`;
   }
   if (
+    process.env.NODE_ENV !== 'test' &&
     document.body.classList.contains('supports-webp') &&
     (url.indexOf('.png') > -1 ||
       url.indexOf('.jpg') > -1 ||
