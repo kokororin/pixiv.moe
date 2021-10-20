@@ -352,6 +352,15 @@ const Illust: React.FC<{}> = () => {
       );
     }
     try {
+      if (!!process.env.PIXIV_STRICT_MODE && item.x_restrict === 1) {
+        return (
+          <Message
+            text={intl.formatMessage({
+              id: 'This page is not available in your area'
+            })}
+          />
+        );
+      }
       return (
         <div className={classes.illust}>
           <div className={classes.image}>{renderImage()}</div>
