@@ -117,16 +117,17 @@ export const proxyImage = (url: string) => {
   const regex = /^https?:\/\/(i\.pximg\.net)|(source\.pixiv\.net)/i;
   if (regex.test(url)) {
     url = `${config.apiBaseURL}/image/${url.replace(/^https?:\/\//, '')}`;
+    if (
+      process.env.NODE_ENV !== 'test' &&
+      document.body.classList.contains('supports-webp') &&
+      (url.indexOf('.png') > -1 ||
+        url.indexOf('.jpg') > -1 ||
+        url.indexOf('.jpeg') > -1)
+    ) {
+      url = `${url}@progressive.webp`;
+    }
   }
-  if (
-    process.env.NODE_ENV !== 'test' &&
-    document.body.classList.contains('supports-webp') &&
-    (url.indexOf('.png') > -1 ||
-      url.indexOf('.jpg') > -1 ||
-      url.indexOf('.jpeg') > -1)
-  ) {
-    url = `${url}@progressive.webp`;
-  }
+
   return url;
 };
 
