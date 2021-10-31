@@ -5,48 +5,49 @@
 
 A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) order by popularity. Written with React.
 
-Table of Contents
-=================
+# Table of Contents
 
-  * [Tech Stack](#tech-stack)
-  * [Online Site](#online-site)
-  * [Features](#features)
-  * [Privacy](#privacy)
-  * [Q&amp;A](#qa)
-  * [Dev](#dev)
-     * [Commands](#commands)
-     * [API](#api)
-  * [Deploy](#deploy)
-     * [With Docker](#with-docker)
-  * [Localization](#localization)
-  * [Contribute](#contribute)
-  * [Contributors](#contributors)
-  * [License](#license)
-
+- [Tech Stack](#tech-stack)
+- [Online Site](#online-site)
+- [Features](#features)
+- [Privacy](#privacy)
+- [Q&amp;A](#qa)
+- [Dev](#dev)
+  - [Commands](#commands)
+  - [API](#api)
+- [Deploy](#deploy)
+  - [With Docker](#with-docker)
+- [Localization](#localization)
+- [Contribute](#contribute)
+- [Contributors](#contributors)
+- [License](#license)
 
 ## Tech Stack
 
 ### Front-end
-* react
-* react-dom
-* react-router
-* mobx
-* mobx-react-lite
-* react-intl
-* material-ui
-* whatwg-fetch
+
+- react
+- react-dom
+- react-router
+- mobx
+- mobx-react-lite
+- react-intl
+- material-ui
+- whatwg-fetch
 
 ## Online Site
+
 [https://pixiv.moe](https://pixiv.moe)
 
 ## Features
 
-* Pinterest-style layout illusts.
-* Select tags.
-* Search keywords order by popularity without pixiv Premium.
-* Login in pixiv and add bookmarks easily.
+- Pinterest-style layout illusts.
+- Select tags.
+- Search keywords order by popularity without pixiv Premium.
+- Login in pixiv and add bookmarks easily.
 
 ## Dev
+
 ```bash
 # Start for development
 $ git clone https://github.com/kokororin/pixiv.moe
@@ -56,6 +57,7 @@ $ npm start
 ```
 
 ### Commands
+
 - Install dependencies: `yarn`
 - Run Front-end Server: `npm start`
 - Test: `npm test`
@@ -69,8 +71,7 @@ Our online site's API Server uses `https://api.pixiv.moe/`
 
 To check whether our API server **could** connected to pixiv, you can visit [https://api.pixiv.moe/ping](https://api.pixiv.moe/ping).
 
-See more in [API Docs](https://api.kotori.love/docs/#/pixiv).
-
+See more in [API Docs](https://github.com/kokororin/pixiv.moe/blob/master/docs/API.md).
 
 ## Deploy
 
@@ -88,7 +89,7 @@ Help us if you can translate this app. Please follow the guide in `src/locale`.
 
 ## Contribute
 
-Feel free to contribute (PR-s and issues welcomed).  
+Feel free to contribute (PR-s and issues welcomed).
 
 ## Contributors
 
@@ -110,9 +111,11 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
 
 ## License
+
 [MIT license](http://opensource.org/licenses/mit-license.php)
