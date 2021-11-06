@@ -14,6 +14,7 @@ const createStore = () => {
     isError: false,
     isFetchingComments: true,
     isCommentsError: false,
+    errorMsg: '',
 
     async fetchItem(illustId: string) {
       store.isFetching = true;
@@ -39,6 +40,11 @@ const createStore = () => {
           store.isFetching = false;
         }
       } catch (err) {
+        if (err instanceof api.APIError) {
+          store.errorMsg = err.message;
+        } else {
+          store.errorMsg = '';
+        }
         store.isFetching = false;
         store.isError = true;
       } finally {

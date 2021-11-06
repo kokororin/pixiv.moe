@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useImperativeHandle, forwardRef } from 'react';
 import { useMount } from 'ahooks';
 import makeStyles from '@mui/styles/makeStyles';
 import { useKeyPress } from 'ahooks';
@@ -69,74 +69,88 @@ interface SearchInputProps {
   searchOptions: SearchOptions;
 }
 
+export interface SearchInputHandles {
+  setValue: (value: string) => void;
+}
+
 export interface SearchOptions {
   xRestrict: boolean;
 }
 
 type SearchOptionsKeys = keyof SearchOptions;
 
-const SearchInput: React.FC<SearchInputProps> = props => {
-  const classes = useStyles();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const switchRef = useRef<HTMLButtonElement>(null);
+const SearchInput = forwardRef<SearchInputHandles, SearchInputProps>(
+  (props, ref) => {
+    const classes = useStyles();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const switchRef = useRef<HTMLButtonElement>(null);
 
-  useMount(() => {
-    if (props.searchOptions.xRestrict) {
-      switchRef.current?.click();
-    }
-  });
+    useMount(() => {
+      if (props.searchOptions.xRestrict) {
+        switchRef.current?.click();
+      }
+    });
 
-  const onSearch = () => {
-    if (inputRef.current) {
-      props.onSearch(inputRef.current.value);
-    }
-  };
+    const onSearch = () => {
+      if (inputRef.current) {
+        props.onSearch(inputRef.current.value);
+      }
+    };
 
-  const onSwitchChange = (
-    key: SearchOptionsKeys,
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { searchOptions } = { ...props };
-    searchOptions[key] = event.target.checked;
-    props.onOptionsChange(searchOptions);
-  };
+    const onSwitchChange = (
+      key: SearchOptionsKeys,
+      event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      const { searchOptions } = { ...props };
+      searchOptions[key] = event.target.checked;
+      props.onOptionsChange(searchOptions);
+    };
 
-  useKeyPress(
-    'enter',
-    () => {
-      inputRef?.current?.blur();
-      onSearch();
-    },
-    {
-      target: inputRef.current
-    }
-  );
+    useKeyPress(
+      'enter',
+      () => {
+        inputRef?.current?.blur();
+        onSearch();
+      },
+      {
+        target: inputRef.current
+      }
+    );
 
-  return (
-    <div className={classes.searchRoot}>
-      <div className={classes.search}>
-        <SearchIcon />
-      </div>
-      <input ref={inputRef} className={classes.searchInput} />
-      {process.env.NODE_ENV === 'development' && (
-        <div className={classes.searchOptionCheckbox}>
-          <FormControlLabel
-            style={{ marginLeft: 0 }}
-            control={
-              <Switch
-                ref={switchRef}
-                onChange={event => onSwitchChange('xRestrict', event)}
-                name="xRestrict"
-                color="primary"
-              />
-            }
-            label="R-18"
-          />
+    useImperativeHandle(ref, () => ({
+      setValue: (value: string) => {
+        if (inputRef.current) {
+          inputRef.current.value = value;
+        }
+      }
+    }));
+
+    return (
+      <div className={classes.searchRoot}>
+        <div className={classes.search}>
+          <SearchIcon />
         </div>
-      )}
-    </div>
-  );
-};
+        <input ref={inputRef} className={classes.searchInput} />
+        {process.env.NODE_ENV === 'development' && (
+          <div className={classes.searchOptionCheckbox}>
+            <FormControlLabel
+              style={{ marginLeft: 0 }}
+              control={
+                <Switch
+                  ref={switchRef}
+                  onChange={event => onSwitchChange('xRestrict', event)}
+                  name="xRestrict"
+                  color="primary"
+                />
+              }
+              label="R-18"
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
+);
 
 SearchInput.defaultProps = {
   onSearch() {}

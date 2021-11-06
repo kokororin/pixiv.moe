@@ -338,7 +338,11 @@ const Illust: React.FC<{}> = () => {
     if (illust.isError) {
       return (
         <>
-          <Message text={intl.formatMessage({ id: 'An Error Occurred' })} />
+          <Message
+            text={
+              illust.errorMsg || intl.formatMessage({ id: 'An Error Occurred' })
+            }
+          />
           <div className={classes.refreshBtn}>
             <Button
               variant="contained"

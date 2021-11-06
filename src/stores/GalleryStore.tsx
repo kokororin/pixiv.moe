@@ -35,9 +35,7 @@ export const createStore = () => {
                 // x_restrict: store.xRestrict ? 1 : 0
               });
         if (data.response.illusts && data.response.illusts.length > 0) {
-          data.response.illusts.forEach((elem: any) => {
-            store.items = [...store.items, ...[elem]];
-          });
+          store.items = [...store.items, ...data.response.illusts];
         } else {
           store.isError = true;
           store.errorTimes = store.errorTimes + 1;
@@ -46,8 +44,11 @@ export const createStore = () => {
       } catch (err) {
         if (err instanceof api.APIError) {
           store.errorMsg = err.message;
+        } else {
+          store.errorMsg = '';
         }
         store.isError = true;
+        store.errorTimes = store.errorTimes + 1;
       } finally {
         store.isFetching = false;
       }

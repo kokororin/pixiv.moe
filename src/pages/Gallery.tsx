@@ -26,7 +26,10 @@ import GalleryList from '../components/GalleryList';
 import Loading from '../components/Loading';
 // import Refresh from '../components/Refresh';
 import Message from '../components/Message';
-import SearchInput, { SearchOptions } from '../components/SearchInput';
+import SearchInput, {
+  SearchOptions,
+  SearchInputHandles
+} from '../components/SearchInput';
 
 import Storage from '../utils/Storage';
 // import * as api from '../utils/api';
@@ -44,7 +47,8 @@ const useStyles = makeStyles({
     // paddingRight: 20
   },
   refreshBtn: {
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: 10
   }
 });
 
@@ -60,6 +64,7 @@ const Gallery: React.FC<{}> = () => {
     xRestrict: Storage.get('x_restrict') || false
   });
   const layoutRef = useRef<LayoutContainerHandles>(null);
+  const inputRef = useRef<SearchInputHandles>(null);
 
   const fetchSource = (isFirstLoad: boolean) => {
     if (isFirstLoad) {
@@ -112,6 +117,11 @@ const Gallery: React.FC<{}> = () => {
 
   const onKeywordClick = (word: string) => {
     gallery.setWord(word);
+    if (word !== 'ranking') {
+      inputRef.current?.setValue(word);
+    } else {
+      inputRef.current?.setValue('');
+    }
     refreshContent();
     Storage.set('word', word);
   };
@@ -125,6 +135,11 @@ const Gallery: React.FC<{}> = () => {
     //   return;
     // }
     // setShouldLogin(false);
+
+    const word = Storage.get('word');
+    if (word && word !== 'ranking') {
+      inputRef.current?.setValue(word);
+    }
 
     if (gallery.fromIllust) {
       onSearch(gallery.word);
@@ -222,6 +237,7 @@ const Gallery: React.FC<{}> = () => {
       )}
       extraRender={() => (
         <SearchInput
+          ref={inputRef}
           onSearch={onSearch}
           onOptionsChange={onSearchOptionsChange}
           searchOptions={searchOptions}
