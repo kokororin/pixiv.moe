@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import StackGrid from 'react-stack-grid';
 import makeStyles from '@mui/styles/makeStyles';
 
@@ -19,8 +20,19 @@ interface GalleryListProps {
 
 const GalleryList: React.FC<GalleryListProps> = props => {
   const classes = useStyles();
+  const gridRef = useRef<StackGrid>(null);
+
+  useEffect(() => {
+    if (props.items.length === 0) {
+      // eslint-disable-next-line react/no-find-dom-node
+      const node = ReactDOM.findDOMNode(gridRef.current) as HTMLDivElement;
+      node.style.height = '';
+    }
+  }, [props.items]);
+
   return (
     <StackGrid
+      ref={gridRef}
       className={classes.stackGrid}
       columnWidth={180}
       gutterWidth={10}
