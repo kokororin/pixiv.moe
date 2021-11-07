@@ -65,13 +65,13 @@
     "copyfiles": "^2.4.1",
     "coveralls": "^3.0.9",
     "cross-env": "^7.0.3",
-    "eslint": "^7.32.0",
-    "eslint-config-kotori": "^0.5.8",
+    "eslint": "^8.2.0",
+    "eslint-config-kotori": "^0.6.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-loader": "^4.0.2",
-    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-jest": "^25.0.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-webpack-plugin": "^3.1.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^4.0.4",
     "friendly-errors-webpack-plugin": "^1.7.0",
@@ -136,10 +136,6 @@
     "supports-webp": "^2.0.1",
     "url-search-params-polyfill": "^8.1.1",
     "use-async-effect": "^2.2.3"
-  },
-  "resolutions": {
-    "**/@typescript-eslint/eslint-plugin": "^4.25.0",
-    "**/@typescript-eslint/parser": "^4.25.0"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
