@@ -4,7 +4,7 @@ The prefix of all APIs is `https://api.pixiv.moe`
 
 ### Fetch access token
 
-All request to `pixiv.moe API` should be passed with `x-kotori-token` header.  
+All request to `pixiv.moe API` should be passed with `Authorization` header.  
 There is a limit on the number of requests per minute.
 
 ```bash

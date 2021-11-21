@@ -55,6 +55,7 @@ const SessionContext: React.FC<{}> = props => {
         document.body.classList.add('not-supports-webp');
       }
     } catch (err) {
+      setLoading(false);
       if (err instanceof api.APIError) {
         setMessage(err.message);
       } else if (

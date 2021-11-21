@@ -39,10 +39,12 @@ export const removeAuth = (setAuthFunc?: (data: any) => void) => {
 honoka.interceptors.register({
   request: options => {
     if (getAuth()?.access_token) {
-      options.headers['X-Access-Token'] = getAuth()?.access_token;
+      options.headers['Proxy-Authorization'] = `Bearer ${
+        getAuth()?.access_token
+      }`;
     }
     if (Storage.get('token')) {
-      options.headers['X-Kotori-Token'] = Storage.get('token');
+      options.headers.Authorization = `Uid ${Storage.get('token')}`;
     }
     return options;
   },
