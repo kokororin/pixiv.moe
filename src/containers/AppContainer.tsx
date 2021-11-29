@@ -21,7 +21,6 @@ import ScrollContext from '../components/ScrollContext';
 import SessionContext from '../components/SessionContext';
 import TrackPageView from '../components/TrackPageView';
 import { AlertProvider } from '../components/Alert';
-import { SocketContext, socket } from '../components/SocketContext';
 
 const theme = createTheme({
   palette: {
@@ -63,13 +62,11 @@ const AppContainer = () => (
       <AlertProvider>
         <Baseline>
           <Router history={history}>
-            <SocketContext.Provider value={socket}>
-              <SessionContext>
-                <TrackPageView>
-                  <ScrollContext>{renderRoutes(routes)}</ScrollContext>
-                </TrackPageView>
-              </SessionContext>
-            </SocketContext.Provider>
+            <SessionContext>
+              <TrackPageView>
+                <ScrollContext>{renderRoutes(routes)}</ScrollContext>
+              </TrackPageView>
+            </SessionContext>
           </Router>
         </Baseline>
       </AlertProvider>
