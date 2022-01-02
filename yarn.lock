@@ -10219,6 +10219,11 @@ rc@^1.0.1, rc@^1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-adsense-google@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/react-adsense-google/-/react-adsense-google-1.3.1.tgz#c8244695bb974ffa30717e0ca46dcb32433e766b"
+  integrity sha512-eA1+y+68fImM0thl3m3RNpgC4lnXbFMVqh8Ahn1AnLBm6G0ezBT+8gaktO73j6VdWDu7XLTHeAJfNblkIFfXNw==
+
 react-combine-provider@^0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/react-combine-provider/-/react-combine-provider-0.1.3.tgz#ee001d51bd5236fdcd482967538d29601d5a5245"
