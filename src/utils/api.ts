@@ -36,6 +36,18 @@ export const removeAuth = (setAuthFunc?: (data: any) => void) => {
   return Storage.remove('auth');
 };
 
+export const getPremiumKey = () => {
+  return Storage.get('premium_key');
+};
+
+export const setPremiumKey = (premiumKey: string) => {
+  return Storage.set('premium_key', premiumKey);
+};
+
+export const removePremiumKey = () => {
+  return Storage.remove('premium_key');
+};
+
 honoka.interceptors.register({
   request: options => {
     if (getAuth()?.access_token) {
@@ -56,7 +68,15 @@ honoka.interceptors.register({
   }
 });
 
-export const session = () => honoka.get('/session') as Promise<PixivResponse>;
+export const session = (data?: { premium_key?: string }) =>
+  honoka.post('/session', { data }) as Promise<PixivResponse>;
+
+export const validatePremiumKey = (premiumKey: string) =>
+  honoka.post('/premium/key/validate', {
+    data: {
+      premium_key: premiumKey
+    }
+  }) as Promise<PixivResponse>;
 
 export const channels = () =>
   honoka.get('/v2/channels') as Promise<PixivResponse>;
@@ -78,12 +98,12 @@ export const search = (data: { word: string; page: number }) =>
     data
   }) as Promise<PixivResponse>;
 
-export const searchBeta = (data: {
+export const searchPremium = (data: {
   word: string;
   page: number;
   x_restrict: number;
 }) =>
-  honoka.get('/v2/search/beta', {
+  honoka.get('/v2/search/premium', {
     data
   }) as Promise<PixivResponse>;
 

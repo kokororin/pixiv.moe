@@ -29,10 +29,15 @@ export const createStore = () => {
         const data =
           store.word === 'ranking'
             ? await api.ranking(store.page)
+            : api.getPremiumKey()
+            ? await api.searchPremium({
+                word: store.word,
+                page: store.page,
+                x_restrict: store.xRestrict ? 1 : 0
+              })
             : await api.search({
                 word: store.word,
                 page: store.page
-                // x_restrict: store.xRestrict ? 1 : 0
               });
         if (data.response.illusts && data.response.illusts.length > 0) {
           store.items = [...store.items, ...data.response.illusts];

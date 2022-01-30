@@ -15,6 +15,7 @@ export const projectLink = 'https://github.com/kokororin/pixiv.moe';
 export const translateLink =
   'https://github.com/kokororin/pixiv.moe#localization';
 export const siteTitle = 'pixiv萌え';
+export const premiumBuyLink = 'https://www.321ka.com/details/0576833F';
 export const languages: Language[] = [
   {
     name: '日本語',

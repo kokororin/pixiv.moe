@@ -32,5 +32,13 @@ export default {
     'このページはお住まいの地域からご利用になれません。',
   'Please sign in to continue': '続行するにはログインしてください',
   'Refresh page': 'ページの更新',
-  'API Server is upgrading': 'APIサーバーがアップグレード中'
+  'API Server is upgrading': 'APIサーバーがアップグレード中',
+  'Premium Key': 'プレミアムキー',
+  'Premium Key is Blank': 'プレミアムキーは空白です',
+  'Premium Key is Invalid': 'プレミアムキーが無効です',
+  'Buy now': '今買う',
+  'Sort by popularity': '人気順で並べ替え',
+  'R-18 Content and Filtering': 'R-18コンテンツとフィルタリング',
+  'No monthly fee': '月額料金なし',
+  'R-18 Premium': 'R-18 (プレミアム会員)'
 };

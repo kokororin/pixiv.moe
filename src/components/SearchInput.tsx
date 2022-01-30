@@ -4,6 +4,8 @@ import makeStyles from '@mui/styles/makeStyles';
 import { useKeyPress } from 'ahooks';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { FormControlLabel, Switch } from '@mui/material';
+import { useIntl } from 'react-intl';
+import * as api from '../utils/api';
 
 const useStyles = makeStyles({
   searchRoot: {
@@ -82,6 +84,7 @@ type SearchOptionsKeys = keyof SearchOptions;
 const SearchInput = forwardRef<SearchInputHandles, SearchInputProps>(
   (props, ref) => {
     const classes = useStyles();
+    const intl = useIntl();
     const inputRef = useRef<HTMLInputElement>(null);
     const switchRef = useRef<HTMLButtonElement>(null);
 
@@ -131,22 +134,24 @@ const SearchInput = forwardRef<SearchInputHandles, SearchInputProps>(
           <SearchIcon />
         </div>
         <input ref={inputRef} className={classes.searchInput} />
-        {process.env.NODE_ENV === 'development' && (
-          <div className={classes.searchOptionCheckbox}>
-            <FormControlLabel
-              style={{ marginLeft: 0 }}
-              control={
-                <Switch
-                  ref={switchRef}
-                  onChange={event => onSwitchChange('xRestrict', event)}
-                  name="xRestrict"
-                  color="primary"
-                />
-              }
-              label="R-18"
-            />
-          </div>
-        )}
+        <div className={classes.searchOptionCheckbox}>
+          <FormControlLabel
+            style={{ marginLeft: 0 }}
+            control={
+              <Switch
+                ref={switchRef}
+                onChange={event => onSwitchChange('xRestrict', event)}
+                name="xRestrict"
+                color="primary"
+              />
+            }
+            label={
+              api.getPremiumKey()
+                ? 'R-18'
+                : intl.formatMessage({ id: 'R-18 Premium' })
+            }
+          />
+        </div>
       </div>
     );
   }

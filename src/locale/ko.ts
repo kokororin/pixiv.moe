@@ -32,5 +32,13 @@ export default {
     '귀하의 지역에서는이 페이지를 이용할 수 없습니다.',
   'Please sign in to continue': '계속하려면 로그인하십시오',
   'Refresh page': '페이지 새로 고침',
-  'API Server is upgrading': 'API 서버가 업그레이드 중입니다'
+  'API Server is upgrading': 'API 서버가 업그레이드 중입니다',
+  'Premium Key': '프리미엄 키',
+  'Premium Key is Blank': '프리미엄 키가 비어 있습니다',
+  'Premium Key is Invalid': '프리미엄 키가 잘못되었습니다',
+  'Buy now': '지금 구매',
+  'Sort by popularity': '인기순으로 정렬',
+  'R-18 Content and Filtering': 'R-18 콘텐츠 및 필터링',
+  'No monthly fee': '월 사용료 없음',
+  'R-18 Premium': 'R-18 (프리미엄 회원)'
 };

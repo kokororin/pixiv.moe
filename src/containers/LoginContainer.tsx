@@ -6,7 +6,7 @@ import React, {
   forwardRef
 } from 'react';
 import { useIntl } from 'react-intl';
-import { useMount, useKeyPress } from 'ahooks';
+import { useMount } from 'ahooks';
 import { useObserver } from 'mobx-react-lite';
 import { IconButton, Avatar } from '@mui/material';
 import { AccountCircle as AccountCircleIcon } from '@mui/icons-material';
@@ -55,8 +55,12 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
 
   useMount(() => {
     const authData = api.getAuth();
+    const premiumKey = api.getPremiumKey();
     if (authData?.access_token) {
       loginRef.current?.setAuthToken(authData.access_token);
+    }
+    if (premiumKey) {
+      loginRef.current?.setPremiumKey(premiumKey);
     }
     setAuthData(authData);
   });
@@ -80,6 +84,7 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
     const username = loginRef.current?.getUsername();
     const password = loginRef.current?.getPassword();
     const authToken = loginRef.current?.getAuthToken();
+    const premiumKey = loginRef.current?.getPremiumKey();
     const authType = loginRef.current?.getAuthType();
 
     if (authType === 'password') {
@@ -108,13 +113,18 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
         );
         return;
       }
-    }
-
-    if (authType === 'token') {
+    } else if (authType === 'token') {
       if (authToken === '') {
         return makeAlert(
           'error',
           intl.formatMessage({ id: 'Auth Token is Blank' })
+        );
+      }
+    } else if (authType === 'premium') {
+      if (premiumKey === '') {
+        return makeAlert(
+          'error',
+          intl.formatMessage({ id: 'Premium Key is Blank' })
         );
       }
     }
@@ -146,9 +156,7 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
             })
         );
       }
-    }
-
-    if (authType === 'token') {
+    } else if (authType === 'token') {
       const authData = {
         access_token: authToken
       };
@@ -160,6 +168,25 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
         onLogin();
       }, 15);
       setIsSubmitting(false);
+    } else if (authType === 'premium') {
+      try {
+        await api.validatePremiumKey(premiumKey);
+        setIsSubmitting(false);
+        api.setPremiumKey(premiumKey);
+        setTimeout(() => {
+          close();
+          loginRef.current?.reset();
+          location.reload();
+        }, 15);
+      } catch (err) {
+        setIsSubmitting(false);
+        makeAlert(
+          'error',
+          intl.formatMessage({
+            id: 'Premium Key is Invalid'
+          })
+        );
+      }
     }
   };
 
@@ -167,12 +194,6 @@ const LoginContainer = forwardRef<LoginContainerHandles, {}>((props, ref) => {
     api.removeAuth(auth.setAuth);
     setAuthData(null);
   };
-
-  useKeyPress('enter', () => {
-    if (loginRef.current?.getIsOpen()) {
-      onLoginClick();
-    }
-  });
 
   useImperativeHandle(ref, () => ({
     open,

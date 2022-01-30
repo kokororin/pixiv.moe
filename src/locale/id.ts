@@ -31,5 +31,13 @@ export default {
     'Halaman ini tidak tersedia di daerah Anda.',
   'Please sign in to continue': 'Tolong masuk untuk melanjutkan',
   'Refresh page': 'Segarkan halaman',
-  'API Server is upgrading': 'Server API sedang ditingkatkan'
+  'API Server is upgrading': 'Server API sedang ditingkatkan',
+  'Premium Key': 'Kunci Premium',
+  'Premium Key is Blank': 'Kunci Premium Kosong',
+  'Premium Key is Invalid': 'Kunci Premium Tidak Valid',
+  'Buy now': 'beli sekarang',
+  'Sort by popularity': 'Urutkan berdasarkan popularitas',
+  'R-18 Content and Filtering': 'Konten dan Penyaringan R-18',
+  'No monthly fee': 'Tidak ada biaya bulanan',
+  'R-18 Premium': 'R-18 (Anggota premium)'
 };

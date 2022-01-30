@@ -30,5 +30,13 @@ export default {
   'This page is not available in your area': '这个页面不适用于您的国家或地区',
   'Please sign in to continue': '请登录以继续',
   'Refresh page': '刷新页面',
-  'API Server is upgrading': 'API服务器正在升级'
+  'API Server is upgrading': 'API服务器正在升级',
+  'Premium Key': '高级版密钥',
+  'Premium Key is Blank': '高级版密钥为空',
+  'Premium Key is Invalid': '高级版密钥不正确',
+  'Buy now': '立即购买',
+  'Sort by popularity': '按人气排序',
+  'R-18 Content and Filtering': 'R-18内容及过滤',
+  'No monthly fee': '无包月费用',
+  'R-18 Premium': 'R-18 (高级会员)'
 };

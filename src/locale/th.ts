@@ -31,5 +31,13 @@ export default {
     'หน้านี้ไม่พร้อมใช้งานในพื้นที่ของคุณ.',
   'Please sign in to continue': 'กรุณาเข้าสู่ระบบเพื่อดำเนินการต่อ',
   'Refresh page': 'รีเฟรชหน้า',
-  'API Server is upgrading': 'API Server กำลังอัปเกรด'
+  'API Server is upgrading': 'API Server กำลังอัปเกรด',
+  'Premium Key': 'กุญแจพรีเมี่ยม',
+  'Premium Key is Blank': 'กุญแจพรีเมี่ยมว่างเปล่า',
+  'Premium Key is Invalid': 'คีย์พรีเมียมไม่ถูกต้อง',
+  'Buy now': 'ซื้อเลย',
+  'Sort by popularity': 'เรียงตามความนิยม',
+  'R-18 Content and Filtering': 'เนื้อหา R-18 และการกรอง',
+  'No monthly fee': 'ไม่มีค่าบริการรายเดือน',
+  'R-18 Premium': 'R-18 (สมาชิกพรีเมี่ยม)'
 };

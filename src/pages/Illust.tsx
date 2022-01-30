@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useMount, useUnmount } from 'ahooks';
 import classNames from 'classnames';
 import makeStyles from '@mui/styles/makeStyles';
-import { IconButton, Avatar, Chip, Button } from '@mui/material';
+import { IconButton, Avatar, Chip, Button, Link } from '@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
   Twitter as TwitterIcon,
@@ -456,9 +456,13 @@ const Illust: React.FC<{}> = () => {
               </div>
             </div>
             <p>
-              <a target="_blank" rel="noopener noreferrer" href={`/${item.id}`}>
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`/${item.id}`}
+                underline="none">
                 {intl.formatMessage({ id: 'Redirect to pixiv' })}
-              </a>
+              </Link>
             </p>
           </div>
 

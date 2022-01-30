@@ -1,8 +1,20 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import { Modal, Backdrop, Fade, Button, TextField } from '@mui/material';
-import { Clear as ClearIcon } from '@mui/icons-material';
+import {
+  Modal,
+  Backdrop,
+  Fade,
+  Button,
+  TextField,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Link
+} from '@mui/material';
+import { Clear as ClearIcon, Star as StarIcon } from '@mui/icons-material';
 import { useIntl } from 'react-intl';
+import * as config from '../config';
 
 const useStyles = makeStyles({
   modal: {
@@ -67,7 +79,9 @@ export interface LoginHandles {
   getPassword: () => string;
   getAuthToken: () => string;
   setAuthToken: (authToken: string) => void;
-  getAuthType: () => 'token' | 'password';
+  getPremiumKey: () => string;
+  setPremiumKey: (premiumKey: string) => void;
+  getAuthType: () => 'premium' | 'token' | 'password';
   getIsOpen: () => boolean;
 }
 
@@ -79,7 +93,8 @@ const Login = forwardRef<LoginHandles, LoginProps>((props, ref) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authToken, setAuthToken] = useState('');
-  const [authType] = useState<'token' | 'password'>('token');
+  const [authType] = useState<'premium' | 'token' | 'password'>('premium');
+  const [premiumKey, setPremiumKey] = useState('');
 
   useImperativeHandle(ref, () => ({
     open: () => setIsOpen(true),
@@ -94,6 +109,10 @@ const Login = forwardRef<LoginHandles, LoginProps>((props, ref) => {
     getAuthToken: () => authToken,
     setAuthToken: (authToken: string) => {
       setAuthToken(authToken);
+    },
+    getPremiumKey: () => premiumKey,
+    setPremiumKey: (premiumKey: string) => {
+      setPremiumKey(premiumKey);
     },
     getAuthType: () => authType,
     getIsOpen: () => isOpen
@@ -122,6 +141,54 @@ const Login = forwardRef<LoginHandles, LoginProps>((props, ref) => {
     }
     return (
       <>
+        {authType === 'premium' && (
+          <>
+            <TextField
+              onChange={event => setPremiumKey(event.target.value)}
+              value={premiumKey}
+              label={intl.formatMessage({
+                id: 'Premium Key'
+              })}
+              fullWidth
+              margin="normal"
+            />
+            <List dense>
+              <ListItem>
+                <ListItemIcon>
+                  <StarIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={intl.formatMessage({ id: 'Sort by popularity' })}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <StarIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={intl.formatMessage({
+                    id: 'R-18 Content and Filtering'
+                  })}
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <StarIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={intl.formatMessage({ id: 'No monthly fee' })}
+                />
+              </ListItem>
+            </List>
+            <Link
+              href={config.premiumBuyLink}
+              target="_blank"
+              rel="noopener"
+              underline="none">
+              {intl.formatMessage({ id: 'Buy now' })}
+            </Link>
+          </>
+        )}
         {authType === 'password' && (
           <>
             <TextField

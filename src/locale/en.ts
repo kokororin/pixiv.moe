@@ -31,5 +31,13 @@ export default {
     'This page is not available in your area.',
   'Please sign in to continue': 'Please sign in to continue',
   'Refresh page': 'Refresh page',
-  'API Server is upgrading': 'API Server is upgrading'
+  'API Server is upgrading': 'API Server is upgrading',
+  'Premium Key': 'Premium Key',
+  'Premium Key is Blank': 'Premium Key is Blank',
+  'Premium Key is Invalid': 'Premium Key is Invalid',
+  'Buy now': 'Buy now',
+  'Sort by popularity': 'Sort by popularity',
+  'R-18 Content and Filtering': 'R-18 Content and Filtering',
+  'No monthly fee': 'No monthly fee',
+  'R-18 Premium': 'R-18 (Premium Member)'
 };

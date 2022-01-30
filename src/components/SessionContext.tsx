@@ -31,8 +31,12 @@ const SessionContext: React.FC<{}> = props => {
 
   useAsyncEffect(async () => {
     try {
-      const data = await api.session();
+      const premiumKey = api.getPremiumKey();
+      const data = await api.session({ premium_key: premiumKey });
       setToken(data.response.access_token);
+      if (!data.response.premium) {
+        api.removePremiumKey();
+      }
       Storage.set('token', data.response.access_token);
       api.refreshToken();
       setLoading(false);

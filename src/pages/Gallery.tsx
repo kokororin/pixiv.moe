@@ -32,7 +32,7 @@ import SearchInput, {
 } from '../components/SearchInput';
 
 import Storage from '../utils/Storage';
-// import * as api from '../utils/api';
+import * as api from '../utils/api';
 
 import LayoutContainer, {
   LayoutContainerHandles
@@ -94,13 +94,17 @@ const Gallery: React.FC<{}> = () => {
     }
   };
 
-  const onSearch = (word: string) => {
+  const onSearch = (word: string, checkPremium = true) => {
     if (!word) {
       return;
     }
     if (!isNaN(parseFloat(word)) && isFinite(Number(word))) {
       history.push(`/illust/${word}`);
     } else {
+      if (!api.getPremiumKey() && searchOptions.xRestrict && checkPremium) {
+        layoutRef.current?.openLogin();
+        return;
+      }
       Storage.set('word', word);
       gallery.clearErrorTimes();
       gallery.clearSource();
@@ -142,7 +146,7 @@ const Gallery: React.FC<{}> = () => {
     }
 
     if (gallery.fromIllust) {
-      onSearch(gallery.word);
+      onSearch(gallery.word, false);
       gallery.setFromIllust(false);
     } else {
       const search = new URLSearchParams(location.search);
