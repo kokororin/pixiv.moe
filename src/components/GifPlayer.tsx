@@ -29,7 +29,7 @@ const GifPlayer: React.FC<GifPlayerProps> = props => {
       };
       img.src = props.images[index];
     },
-    isPlaying ? 80 : null
+    isPlaying ? 80 : undefined
   );
 
   const play = () => {

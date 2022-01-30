@@ -47,7 +47,6 @@ const createStore = () => {
         }
         store.isFetching = false;
         store.isError = true;
-      } finally {
       }
     },
 
@@ -61,10 +60,13 @@ const createStore = () => {
         if (data.response.comments) {
           if (data.response.next) {
             store.page = store.page + 1;
+            store.isCommentsEnd = false;
           } else {
             store.isCommentsEnd = true;
           }
           store.comments = [...store.comments, ...data.response.comments];
+        } else {
+          store.isCommentsEnd = true;
         }
         store.isFetchingComments = false;
       } catch (err) {
@@ -79,6 +81,7 @@ const createStore = () => {
       store.comments = [];
       store.page = 1;
       store.isCommentsEnd = false;
+      store.isFetchingComments = true;
     }
   });
   return store;

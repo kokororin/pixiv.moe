@@ -12,7 +12,7 @@ import {
   Cached as CachedIcon
 } from '@mui/icons-material';
 import shortid from 'shortid';
-import Img from 'react-image';
+import { Img } from 'react-image';
 import { useIntl } from 'react-intl';
 import { useObserver } from 'mobx-react-lite';
 import dayjs from 'dayjs';
@@ -195,6 +195,15 @@ const Illust: React.FC<{}> = () => {
   };
 
   const onBookmarkClick = async () => {
+    if (dayjs().year() >= 2021) {
+      makeAlert(
+        'error',
+        intl.formatMessage({
+          id: 'API Server is upgrading'
+        })
+      );
+      return;
+    }
     const authData = api.getAuth();
     if (!authData) {
       return layoutRef.current?.openLogin();

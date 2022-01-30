@@ -53,7 +53,7 @@ const useStyles = makeStyles({
   form: {
     height: 'auto',
     opacity: 1,
-    padding: '3em'
+    padding: '2em'
   },
   fields: {
     opacity: 1,

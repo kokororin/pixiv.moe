@@ -1,6 +1,6 @@
 import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import Img from 'react-image';
+import { Img } from 'react-image';
 import EmojiParser from '../utils/EmojiParser';
 import * as api from '../utils/api';
 
