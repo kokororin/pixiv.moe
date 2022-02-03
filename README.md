@@ -7,20 +7,19 @@ A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) or
 
 # Table of Contents
 
-- [Tech Stack](#tech-stack)
-- [Online Site](#online-site)
-- [Features](#features)
-- [Privacy](#privacy)
-- [Q&amp;A](#qa)
-- [Dev](#dev)
-  - [Commands](#commands)
-  - [API](#api)
-- [Deploy](#deploy)
-  - [With Docker](#with-docker)
-- [Localization](#localization)
-- [Contribute](#contribute)
-- [Contributors](#contributors)
-- [License](#license)
+- [Table of Contents](#table-of-contents)
+  - [Tech Stack](#tech-stack)
+    - [Front-end](#front-end)
+  - [Features](#features)
+  - [Dev](#dev)
+    - [Commands](#commands)
+    - [API](#api)
+  - [Deploy](#deploy)
+    - [With Docker](#with-docker)
+  - [Localization](#localization)
+  - [Contribute](#contribute)
+  - [Contributors](#contributors)
+  - [License](#license)
 
 ## Tech Stack
 
@@ -34,10 +33,6 @@ A pinterest-style layout site, shows illusts on [pixiv.net](http://pixiv.net) or
 - react-intl
 - material-ui
 - whatwg-fetch
-
-## Online Site
-
-[https://pixiv.moe](https://pixiv.moe)
 
 ## Features
 
@@ -66,10 +61,6 @@ $ npm start
 ### API
 
 The API is based on HTTPS requests and JSON responses.
-
-Our online site's API Server uses `https://api.pixiv.moe/`
-
-To check whether our API server **could** connected to pixiv, you can visit [https://api.pixiv.moe/ping](https://api.pixiv.moe/ping).
 
 See more in [API Docs](https://github.com/kokororin/pixiv.moe/blob/master/docs/API.md).
 

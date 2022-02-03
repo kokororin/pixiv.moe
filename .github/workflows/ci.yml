@@ -24,14 +24,3 @@ jobs:
         run: npm run lint
       - name: Test
         run: npm test
-      - name: Build
-        if: github.ref == 'refs/heads/release'
-        run: npm run build
-      - name: Deploy
-        if: github.ref == 'refs/heads/release'
-        uses: JamesIves/github-pages-deploy-action@3.7.1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: dist # The folder the action should deploy.
-          CLEAN: true # Automatically remove deleted files from the deploy branch
